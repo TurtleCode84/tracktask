@@ -44,7 +44,7 @@ export default function Home() {
             href="https://data.turtlecode84.vercel.app/api"
             className={styles.card}
           >
-            <h2>See an example endpoint &rarr;</h2>
+            <h2>Example endpoint &rarr;</h2>
             <p>
               Click here to see an example of a JSON response from the API.
             </p>
@@ -62,7 +62,7 @@ export default function Home() {
           <span className={styles.logo}>
             <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
           </span>
-          {'  '}and Express.js
+           and Express.js
         </a>
       </footer>
     </div>
