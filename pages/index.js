@@ -24,20 +24,20 @@ export default function Home() {
         <div className={styles.grid}>
           <a href="https://github.com/TurtleCode84" className={styles.card}>
             <h2>Find me on GitHub &rarr;</h2>
-            <p>View my profile, public projects, and more.</p>
+            <p>View my GitHub profile, public projects, and more.</p>
           </a>
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
+          <a href="https://nextjs.org" className={styles.card}>
+            <h2>Learn about Next.js &rarr;</h2>
+            <p>Check out everything about Next.js on its website!</p>
           </a>
 
           <a
             href="https://github.com/vercel/next.js/tree/canary/examples"
             className={styles.card}
           >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
+            <h2>Use the API &rarr;</h2>
+            <p>Discover the many uses & functions of this extensive API.</p>
           </a>
 
           <a
@@ -54,7 +54,7 @@ export default function Home() {
 
       <footer className={styles.footer}>
         <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+          href="https://vercel.com"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -62,6 +62,7 @@ export default function Home() {
           <span className={styles.logo}>
             <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
           </span>
+          {' '}and Express.js
         </a>
       </footer>
     </div>
