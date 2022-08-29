@@ -33,7 +33,7 @@ export default function Home() {
           </a>
 
           <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
+            href="#"
             className={styles.card}
           >
             <h2>Use the API &rarr;</h2>
@@ -41,12 +41,12 @@ export default function Home() {
           </a>
 
           <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+            href="https://data.turtlecode84.vercel.app/api"
             className={styles.card}
           >
-            <h2>Deploy &rarr;</h2>
+            <h2>See an example endpoint &rarr;</h2>
             <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
+              Click here to see an example of a JSON response from the API.
             </p>
           </a>
         </div>
@@ -62,7 +62,7 @@ export default function Home() {
           <span className={styles.logo}>
             <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
           </span>
-          {' '}and Express.js
+          {'  '}and Express.js
         </a>
       </footer>
     </div>
