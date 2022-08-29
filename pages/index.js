@@ -13,12 +13,12 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Welcome to <a href="https://data.turtlecode84.vercel.app">TurtleCode Data!</a>
         </h1>
 
         <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
+          The API for all of my important databases, powered by{' '}
+          <code className={styles.code}>Express.js</code>
         </p>
 
         <div className={styles.grid}>
