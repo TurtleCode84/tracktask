@@ -1,13 +1,15 @@
-/*const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://turtlecode84dba:<password>@cluster0.7aegnb2.mongodb.net/?retryWrites=true&w=majority";
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
-client.connect(err => {
-  const collection = client.db("test").collection("devices");
-  // perform actions on the collection object
-  client.close();
-});*/
+import clientPromise from "../../util/mongodb";
 
-export default function handler(req, res) {
-  const { user } = req.query
-  res.end(`User: ${user}`)
+export default async function handler(req, res) {
+  const client = await clientPromise;
+  const db = client.db("data");
+  switch (req.method) {
+    case "POST":
+      res.json({ message: "hello, world!" });
+      break;
+    case "GET":
+      const allUsers = await db.collection("users").find({}).toArray();
+      res.json({ status: 200, data: allUsers });
+      break;
+  }
 }
