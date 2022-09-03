@@ -1,15 +1,9 @@
 import clientPromise from "../../../util/mongodb";
 
 export default async function handler(req, res) {
+  const user = { req.query };
   const client = await clientPromise;
   const db = client.db("data");
-  switch (req.method) {
-    case "POST":
-      res.json({ message: "hello, world!" });
-      break;
-    case "GET":
-      const allUsers = await db.collection("users").find({}).toArray();
-      res.json({ status: 200, data: allUsers });
-      break;
-  }
+  const userInfo = await db.collection("users").find({username : ${user}).toArray();
+  res.json({ user: userInfo });
 }
