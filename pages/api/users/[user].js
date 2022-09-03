@@ -9,5 +9,5 @@ client.connect(err => {
 
 export default function handler(req, res) {
   const { user } = req.query
-  res.end(`User: ${user.join(', ')}`)
+  res.end(`User: ${user}`)
 }
