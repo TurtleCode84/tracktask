@@ -13,7 +13,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          <a href="/">TrackTask</a> - Shareable Task Management
+          <a href="https://tracktask.vercel.app">TrackTask</a> - Shareable Task Management
         </h1>
 
         <p className={styles.description}>
@@ -41,7 +41,7 @@ export default function Home() {
           </a>
 
           <a
-            href="/api"
+            href="https://tracktask.vercel.app/api"
             className={styles.card}
           >
             <h2>Try the API &rarr;</h2>
