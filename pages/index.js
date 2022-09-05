@@ -36,7 +36,7 @@ export default function Home() {
             href="#"
             className={styles.card}
           >
-            <h2>Become a beta tester &rarr;</h2>
+            <h2>Be a beta tester &rarr;</h2>
             <p>Find out how to become a TrackTask Beta tester.</p>
           </a>
 
@@ -46,7 +46,7 @@ export default function Home() {
           >
             <h2>Try the API &rarr;</h2>
             <p>
-              Click here to see an example of an API response.
+              See an example of a Next.js API response.
             </p>
           </a>
         </div>
