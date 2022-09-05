@@ -17,8 +17,8 @@ export default function Home() {
         </h1>
 
         <p className={styles.description}>
-          Coming soon, powered by{' '}
-          <code className={styles.code}>Express.js</code>
+          An easy-to-use platform for managing your tasks! Coming soon, powered by{' '}
+          <code className={styles.code}>Next.js</code>
         </p>
 
         <div className={styles.grid}>
@@ -58,7 +58,7 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by Express.js and{' '}
+          Powered by Next.js and{' '}
           <span className={styles.logo}>
             <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
           </span>
