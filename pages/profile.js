@@ -1,25 +1,16 @@
-import withSession from '../lib/session'
+import useUser from '../lib/useUser'
 import Layout from '../components/Layout'
 
-export const getServerSideProps = withSession(async function ({ req, res }) {
-  const { user } = req.session
+const Profile = () => {
+  // Fetch the user client-side
+  const { user } = useUser({ redirectTo: '/login' })
 
-  if (!user) {
-    return {
-      redirect: {
-        destination: '/login',
-        permanent: false,
-      },
-    }
+  // Server-render loading state
+  if (!user || user.isLoggedIn === false) {
+    return <Layout>Loading...</Layout>
   }
 
-  return {
-    props: { user },
-  }
-})
-
-const Profile = ({ user }) => {
-  // Show the user. No loading state is required
+  // Once the user request finishes, show the user
   return (
     <Layout>
       <h1>Your Profile</h1>
