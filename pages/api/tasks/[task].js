@@ -3,6 +3,9 @@ import { ObjectId } from "mongodb";
 
 export default async function handler(req, res) {
   const { task } = req.query
+  if(!ObjectId.isValid(task)){
+    res.status(500).json({ error : "invalid task id" });
+  }
   const client = await clientPromise;
   const db = client.db("data");
   const exists = await db.collection("tasks").find({ _id : ObjectId(task) , hidden : false}).count();
