@@ -3,7 +3,7 @@ import { ObjectId } from "mongodb";
 
 export default async function handler(req, res) {
   const { user } = req.query
-  if(ObjectId.isValid(task)) {
+  if(ObjectId.isValid(user)) {
     const client = await clientPromise;
     const db = client.db("data");
     const query = { _id: ObjectId(user) };
