@@ -16,11 +16,9 @@ async function handler(req, res) {
     const client = await clientPromise;
     const db = client.db("data");
     //Check existing
-    const checkExisting = await db
-      .collection('users')
-      .findOne({ username: username });
-    //Send error response if duplicate user is found
-    if (checkExisting) {
+    const query = { username: username };
+    const exists = await db.collection("users").countDocuments(query);
+    if (exists > 0) {
       res.status(422).json({ error: 'username is already taken' });
       client.close();
       return;
