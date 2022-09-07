@@ -16,10 +16,17 @@ async function handler(req, res) {
     const client = await clientPromise;
     const db = client.db("data");
     //Check existing user
-    const query = { username: username };
-    const userExists = await db.collection("users").countDocuments(query);
+    const uQuery = { username: username };
+    const userExists = await db.collection("users").countDocuments(uQuery);
     if (userExists > 0) {
       res.status(422).json({ error: 'username is already taken' });
+      return;
+    }
+    //Check existing email
+    const eQuery = { email: email };
+    const emailExists = await db.collection("users").countDocuments(eQuery);
+    if (emailExists > 0) {
+      res.status(422).json({ error: 'please use a different email' });
       return;
     }
     //Get user IP
