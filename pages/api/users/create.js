@@ -1,6 +1,6 @@
 import clientPromise from "../../../lib/mongodb";
 import { hash } from 'bcryptjs';
-import type { NextRequest } from 'next/server';
+import { NextRequest } from 'next/server';
 
 async function handler(req, res) {
   //Only POST mothod is accepted
