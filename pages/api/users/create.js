@@ -32,6 +32,7 @@ async function handler(req, res) {
       return;
     }
     //Get user IP
+    const ip = req.headers["x-forwarded-for"].split(',')[0];
     /*if (req.headers["x-forwarded-for"]) {
       const ip = req.headers["x-forwarded-for"].split(',')[0];
     } else if (req.headers["x-real-ip"]) {
@@ -47,7 +48,7 @@ async function handler(req, res) {
       history: {
         joined: Math.floor(Date.now()/1000),
         lastLogin: 0,
-        joinedIp: req.ip,
+        joinedIp: ip,
         loginIpList: [],
       },
       permissions: {
