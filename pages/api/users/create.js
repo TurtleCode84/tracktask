@@ -20,7 +20,6 @@ async function handler(req, res) {
     const userExists = await db.collection("users").countDocuments(uQuery);
     if (userExists > 0) {
       res.status(422).json({ error: 'username is already taken' });
-      client.close();
       return;
     }
     //Check existing email
@@ -28,7 +27,6 @@ async function handler(req, res) {
     const emailExists = await db.collection("users").countDocuments(eQuery);
     if (emailExists > 0) {
       res.status(422).json({ error: 'please use a different email' });
-      client.close();
       return;
     }
     //Get user IP
