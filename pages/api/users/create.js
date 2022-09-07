@@ -16,30 +16,38 @@ async function handler(req, res) {
     const client = await clientPromise;
     const db = client.db("data");
     //Check existing user
-    const query = { username: username };
-    const userExists = await db.collection("users").countDocuments(query);
+    const uQuery = { username: username };
+    const userExists = await db.collection("users").countDocuments(uQuery);
     if (userExists > 0) {
       res.status(422).json({ error: 'username is already taken' });
       client.close();
       return;
     }
     //Check existing email
-    query = { email: email };
-    const emailExists = await db.collection("users").countDocuments(query);
+    const eQuery = { email: email };
+    const emailExists = await db.collection("users").countDocuments(eQuery);
     if (emailExists > 0) {
       res.status(422).json({ error: 'please use a different email' });
       client.close();
       return;
     }
-    //Hash password
+    //Get user IP
+    /*if (req.headers["x-forwarded-for"]) {
+      const ip = req.headers["x-forwarded-for"].split(',')[0];
+    } else if (req.headers["x-real-ip"]) {
+      const ip = req.connection.remoteAddress;
+    } else {
+      const ip = req.connection.remoteAddress;
+    }*/
+    //Create user in database
     const status = await db.collection('users').insertOne({
       username,
       password: await hash(password, 10),
       email,
       history: {
-        joined: Date.now(),
+        joined: Math.floor(Date.now()/1000),
         lastLogin: 0,
-        joinedIp: NextRequest.ip,
+        joinedIp: req.ip,
         loginIpList: [],
       },
       permissions: {
