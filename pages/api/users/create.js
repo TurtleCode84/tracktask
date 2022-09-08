@@ -16,14 +16,14 @@ async function handler(req, res) {
     const client = await clientPromise;
     const db = client.db("data");
     //Check existing user
-    const uQuery = { username: username };
+    const uQuery = { username: username.toLowerCase() };
     const userExists = await db.collection("users").countDocuments(uQuery);
     if (userExists > 0) {
       res.status(422).json({ error: 'username is already taken' });
       return;
     }
     //Check existing email
-    const eQuery = { email: email };
+    const eQuery = { email: email.toLowerCase() };
     const emailExists = await db.collection("users").countDocuments(eQuery);
     if (emailExists > 0) {
       res.status(422).json({ error: 'please use a different email' });
@@ -42,9 +42,9 @@ async function handler(req, res) {
     }*/
     //Create user in database
     const status = await db.collection('users').insertOne({
-      username,
+      username.toLowerCase(),
       password: await hash(password, 10),
-      email,
+      email.toLowerCase(),
       history: {
         joined: Math.floor(Date.now()/1000),
         lastLogin: 0,
