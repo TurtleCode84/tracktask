@@ -6,7 +6,7 @@ export default async function handler(req, res) {
   if(ObjectId.isValid(task)) {
     const client = await clientPromise;
     const db = client.db("data");
-    const query = { hidden: false, _id: ObjectId(task) };
+    const query = { _id: ObjectId(task), hidden: false };
     const exists = await db.collection("tasks").countDocuments(query);
     if (exists > 0) {
       const projection = { name: 1, description: 1, dueDate: 1, owner: 1, completion: 1 };
