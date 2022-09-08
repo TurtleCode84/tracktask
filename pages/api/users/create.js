@@ -62,8 +62,6 @@ async function handler(req, res) {
     });
     //Send success response
     res.status(201).json({ message: 'user created', ...status });
-    //Close DB connection
-    //client.close(); // unneeded?
   } else {
     //Response for other than POST method
     res.status(405).json({ error: 'method not allowed' });
