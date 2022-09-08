@@ -42,9 +42,9 @@ async function handler(req, res) {
     }*/
     //Create user in database
     const status = await db.collection('users').insertOne({
-      username.toLowerCase(),
+      username: username.toLowerCase(),
       password: await hash(password, 10),
-      email.toLowerCase(),
+      email: email.toLowerCase(),
       history: {
         joined: Math.floor(Date.now()/1000),
         lastLogin: 0,
