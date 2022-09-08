@@ -1,6 +1,6 @@
 import clientPromise from "../../../lib/mongodb";
 import { hash } from 'bcryptjs';
-import { NextRequest } from 'next/server';
+//import { NextRequest } from 'next/server'; // unneeded?
 
 async function handler(req, res) {
   //Only POST mothod is accepted
@@ -30,7 +30,8 @@ async function handler(req, res) {
       return;
     }
     //Get user IP
-    const ip = req.headers["x-forwarded-for"].split(',')[0];
+    const ipList = req.headers["x-forwarded-for"].split(',');
+    const ip = ipList[ipList.length-1];
     /*if (req.headers["x-forwarded-for"]) {
       const ip = req.headers["x-forwarded-for"].split(',')[0];
     } else if (req.headers["x-real-ip"]) {
