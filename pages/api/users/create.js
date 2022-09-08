@@ -30,8 +30,9 @@ async function handler(req, res) {
       return;
     }
     //Get user IP
-    const ipList = req.headers["x-forwarded-for"].split(',');
-    const ip = ipList[ipList.length-1];
+    /*const ipList = req.headers["x-forwarded-for"].split(',');
+    const ip = ipList[ipList.length-1];*/
+    const ip = req.headers["x-forwarded-for"].split(',')[0];
     /*if (req.headers["x-forwarded-for"]) {
       const ip = req.headers["x-forwarded-for"].split(',')[0];
     } else if (req.headers["x-real-ip"]) {
@@ -62,7 +63,7 @@ async function handler(req, res) {
     //Send success response
     res.status(201).json({ message: 'user created', ...status });
     //Close DB connection
-    client.close();
+    //client.close(); // unneeded?
   } else {
     //Response for other than POST method
     res.status(405).json({ error: 'method not allowed' });
