@@ -48,7 +48,8 @@ async function handler(req, res) {
     }
     const ipUpdateDoc = {
       $set: {
-        history.loginIpList: newIpList
+        history.loginIpList: `${newIpList}`,
+        history.lastLogin: `${Math.floor(Date.now()/1000)}`
       },
     };
     const ipUpdate = await db.collection('users').updateOne(query, ipUpdateDoc);
