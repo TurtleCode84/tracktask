@@ -1,5 +1,5 @@
 import clientPromise from "../../../lib/mongodb";
-import { hash, compare } from 'bcrypt';
+import { compare } from 'bcryptjs';
 //import { NextRequest } from 'next/server'; // unneeded?
 
 async function handler(req, res) {
