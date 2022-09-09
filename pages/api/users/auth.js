@@ -23,18 +23,21 @@ async function handler(req, res) {
       res.status(422).json({ error: 'incorrect username or password' }); // user does not exist
       return;
     }
-    
     //Get the rest of the user info
     //const projection = { username: 1, "history.joined": 1, permissions: 1, bio: 1, profilePicture: 1 };
     const userInfo = await db.collection("users").findOne(query); /*.project(projection)*/
-    
     //Check the password
     const passwordMatch = await compare(password, userInfo.password);
     if (!passwordMatch) {
       res.status(422).json({ error: 'incorrect username or password' }); // password is incorrect
       return;
     }
-    
+    //Check if already session
+    const sessionExists = await db.collection("sessions").countDocuments({ _id: userInfo._id });
+    if (sessionExists > 0) {
+      res.status(422).json({ error: 'user is already logged in' }); // user does not exist
+      return;
+    }
     //Get user IP
     /*const ipList = req.headers["x-forwarded-for"].split(',');
     const ip = ipList[ipList.length-1];*/
@@ -62,12 +65,6 @@ async function handler(req, res) {
       },
     };
     const ipUpdate = await db.collection('users').updateOne(query, ipUpdateDoc);
-    //Check if already session
-    const sessionExists = await db.collection("sessions").countDocuments({ _id: userInfo._id });
-    if (sessionExists < 1) {
-      res.status(422).json({ error: 'user is already logged in' }); // user does not exist
-      return;
-    }
     //Create new session
     const status = await db.collection('sessions').insertOne({
       userId: userInfo._id,
