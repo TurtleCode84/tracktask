@@ -46,21 +46,29 @@ async function handler(req, res) {
     } else {
       const ip = req.connection.remoteAddress;
     }*/
-    //Formulate and update IP list in database
-    var newIpList = [];
-    if (userInfo.history.loginIpList[4] !== null) {
+    //Push current user IP to database
+    /*if (userInfo.history.loginIpList[4] !== null) {
       const temp = userInfo.history.loginIpList.unshift(ip);
       newIpList = userInfo.history.loginIpList.pop();
     } else {
       newIpList = userInfo.history.loginIpList.unshift(ip);
-    }
+    }*/
     const ipUpdateDoc = {
       $set: {
-        "history.loginIpList": newIpList,
         "history.lastLogin": Math.floor(Date.now()/1000),
+      },
+      $push: {
+        "history.loginIpList.$[]": ip,
       },
     };
     const ipUpdate = await db.collection('users').updateOne(query, ipUpdateDoc);
+    //Check if already session
+    const sessionExists = await db.collection("sessions").countDocuments({ _id: userInfo._id });
+    if (sessionExists < 1) {
+      res.status(422).json({ error: 'user is already logged in' }); // user does not exist
+      return;
+    }
+    //Create new session
     const status = await db.collection('sessions').insertOne({
       userId: userInfo._id,
       expires: Math.floor((Date.now()/1000) + 3600), // Current timestamp plus 60 minutes
