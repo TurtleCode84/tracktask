@@ -20,7 +20,7 @@ async function handler(req, res) {
     const query = { username: username.toLowerCase(), password: passwordHashed };
     const userExists = await db.collection("users").countDocuments(query);
     if (userExists < 1) {
-      res.status(422).json({ error: 'incorrect username or password' });
+      res.status(422).json({ error: 'incorrect username or password', ...passwordHashed });
       return;
     }
     
