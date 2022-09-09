@@ -1,5 +1,5 @@
 import clientPromise from "../../../lib/mongodb";
-import { hash } from 'bcryptjs';
+import { compare } from 'bcrypt';
 //import { NextRequest } from 'next/server'; // unneeded?
 
 async function handler(req, res) {
@@ -16,17 +16,25 @@ async function handler(req, res) {
     const client = await clientPromise;
     const db = client.db("data");
     //Check existing user
-    const passwordHashed = await hash(password, 10);
-    const query = { username: username.toLowerCase(), password: passwordHashed };
+    
+    //const passwordHashed = await hash(password, 10);
+    const query = { username: username.toLowerCase() };
     const userExists = await db.collection("users").countDocuments(query);
     if (userExists < 1) {
-      res.status(422).json({ error: 'incorrect username or password', ...passwordHashed });
+      res.status(422).json({ error: 'incorrect username or password' }); // user does not exist
       return;
     }
     
     //Get the rest of the user info
     //const projection = { username: 1, "history.joined": 1, permissions: 1, bio: 1, profilePicture: 1 };
     const userInfo = await db.collection("users").find(query)/*.project(projection)*/;
+    
+    //Check the password
+    const passwordMatch = await compare(password, userInfo.password);
+    if (!passwordMatch) {
+      res.status(422).json({ error: 'incorrect username or password' }); // password is incorrect
+      return;
+    }
     
     //Get user IP
     /*const ipList = req.headers["x-forwarded-for"].split(',');
