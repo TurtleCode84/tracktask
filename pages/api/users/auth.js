@@ -47,8 +47,8 @@ async function handler(req, res) {
       const ip = req.connection.remoteAddress;
     }*/
     //Formulate and update IP list in database
-    var newIpList;
-    if (userInfo.history.loginIpList[4]) {
+    var newIpList = [];
+    if (userInfo.history.loginIpList[4] !== null) {
       const temp = userInfo.history.loginIpList.unshift(ip);
       newIpList = userInfo.history.loginIpList.pop();
     } else {
