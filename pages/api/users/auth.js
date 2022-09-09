@@ -15,9 +15,8 @@ async function handler(req, res) {
     //Connect with database
     const client = await clientPromise;
     const db = client.db("data");
-    //Check existing user
     
-    //const passwordHashed = await hash(password, 10);
+    //Check existing user
     const query = { username: username.toLowerCase() };
     const userExists = await db.collection("users").countDocuments(query);
     if (userExists < 1) {
@@ -27,7 +26,7 @@ async function handler(req, res) {
     
     //Get the rest of the user info
     //const projection = { username: 1, "history.joined": 1, permissions: 1, bio: 1, profilePicture: 1 };
-    const userInfo = await db.collection("users").find(query)/*.project(projection)*/;
+    const userInfo = await db.collection("users").find(query)/*.project(projection)*/.toArray();
     
     //Check the password
     const passwordHashed = await userInfo.password;
