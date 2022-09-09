@@ -17,7 +17,7 @@ async function handler(req, res) {
     const db = client.db("data");
     //Check existing user
     const passwordHashed = await hash(password, 10);
-    const query = { username: username.toLowerCase(), passwordHashed };
+    const query = { username: username.toLowerCase(), password: passwordHashed };
     const userExists = await db.collection("users").countDocuments(query);
     if (userExists < 1) {
       res.status(422).json({ error: 'incorrect username or password' });
