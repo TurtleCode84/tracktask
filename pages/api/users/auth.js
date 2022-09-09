@@ -33,7 +33,7 @@ async function handler(req, res) {
       return;
     }
     //Check if already session
-    const sessionExists = await db.collection("sessions").countDocuments({ _id: userInfo._id });
+    const sessionExists = await db.collection("sessions").countDocuments({ userId: userInfo._id });
     if (sessionExists > 0) {
       res.status(422).json({ error: 'user is already logged in' }); // user does not exist
       return;
