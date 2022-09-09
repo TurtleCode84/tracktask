@@ -29,13 +29,19 @@ async function handler(req, res) {
     //Check the password
     const passwordMatch = await compare(password, userInfo.password);
     if (!passwordMatch) {
-      res.status(422).json({ error: 'incorrect username or password' }); // password is incorrect
+      res.status(401).json({ error: 'incorrect username or password' }); // password is incorrect
+      return;
+    }
+    //Check if banned
+    const isBanned = await db.collection("users").countDocuments({ username: userInfo.username, "permissions.banned": true });
+    if (isBanned > 0) {
+      res.status(401).json({ error: 'your account has been banned, please contact a site admin for more information' }); // user is banned
       return;
     }
     //Check if already session
     const sessionExists = await db.collection("sessions").countDocuments({ userId: userInfo._id });
     if (sessionExists > 0) {
-      res.status(422).json({ error: 'user is already logged in' }); // user does not exist
+      res.status(422).json({ error: 'you are already logged in' }); // user is already logged in
       return;
     }
     //Get user IP
