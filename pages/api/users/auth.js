@@ -26,11 +26,10 @@ async function handler(req, res) {
     
     //Get the rest of the user info
     //const projection = { username: 1, "history.joined": 1, permissions: 1, bio: 1, profilePicture: 1 };
-    const userInfo = await db.collection("users").find(query)/*.project(projection)*/.toArray();
+    const userInfo = await db.collection("users").findOne(query); /*.project(projection)*/
     
     //Check the password
-    const passwordHashed = userInfo.password;
-    const passwordMatch = await compare(password, passwordHashed);
+    const passwordMatch = await compare(password, userInfo.password);
     if (!passwordMatch) {
       res.status(422).json({ error: 'incorrect username or password' }); // password is incorrect
       return;
