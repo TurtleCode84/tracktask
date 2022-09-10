@@ -1,6 +1,6 @@
 import clientPromise from "../../../lib/mongodb";
 import { compare } from 'bcryptjs';
-//import { NextRequest } from 'next/server'; // unneeded?
+import { v4 as uuidv4 } from 'uuid';
 
 async function handler(req, res) {
   //Only POST mothod is accepted
@@ -75,6 +75,7 @@ async function handler(req, res) {
     const status = await db.collection('sessions').insertOne({
       userId: userInfo._id,
       expires: Math.floor((Date.now()/1000) + 3600), // Current timestamp plus 60 minutes
+      sessionKey: uuidv4(),
     });
     //Send success response
     res.status(201).json({ message: 'user logged in', ...status });
