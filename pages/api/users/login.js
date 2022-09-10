@@ -1,6 +1,6 @@
 import clientPromise from "../../../lib/mongodb";
 import { compare } from 'bcryptjs';
-//import { NextRequest } from 'next/server'; // unneeded?
+import { v4 as uuidv4 } from 'uuid';
 
 async function handler(req, res) {
   //Only POST mothod is accepted
