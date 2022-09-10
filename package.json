@@ -17,6 +17,7 @@
     "mongodb": "^4.9.1",
     "bcryptjs": "^2.4.3",
     "crypto": "^1.0.1",
+    "uuid": "^9.0.0",
     "iron-session": "^6.2.0"
   },
   "devDependencies": {
