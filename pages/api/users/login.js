@@ -75,6 +75,7 @@ async function handler(req, res) {
     const status = await db.collection('sessions').insertOne({
       userId: userInfo._id,
       expires: Math.floor((Date.now()/1000) + 3600), // Current timestamp plus 60 minutes
+      sessionKey: uuidv4(),
     });
     //Send success response
     res.status(201).json({ message: 'user logged in', ...status });
