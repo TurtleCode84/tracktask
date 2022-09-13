@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import useUser from "lib/useUser";
-import Layout from "components/Layout";
-import Form from "components/Form";
-import fetchJson, { FetchError } from "lib/fetchJson";
+import useUser from "../lib/useUser";
+import Layout from "../components/Layout";
+import Form from "../components/Form";
+import fetchJson, { FetchError } from "../lib/fetchJson";
 
 export default function Login() {
   // here we just check if user is already logged in and redirect to profile
