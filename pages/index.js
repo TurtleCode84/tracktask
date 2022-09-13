@@ -1,69 +1,59 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import Layout from "components/Layout";
+import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>TrackTask - Shareable Task Management</title>
-        <meta name="description" content="TrackTask: Shareable task management, made easier." />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <Layout>
+      <h1>
+        <span style={{ marginRight: ".3em", verticalAlign: "middle" }}>
+          <Image src="/GitHub-Mark-32px.png" width="32" height="32" alt="" />
+        </span>
+        <a href="https://github.com/vvo/iron-session">iron-session</a> -
+        Authentication example
+      </h1>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          <a href="https://tracktask.vercel.app">TrackTask</a> - Shareable Task Management
-        </h1>
+      <p>
+        This example creates an authentication system that uses a{" "}
+        <b>signed and encrypted cookie to store session data</b>.
+      </p>
 
-        <p className={styles.description}>
-          An easy-to-use platform for managing your tasks! Coming soon, powered by{' '}
-          <code className={styles.code}>Next.js</code>
-        </p>
+      <p>
+        It uses current best practices as for authentication in the Next.js
+        ecosystem:
+        <br />
+        1. <b>no `getInitialProps`</b> to ensure every page is static
+        <br />
+        2. <b>`useUser` hook</b> together with `
+        <a href="https://swr.now.sh/">swr`</a> for data fetching
+      </p>
 
-        <div className={styles.grid}>
-          <a href="https://github.com/TurtleCode84" className={styles.card}>
-            <h2>Find me on GitHub &rarr;</h2>
-            <p>View my GitHub profile, public projects, and more.</p>
-          </a>
+      <h2>Features</h2>
 
-          <a href="https://nextjs.org" className={styles.card}>
-            <h2>Learn about Next.js &rarr;</h2>
-            <p>Check out everything about Next.js on its website!</p>
-          </a>
+      <ul>
+        <li>Logged in status synchronized between browser windows/tabs</li>
+        <li>Layout based on logged in status</li>
+        <li>All pages are static</li>
+        <li>Session data is signed and encrypted in a cookie</li>
+      </ul>
 
-          <a
-            href="#"
-            className={styles.card}
-          >
-            <h2>Be a beta tester &rarr;</h2>
-            <p>Find out how to become a TrackTask Beta tester.</p>
-          </a>
+      <h2>Steps to test the functionality:</h2>
 
-          <a
-            href="https://tracktask.vercel.app/api"
-            className={styles.card}
-          >
-            <h2>Try the API &rarr;</h2>
-            <p>
-              See an example of a Next.js API response.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by Next.js and{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
-    </div>
-  )
+      <ol>
+        <li>Click login and enter your GitHub username.</li>
+        <li>
+          Click home and click profile again, notice how your session is being
+          used through a token stored in a cookie.
+        </li>
+        <li>
+          Click logout and try to go to profile again. You&apos;ll get
+          redirected to the `/login` route.
+        </li>
+      </ol>
+      <style jsx>{`
+        li {
+          margin-bottom: 0.5rem;
+        }
+      `}</style>
+    </Layout>
+  );
 }
