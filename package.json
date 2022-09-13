@@ -20,7 +20,7 @@
     "iron-session": "^6.2.0"
   },
   "devDependencies": {
-    "eslint": "8.23.0",
+    "eslint": "8.23.1",
     "eslint-config-next": "12.3.0"
   }
 }
