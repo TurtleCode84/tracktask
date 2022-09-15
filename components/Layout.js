@@ -5,7 +5,7 @@ export default function Layout({ children }) {
   return (
     <>
       <Head>
-        <title>With Iron Session</title>
+        <title>TrackTask - Shareable Task Management/title>
       </Head>
       <style jsx global>{`
         *,
