@@ -1,11 +1,11 @@
 import Head from "next/head";
-import Header from "./Header";
+import Header from "components/Header";
 
 export default function Layout({ children }) {
   return (
     <>
       <Head>
-        <title>TrackTask Sessions</title>
+        <title>TrackTask - Shareable Task Management</title>
       </Head>
       <style jsx global>{`
         *,

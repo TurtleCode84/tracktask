@@ -1,7 +1,7 @@
 import React from "react";
-import Layout from "../components/Layout";
+import Layout from "components/Layout";
 import { withIronSessionSsr } from "iron-session/next";
-import { sessionOptions } from "../lib/session";
+import { sessionOptions } from "lib/session";
 
 export default function SsrProfile({ user }) {
   return (

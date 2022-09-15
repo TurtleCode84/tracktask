@@ -1,5 +1,5 @@
 import { withIronSessionApiRoute } from "iron-session/next";
-import { sessionOptions } from "../../lib/session";
+import { sessionOptions } from "lib/session";
 import { Octokit } from "octokit";
 
 const octokit = new Octokit();
