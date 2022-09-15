@@ -16,6 +16,7 @@ async function userRoute(req, res) {
       isLoggedIn: false,
       login: "",
       avatarUrl: "",
+      followers: "",
     });
   }
 }
