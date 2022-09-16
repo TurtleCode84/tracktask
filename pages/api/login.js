@@ -23,8 +23,8 @@ export default withIronSessionApiRoute(async (req, res) => {
       res.status(401).json({ message: "incorrect username or password" }); // user does not exist
       return;
     }
-    //Check the password
-    const options = { projection: { password: 1 } };
+    //Get basic user info
+    const options = { projection: { password: 1, _id: 1, username: 1, profilePicture: 1 } };
     const userInfo = await db.collection("users").findOne(query, options);
     //Check the password
     const passwordMatch = await compare(password, userInfo.password);
@@ -34,11 +34,7 @@ export default withIronSessionApiRoute(async (req, res) => {
     }
     //Otherwise...
     try {
-      const {
-        data: { username, _id, profilePicture },
-      } = await db.collection("users").findOne(query);
-
-      const user = { isLoggedIn: true, id: _id, username, profilePicture };
+      const user = { isLoggedIn: true, id: userInfo._id, username: userInfo.username, profilePicture: userInfo.profilePicture };
       req.session.user = user;
       await req.session.save();
       res.json(user);
