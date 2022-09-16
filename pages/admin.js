@@ -7,7 +7,6 @@ export default function Admin() {
     adminOnly: true,
     redirectTo: "/",
   });
-  const { events } = useEvents(user);
 
   return (
     <Layout>
