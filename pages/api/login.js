@@ -35,10 +35,10 @@ export default withIronSessionApiRoute(async (req, res) => {
     //Otherwise...
     try {
       const {
-        data: { id: _id, username, profilePicture },
+        data: { _id, username, profilePicture },
       } = await db.collection("users").findOne(query);
 
-      const user = { isLoggedIn: true, id, username, profilePicture };
+      const user = { isLoggedIn: true, id: _id, username, profilePicture };
       req.session.user = user;
       await req.session.save();
       res.json(user);
