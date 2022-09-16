@@ -3,7 +3,7 @@ import Layout from "components/Layout";
 import useUser from "lib/useUser";
 
 export default function Admin() {
-  const { user } = useUser({
+  const { user, mutateUser } = useUser({
     redirectTo: "/",
     adminOnly: true,
   });
