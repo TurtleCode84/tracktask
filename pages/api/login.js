@@ -1,7 +1,7 @@
-import { Octokit } from "octokit";
+import clientPromise from "lib/mongodb";
+import { compare } from 'bcryptjs';
 import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "lib/session";
-const octokit = new Octokit();
 
 export default withIronSessionApiRoute(async (req, res) => {
   if (req.method === 'POST') {
