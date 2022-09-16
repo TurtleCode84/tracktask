@@ -29,13 +29,13 @@ export default withIronSessionApiRoute(async (req, res) => {
     //Check the password
     const passwordMatch = await compare(password, userInfo.password);
     if (!passwordMatch) {
-      res.status(401).json({ error: 'incorrect username or password' }); // password is incorrect
+      res.status(401).json({ message: 'incorrect username or password' }); // password is incorrect
       return;
     }
     //Otherwise...
     try {
       const {
-        data: { _id, username, profilePicture },
+        data: { username, _id, profilePicture },
       } = await db.collection("users").findOne(query);
 
       const user = { isLoggedIn: true, id: _id, username, profilePicture };
