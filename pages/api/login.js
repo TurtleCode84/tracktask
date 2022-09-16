@@ -24,8 +24,8 @@ export default withIronSessionApiRoute(async (req, res) => {
       return;
     }
     //Check the password
-    const projection = { password: 1 };
-    const userInfo = await db.collection("users").findOne(query).project(projection);
+    const options = { projection: { password: 1 } };
+    const userInfo = await db.collection("users").findOne(query, options);
     //Check the password
     const passwordMatch = await compare(password, userInfo.password);
     if (!passwordMatch) {
