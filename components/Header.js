@@ -48,11 +48,11 @@ export default function Header() {
                   </a>
                 </Link>
               </li>
-              /*<li>
+              {/*<li>
                 <Link href="/profile-ssr">
                   <a>Profile (Server-side Rendering)</a>
                 </Link>
-              </li>*/
+              </li>*/}
               <li>
                 {/* In this case, we're fine with linking with a regular a in case of no JavaScript */}
                 {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
