@@ -48,6 +48,13 @@ export default function Header() {
                   </a>
                 </Link>
               </li>
+              {user?.isAdmin === true && (
+                <li>
+                  <Link href="/admin">
+                    <a>Admin</a>
+                  </Link>
+                </li>
+              )}
               {/*<li>
                 <Link href="/profile-ssr">
                   <a>Profile (Server-side Rendering)</a>
