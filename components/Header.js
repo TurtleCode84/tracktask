@@ -38,7 +38,7 @@ export default function Header() {
                       }}
                     >
                       <Image
-                        src={user.avatarUrl}
+                        src={user.profilePicture}
                         width={32}
                         height={32}
                         alt=""
