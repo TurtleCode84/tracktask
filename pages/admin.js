@@ -4,8 +4,8 @@ import useUser from "lib/useUser";
 
 export default function Admin() {
   const { user } = useUser({
-    adminOnly: true,
     redirectTo: "/",
+    adminOnly: true,
   });
 
   return (
