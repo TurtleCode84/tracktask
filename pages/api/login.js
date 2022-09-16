@@ -8,7 +8,7 @@ export default withIronSessionApiRoute(async (req, res) => {
     const { username, password } = await req.body;
     
     //Validate
-    if (!username) {
+    if (!username || !password) {
       res.status(401).json({ message: "invalid data" });
       return;
     }
