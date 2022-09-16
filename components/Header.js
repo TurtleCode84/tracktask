@@ -27,7 +27,7 @@ export default function Header() {
           {user?.isLoggedIn === true && (
             <>
               <li>
-                <Link href="/profile-sg">
+                <Link href="/dashboard">
                   <a>
                     <span
                       style={{
@@ -44,15 +44,15 @@ export default function Header() {
                         alt=""
                       />
                     </span>
-                    Profile (Static Generation, recommended)
+                    Dashboard
                   </a>
                 </Link>
               </li>
-              <li>
+              /*<li>
                 <Link href="/profile-ssr">
                   <a>Profile (Server-side Rendering)</a>
                 </Link>
-              </li>
+              </li>*/
               <li>
                 {/* In this case, we're fine with linking with a regular a in case of no JavaScript */}
                 {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
