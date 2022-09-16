@@ -13,7 +13,7 @@ export default function Admin() {
     <Layout>
       <h1>TrackTask Admin Panel</h1>
       <h2>
-        You shouldn't be here...
+        You shouldn&apos;t be here...
       </h2>
       {user && (
         <>
