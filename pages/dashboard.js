@@ -4,7 +4,7 @@ import useUser from "lib/useUser";
 import useEvents from "lib/useEvents";
 
 // Make sure to check https://nextjs.org/docs/basic-features/layouts for more info on how to use layouts
-export default function SgProfile() {
+export default function Dashboard() {
   const { user } = useUser({
     redirectTo: "/login",
   });
@@ -12,24 +12,14 @@ export default function SgProfile() {
 
   return (
     <Layout>
-      <h1>Your GitHub profile</h1>
+      <h1>Welcome to TrackTask!</h1>
       <h2>
-        This page uses{" "}
-        <a href="https://nextjs.org/docs/basic-features/pages#static-generation-recommended">
-          Static Generation (SG)
-        </a>{" "}
-        {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-        and the <a href="/api/user">/api/user</a> route (using{" "}
-        <a href="https://github.com/vercel/swr">vercel/SWR</a>)
+        The shareable task management system.
       </h2>
       {user && (
         <>
           <p style={{ fontStyle: "italic" }}>
-            Public data, from{" "}
-            <a href={`https://github.com/${user.login}`}>
-              https://github.com/{user.login}
-            </a>
-            , reduced to `login` and `avatar_url`.
+            Your user info, pulled from the TrackTask API.
           </p>
 
           <pre>{JSON.stringify(user, null, 2)}</pre>
@@ -38,7 +28,7 @@ export default function SgProfile() {
 
       {events !== undefined && (
         <p>
-          Number of GitHub events for user: <b>{events.length}</b>.{" "}
+          Number of GitHub events for user (deprecated): <b>{events.length}</b>.{" "}
           {events.length > 0 && (
             <>
               Last event type: <b>{events[0].type}</b>
