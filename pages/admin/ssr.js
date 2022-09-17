@@ -3,7 +3,7 @@ import Layout from "components/Layout";
 import { withIronSessionSsr } from "iron-session/next";
 import { sessionOptions } from "lib/session";
 
-export default function Admin({ user }) {
+export default function AdminSSr({ user }) {
   return (
     <Layout>
       <h1>TrackTask Admin Panel</h1>
