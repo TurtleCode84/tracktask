@@ -1,15 +1,12 @@
 import React from "react";
 import Layout from "components/Layout";
 import useUser from "lib/useUser";
-import { useRouter } from 'next/router'
 
 export default function Admin() {
   const { user, mutateUser } = useUser({
     redirectTo: "/",
     adminOnly: true,
   });
-  const router = useRouter()
-  const { userId } = router.query
 
   if (!user || !user.isLoggedIn || !user.permissions.admin) {
     return (
