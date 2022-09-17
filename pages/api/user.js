@@ -6,11 +6,15 @@ export default withIronSessionApiRoute(userRoute, sessionOptions);
 
 async function userRoute(req, res) {
   if (req.session.user) {
-    // in a real world application you might read the user id from the session and then do a database request
-    // to get more information on the user if needed
+    const client = await clientPromise;
+    const db = client.db("data");
+    const user = req.session.user;
+    const query = { _id: user.id };
+    const userInfo = await db.collection("users").findOne(query);
     res.json({
       ...req.session.user,
       isLoggedIn: true,
+      permissions: userInfo.permissions,
     });
   } else {
     res.json({
