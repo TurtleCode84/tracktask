@@ -2,7 +2,7 @@ import React from "react";
 import Layout from "components/Layout";
 import useUser from "lib/useUser";
 
-export default function Admin() {
+export default function OldAdmin() {
   const { user, mutateUser } = useUser({
     redirectTo: "/",
     adminOnly: true,
