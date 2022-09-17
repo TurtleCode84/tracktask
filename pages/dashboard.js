@@ -14,6 +14,7 @@ export default function Dashboard() {
   if (!user || !user.isLoggedIn || user.permissions.banned) {
     return (
       <Layout>
+        <p>Loading...</p>
       </Layout>
     );
   }
