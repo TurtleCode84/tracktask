@@ -12,11 +12,11 @@ export default function Dashboard() {
 
   return (
     <Layout>
+    {user.isLoggedIn ?
       <h1>Welcome to TrackTask!</h1>
       <h2>
         The shareable task management system.
       </h2>
-      {user && (
         <>
           <p style={{ fontStyle: "italic" }}>
             Your user info, pulled from the TrackTask API.
@@ -24,7 +24,6 @@ export default function Dashboard() {
 
           <pre>{JSON.stringify(user, null, 2)}</pre>
         </>
-      )}
 
       {events !== undefined && (
         <p>
@@ -36,6 +35,9 @@ export default function Dashboard() {
           )}
         </p>
       )}
+    :
+      <p>Loading...</p>
+    }
     </Layout>
   );
 }
