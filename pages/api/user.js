@@ -14,7 +14,8 @@ async function userRoute(req, res) {
     res.json({
       ...req.session.user,
       isLoggedIn: true,
-      permissions: userInfo.permissions,
+      //permissions: userInfo.permissions,
+      return: userInfo,
     });
   } else {
     res.json({
