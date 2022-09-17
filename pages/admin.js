@@ -39,7 +39,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     res.end();
     return {
       props: {
-        user: { isLoggedIn: false, login: "", avatarUrl: "" },
+        user: { isLoggedIn: false, id: "", username: "", permissions: {} },
       },
     };
   } else if (!user.permissions.admin) {
