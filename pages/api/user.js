@@ -12,7 +12,6 @@ async function userRoute(req, res) {
     const query = { _id: user.id };
     const userInfo = await db.collection("users").findOne(query);
     res.json({
-      ...req.session.user,
       isLoggedIn: true,
       email: userInfo.email,
       profilePicture: userInfo.profilePicture,
@@ -20,6 +19,7 @@ async function userRoute(req, res) {
       shareKey: userInfo.shareKey,
       bio: userInfo.bio,
       permissions: userInfo.permissions,
+      ...req.session.user,
     });
   } else {
     res.json({
