@@ -3,19 +3,12 @@ import Layout from "components/Layout";
 import { withIronSessionSsr } from "iron-session/next";
 import { sessionOptions } from "lib/session";
 
-export default function SsrProfile({ user }) {
+export default function Admin({ user }) {
   return (
     <Layout>
-      <h1>Your GitHub profile</h1>
+      <h1>TrackTask Admin Panel</h1>
       <h2>
-        This page uses{" "}
-        <a href="https://nextjs.org/docs/basic-features/pages#server-side-rendering">
-          Server-side Rendering (SSR)
-        </a>{" "}
-        and{" "}
-        <a href="https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering">
-          getServerSideProps
-        </a>
+        You probably shouldn&apos;t be here...
       </h2>
 
       {user?.isLoggedIn && (
@@ -49,6 +42,11 @@ export const getServerSideProps = withIronSessionSsr(async function ({
         user: { isLoggedIn: false, login: "", avatarUrl: "" },
       },
     };
+  } else if (!user.permissions.admin) {
+    res.setHeader("location", "/");
+    res.statusCode = 302;
+    res.end();
+    return;
   }
 
   return {
