@@ -12,7 +12,7 @@ async function userRoute(req, res) {
     const query = { _id: ObjectId(req.session.user.id) };
     //const options = { projection: { permissions: 1 } };
     const userInfo = await db.collection("users").findOne(query);
-    res.json({
+    const user = {
       ...req.session.user,
       isLoggedIn: true,
       email: userInfo.email,
@@ -20,7 +20,10 @@ async function userRoute(req, res) {
       history: { joined: userInfo.history.joined, lastLogin: userInfo.history.lastLogin, banReason: userInfo.history.banReason },
       shareKey: userInfo.shareKey,
       permissions: userInfo.permissions,
-    });
+    };
+    req.session.user = user;
+    await req.session.save();
+    res.json(user);
   } else {
     res.json({
       isLoggedIn: false,
