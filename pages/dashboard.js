@@ -9,10 +9,11 @@ export default function Dashboard() {
     redirectTo: "/login",
   });
   const { events } = useEvents(user);
+  {/*const { tasks } = useTasks(user);*/}
 
   return (
     <Layout>
-    {user && user.isLoggedIn ?
+    {user && user.isLoggedIn && !user.permissions.banned ?
     <>
       <h1>Welcome to TrackTask!</h1>
       <h2>
