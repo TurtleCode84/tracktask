@@ -48,7 +48,7 @@ export default function Header() {
                   </a>
                 </Link>
               </li>
-              {user?.isAdmin === true && (
+              {user?.permissions.admin === true && (
                 <li>
                   <Link href="/admin">
                     <a>Admin</a>
@@ -71,7 +71,7 @@ export default function Header() {
                       await fetchJson("/api/logout", { method: "POST" }),
                       false,
                     );
-                    router.push("/");
+                    router.push("/login");
                   }}
                 >
                   Logout
