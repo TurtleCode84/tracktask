@@ -12,12 +12,13 @@ export default function Dashboard() {
   {/*const { tasks } = useTasks(user);*/}
   
   if (!user || !user.isLoggedIn || user.permissions.banned) {
-    return null;
+    return (
+      <Layout>
+      </Layout>
+    );
   }
   return (
     <Layout>
-    {user && user.isLoggedIn && !user.permissions.banned ?
-    <>
       <h1>Welcome to TrackTask!</h1>
       <h2>
         The shareable task management system.
@@ -38,12 +39,6 @@ export default function Dashboard() {
           )}
         </p>
       )}
-    </>
-    :
-    <>
-      <p>Loading...</p>
-    </>
-    }
     </Layout>
   );
 }
