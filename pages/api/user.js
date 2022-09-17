@@ -10,7 +10,7 @@ async function userRoute(req, res) {
     const client = await clientPromise;
     const db = client.db("data");
     const query = { _id: ObjectId(req.session.user.id) };
-    const options = { projection: { permissions: 1 } };
+    //const options = { projection: { permissions: 1 } };
     const userInfo = await db.collection("users").findOne(query);
     res.json({
       ...req.session.user,
