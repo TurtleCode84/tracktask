@@ -43,7 +43,7 @@ export default function Header() {
                       }}
                     >
                       <Image
-                        src={user.profilePicture ? user.profilePicture : 'https://u.cubeupload.com/Turtle84375/AO6OiZ.png' }
+                        src={user.profilePicture ? user.profilePicture : "/default-pfp.jpg" }
                         width={32}
                         height={32}
                         alt=""
