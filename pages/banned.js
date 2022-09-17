@@ -1,12 +1,9 @@
 import React from "react";
 import Layout from "components/Layout";
-import useUser from "lib/useUser";
+import { withIronSessionSsr } from "iron-session/next";
+import { sessionOptions } from "lib/session";
 
-export default function Banned() {
-  const { user } = useUser({
-    redirectTo: "/login",
-  });
-
+export default function Banned({ user }) {
   return (
     <Layout>
       <h1>Account Banned:</h1>
@@ -26,3 +23,33 @@ export default function Banned() {
     </Layout>
   );
 }
+
+export const getServerSideProps = withIronSessionSsr(async function ({
+  req,
+  res,
+}) {
+  const user = req.session.user;
+
+  if (user === undefined) {
+    res.setHeader("location", "/login");
+    res.statusCode = 302;
+    res.end();
+    return {
+      props: {
+        user: { isLoggedIn: false, id: "", username: "", permissions: {} },
+      },
+    };
+  } else if (!user.permissions.banned) {
+    res.setHeader("location", "/");
+    res.statusCode = 302;
+    res.end();
+    return {
+      props: { user: req.session.user },
+    };
+  }
+
+  return {
+    props: { user: req.session.user },
+  };
+},
+sessionOptions);
