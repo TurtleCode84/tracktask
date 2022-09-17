@@ -11,7 +11,7 @@ export default function Dashboard() {
   const { events } = useEvents(user);
   {/*const { tasks } = useTasks(user);*/}
   
-  if (!user || user.isLoggedIn || user.permissions.banned) {
+  if (!user || !user.isLoggedIn || user.permissions.banned) {
     return null;
   }
   return (
