@@ -12,7 +12,7 @@ export default function Dashboard() {
 
   return (
     <Layout>
-    {user.isLoggedIn ?
+    {user && user.isLoggedIn ?
     <>
       <h1>Welcome to TrackTask!</h1>
       <h2>
