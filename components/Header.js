@@ -71,7 +71,7 @@ export default function Header() {
                       await fetchJson("/api/logout", { method: "POST" }),
                       false,
                     );
-                    router.push("/login");
+                    router.push("/");
                   }}
                 >
                   Logout
