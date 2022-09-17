@@ -17,6 +17,11 @@ export default function Header() {
               <a>Home</a>
             </Link>
           </li>
+          <li>
+            <Link href="/about">
+              <a>About</a>
+            </Link>
+          </li>
           {user?.isLoggedIn === false && (
             <li>
               <Link href="/login">
@@ -38,7 +43,7 @@ export default function Header() {
                       }}
                     >
                       <Image
-                        src={user.profilePicture}
+                        src={user.profilePicture ? user.profilePicture : 'https://u.cubeupload.com/Turtle84375/AO6OiZ.png' }
                         width={32}
                         height={32}
                         alt=""
