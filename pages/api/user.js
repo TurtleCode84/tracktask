@@ -17,6 +17,7 @@ async function userRoute(req, res) {
       isLoggedIn: false,
       id: "",
       username: "",
+      permissions: {},
     });
   }
 }
