@@ -22,7 +22,9 @@ export default function Faq() {
       </p>
 
       <ul>
-        <li><p style={{ fontStyle: "italic" }}>What does it mean to be verified?</p><br/><p>If your account is verified, you will be able to share collections of tasks with other users, among other perks. This is to prevent abuse of the sharing capabilities by restricting them to reviewed & trusted users.</p></li>
+        <li><p style={{ fontStyle: "italic" }}>What does it mean to be verified?</p><p>If your account is verified, you will be able to share collections of tasks with other users, among other perks. This is to prevent abuse of the sharing capabilities by restricting them to reviewed & trusted users.</p></li>
+        <li><p style={{ fontStyle: "italic" }}>How do I get verified?</p><p>There is currently no official way to request verification, so at the moment it&apos;s given only at admin discretion</p></li>
+        <li><p style={{ fontStyle: "italic" }}>Help, I&apos;ve been banned!</p><p>Unfortunately for you, there is no official way to appeal to a ban yet, so you&apos;ll either have find an admin to contact or wait until the next update...</p></li>
       </ul>
 
       <style jsx>{`
