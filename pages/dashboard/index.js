@@ -24,15 +24,17 @@ export default function Dashboard() {
   }
   return (
     <Layout>
-      <h1>Welcome to TrackTask!</h1>
-      <h2>
-        The shareable task management system.
-      </h2>
-      <p style={{ fontStyle: "italic" }}>
-        Your user info, pulled from the TrackTask API.
-      </p>
-
-      <pre>{JSON.stringify(user, null, 2)}</pre>
+      <h1>
+        {user ? 
+        <>
+        Welcome back, {user.username}!
+        </>
+        :
+        <>
+        Welcome back!
+        </>
+        }
+      </h1>
 
       <h2>Your tasks:</h2>
       {taskList === undefined || taskList.length === 0 ?
@@ -48,6 +50,17 @@ export default function Dashboard() {
       </ul>
       </>
       }
+      
+      <h2>Your collections:</h2>
+      <p style={{ fontStyle: "italic" }}>
+        Coming soon...
+      </p>
+      <hr/>
+      <p style={{ fontStyle: "italic" }}>
+        Your user info, pulled from the TrackTask API.
+      </p>
+
+      <pre>{JSON.stringify(user, null, 2)}</pre>
     </Layout>
   );
 }
