@@ -29,7 +29,7 @@ export default function Banned() {
       )}
       
       <p>
-        <i>If you would like to appeal to this decision, please contact Turtle84375 on wasteof.money.</i>
+        <i>If you would like to appeal to this decision, please read about our appeals process on our FAQ page.</i>
       </p>
     </Layout>
   );
