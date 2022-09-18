@@ -10,7 +10,7 @@ export default function Dashboard() {
   });
   {/*const { events } = useEvents(user);*/}
   const { tasks } = useTasks(user);
-  const taskList = tasks.map((task) =>
+  const taskList = tasks?.map((task) =>
     <li key={task._id}>
       {task.name}
     </li>
