@@ -36,18 +36,17 @@ export default function Dashboard() {
       <pre>{JSON.stringify(user, null, 2)}</pre>
 
       <h2>Your tasks:</h2>
-      {taskList !== [] ?
-      <>
-      <ul>
-        {taskList}
-        <p>end of task list</p>
-      </ul>
-      </>
-      :
+      {taskList === undefined || taskList.length === 0 ?
       <>
       <p style={{ fontStyle: "italic" }}>
         Looks like you have no tasks!
       </p>
+      </>
+      :
+      <>
+      <ul>
+        {taskList}
+      </ul>
       </>
       }
     </Layout>
