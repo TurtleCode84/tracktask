@@ -10,6 +10,9 @@ export default function Dashboard() {
   });
   {/*const { events } = useEvents(user);*/}
   const { tasks } = useTasks(user);
+  const taskList = tasks.map((task) =>
+    <li>{task.name}</li>
+  );
   
   if (!user || !user.isLoggedIn || user.permissions.banned) {
     return (
@@ -31,10 +34,9 @@ export default function Dashboard() {
       <pre>{JSON.stringify(user, null, 2)}</pre>
 
       <h2>Your tasks:</h2>
-      {/*list tasks*/}
-      {tasks.map(task => (
-      <p>{task.name}</p>
-      ))}
+      <ul>
+        {taskList}
+      </ul>
     </Layout>
   );
 }
