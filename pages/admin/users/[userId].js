@@ -29,13 +29,9 @@ export default function Admin() {
         Luckily, there&apos;s not much here yet.
       </p>
       {ObjectID.isValid(userId) ?
-      <>
         <p>You&apos;re at the admin page for user {userId}.</p>
-      </>
       :
-      <>
         <p>Invalid user ID</p>
-      </>
       }
     </Layout>
   );
