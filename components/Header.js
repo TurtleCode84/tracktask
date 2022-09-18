@@ -31,8 +31,8 @@ export default function Header() {
           )}
           {user?.isLoggedIn === false && (
             <li>
-              <Link href="/signup">
-                <a>Sign up</a>
+              <Link href="/join">
+                <a>Join</a>
               </Link>
             </li>
           )}
