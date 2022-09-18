@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 
 export default function Admin() {
   const { user, mutateUser } = useUser({
-    redirectTo: "/",
+    redirectTo: "/dashboard",
     adminOnly: true,
   });
   const router = useRouter()
