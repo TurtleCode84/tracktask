@@ -1,5 +1,6 @@
 import React from "react";
 import Layout from "components/Layout";
+import Loading from "components/Loading";
 import useUser from "lib/useUser";
 
 export default function Banned() {
@@ -10,9 +11,7 @@ export default function Banned() {
   
   if (!user || !user.isLoggedIn || !user.permissions.banned) {
     return (
-      <Layout>
-        <p>Loading...</p>
-      </Layout>
+      <Loading>
     );
   }
   return (
