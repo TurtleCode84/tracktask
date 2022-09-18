@@ -53,7 +53,7 @@ export default function Join() {
           }}
         />
         <p>Already have an account?{' '}
-        <Link href="/signup">
+        <Link href="/login">
           <a>Login!</a>
         </Link>
         </p>
