@@ -17,7 +17,7 @@ export default function Join() {
   return (
     <Layout>
       <div className="signup">
-        <h2>Sign Up:</h2>
+        <h2>Create an account:</h2>
         <hr/><br/>
         <SignupForm
           errorMessage={errorMsg}
