@@ -3,7 +3,7 @@ import { sessionOptions } from "lib/session";
 import { ObjectId } from 'mongodb'
 import clientPromise from "lib/mongodb";
 
-export default withIronSessionApiRoute(eventsRoute, sessionOptions);
+export default withIronSessionApiRoute(tasksRoute, sessionOptions);
 
 async function tasksRoute(req, res) {
   const user = req.session.user;
