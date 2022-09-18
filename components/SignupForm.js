@@ -7,7 +7,7 @@ export default function SignupForm({ errorMessage, onSubmit }) {
       </label>
       <label>
         <span>Email (optional)</span>
-        <input type="text" name="email" />
+        <input type="email" name="email" />
       </label>
       <label>
         <span>Password</span>
