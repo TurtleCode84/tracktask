@@ -13,9 +13,7 @@ export default function Admin() {
 
   if (!user || !user.isLoggedIn || !user.permissions.admin) {
     return (
-      <Layout>
-        <p>Loading...</p>
-      </Layout>
+      <Loading/>
     );
   }
   return (
