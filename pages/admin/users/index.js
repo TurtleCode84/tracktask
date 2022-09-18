@@ -5,7 +5,7 @@ import useUser from "lib/useUser";
 
 export default function Admin() {
   const { user, mutateUser } = useUser({
-    redirectTo: "/",
+    redirectTo: "/dashboard",
     adminOnly: true,
   });
 
