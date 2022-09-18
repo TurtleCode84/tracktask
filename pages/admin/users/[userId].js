@@ -2,7 +2,7 @@ import React from "react";
 import Layout from "components/Layout";
 import useUser from "lib/useUser";
 import { useRouter } from 'next/router'
-import { ObjectId } from 'mongodb'
+import { ObjectID } from 'bson-objectid'
 
 export default function Admin() {
   const { user, mutateUser } = useUser({
@@ -28,7 +28,7 @@ export default function Admin() {
       <p style={{ fontStyle: "italic" }}>
         Luckily, there&apos;s not much here yet.
       </p>
-      {ObjectId.isValid(userId) ?
+      {ObjectID.isValid(userId) ?
       <>
         <p>You&apos;re at the admin page for user {userId}.</p>
       </>
