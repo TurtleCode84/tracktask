@@ -11,7 +11,9 @@ export default function Dashboard() {
   {/*const { events } = useEvents(user);*/}
   const { tasks } = useTasks(user);
   const taskList = tasks.map((task) =>
-    <li>{task.name}</li>
+    <li key={task._id}>
+      {task.name}
+    </li>
   );
   
   if (!user || !user.isLoggedIn || user.permissions.banned) {
