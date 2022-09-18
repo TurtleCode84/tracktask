@@ -47,7 +47,7 @@ export default function Login() {
             }
           }}
         />
-        <p>Already have an account?
+        <p>Don&apos;t have an account?
         <Link href="/signup">
           <a> Sign up!</a>
         </Link>
