@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import useUser from "lib/useUser";
 import Layout from "components/Layout";
-import Form from "components/Form";
+import LoginForm from "components/LoginForm";
 import fetchJson, { FetchError } from "lib/fetchJson";
 
 export default function Login() {
@@ -16,7 +16,7 @@ export default function Login() {
   return (
     <Layout>
       <div className="login">
-        <Form
+        <LoginForm
           errorMessage={errorMsg}
           onSubmit={async function handleSubmit(event) {
             event.preventDefault();
