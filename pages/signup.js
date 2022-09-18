@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import useUser from "lib/useUser";
 import Layout from "components/Layout";
-import LoginForm from "components/LoginForm";
+import LoginForm from "components/SignupForm";
 import fetchJson, { FetchError } from "lib/fetchJson";
 
-export default function Login() {
+export default function Signup() {
   // here we just check if user is already logged in and redirect to dashboard
   const { mutateUser } = useUser({
     redirectTo: "/dashboard",
