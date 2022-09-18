@@ -40,6 +40,7 @@ export default function Dashboard() {
       <>
       <ul>
         {taskList}
+        <p>end of task list</p>
       </ul>
       </>
       :
