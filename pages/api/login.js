@@ -44,6 +44,15 @@ export default withIronSessionApiRoute(async (req, res) => {
     }
     //Otherwise...
     try {
+      const ipUpdateDoc = { //update user IP and lastLogin
+        $set: {
+          "history.lastLogin": Math.floor(Date.now()/1000),
+        },
+        $push: {
+          "history.loginIpList": req.ip,
+        },
+      };
+      const ipUpdate = await db.collection('users').updateOne(query, ipUpdateDoc);
       const user = { isLoggedIn: true, id: userInfo._id, username: userInfo.username, profilePicture: userInfo.profilePicture, permissions: userInfo.permissions, "history.banReason": userInfo.history.banReason };
       req.session.user = user;
       await req.session.save();
