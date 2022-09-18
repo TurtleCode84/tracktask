@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import useUser from "lib/useUser";
 import Layout from "components/Layout";
 import LoginForm from "components/LoginForm";
+import Link from "next/link";
 import fetchJson, { FetchError } from "lib/fetchJson";
 
 export default function Login() {
@@ -46,6 +47,11 @@ export default function Login() {
             }
           }}
         />
+        <br/>
+        <p>Already have an account?
+        <Link href="/signup">
+          <a>Sign up!</a>
+        </Link>
       </div>
       <style jsx>{`
         .login {
