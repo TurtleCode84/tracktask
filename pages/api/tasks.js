@@ -7,6 +7,11 @@ export default withIronSessionApiRoute(tasksRoute, sessionOptions);
 
 async function tasksRoute(req, res) {
   const user = req.session.user;
+  if (!user || !user.isLoggedIn || user.permissions.banned ) {
+    res.status(401).end();
+    return;
+  }
+  
   const client = await clientPromise;
   const db = client.db("data");
   const query = { owner: ObjectId(user.id), hidden: false };
@@ -14,11 +19,6 @@ async function tasksRoute(req, res) {
     sort: { dueDate: 1 },
     projection: { name: 1, description: 1, dueDate: 1, owner: 1, completion: 1 },
   };
-
-  if (!user || !user.isLoggedIn || user.permissions.banned ) {
-    res.status(401).end();
-    return;
-  }
 
   try {
     const tasks = await db.collection("tasks").find(query, options).toArray();
