@@ -1,5 +1,9 @@
+import Layout from "components/Layout";
+
 export default function Loading() {
   return (
-    <p>Loading...</p>
+    <Layout>
+      <p>Loading...</p>
+    </Layout>
   );
 }
