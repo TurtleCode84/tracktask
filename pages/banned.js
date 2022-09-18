@@ -5,7 +5,7 @@ import useUser from "lib/useUser";
 
 export default function Banned() {
   const { user } = useUser({
-    redirectTo: "/",
+    redirectTo: "/dashboard",
     bannedOnly: true,
   });
   
