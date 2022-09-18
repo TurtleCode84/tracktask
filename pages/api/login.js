@@ -35,16 +35,16 @@ export default withIronSessionApiRoute(async (req, res) => {
     //Check if banned (beta)
     if (userInfo.permissions.banned) {
       if (userInfo.history.banReason) {
-        res.status(401).json({ message: 'Your account has been banned for the following reason: ' + userInfo.history.banReason + ' Please contact Turtle84375 via wasteof.money for more information.' }); // password is incorrect
+        res.status(401).json({ message: 'Your account has been banned for the following reason: ' + userInfo.history.banReason + ' Please contact an administrator for more information.' }); // password is incorrect
         return;
       } else {
-        res.status(401).json({ message: 'Your account has been banned, please contact Turtle84375 via wasteof.money for more information.' }); // password is incorrect
+        res.status(401).json({ message: 'Your account has been banned, please contact an administrator for more information.' }); // password is incorrect
         return;
       }
     }
     //Otherwise...
     try {
-      const user = { isLoggedIn: true, id: userInfo._id, username: userInfo.username, profilePicture: userInfo.profilePicture, permissions: userInfo.permissions };
+      const user = { isLoggedIn: true, id: userInfo._id, username: userInfo.username, profilePicture: userInfo.profilePicture, permissions: userInfo.permissions, "history.banReason": userInfo.history.banReason };
       req.session.user = user;
       await req.session.save();
       res.json(user);
