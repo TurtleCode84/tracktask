@@ -52,6 +52,7 @@ export default function Login() {
         <Link href="/signup">
           <a>Sign up!</a>
         </Link>
+        </p>
       </div>
       <style jsx>{`
         .login {
