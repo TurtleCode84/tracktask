@@ -8,7 +8,7 @@ export default withIronSessionApiRoute(tasksRoute, sessionOptions);
 async function tasksRoute(req, res) {
   const user = req.session.user;
   if (!user || !user.isLoggedIn || user.permissions.banned ) {
-    res.status(404).end();
+    res.status(401).json({ message: "Unauthorized" });
     return;
   }
   
