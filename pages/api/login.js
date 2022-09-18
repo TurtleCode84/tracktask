@@ -35,10 +35,10 @@ export default withIronSessionApiRoute(async (req, res) => {
     //Check if banned (beta)
     if (userInfo.permissions.banned) {
       if (userInfo.history.banReason) {
-        res.status(401).json({ message: 'Your account has been banned for the following reason: ' + userInfo.history.banReason + ' Please contact an administrator for more information.' }); // password is incorrect
+        res.status(401).json({ message: 'Your account has been banned for the following reason: ' + userInfo.history.banReason + ' Please contact a TrackTask administrator for more information.' }); // password is incorrect
         return;
       } else {
-        res.status(401).json({ message: 'Your account has been banned, please contact an administrator for more information.' }); // password is incorrect
+        res.status(401).json({ message: 'Your account has been banned, please contact a TrackTask administrator for more information.' }); // password is incorrect
         return;
       }
     }
