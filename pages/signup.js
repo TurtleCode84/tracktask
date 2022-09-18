@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import useUser from "lib/useUser";
 import Layout from "components/Layout";
-import LoginForm from "components/SignupForm";
+import SignupForm from "components/SignupForm";
 import fetchJson, { FetchError } from "lib/fetchJson";
 
 export default function Signup() {
