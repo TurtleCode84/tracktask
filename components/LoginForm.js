@@ -1,4 +1,4 @@
-export default function Form({ errorMessage, onSubmit }) {
+export default function LoginForm({ errorMessage, onSubmit }) {
   return (
     <form onSubmit={onSubmit}>
       <label>
