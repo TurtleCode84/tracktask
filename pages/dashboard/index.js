@@ -36,7 +36,7 @@ export default function Dashboard() {
       <pre>{JSON.stringify(user, null, 2)}</pre>
 
       <h2>Your tasks:</h2>
-      {taskList ?
+      {taskList.length > 0 ?
       <>
       <ul>
         {taskList}
