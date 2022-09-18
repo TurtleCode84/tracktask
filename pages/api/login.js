@@ -9,7 +9,7 @@ export default withIronSessionApiRoute(async (req, res) => {
     
     //Validate
     if (!username || !password) {
-      res.status(401).json({ message: "invalid data" });
+      res.status(401).json({ message: "Invalid data" });
       return;
     }
     //Connect with database
@@ -20,17 +20,27 @@ export default withIronSessionApiRoute(async (req, res) => {
     const query = { username: username.toLowerCase() };
     const userExists = await db.collection("users").countDocuments(query);
     if (userExists < 1) {
-      res.status(401).json({ message: "incorrect username or password" }); // user does not exist
+      res.status(401).json({ message: "Incorrect username or password" }); // user does not exist
       return;
     }
     //Get basic user info
-    const options = { projection: { password: 1, _id: 1, username: 1, profilePicture: 1, permissions: 1 } };
+    const options = { projection: { password: 1, _id: 1, username: 1, profilePicture: 1, permissions: 1, "history.banReason": 1 } };
     const userInfo = await db.collection("users").findOne(query, options);
     //Check the password
     const passwordMatch = await compare(password, userInfo.password);
     if (!passwordMatch) {
-      res.status(401).json({ message: 'incorrect username or password' }); // password is incorrect
+      res.status(401).json({ message: 'Incorrect username or password' }); // password is incorrect
       return;
+    }
+    //Check if banned (beta)
+    if (userInfo.permissions.banned) {
+      if (userInfo.history.banReason) {
+        res.status(401).json({ message: 'Your account has been banned for the following reason: ' + userInfo.history.banReason + ' Please contact Turtle84375 via wasteof.money for more information.' }); // password is incorrect
+        return;
+      } else {
+        res.status(401).json({ message: 'Your account has been banned, please contact Turtle84375 via wasteof.money for more information.' }); // password is incorrect
+        return;
+      }
     }
     //Otherwise...
     try {
@@ -42,6 +52,6 @@ export default withIronSessionApiRoute(async (req, res) => {
       res.status(500).json({ message: error.message });
     }
   } else {
-    res.status(405).json({ message: "method not allowed" });
+    res.status(405).json({ message: "Method not allowed" });
   }
 }, sessionOptions);
