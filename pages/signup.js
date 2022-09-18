@@ -16,6 +16,7 @@ export default function Signup() {
   return (
     <Layout>
       <div className="signup">
+        <h2>Sign Up:</h2>
         <SignupForm
           errorMessage={errorMsg}
           onSubmit={async function handleSubmit(event) {
