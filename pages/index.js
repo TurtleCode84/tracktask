@@ -1,7 +1,18 @@
 import Layout from "components/Layout";
+import Loading from "components/Loading";
 import Image from "next/image";
+import useUser from "lib/useUser";
 
 export default function Home() {
+  const { user } = useUser({
+    redirectTo: "/dashboard",
+    redirectIfFound: true,
+  });
+  if (user || user.isLoggedIn) {
+    return (
+      <Loading/>
+    );
+  }
   return (
     <Layout>
       <h1>
