@@ -21,7 +21,7 @@ async function tasksRoute(req, res) {
   }
 
   try {
-    const tasks = await db.collection("tasks").find(query, options);
+    const tasks = await db.collection("tasks").find(query, options).toArray();
     res.json(tasks);
   } catch (error) {
     res.status(200).json([]);
