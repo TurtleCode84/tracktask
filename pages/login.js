@@ -16,6 +16,8 @@ export default function Login() {
   return (
     <Layout>
       <div className="login">
+        <h2>Login:</h2>
+        <hr>
         <LoginForm
           errorMessage={errorMsg}
           onSubmit={async function handleSubmit(event) {
