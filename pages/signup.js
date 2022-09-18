@@ -52,9 +52,9 @@ export default function Signup() {
             }
           }}
         />
-        <p>Already have an account?
+        <p>Already have an account?{' '}
         <Link href="/signup">
-          <a> Login!</a>
+          <a>Login!</a>
         </Link>
         </p>
       </div>
