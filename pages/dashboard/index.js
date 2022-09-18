@@ -12,7 +12,7 @@ export default function Dashboard() {
   const { tasks } = useTasks(user);
   const taskList = tasks?.map((task) =>
     <li key={task._id}>
-      {task.name}
+      {task.name} - {task.description} (due {task.dueDate})
     </li>
   );
   
@@ -36,7 +36,7 @@ export default function Dashboard() {
       <pre>{JSON.stringify(user, null, 2)}</pre>
 
       <h2>Your tasks:</h2>
-      {taskList.length > 0 ?
+      {taskList !== [] ?
       <>
       <ul>
         {taskList}
