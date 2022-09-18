@@ -11,7 +11,7 @@ export default function Banned() {
   
   if (!user || !user.isLoggedIn || !user.permissions.banned) {
     return (
-      <Loading></Loading>
+      <Loading/>
     );
   }
   return (
