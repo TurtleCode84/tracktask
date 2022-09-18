@@ -8,7 +8,7 @@ export default function Home() {
     redirectTo: "/dashboard",
     redirectIfFound: true,
   });
-  if (user || user.isLoggedIn) {
+  if (!user || user.isLoggedIn) {
     return (
       <Loading/>
     );
