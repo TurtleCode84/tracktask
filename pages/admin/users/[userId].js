@@ -2,6 +2,7 @@ import React from "react";
 import Layout from "components/Layout";
 import useUser from "lib/useUser";
 import { useRouter } from 'next/router'
+import { ObjectId } from 'mongodb'
 
 export default function Admin() {
   const { user, mutateUser } = useUser({
@@ -27,16 +28,15 @@ export default function Admin() {
       <p style={{ fontStyle: "italic" }}>
         Luckily, there&apos;s not much here yet.
       </p>
-      <p>You&apos;re at the admin page for user {userId}.</p>
-    {/*{user && (
-        <>
-          <p style={{ fontStyle: "italic" }}>
-            Your user info, pulled from the TrackTask API.
-          </p>
-
-          <pre>{JSON.stringify(user, null, 2)}</pre>
-        </>
-      )}*/}
+      {ObjectId.isValid(userId) ?
+      <>
+        <p>You&apos;re at the admin page for user {userId}.</p>
+      </>
+      :
+      <>
+        <p>Invalid user ID</p>
+      </>
+      }
     </Layout>
   );
 }
