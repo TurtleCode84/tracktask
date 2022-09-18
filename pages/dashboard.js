@@ -30,16 +30,11 @@ export default function Dashboard() {
 
       <pre>{JSON.stringify(user, null, 2)}</pre>
 
-      {tasks !== undefined && (
-        <p>
-          Number of tasks: <b>{tasks.length}</b>.{" "}
-          {tasks.length > 0 && (
-            <>
-              A task: <b>{tasks[0]}</b>
-            </>
-          )}
-        </p>
-      )}
+      <h2>Your tasks:</h2>
+      {/*list tasks*/}
+      {tasks.map(task => (
+      <p>{task.name}</p>
+      ))}
     </Layout>
   );
 }
