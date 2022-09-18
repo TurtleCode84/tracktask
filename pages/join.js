@@ -5,7 +5,7 @@ import SignupForm from "components/SignupForm";
 import Link from "next/link";
 import fetchJson, { FetchError } from "lib/fetchJson";
 
-export default function Signup() {
+export default function Join() {
   // here we just check if user is already logged in and redirect to dashboard
   const { mutateUser } = useUser({
     redirectTo: "/dashboard",
