@@ -6,7 +6,7 @@ export default function DueDate({ timestamp }) {
       <>never</>
     );
   }
-  const delta = timestamp - Date.now();
+  const delta = timestamp - Math.floor(Date.now()/1000);
   switch (delta >= 0) {
     case true:
       if (delta < 60) { //seconds
