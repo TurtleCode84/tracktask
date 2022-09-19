@@ -1,7 +1,13 @@
 import moment from "moment";
 
 export default function DueDate({ timestamp }) {
-  return (
-    <>{moment.unix(timestamp).fromNow()}</>
-  );
+  if (timestamp === 0) {
+    return (
+      <>never</>
+    );
+  } else {
+    return (
+      <>{moment.unix(timestamp).fromNow()}</>
+    );
+  }
 }
