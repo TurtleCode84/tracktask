@@ -3,7 +3,7 @@ import Layout from "components/Layout";
 export default function DueDate({ timestamp }) {
   if (timestamp === 0) {
     return (
-      'never'
+      <>never</>
     );
   }
   const delta = timestamp - Date.now();
@@ -23,7 +23,7 @@ export default function DueDate({ timestamp }) {
         );
       } else if (delta < 2635200) { //days
         return (
-          'in {delta/86400} days</>
+          <>in {delta/86400} days</>
         );
       } else if (delta < 31622400) { //months (approx 30.5 days)
         return (
