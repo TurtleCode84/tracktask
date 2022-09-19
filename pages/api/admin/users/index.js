@@ -3,7 +3,7 @@ import { sessionOptions } from "lib/session";
 import { ObjectId } from 'mongodb'
 import clientPromise from "lib/mongodb";
 
-export default withIronSessionApiRoute(tasksRoute, sessionOptions);
+export default withIronSessionApiRoute(adminUserRoute, sessionOptions);
 
 async function adminUserRoute(req, res) {
   if (req.method === 'POST') {
@@ -16,7 +16,7 @@ async function adminUserRoute(req, res) {
     
     const client = await clientPromise;
     const db = client.db("data");
-    const query = { _id: uid };
+    const query = { _id: ObjectId(uid) };
   
     try {
       const userInfo = await db.collection("users").findOne(query);
