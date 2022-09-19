@@ -48,35 +48,35 @@ export default function DueDate({ timestamp }) {
     }
     break;
     case false:
-    if (delta < -60) { //seconds
+    if (delta > -60) { //seconds
       return (
         '{delta} seconds ago'
       );
-    } else if (delta < -3600) { //minutes
+    } else if (delta > -3600) { //minutes
       return (
         '{delta/60} minutes ago'
       );
-    } else if (delta < -86400) { //hours
+    } else if (delta > -86400) { //hours
       return (
         '{delta/3600} hours ago'
       );
-    } else if (delta < -2635200) { //days
+    } else if (delta > -2635200) { //days
       return (
         '{delta/86400} days ago'
       );
-    } else if (delta < -31622400) { //months (approx 30.5 days)
+    } else if (delta > -31622400) { //months (approx 30.5 days)
       return (
         '{delta/2635200} months ago'
       );
-    } else if (delta < -316224000) { //years
+    } else if (delta > -316224000) { //years
       return (
         '{delta/31622400} years ago'
       );
-    } else if (delta < -3162240000) { //decades
+    } else if (delta > -3162240000) { //decades
       return (
         '{delta/31622400} decades ago'
       );
-    } else if (delta < 31622400000) { //centuries
+    } else if (delta > -31622400000) { //centuries
       return (
         '{delta/3162240000} centuries ago'
       );
