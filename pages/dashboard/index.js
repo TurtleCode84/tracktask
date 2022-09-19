@@ -38,7 +38,7 @@ export default function Dashboard() {
       </h1>
 
       <h2>Your tasks:</h2>
-      {taskList === undefined && taskList.length === 0 ?
+      {taskList === undefined || taskList.length === 0 ?
       <>
       <p style={{ fontStyle: "italic" }}>
         Looks like you have no tasks!
