@@ -33,7 +33,7 @@ export default function DueDate({ timestamp }) {
         return (
           <>in {Math.floor(delta/31622400)} years</>
         );
-      } else if (delta < 3162240000)) { //decades
+      } else if (delta < 3162240000) { //decades
         return (
           <>in {Math.floor(delta/31622400)} decades</>
         );
