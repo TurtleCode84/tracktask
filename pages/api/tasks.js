@@ -16,7 +16,7 @@ async function tasksRoute(req, res) {
   const db = client.db("data");
   const query = { owner: ObjectId(user.id), hidden: false };
   const options = {
-    sort: { dueDate: 1, $not: { dueDate: 0 }, priority: 1 },
+    sort: { dueDate: 1, priority: 1 },
     projection: { name: 1, description: 1, dueDate: 1, owner: 1, completion: 1, priority: 1 },
   };
 
