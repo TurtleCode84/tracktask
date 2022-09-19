@@ -16,7 +16,7 @@ export default function Banned() {
   }
   return (
     <Layout>
-      <h1>Account Banned:</h1>
+      <h1>&#10060; Account Banned:</h1>
       <h2>
         Your TrackTask account was banned by an administrator.
       </h2>
