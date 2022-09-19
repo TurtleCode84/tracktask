@@ -3,7 +3,7 @@ import Layout from "components/Layout";
 export default function DueDate({ timestamp }) {
   if (timestamp === 0) {
     return (
-      never
+      'never'
     );
   }
   const delta = timestamp - Date.now();
