@@ -20,7 +20,6 @@
     "moment": "^2.29.4",
     "uuid": "^9.0.0",
     "iron-session": "^6.2.0",
-    "octokit": "^2.0.7"
   },
   "devDependencies": {
     "eslint": "8.23.1",
