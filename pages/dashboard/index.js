@@ -14,7 +14,7 @@ export default function Dashboard() {
   const { tasks } = useTasks(user);
   const taskList = tasks?.map((task) =>
     <li key={task._id}>
-      {task.name} - {task.description} (due <DueDate timestamp={task.dueDate}/>, on {moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a")})
+      {task.name} - {task.description} (due <DueDate timestamp={task.dueDate}/>{task.dueDate !== 0 ? <>, on {moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a")})</> : null}
     </li>
   );
   
