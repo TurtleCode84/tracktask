@@ -16,7 +16,7 @@ export default function Admin() {
   }
   return (
     <Layout>
-      <h1>TrackTask Admin Panel</h1>
+      <h1>TrackTask Admin Panel &#128737;</h1>
       <h2>
         You shouldn&apos;t be here...
       </h2>
