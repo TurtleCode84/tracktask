@@ -12,8 +12,9 @@ export default function Dashboard() {
   });
   const { tasks } = useTasks(user);
   const taskList = tasks?.map((task) =>
+    {const dueString = new Date(task.dueDate * 1000)}
     <li key={task._id}>
-      {task.name} - {task.description} (due <DueDate timestamp={task.dueDate}/>, {Date(task.dueDate * 1000).toLocaleString()})
+      {task.name} - {task.description} (due <DueDate timestamp={task.dueDate}/>, {dueString.toLocaleString()})
     </li>
   );
   
