@@ -14,7 +14,7 @@ export default function Dashboard() {
   const { tasks } = useTasks(user);
   const taskList = tasks?.map((task) =>
     <li key={task._id}>
-      {task.name} - {task.description} (due <DueDate timestamp={task.dueDate}/>{task.dueDate !== 0 ? <>, on {moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}</> : null})
+      {task.priority ? <><b>&#10071;</> : null}{task.name} - {task.description}{task.priority ? <></b></> : null} (due <DueDate timestamp={task.dueDate}/>{task.dueDate !== 0 ? <>, on {moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}</> : null})
     </li>
   );
   
@@ -38,7 +38,7 @@ export default function Dashboard() {
       </h1>
 
       <h2>Your tasks:</h2>
-      {taskList === undefined || taskList.length === 0 ?
+      {taskList === undefined && taskList.length === 0 ?
       <>
       <p style={{ fontStyle: "italic" }}>
         Looks like you have no tasks!
