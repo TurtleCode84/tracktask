@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
 import DueDate from "components/DueDate";
@@ -13,7 +14,7 @@ export default function Dashboard() {
   const { tasks } = useTasks(user);
   const taskList = tasks?.map((task) =>
     <li key={task._id}>
-      {task.name} - {task.description} (due <DueDate timestamp={task.dueDate}/>, {new Date(task.dueDate * 1000).toLocaleString()})
+      {task.name} - {task.description} (due <DueDate timestamp={task.dueDate}/>, {moment(task.dueDate).format()})
     </li>
   );
   
