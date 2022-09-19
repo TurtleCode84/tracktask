@@ -55,12 +55,6 @@ export default function Dashboard() {
       <p style={{ fontStyle: "italic" }}>
         Coming soon...
       </p>
-      <hr/>
-      <p style={{ fontStyle: "italic" }}>
-        Your user info, pulled from the TrackTask API.
-      </p>
-
-      <pre>{JSON.stringify(user, null, 2)}</pre>
     </Layout>
   );
 }
