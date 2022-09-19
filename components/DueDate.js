@@ -25,15 +25,15 @@ export default function DueDate({ timestamp }) {
       return (
         'in {delta/86400} days'
       );
-    } else if (delta < 31622400 { //months (approx 30.5 days)
+    } else if (delta < 31622400) { //months (approx 30.5 days)
       return (
         'in {delta/2635200} months'
       );
-    } else if (delta < 316224000 { //years
+    } else if (delta < 316224000) { //years
       return (
         'in {delta/31622400} years'
       );
-    } else if (delta < 3162240000 { //decades
+    } else if (delta < 3162240000) { //decades
       return (
         'in {delta/31622400} decades'
       );
@@ -64,15 +64,15 @@ export default function DueDate({ timestamp }) {
       return (
         '{delta/86400} days ago'
       );
-    } else if (delta < -31622400 { //months (approx 30.5 days)
+    } else if (delta < -31622400) { //months (approx 30.5 days)
       return (
         '{delta/2635200} months ago'
       );
-    } else if (delta < -316224000 { //years
+    } else if (delta < -316224000) { //years
       return (
         '{delta/31622400} years ago'
       );
-    } else if (delta < -3162240000 { //decades
+    } else if (delta < -3162240000) { //decades
       return (
         '{delta/31622400} decades ago'
       );
