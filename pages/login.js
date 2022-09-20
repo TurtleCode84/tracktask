@@ -23,29 +23,33 @@ export default function Login() {
           errorMessage={errorMsg}
           onSubmit={async function handleSubmit(event) {
             event.preventDefault();
-
-            const body = {
-              username: event.currentTarget.username.value,
-              password: event.currentTarget.password.value,
-              token: event.currentTarget.token,
-            };
-
-            try {
-              mutateUser(
-                await fetchJson("/api/login", {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify(body),
-                }),
-                false,
-              );
-            } catch (error) {
-              if (error instanceof FetchError) {
-                setErrorMsg(error.data.message);
-              } else {
-                console.error("An unexpected error happened:", error);
-              }
-            }
+            grecaptcha.ready(function() {
+              grecaptcha.execute('6LdQjxQiAAAAAJzWoXdUgeI3nsSxzDtG5Z7njbFe', {action: 'submit'}).then(function(token) {
+                // Add your logic to submit to your backend server here.
+                const body = {
+                  username: event.currentTarget.username.value,
+                  password: event.currentTarget.password.value,
+                  recaptcha_token: token,
+                };
+              
+                try {
+                  mutateUser(
+                    await fetchJson("/api/login", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify(body),
+                    }),
+                    false,
+                  );
+                } catch (error) {
+                  if (error instanceof FetchError) {
+                    setErrorMsg(error.data.message);
+                  } else {
+                    console.error("An unexpected error happened:", error);
+                  }
+                }
+              });
+            });
           }}
         />
         <p>Don&apos;t have an account?{' '}
