@@ -27,6 +27,7 @@ export default function Login() {
             const body = {
               username: event.currentTarget.username.value,
               password: event.currentTarget.password.value,
+              token: event.currentTarget.token.value,
             };
 
             try {
