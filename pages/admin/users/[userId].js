@@ -31,10 +31,10 @@ export default function UserAdmin() {
       <><p>User ID: {lookup._id}</p>
       <p>Username: {lookup.username}</p>
       <p>Email: <Link href={`mailto:${lookup.email}`}>{lookup.email}</Link></p>
-      <p title={moment.unix(lookup.joined).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Joined: {moment.unix(lookup.joined).fromNow()}</p>
-      {/*<p>Join IP address: <Link title="Lookup IP address" href={`https://whatismyipaddress.com/ip/${lookup.joinedIp}`}>{lookup.joinedIp}</Link></p>
-      <p title={moment.unix(lookup.lastLogin).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Last login: {moment.unix(lookup.lastLogin).fromNow()}</p>*/}
-      <p>Admin notes: {lookup.notes}</p></>
+      <p title={moment.unix(lookup.history.joined).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Joined: {moment.unix(lookup.history.joined).fromNow()}</p>
+      <p>Join IP address: <Link title="Lookup IP address" href={`https://whatismyipaddress.com/ip/${lookup.history.joinedIp}`}>{lookup.history.joinedIp}</Link></p>
+      <p title={moment.unix(lookup.history.lastLogin).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Last login: {moment.unix(lookup.history.lastLogin).fromNow()}</p>
+      <p>Admin notes: {lookup.history.notes}</p></>
       :
       <p style={{ fontStyle: "italic" }}>Loading user info...</p>
       }
