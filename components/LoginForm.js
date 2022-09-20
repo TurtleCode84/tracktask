@@ -1,6 +1,9 @@
+import Script from 'next/script;
+
 export default function LoginForm({ errorMessage, onSubmit }) {
   return (
-    <form onSubmit={onSubmit}>
+    <Script src={siteKey} />
+    <form onSubmit="https://www.google.com/recaptcha/api.js">
       <label>
         <span>Username</span>
         <input type="text" name="username" required />
@@ -10,7 +13,7 @@ export default function LoginForm({ errorMessage, onSubmit }) {
         <input type="password" name="password" required />
       </label>
 
-      <button type="submit">Login</button>
+      <button class="g-recaptcha" data-sitekey="6LdQjxQiAAAAAJzWoXdUgeI3nsSxzDtG5Z7njbFe" data-callback='onSubmit' data-action='submit'>Login</button>
 
       {errorMessage && <p className="error">{errorMessage}</p>}
 
