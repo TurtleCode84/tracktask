@@ -6,14 +6,14 @@ import clientPromise from "lib/mongodb";
 export default withIronSessionApiRoute(adminUserRoute, sessionOptions);
 
 async function adminUserRoute(req, res) {
-  if (req.method === 'POST') {
-    const { uid } = await req.body;
+  if (req.method === 'GET') {
     const user = req.session.user;
     if (!user || !user.isLoggedIn || !user.permissions.admin ) {
       res.status(401).json({ message: "Unauthorized" });
       return;
     }
     
+    const { uid } = req.query.uid;
     const client = await clientPromise;
     const db = client.db("data");
     const query = { _id: ObjectId(uid) };
