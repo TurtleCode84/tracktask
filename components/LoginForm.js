@@ -13,7 +13,7 @@ export default function LoginForm({ errorMessage, onSubmit }) {
         <input type="password" name="password" required />
       </label>
 
-      <button class="g-recaptcha" data-sitekey="6LdQjxQiAAAAAJzWoXdUgeI3nsSxzDtG5Z7njbFe" data-callback='onSubmit' data-action='submit'>Login</button>
+      <button class="g-recaptcha" data-sitekey="6LdQjxQiAAAAAJzWoXdUgeI3nsSxzDtG5Z7njbFe" data-callback='onSubmit' data-action='submit' type='submit'>Login</button>
 
       {errorMessage && <p className="error">{errorMessage}</p>}
 
