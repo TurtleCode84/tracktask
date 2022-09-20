@@ -3,7 +3,7 @@ import Layout from "components/Layout";
 import Loading from "components/Loading";
 import useUser from "lib/useUser";
 
-export default function Admin() {
+export default function UsersAdmin() {
   const { user, mutateUser } = useUser({
     redirectTo: "/dashboard",
     adminOnly: true,
