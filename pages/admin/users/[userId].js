@@ -4,6 +4,8 @@ import Loading from "components/Loading";
 import useUser from "lib/useUser";
 import useAdminUser from "lib/useAdminUser";
 import { useRouter } from 'next/router'
+import moment from "moment";
+import Link from "next/link";
 
 export default function Admin() {
   const { user, mutateUser } = useUser({
@@ -12,7 +14,7 @@ export default function Admin() {
   });
   const router = useRouter()
   const { userId } = router.query
-  const { getUser } = useAdminUser(user, userId);
+  const { lookup } = useAdminUser(user, userId);
 
   if (!user || !user.isLoggedIn || !user.permissions.admin) {
     return (
@@ -21,14 +23,17 @@ export default function Admin() {
   }
   return (
     <Layout>
-      <h1>TrackTask User Admin</h1>
+      <h1>TrackTask User Admin &#128737;</h1>
       <h2>
-        You shouldn&apos;t be here either...
+        Viewing information for {lookup.username}:
       </h2>
-      <p style={{ fontStyle: "italic" }}>
-        Luckily, there&apos;s not much here yet.
-      </p>
-      <p>You&apos;re at the admin page for user {userId}.</p>
+      <p>User ID: {lookup._id}</p>
+      <p>Username: {lookup.user}</p>
+      <p>Email: <Link href={"mailto:" + lookup.email}>{lookup.email}</Link></p>
+      <p title={moment.unix(lookup.joined).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Joined: {moment.unix(lookup.joined).fromNow()}</p>
+      <p>Join IP address: <Link title="Lookup IP address" href={"https://whatismyipaddress.com/ip/" + lookup.joinedIp}>{lookup.joinedIp}</Link></p>
+      <p title={moment.unix(lookup.lastLogin).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Last login: {moment.unix(lookup.lastLogin).fromNow()}</p>
+      <p>Admin notes: {lookup.notes}</p>
       <pre>{JSON.stringify(getUser, null, 2)}</pre>
     </Layout>
   );
