@@ -24,7 +24,7 @@ export default function Login() {
           onSubmit={async function handleSubmit(event) {
             event.preventDefault();
             grecaptcha.ready(function() {
-              grecaptcha.execute('6LdQjxQiAAAAAJzWoXdUgeI3nsSxzDtG5Z7njbFe', {action: 'submit'}).then(function(token) {
+              grecaptcha.execute('6LdQjxQiAAAAAJzWoXdUgeI3nsSxzDtG5Z7njbFe', {action: 'submit'}).then(async function(token) {
                 // Add your logic to submit to your backend server here.
                 const body = {
                   username: event.currentTarget.username.value,
