@@ -2,6 +2,7 @@ import React from "react";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
 import useUser from "lib/useUser";
+import useAdminUser from "lib/useAdminUser";
 import { useRouter } from 'next/router'
 
 export default function Admin() {
