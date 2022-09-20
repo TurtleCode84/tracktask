@@ -3,7 +3,6 @@ import Layout from "components/Layout";
 import Loading from "components/Loading";
 import useUser from "lib/useUser";
 import { useRouter } from 'next/router'
-import useSWR from "swr";
 
 export default function Admin() {
   const { user, mutateUser } = useUser({
@@ -12,8 +11,7 @@ export default function Admin() {
   });
   const router = useRouter()
   const { userId } = router.query
-  const swrUrl = "/api/admin/users/" + userId;
-  const { getUser } = useSWR(swrUrl);
+  const { getUser } = useAdminUser(user, userId);
 
   if (!user || !user.isLoggedIn || !user.permissions.admin) {
     return (
