@@ -12,7 +12,7 @@ export default function Admin() {
   });
   const router = useRouter()
   const { userId } = router.query
-  const { getUser } = useSWR(`/api/admin/users?uid={userId}`);
+  const { getUser } = useSWR("/api/admin/users?uid=`{userId}`");
 
   if (!user || !user.isLoggedIn || !user.permissions.admin) {
     return (
