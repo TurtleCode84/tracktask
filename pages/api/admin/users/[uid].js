@@ -13,9 +13,10 @@ async function adminUserRoute(req, res) {
       return;
     }
     
+    const { uid } = req.query
     const client = await clientPromise;
     const db = client.db("data");
-    const query = { _id: ObjectId(userId) };
+    const query = { _id: ObjectId(uid) };
   
     try {
       const getUser = await db.collection("users").findOne(query);
