@@ -1,5 +1,8 @@
+import Script from 'next/script';
+
 export default function LoginForm({ errorMessage, onSubmit }) {
   return (
+    <><Script src="https://www.google.com/recaptcha/api.js" />
     <form onSubmit={onSubmit}>
       <label>
         <span>Username</span>
@@ -34,6 +37,6 @@ export default function LoginForm({ errorMessage, onSubmit }) {
           margin: 1rem 0 0;
         }
       `}</style>
-    </form>
+    </form></>
   );
 }
