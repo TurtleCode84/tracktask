@@ -3,6 +3,7 @@ import Layout from "components/Layout";
 import Loading from "components/Loading";
 import useUser from "lib/useUser";
 import { useRouter } from 'next/router'
+import useSWR from "swr";
 
 export default function Admin() {
   const { user, mutateUser } = useUser({
@@ -11,6 +12,7 @@ export default function Admin() {
   });
   const router = useRouter()
   const { userId } = router.query
+  const { data: getUser, uid: userId } = useSWR("/api/admin/users");
 
   if (!user || !user.isLoggedIn || !user.permissions.admin) {
     return (
@@ -27,6 +29,7 @@ export default function Admin() {
         Luckily, there&apos;s not much here yet.
       </p>
       <p>You&apos;re at the admin page for user {userId}.</p>
+      <pre>{JSON.stringify(getUser, null, 2)}</pre>
     </Layout>
   );
 }
