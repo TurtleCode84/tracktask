@@ -4,7 +4,6 @@ import Layout from "components/Layout";
 import LoginForm from "components/LoginForm";
 import Link from "next/link";
 import fetchJson, { FetchError } from "lib/fetchJson";
-import Script from 'next/script';
 
 export default function Login() {
   // here we just check if user is already logged in and redirect to dashboard
@@ -16,7 +15,6 @@ export default function Login() {
   const [errorMsg, setErrorMsg] = useState("");
 
   return (
-    <Script src="https://www.google.com/recaptcha/api.js" />
     <Layout>
       <div className="login">
         <h2>Log in:</h2>
