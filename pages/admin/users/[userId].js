@@ -25,15 +25,19 @@ export default function UserAdmin() {
     <Layout>
       <h1>TrackTask User Admin &#128737;</h1>
       <h2>
-        Viewing information for {lookup.username}:
+        Viewing information for {lookup ? lookup.username : userId}:
       </h2>
-      <p>User ID: {lookup._id}</p>
+      {lookup ?
+      <><p>User ID: {lookup._id}</p>
       <p>Username: {lookup.user}</p>
       <p>Email: <Link href={`mailto:${lookup.email}`}>{lookup.email}</Link></p>
       <p title={moment.unix(lookup.joined).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Joined: {moment.unix(lookup.joined).fromNow()}</p>
       <p>Join IP address: <Link title="Lookup IP address" href={`https://whatismyipaddress.com/ip/${lookup.joinedIp}`}>{lookup.joinedIp}</Link></p>
       <p title={moment.unix(lookup.lastLogin).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Last login: {moment.unix(lookup.lastLogin).fromNow()}</p>
-      <p>Admin notes: {lookup.notes}</p>
+      <p>Admin notes: {lookup.notes}</p></>
+      :
+      <p style={{ fontStyle: "italic" }}>Loading user info...</p>
+      }
       <pre>{JSON.stringify(lookup, null, 2)}</pre>
     </Layout>
   );
