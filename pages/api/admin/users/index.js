@@ -13,7 +13,7 @@ async function adminUserRoute(req, res) {
       return;
     }
     
-    const { uid } = req.query.uid;
+    const uid = req.query.uid;
     const client = await clientPromise;
     const db = client.db("data");
     const query = { _id: ObjectId(uid) };
