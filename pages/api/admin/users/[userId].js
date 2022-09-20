@@ -3,6 +3,7 @@ import { sessionOptions } from "lib/session";
 import { ObjectId } from 'mongodb'
 import clientPromise from "lib/mongodb";
 import { useRouter } from 'next/router'
+const router = useRouter()
 
 export default withIronSessionApiRoute(adminUserRoute, sessionOptions);
 
@@ -14,7 +15,6 @@ async function adminUserRoute(req, res) {
       return;
     }
     
-    const router = useRouter()
     const { uid } = router.query
     const client = await clientPromise;
     const db = client.db("data");
