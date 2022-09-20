@@ -1,5 +1,3 @@
-import Script from 'next/script';
-
 export default function LoginForm({ errorMessage, onSubmit }) {
   return (
     <form onSubmit={onSubmit}>
