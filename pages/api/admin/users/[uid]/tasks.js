@@ -13,7 +13,7 @@ async function adminTaskRoute(req, res) {
       return;
     }
     
-    const { uid } = req.query.uid
+    const { uid } = req.query
     if (!ObjectId.isValid(uid)) {
       res.status(422).json({ message: "Invalid user ID" });
       return;
