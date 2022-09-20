@@ -21,13 +21,13 @@ export default function Login() {
         <hr/><br/>
         <LoginForm
           errorMessage={errorMsg}
-          onSubmit={async function handleSubmit(event, token) {
+          onSubmit={async function handleSubmit(event) {
             event.preventDefault();
 
             const body = {
               username: event.currentTarget.username.value,
               password: event.currentTarget.password.value,
-              token: token,
+              token: event.currentTarget.token,
             };
 
             try {
