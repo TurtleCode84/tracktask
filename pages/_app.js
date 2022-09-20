@@ -1,5 +1,6 @@
 import { SWRConfig } from "swr";
 import fetchJson from "lib/fetchJson";
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 
 function MyApp({ Component, pageProps }) {
   return (
