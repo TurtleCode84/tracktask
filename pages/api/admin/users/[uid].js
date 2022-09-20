@@ -14,6 +14,10 @@ async function adminUserRoute(req, res) {
     }
     
     const { uid } = req.query
+    if (!ObjectId(uid).isValid()) {
+      res.status(422).json({ message: "Invalid user ID" });
+      return;
+    }
     const client = await clientPromise;
     const db = client.db("data");
     const query = { _id: ObjectId(uid) };
