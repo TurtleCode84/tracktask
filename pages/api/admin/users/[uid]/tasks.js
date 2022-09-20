@@ -23,7 +23,7 @@ async function adminTaskRoute(req, res) {
     const query = { owner: ObjectId(uid) };
   
     try {
-      const getTasks = await db.collection("tasks").find(query);
+      const getTasks = await db.collection("tasks").find(query).toArray();
       res.json(getTasks);
     } catch (error) {
       res.status(200).json([]);
