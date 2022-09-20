@@ -19,8 +19,8 @@ async function adminUserRoute(req, res) {
     const query = { _id: ObjectId(uid) };
   
     try {
-      const userInfo = await db.collection("users").findOne(query);
-      res.json(userInfo);
+      const getUser = await db.collection("users").findOne(query);
+      res.json(getUser);
     } catch (error) {
       res.status(200).json([]);
     }
