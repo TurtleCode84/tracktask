@@ -2,8 +2,8 @@ import Script from 'next/script;
 
 export default function LoginForm({ errorMessage, onSubmit }) {
   return (
-    <Script src={siteKey} />
-    <form onSubmit="https://www.google.com/recaptcha/api.js">
+    <Script src="https://www.google.com/recaptcha/api.js" />
+    <form onSubmit={onSubmit}>
       <label>
         <span>Username</span>
         <input type="text" name="username" required />
