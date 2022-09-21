@@ -5,7 +5,7 @@ import useUser from "lib/useUser";
 import useAdminUser from "lib/useAdminUser";
 import { useRouter } from 'next/router';
 import moment from "moment";
-import Link from "next/link"; {/* remove? */}
+import Link from "next/link";
 import Image from "next/image";
 
 export default function UserAdmin() {
@@ -38,6 +38,7 @@ export default function UserAdmin() {
       <h2>
         Viewing information for {lookup ? lookup.username : userId}:
       </h2>
+      <Link href="/admin/users">Back to user search</Link><br/>
       {lookup ?
       <><p>User ID: {lookup._id}</p>
       <p>Username: {lookup.username}</p>
