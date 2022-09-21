@@ -12,15 +12,22 @@ export default function UserAdmin() {
     redirectTo: "/dashboard",
     adminOnly: true,
   });
-  const router = useRouter();
-  const { userId } = router.query;
-  const { lookup } = useAdminUser(user, userId);
 
   if (!user || !user.isLoggedIn || !user.permissions.admin) {
     return (
       <Loading/>
     );
   }
+  
+  const router = useRouter();
+  const { userId } = router.query;
+  const { lookup } = useAdminUser(user, userId);
+  const ipList = lookup.history.loginIpList?.map((ip, index) =>
+    <li key={index}>
+      {ip}
+    </li>
+  );
+  
   return (
     <Layout>
       <h1>TrackTask User Admin &#128737;</h1>
@@ -33,6 +40,11 @@ export default function UserAdmin() {
       <p>Email: <Link href={`mailto:${lookup.email}`}>{lookup.email}</Link></p>
       <p title={moment.unix(lookup.history.joined).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Joined: {moment.unix(lookup.history.joined).fromNow()}</p>
       <p>Join IP address: <Link title="Lookup IP address" href={`https://whatismyipaddress.com/ip/${lookup.history.joinedIp}`}>{lookup.history.joinedIp}</Link></p>
+      <details>
+        <summary>Last 5 IP addresses</summary>
+        <p style={{ fontStyle: "italic" }}>(Oldest to newest)</p>
+        <ul>{ipList}</ul>
+       </details>
       <p title={moment.unix(lookup.history.lastLogin).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Last login: {moment.unix(lookup.history.lastLogin).fromNow()}</p>
       <p>Admin notes: {lookup.history.notes}</p></>
       :
