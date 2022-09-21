@@ -54,7 +54,7 @@ export default function UsersAdmin() {
             }
           }}
       />
-      <Link href="/admin/users">Back to search</Link>
+      <Link href="/admin">Back to admin dashboard</Link>
     </Layout>
   );
 }
