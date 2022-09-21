@@ -55,9 +55,9 @@ export default function UserAdmin() {
        </details>
       <p title={moment.unix(lookup.history.lastLogin).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Last login: {moment.unix(lookup.history.lastLogin).fromNow()}</p>
       <p>Admin notes: {lookup.history.notes}</p>
-      <p>Is admin: {lookup.permissions.admin ? `${&#9989;}` : `${&#10060;}`}</p>
-      <p>Is verified: {lookup.permissions.verified ? `${&#9989;}` : `${&#10060;}`}</p>
-      <p>Is banned: {lookup.permissions.banned ? `${&#9989;}` : `${&#10060;}`}</p>
+      <p>Is admin: {lookup.permissions.admin ? <>&#9989;</> : <>&#10060;</>}</p>
+      <p>Is verified: {lookup.permissions.verified ? <>&#9989;</> : <>&#10060;</>}</p>
+      <p>Is banned: {lookup.permissions.banned ? <>&#9989;</> : <>&#10060;</>}</p>
       <p>Last ban reason: {lookup.history.banReason ? lookup.history.banReason : 'none'}</p></>
       :
       <p style={{ fontStyle: "italic" }}>Loading user info...</p>
