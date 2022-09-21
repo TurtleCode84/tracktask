@@ -7,7 +7,7 @@ export default withIronSessionApiRoute(adminUserSearchRoute, sessionOptions);
 
 async function adminUserSearchRoute(req, res) {
   if (req.method === 'POST') {
-    const { usernameuid: usernameuid.trim().toLowerCase(), query } = await req.body;
+    const { usernameuid, query } = await req.body;
     const user = req.session.user;
     
     if (!user || !user.isLoggedIn || !user.permissions.admin ) {
@@ -19,13 +19,13 @@ async function adminUserSearchRoute(req, res) {
     const db = client.db("data");
     var dbQuery;
     if (query === "username") {
-      dbQuery = { username: usernameuid };
+      dbQuery = { username: usernameuid.trim().toLowerCase() };
     } else if (query === "uid") { // simple validation
       if (!ObjectId.isValid(usernameuid)) {
         res.status(422).json({ message: "Invalid user ID" });
         return;
       }
-      const searchUser = { _id: usernameuid };
+      const searchUser = { _id: usernameuid.trim().toLowerCase() };
       res.json(searchUser);
     } else {
       res.status(422).json({ message: "Invalid search query" });
