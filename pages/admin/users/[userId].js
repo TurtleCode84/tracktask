@@ -51,7 +51,7 @@ export default function UserAdmin() {
       <details>
         <summary>Last 5 IP addresses</summary>
         <p style={{ fontStyle: "italic" }}>(Newest to oldest)</p>
-        <ul>{ipList ? ipList : 'No IPs found'}</ul>
+        <ul>{ipList.length > 0 ? ipList : 'No IPs found'}</ul>
        </details>
       <p title={moment.unix(lookup.history.lastLogin).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Last login: {moment.unix(lookup.history.lastLogin).fromNow()}</p>
       <p>Admin notes: {lookup.history.notes}</p>
