@@ -8,8 +8,8 @@ export default function UserSearchForm({ errorMessage, onSubmit }) {
       <label>
         <span>Search by...</span>
         <select name="query" required>
-          <option value="username">Username<option/>
-          <option value="uid">User ID<option/>
+          <option value="username">Username</option>
+          <option value="uid">User ID</option>
         </select>
       </label>
 
