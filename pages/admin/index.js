@@ -2,6 +2,7 @@ import React from "react";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
 import useUser from "lib/useUser";
+import Link from "next/link";
 
 export default function Admin() {
   const { user, mutateUser } = useUser({
@@ -18,20 +19,20 @@ export default function Admin() {
     <Layout>
       <h1>TrackTask Admin Panel &#128737;</h1>
       <h2>
-        You shouldn&apos;t be here...
+        Welcome back{user ? `, ${user.username}` : null}!
       </h2>
-      <p style={{ fontStyle: "italic" }}>
-        Luckily, there&apos;s not much here yet.
-      </p>
-    {user && (
-        <>
-          <p style={{ fontStyle: "italic" }}>
-            Current user info, pulled from the TrackTask API.
-          </p>
-
-          <pre>{JSON.stringify(user, null, 2)}</pre>
-        </>
-      )}
+      <p>All admin pages:</p>
+      <ul>
+        <li><Link href="/users">User Admin</Link></li>
+      </ul>
+      <detail>
+        <summary>View my raw session info</summary>
+        {user && (
+          <>
+            <pre>{JSON.stringify(user, null, 2)}</pre>
+          </>
+        )}
+      </detail>
     </Layout>
   );
 }
