@@ -7,7 +7,7 @@ export default withIronSessionApiRoute(adminUserSearchRoute, sessionOptions);
 
 async function adminUserSearchRoute(req, res) {
   if (req.method === 'POST') {
-    const { usernameuid, query } = await req.body;
+    const { usernameuid: usernameuid.trim().toLowerCase(), query } = await req.body;
     const user = req.session.user;
     
     if (!user || !user.isLoggedIn || !user.permissions.admin ) {
