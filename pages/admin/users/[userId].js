@@ -28,7 +28,7 @@ export default function UserAdmin() {
   const sortedIpList = pureIpList?.reverse().slice(0, 6);
   const ipList = sortedIpList?.map((ip, index) =>
     <li key={index}>
-      <Link target="_blank" href={`https://whatismyipaddress.com/ip/${ip}`}>{ip}</Link>
+      <a href={`https://whatismyipaddress.com/ip/${ip}`} target="_blank" rel="noopener noreferrer">{ip}</a>
     </li>
   );
   
@@ -41,12 +41,12 @@ export default function UserAdmin() {
       {lookup ?
       <><p>User ID: {lookup._id}</p>
       <p>Username: {lookup.username}</p>
-      <p>Email: <a href={`mailto:${lookup.email}`} target="_blank">{lookup.email}</a></p>
+      <p>Email: <a href={`mailto:${lookup.email}`} target="_blank" rel="noopener noreferrer">{lookup.email}</a></p>
       <p>Password (hashed): <pre>{lookup.password}</pre></p>
       <p>Share key: {lookup.shareKey}</p>
-      <p>Profile picture: <Image src={lookup.profilePicture ? lookup.profilePicture : "/default-pfp.jpg" } width={32} height={32} alt=""/> (<a href={lookup.profilePicture} target="_blank">link</a>)</p>
+      <p>Profile picture: <Image src={lookup.profilePicture ? lookup.profilePicture : "/default-pfp.jpg" } width={32} height={32} alt=""/> (<a href={lookup.profilePicture} target="_blank" rel="noopener noreferrer">link</a>)</p>
       <p title={moment.unix(lookup.history.joined).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Joined: {moment.unix(lookup.history.joined).fromNow()}</p>
-      <p>Join IP address: <a href={`https://whatismyipaddress.com/ip/${lookup.history.joinedIp}`} target="_blank">{lookup.history.joinedIp}</a></p>
+      <p>Join IP address: <a href={`https://whatismyipaddress.com/ip/${lookup.history.joinedIp}`} target="_blank" rel="noopener noreferrer">{lookup.history.joinedIp}</a></p>
       <details>
         <summary>Last 5 IP addresses</summary>
         <p style={{ fontStyle: "italic" }}>(Newest to oldest)</p>
@@ -54,9 +54,9 @@ export default function UserAdmin() {
        </details>
       <p title={moment.unix(lookup.history.lastLogin).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Last login: {moment.unix(lookup.history.lastLogin).fromNow()}</p>
       <p>Admin notes: {lookup.history.notes}</p>
-      <p>Is admin: {lookup.permissions.admin}</p>
-      <p>Is verified: {lookup.permissions.verified}</p>
-      <p>Is banned: {lookup.permissions.banned}</p>
+      <p>Is admin: {lookup.permissions.admin ? 'true' : 'false'}</p>
+      <p>Is verified: {lookup.permissions.verified ? 'true' : 'false'}</p>
+      <p>Is banned: {lookup.permissions.banned ? 'true' : 'false'}</p>
       <p>Last ban reason: {lookup.history.banReason ? lookup.history.banReason : 'none'}</p></>
       :
       <p style={{ fontStyle: "italic" }}>Loading user info...</p>
