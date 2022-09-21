@@ -12,6 +12,10 @@ export default function UserAdmin() {
     redirectTo: "/dashboard",
     adminOnly: true,
   });
+  
+  const router = useRouter();
+  const { userId } = router.query;
+  const { lookup } = useAdminUser(user, userId);
 
   if (!user || !user.isLoggedIn || !user.permissions.admin) {
     return (
@@ -19,9 +23,6 @@ export default function UserAdmin() {
     );
   }
   
-  const router = useRouter();
-  const { userId } = router.query;
-  const { lookup } = useAdminUser(user, userId);
   const ipList = lookup.history.loginIpList?.map((ip, index) =>
     <li key={index}>
       {ip}
