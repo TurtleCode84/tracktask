@@ -44,7 +44,7 @@ export default function UsersAdmin() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body),
               })
-              router.push("https://youtube.com");
+              router.push(`/admin/users/${getUrl?._id}`);
             } catch (error) {
               if (error instanceof FetchError) {
                 setErrorMsg(error.data.message);
