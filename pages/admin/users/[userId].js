@@ -27,7 +27,7 @@ export default function UserAdmin() {
   const sortedIpList = pureIpList?.reverse().slice(0, 6);
   const ipList = sortedIpList?.map((ip, index) =>
     <li key={index}>
-      {ip}
+      <Link target="_blank" href={`https://whatismyipaddress.com/ip/${ip}`}>{ip}</Link>
     </li>
   );
   
@@ -40,9 +40,9 @@ export default function UserAdmin() {
       {lookup ?
       <><p>User ID: {lookup._id}</p>
       <p>Username: {lookup.username}</p>
-      <p>Email: <Link href={`mailto:${lookup.email}`}>{lookup.email}</Link></p>
+      <p>Email: <Link target="_blank" href={`mailto:${lookup.email}`}>{lookup.email}</Link></p>
       <p title={moment.unix(lookup.history.joined).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Joined: {moment.unix(lookup.history.joined).fromNow()}</p>
-      <p>Join IP address: <Link title="Lookup IP address" href={`https://whatismyipaddress.com/ip/${lookup.history.joinedIp}`}>{lookup.history.joinedIp}</Link></p>
+      <p>Join IP address: <Link target="_blank" href={`https://whatismyipaddress.com/ip/${lookup.history.joinedIp}`}>{lookup.history.joinedIp}</Link></p>
       <details>
         <summary>Last 5 IP addresses</summary>
         <p style={{ fontStyle: "italic" }}>(Newest to oldest)</p>
