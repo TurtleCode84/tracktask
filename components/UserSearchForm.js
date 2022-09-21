@@ -9,8 +9,8 @@ export default function UserSearchForm({ errorMessage, onSubmit }) {
         <span>Search by...</span>
         <input list="options" name="query" required />
         <datalist id="options">
-          <option value="username" label="Username" />
-          <option value="uid" label="User ID" />
+          <option value="username" />
+          <option value="uid" />
         </datalist>
       </label>
 
