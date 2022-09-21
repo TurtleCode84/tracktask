@@ -3,14 +3,14 @@ export default function UserSearchForm({ errorMessage, onSubmit }) {
     <form onSubmit={onSubmit}>
       <label>
         <span>Username or User ID</span>
-        <input type="text" name="username" required />
+        <input type="text" name="usernameuid" required />
       </label>
       <label>
         <span>Search by...</span>
         <input list="options" name="query">
         <datalist id="options">
-          <option value="Username">
-          <option value="User ID">
+          <option value="Username" />
+          <option value="User ID" />
         </datalist>
       </label>
 
