@@ -8,11 +8,12 @@ import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from 'next/router'
 
 export default function UsersAdmin() {
-  const router = useRouter();
   const { user, mutateUser } = useUser({
     redirectTo: "/dashboard",
     adminOnly: true,
   });
+  
+  const router = useRouter();
 
   if (!user || !user.isLoggedIn || !user.permissions.admin) {
     return (
