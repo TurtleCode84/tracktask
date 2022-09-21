@@ -61,7 +61,7 @@ export default function UserAdmin() {
       <p>Last ban reason: {lookup.history.banReason ? lookup.history.banReason : 'none'}</p></>
       :
       <>{lookup === undefined && <p style={{ fontStyle: "italic" }}>Loading user info...</p>}
-      {lookup === null && <p>User does not exist</p>}</>
+      {lookup.status === '404' && <p>User does not exist</p>}</>
       }
       <details>
         <summary>View raw JSON</summary>
