@@ -23,16 +23,16 @@ export default function Admin() {
       </h2>
       <p>All admin pages:</p>
       <ul>
-        <li><Link href="/users">User Admin</Link></li>
+        <li><Link href="/admin/users">User Admin</Link></li>
       </ul>
-      <detail>
+      <details>
         <summary>View my raw session info</summary>
         {user && (
           <>
             <pre>{JSON.stringify(user, null, 2)}</pre>
           </>
         )}
-      </detail>
+      </details>
     </Layout>
   );
 }
