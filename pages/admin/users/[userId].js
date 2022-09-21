@@ -5,7 +5,7 @@ import useUser from "lib/useUser";
 import useAdminUser from "lib/useAdminUser";
 import { useRouter } from 'next/router';
 import moment from "moment";
-import Link from "next/link";
+import Link from "next/link"; {/* remove? */}
 import Image from "next/image";
 
 export default function UserAdmin() {
@@ -41,12 +41,12 @@ export default function UserAdmin() {
       {lookup ?
       <><p>User ID: {lookup._id}</p>
       <p>Username: {lookup.username}</p>
-      <p>Email: <Link href={`mailto:${lookup.email}`} target="_blank">{lookup.email}</Link></p>
+      <p>Email: <a href={`mailto:${lookup.email}`} target="_blank">{lookup.email}</a></p>
       <p>Password (hashed): <pre>{lookup.password}</pre></p>
       <p>Share key: {lookup.shareKey}</p>
-      <p>Profile picture: <Image src={lookup.profilePicture ? lookup.profilePicture : "/default-pfp.jpg" } width={32} height={32} alt=""/> (<Link href={lookup.profilePicture} target="_blank">link</Link>)</p>
+      <p>Profile picture: <Image src={lookup.profilePicture ? lookup.profilePicture : "/default-pfp.jpg" } width={32} height={32} alt=""/> (<a href={lookup.profilePicture} target="_blank">link</a>)</p>
       <p title={moment.unix(lookup.history.joined).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Joined: {moment.unix(lookup.history.joined).fromNow()}</p>
-      <p>Join IP address: <Link href={`https://whatismyipaddress.com/ip/${lookup.history.joinedIp}`} target="_blank">{lookup.history.joinedIp}</Link></p>
+      <p>Join IP address: <a href={`https://whatismyipaddress.com/ip/${lookup.history.joinedIp}`} target="_blank">{lookup.history.joinedIp}</a></p>
       <details>
         <summary>Last 5 IP addresses</summary>
         <p style={{ fontStyle: "italic" }}>(Newest to oldest)</p>
