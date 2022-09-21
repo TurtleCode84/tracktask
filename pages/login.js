@@ -6,12 +6,13 @@ import Link from "next/link";
 import fetchJson, { FetchError } from "lib/fetchJson";
 
 export default function Login() {
-  const [errorMsg, setErrorMsg] = useState("");
   // here we just check if user is already logged in and redirect to dashboard
   const { mutateUser } = useUser({
     redirectTo: "/dashboard",
     redirectIfFound: true,
   });
+  
+  const [errorMsg, setErrorMsg] = useState("");
 
   return (
     <Layout>
