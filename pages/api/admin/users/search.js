@@ -20,12 +20,12 @@ async function adminUserSearchRoute(req, res) {
     var dbQuery;
     if (query === "username") {
       dbQuery = { username: usernameuid };
-    } else if (query === "uid") {
+    } else if (query === "uid") { // simple validation
       if (!ObjectId.isValid(usernameuid)) {
         res.status(422).json({ message: "Invalid user ID" });
         return;
       }
-      dbQuery = { _id: ObjectId(uid) };
+      res.json(usernameuid);
     } else {
       res.status(422).json({ message: "Invalid search query" });
       return;
