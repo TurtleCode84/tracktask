@@ -1,21 +1,26 @@
-import React from "react";
+import React, {useState} from "react";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
 import UserSearchForm from "components/UserSearchForm";
 import useUser from "lib/useUser";
 import Link from "next/link";
+import fetchJson, { FetchError } from "lib/fetchJson";
+import { useRouter } from 'next/router'
 
 export default function UsersAdmin() {
   const { user, mutateUser } = useUser({
     redirectTo: "/dashboard",
     adminOnly: true,
   });
+  
+  const router = useRouter();
 
   if (!user || !user.isLoggedIn || !user.permissions.admin) {
     return (
       <Loading/>
     );
   }
+  const [errorMsg, setErrorMsg] = useState("");
   return (
     <Layout>
       <h1>TrackTask User Admin &#128737;</h1>
@@ -33,14 +38,12 @@ export default function UsersAdmin() {
             };
 
             try {
-              mutateUser(
-                await fetchJson("/api/admin/users/search", {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify(body),
-                }),
-                false,
-              );
+              const getUrl = await fetchJson("/api/admin/users/search", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body),
+              })
+              router.push("https://youtube.com");
             } catch (error) {
               if (error instanceof FetchError) {
                 setErrorMsg(error.data.message);
