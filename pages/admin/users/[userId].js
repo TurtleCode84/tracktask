@@ -23,7 +23,9 @@ export default function UserAdmin() {
     );
   }
   
-  const ipList = lookup.history.loginIpList?.map((ip, index) =>
+  const pureIpList = lookup?.history.loginIpList;
+  const sortedIpList = pureIpList?.reverse().slice(0, 6);
+  const ipList = sortedIpList?.map((ip, index) =>
     <li key={index}>
       {ip}
     </li>
@@ -43,7 +45,7 @@ export default function UserAdmin() {
       <p>Join IP address: <Link title="Lookup IP address" href={`https://whatismyipaddress.com/ip/${lookup.history.joinedIp}`}>{lookup.history.joinedIp}</Link></p>
       <details>
         <summary>Last 5 IP addresses</summary>
-        <p style={{ fontStyle: "italic" }}>(Oldest to newest)</p>
+        <p style={{ fontStyle: "italic" }}>(Newest to oldest)</p>
         <ul>{ipList}</ul>
        </details>
       <p title={moment.unix(lookup.history.lastLogin).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Last login: {moment.unix(lookup.history.lastLogin).fromNow()}</p>
