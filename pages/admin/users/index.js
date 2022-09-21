@@ -13,6 +13,7 @@ export default function UsersAdmin() {
     adminOnly: true,
   });
   
+  const [errorMsg, setErrorMsg] = useState("");
   const router = useRouter();
 
   if (!user || !user.isLoggedIn || !user.permissions.admin) {
@@ -20,7 +21,7 @@ export default function UsersAdmin() {
       <Loading/>
     );
   }
-  const [errorMsg, setErrorMsg] = useState("");
+  
   return (
     <Layout>
       <h1>TrackTask User Admin &#128737;</h1>
