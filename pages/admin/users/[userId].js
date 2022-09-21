@@ -28,7 +28,7 @@ export default function UserAdmin() {
   const sortedIpList = pureIpList?.reverse().slice(0, 6);
   const ipList = sortedIpList?.map((ip, index) =>
     <li key={index}>
-      <a href={`https://whatismyipaddress.com/ip/${ip}`} target="_blank" rel="noopener noreferrer">{ip}</a>
+      <a href={`https://whatismyipaddress.com/ip/${ip}`} target="_blank" rel="noreferrer">{ip}</a>
     </li>
   );
   
@@ -41,12 +41,12 @@ export default function UserAdmin() {
       {lookup ?
       <><p>User ID: {lookup._id}</p>
       <p>Username: {lookup.username}</p>
-      <p>Email: <a href={`mailto:${lookup.email}`} target="_blank" rel="noopener noreferrer">{lookup.email}</a></p>
+      <p>Email: <a href={`mailto:${lookup.email}`} target="_blank" rel="noreferrer">{lookup.email}</a></p>
       <p>Password (hashed): <pre>{lookup.password}</pre></p>
       <p>Share key: {lookup.shareKey}</p>
-      <p>Profile picture: <Image src={lookup.profilePicture ? lookup.profilePicture : "/default-pfp.jpg" } width={32} height={32} alt=""/> (<a href={lookup.profilePicture} target="_blank" rel="noopener noreferrer">link</a>)</p>
+      <p>Profile picture: <Image src={lookup.profilePicture ? lookup.profilePicture : "/default-pfp.jpg" } width={32} height={32} alt=""/> (<a href={lookup.profilePicture} target="_blank" rel="noreferrer">link</a>)</p>
       <p title={moment.unix(lookup.history.joined).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Joined: {moment.unix(lookup.history.joined).fromNow()}</p>
-      <p>Join IP address: <a href={`https://whatismyipaddress.com/ip/${lookup.history.joinedIp}`} target="_blank" rel="noopener noreferrer">{lookup.history.joinedIp}</a></p>
+      <p>Join IP address: <a href={`https://whatismyipaddress.com/ip/${lookup.history.joinedIp}`} target="_blank" rel="noreferrer">{lookup.history.joinedIp}</a></p>
       <details>
         <summary>Last 5 IP addresses</summary>
         <p style={{ fontStyle: "italic" }}>(Newest to oldest)</p>
