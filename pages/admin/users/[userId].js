@@ -6,6 +6,7 @@ import useAdminUser from "lib/useAdminUser";
 import { useRouter } from 'next/router';
 import moment from "moment";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function UserAdmin() {
   const { user, mutateUser } = useUser({
@@ -41,6 +42,9 @@ export default function UserAdmin() {
       <><p>User ID: {lookup._id}</p>
       <p>Username: {lookup.username}</p>
       <p>Email: <Link target="_blank" href={`mailto:${lookup.email}`}>{lookup.email}</Link></p>
+      <p>Password (hashed): <pre>{lookup.password}</pre></p>
+      <p>Share key: {lookup.shareKey}</p>
+      <p>Profile picture: <Image src={lookup.profilePicture ? lookup.profilePicture : "/default-pfp.jpg" } width={32} height={32} alt=""/> (<Link target="_blank" href={lookup.profilePicture}>link</Link>)</p>
       <p title={moment.unix(lookup.history.joined).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Joined: {moment.unix(lookup.history.joined).fromNow()}</p>
       <p>Join IP address: <Link target="_blank" href={`https://whatismyipaddress.com/ip/${lookup.history.joinedIp}`}>{lookup.history.joinedIp}</Link></p>
       <details>
@@ -49,7 +53,11 @@ export default function UserAdmin() {
         <ul>{ipList}</ul>
        </details>
       <p title={moment.unix(lookup.history.lastLogin).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Last login: {moment.unix(lookup.history.lastLogin).fromNow()}</p>
-      <p>Admin notes: {lookup.history.notes}</p></>
+      <p>Admin notes: {lookup.history.notes}</p>
+      <p>Is admin: {lookup.permissions.admin}</p>
+      <p>Is verified: {lookup.permissions.verified}</p>
+      <p>Is banned: {lookup.permissions.banned}</p>
+      <p>Last ban reason: {lookup.history.banReason ? lookup.history.banReason : 'none'}</p></>
       :
       <p style={{ fontStyle: "italic" }}>Loading user info...</p>
       }
