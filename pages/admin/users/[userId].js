@@ -62,7 +62,10 @@ export default function UserAdmin() {
       :
       <p style={{ fontStyle: "italic" }}>Loading user info...</p>
       }
-      <pre>{JSON.stringify(lookup, null, 2)}</pre>
+      <details>
+        <summary>View raw JSON</summary>
+        <pre>{JSON.stringify(lookup, null, 2)}</pre>
+      </details>
     </Layout>
   );
 }
