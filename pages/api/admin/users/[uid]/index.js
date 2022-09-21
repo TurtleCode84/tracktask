@@ -24,7 +24,11 @@ async function adminUserRoute(req, res) {
   
     try {
       const getUser = await db.collection("users").findOne(query);
-      res.json(getUser);
+      if (getUser) {
+        res.json(getUser);
+      } else {
+        res.status(404).json(null);
+      }
     } catch (error) {
       res.status(200).json([]);
     }
