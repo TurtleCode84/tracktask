@@ -25,7 +25,7 @@ async function adminUserSearchRoute(req, res) {
         res.status(422).json({ message: "Invalid user ID" });
         return;
       }
-      const searchUser = usernameuid;
+      const searchUser = { _id: usernameuid };
       res.json(searchUser);
     } else {
       res.status(422).json({ message: "Invalid search query" });
