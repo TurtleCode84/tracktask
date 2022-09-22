@@ -40,7 +40,7 @@ export default function UserAdmin() {
       </h2>
       <Link href="/admin/users">Back to user search</Link><br/>
       {lookup ?
-      <>{lookup.permissions.banned && <p><b>This user is banned.</b></p>}{lookup.permissions.banned && lookup.history.banReason && <p style={{ fontStyle: "italic" }}>Reason: {
+      <>{lookup.permissions.banned && <p><b>This user is banned.</b></p>}{' '}{lookup.permissions.banned && lookup.history.banReason && <p style={{ fontStyle: "italic" }}>Reason: {lookup.history.banReason}</p>}
       <p>User ID: {lookup._id}</p>
       <p>Username: {lookup.username}</p>
       <p>Email: <a href={`mailto:${lookup.email}`} target="_blank" rel="noreferrer">{lookup.email}</a></p>
