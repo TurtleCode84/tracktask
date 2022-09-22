@@ -64,7 +64,7 @@ export default function UserAdmin() {
       }
       <details>
         <summary>View raw JSON</summary>
-        <pre>{JSON.stringify(lookup, null, 2)}</pre>
+        {error ? <pre>{JSON.stringify(error, null, 2)}</pre> : <pre>{JSON.stringify(lookup, null, 2)}</pre>}
       </details>
     </Layout>
   );
