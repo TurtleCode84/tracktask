@@ -67,7 +67,7 @@ export default function UserSearchForm({ errorMessage, onSubmit, lookup }) {
         input[type="checkbox"] {
           margin: 0;
           vertical-align: middle;
-          width: 14 !important;
+          width: 10 !important;
         }
         .error {
           color: brown;
