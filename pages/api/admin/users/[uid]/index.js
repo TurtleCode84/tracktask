@@ -27,7 +27,7 @@ async function adminUserRoute(req, res) {
       if (getUser) {
         res.json(getUser);
       } else {
-        res.redirect(307, '/admin/users');
+        res.status(404).json({ message: "User does not exist" });
       }
     } catch (error) {
       res.status(200).json([]);
