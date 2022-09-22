@@ -27,7 +27,7 @@ async function adminUserRoute(req, res) {
       if (getUser) {
         res.json(getUser);
       } else {
-        res.json({ exists: false });
+        res.json({ message: "User does not exist" }); // not returning 404 here
       }
     } catch (error) {
       res.status(200).json([]);
