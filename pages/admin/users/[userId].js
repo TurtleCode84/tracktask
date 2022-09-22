@@ -50,7 +50,7 @@ export default function UserAdmin() {
       <p>Password (hashed): <pre>{lookup.password}</pre></p>
       <p>Share key: {lookup.shareKey ? lookup.shareKey : 'none'}</p>
       <p>Profile picture: <Image src={lookup.profilePicture ? lookup.profilePicture : "/default-pfp.jpg" } width={32} height={32} alt=""/> ({lookup.profilePicture ? <a href={lookup.profilePicture} target="_blank" rel="noreferrer">link</a> : 'default'})</p>
-      <h3>History</h3>
+      <hr/><h3>History</h3>
       <p title={moment.unix(lookup.history.joined).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Joined: {moment.unix(lookup.history.joined).fromNow()}</p>
       <p>Join IP address: <a href={`https://whatismyipaddress.com/ip/${lookup.history.joinedIp}`} target="_blank" rel="noreferrer">{lookup.history.joinedIp}</a></p>
       <details>
@@ -61,7 +61,7 @@ export default function UserAdmin() {
       <p title={moment.unix(lookup.history.lastLogin).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Last login: {moment.unix(lookup.history.lastLogin).fromNow()}</p>
       <p>Admin notes: {lookup.history.notes ? lookup.history.notes : 'none'}</p>
       {!lookup.permissions.banned && <p>Last ban reason: {lookup.history.banReason ? lookup.history.banReason : 'none'}</p>}
-      <hr/><br/>
+      <hr/>
       <details>
         <summary>Edit user info</summary>
         <UserAdminForm
