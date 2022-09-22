@@ -3,11 +3,11 @@ export default function UserSearchForm({ errorMessage, onSubmit, lookup }) {
     <form onSubmit={onSubmit}>
       <label>
         <span>Username</span>
-        <input type="text" name="username" value={lookup.username} required />
+        <input type="text" name="username" placeholder={lookup.username} required />
       </label>
       <label>
         <span>Email</span>
-        <input type="email" name="email" value={lookup.email} required />
+        <input type="email" name="email" placeholder={lookup.email} required />
       </label>
       <hr/><label>
         <span>Change password</span>
@@ -16,15 +16,15 @@ export default function UserSearchForm({ errorMessage, onSubmit, lookup }) {
       </label><hr/>
       <label>
         <span>Share key</span>
-        <input type="text" name="shareKey" value={lookup.shareKey} required />
+        <input type="text" name="shareKey" placeholder={lookup.shareKey} required />
       </label>
       <label>
         <span>Profile picture</span>
-        <input type="url" name="profilePicture" value={lookup.profilePicture} />
+        <input type="url" name="profilePicture" placeholder={lookup.profilePicture} />
       </label>
       <label>
         <span>Admin notes</span>
-        <textarea name="notes" value={lookup.history.notes} />
+        <textarea name="notes" placeholder={lookup.history.notes} />
       </label><hr/>
       <h2>Permissions:</h2>
       <label>
@@ -41,7 +41,7 @@ export default function UserSearchForm({ errorMessage, onSubmit, lookup }) {
       </label>
       {!lookup.permissions.banned && <label>
         <span>Ban reason</span>
-        <input type="text" name="banReason" value={lookup.history.banReason} />
+        <input type="text" name="banReason" placeholder={lookup.history.banReason} />
       </label>}
 
       <button type="submit">Edit user data</button>
