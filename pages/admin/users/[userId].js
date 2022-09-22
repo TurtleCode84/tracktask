@@ -27,7 +27,7 @@ export default function UserAdmin() {
   }
   
   const pureIpList = lookup?.history.loginIpList;
-  const sortedIpList = pureIpList?.reverse().slice(0, 6);
+  const sortedIpList = pureIpList?.reverse().slice(0, 5);
   const ipList = sortedIpList?.map((ip, index) =>
     <li key={index}>
       <a href={`https://whatismyipaddress.com/ip/${ip}`} target="_blank" rel="noreferrer">{ip}</a>
