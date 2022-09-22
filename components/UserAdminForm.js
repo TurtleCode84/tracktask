@@ -1,3 +1,5 @@
+import Script from "next/script";
+
 export default function UserSearchForm({ errorMessage, onSubmit, lookup }) {
   return (
     <form onSubmit={onSubmit}>
@@ -29,15 +31,18 @@ export default function UserSearchForm({ errorMessage, onSubmit, lookup }) {
       <h2>Permissions:</h2>
       <label>
         <span>Verified</span>
-        <input type="checkbox" name="verified" id="verified" {lookup.permissions.verified ? `checked="checked"` : null} />
+        <input type="checkbox" name="verified" id="verified" />
+        <Script>document.getElementById("verified").checked = lookup.permissions.verified;</Script>
       </label>
       <label>
         <span>Admin</span>
-        <input type="checkbox" name="admin" id="admin" {lookup.permissions.admin ? `checked="checked"` : null} />
+        <input type="checkbox" name="admin" id="admin" />
+        <Script>document.getElementById("admin").checked = lookup.permissions.admin;</Script>
       </label>
       <label>
         <span>Banned</span>
-        <input type="checkbox" name="banned" id="banned" {lookup.permissions.banned ? `checked="checked"` : null} />
+        <input type="checkbox" name="banned" id="banned" />
+        <Script>document.getElementById("banned").checked = lookup.permissions.banned;</Script>
       </label>
       <label>
         <span>Ban reason</span>
