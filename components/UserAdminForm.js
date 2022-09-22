@@ -11,7 +11,7 @@ export default function UserSearchForm({ errorMessage, onSubmit, lookup }) {
       </label>
       <hr/><label>
         <span>Change password</span>
-        <p>(current hashed password: {lookup.password})</p>
+        <p>(current hashed password: <pre>{lookup.password}</pre>)</p>
         <input type="password" name="password" />
       </label><hr/>
       <label>
