@@ -3,45 +3,45 @@ export default function UserSearchForm({ errorMessage, onSubmit, lookup }) {
     <form onSubmit={onSubmit}>
       <label>
         <span>Username</span>
-        <input type="text" name="username" value={lookup.username} required />
+        <input type="text" name="username" value={lookup?.username} required />
       </label>
       <label>
         <span>Email</span>
-        <input type="email" name="email" value={lookup.email} required />
+        <input type="email" name="email" value={lookup?.email} required />
       </label>
       <hr/><label>
         <span>Change password</span>
-        <p>(current hashed password: {lookup.password})</p>
+        <p>(current hashed password: {lookup?.password})</p>
         <input type="password" name="password" />
       </label><hr/>
       <label>
         <span>Share key</span>
-        <input type="text" name="shareKey" value={lookup.shareKey} required />
+        <input type="text" name="shareKey" value={lookup?.shareKey} required />
       </label>
       <label>
         <span>Profile picture</span>
-        <input type="url" name="profilePicture" value={lookup.profilePicture} />
+        <input type="url" name="profilePicture" value={lookup?.profilePicture} />
       </label>
       <label>
         <span>Admin notes</span>
-        <input type="url" name="profilePicture" value={lookup.history.notes} />
+        <input type="url" name="profilePicture" value={lookup?.history.notes} />
       </label><hr/>
       <h2>Permissions:</h2>
       <label>
         <span>Verified</span>
-        <input type="checkbox" name="verified" value={lookup.permissions.verified} />
+        <input type="checkbox" name="verified" value={lookup?.permissions.verified} />
       </label>
       <label>
         <span>Admin</span>
-        <input type="checkbox" name="admin" value={lookup.permissions.admin} />
+        <input type="checkbox" name="admin" value={lookup?.permissions.admin} />
       </label>
       <label>
         <span>Banned</span>
-        <input type="checkbox" name="banned" value={lookup.permissions.banned} />
+        <input type="checkbox" name="banned" value={lookup?.permissions.banned} />
       </label>
       <label>
         <span>Ban reason</span>
-        <input type="text" name="banReason" value={lookup.permissions.verified} />
+        <input type="text" name="banReason" value={lookup?.permissions.verified} />
       </label>
 
       <button type="submit">Edit user data</button>
