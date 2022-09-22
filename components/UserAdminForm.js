@@ -11,7 +11,7 @@ export default function UserSearchForm({ errorMessage, onSubmit, lookup }) {
       </label>
       <hr/><label>
         <span>Change password</span>
-        <p>(current hashed password: <pre>{lookup.password}</pre>)</p>
+        <p style={{ fontStyle: "italic" }}>Current hashed password: <pre>{lookup.password}</pre></p>
         <input type="password" name="password" />
       </label><hr/>
       <label>
@@ -41,7 +41,7 @@ export default function UserSearchForm({ errorMessage, onSubmit, lookup }) {
       </label>
       <label>
         <span>Ban reason</span>
-        <input type="text" name="banReason" value={lookup.permissions.verified} />
+        <input type="text" name="banReason" value={lookup.history.banReason} />
       </label>
 
       <button type="submit">Edit user data</button>
@@ -62,7 +62,7 @@ export default function UserSearchForm({ errorMessage, onSubmit, lookup }) {
           margin: 0.3rem 0 1rem;
           border: 1px solid #ccc;
           border-radius: 4px;
-          max-width: 450px;
+          max-width: 400px;
         }
         .error {
           color: brown;
