@@ -32,17 +32,17 @@ export default function UserSearchForm({ errorMessage, onSubmit, lookup }) {
       <label>
         <span>Verified</span>
         <input type="checkbox" name="verified" id="verified" />
-        <Script>document.getElementById("verified").checked = lookup.permissions.verified;</Script>
+        <Script id="checkVerified">{`document.getElementById('verified').checked = lookup.permissions.verified;`}</Script>
       </label>
       <label>
         <span>Admin</span>
         <input type="checkbox" name="admin" id="admin" />
-        <Script>document.getElementById("admin").checked = lookup.permissions.admin;</Script>
+        <Script id="checkAdmin">{`document.getElementById("admin").checked = lookup.permissions.admin;`}</Script>
       </label>
       <label>
         <span>Banned</span>
         <input type="checkbox" name="banned" id="banned" />
-        <Script>document.getElementById("banned").checked = lookup.permissions.banned;</Script>
+        <Script id="checkAdmin">{`document.getElementById("banned").checked = lookup.permissions.banned;`}</Script>
       </label>
       <label>
         <span>Ban reason</span>
