@@ -26,23 +26,23 @@ export default function UserSearchForm({ errorMessage, onSubmit, lookup }) {
       </label>
       <label>
         <span>Admin notes</span>
-        <input type="url" name="profilePicture" value={lookup.history.notes} />
+        <textarea name="notes" value={lookup.history.notes} />
       </label><hr/>
       <h2>Permissions:</h2>
       <label>
         <span>Verified</span>
         <input type="checkbox" name="verified" id="verified" />
-        <Script id="checkVerified">{`document.getElementById('verified').checked = lookup.permissions.verified;`}</Script>
+        <Script id="checkVerified">document.getElementById('verified').checked = lookup.permissions.verified;</Script>
       </label>
       <label>
         <span>Admin</span>
         <input type="checkbox" name="admin" id="admin" />
-        <Script id="checkAdmin">{`document.getElementById("admin").checked = lookup.permissions.admin;`}</Script>
+        <Script id="checkAdmin">document.getElementById("admin").checked = lookup.permissions.admin;</Script>
       </label>
       <label>
         <span>Banned</span>
         <input type="checkbox" name="banned" id="banned" />
-        <Script id="checkBanned">{`document.getElementById("banned").checked = lookup.permissions.banned;`}</Script>
+        <Script id="checkBanned">document.getElementById("banned").checked = lookup.permissions.banned;</Script>
       </label>
       <label>
         <span>Ban reason</span>
