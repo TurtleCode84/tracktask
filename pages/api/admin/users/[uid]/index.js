@@ -32,6 +32,8 @@ async function adminUserRoute(req, res) {
     } catch (error) {
       res.status(200).json([]);
     }
+  } else if (req.method === 'POST') {
+    res.status(400).json({ message: "Under construction" });
   } else {
     res.status(405).json({ message: "Method not allowed" });
   }
