@@ -36,11 +36,12 @@ export default function UserAdmin() {
     <Layout>
       <h1>TrackTask User Admin &#128737;</h1>
       <h2>
-        Viewing information for {lookup ? lookup.username : userId}:
+        Viewing information for {lookup ? lookup.username : userId} [{user.permissions.verified ? <>&#9989;</> : null}{user.permissions.admin ? <>&#128737;</> : null}{user.permissions.banned ? <>&#10060;</> : null}]:
       </h2>
       <Link href="/admin/users">Back to user search</Link><br/>
       {lookup ?
-      <><p>User ID: {lookup._id}</p>
+      <>{lookup.permissions.banned && <p><b>This user is banned.</b></p>}{lookup.permissions.banned && lookup.history.banReason && <p style={{ fontStyle: "italic" }}>Reason: {
+      <p>User ID: {lookup._id}</p>
       <p>Username: {lookup.username}</p>
       <p>Email: <a href={`mailto:${lookup.email}`} target="_blank" rel="noreferrer">{lookup.email}</a></p>
       <p>Password (hashed): <pre>{lookup.password}</pre></p>
@@ -56,9 +57,7 @@ export default function UserAdmin() {
       <p title={moment.unix(lookup.history.lastLogin).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Last login: {moment.unix(lookup.history.lastLogin).fromNow()}</p>
       <p>Admin notes: {lookup.history.notes}</p>
       <p>Is admin: {lookup.permissions.admin ? <>&#9989;</> : <>&#10060;</>}</p>
-      <p>Is verified: {lookup.permissions.verified ? <>&#9989;</> : <>&#10060;</>}</p>
-      <p>Is banned: {lookup.permissions.banned ? <>&#9989;</> : <>&#10060;</>}</p>
-      <p>Last ban reason: {lookup.history.banReason ? lookup.history.banReason : 'none'}</p></>
+      {!lookup.permissions.banned && <p>Last ban reason: {lookup.history.banReason ? lookup.history.banReason : 'none'}</p>}</>
       :
       <>{error ? <p>{error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading user info...</p>}</>
       }
