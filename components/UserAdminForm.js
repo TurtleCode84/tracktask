@@ -3,11 +3,11 @@ export default function UserSearchForm({ errorMessage, onSubmit, lookup }) {
     <form onSubmit={onSubmit}>
       <label>
         <span>Username</span>
-        <input type="text" name="username" placeholder={lookup.username} required />
+        <input type="text" name="username" placeholder={lookup.username} />
       </label>
       <label>
         <span>Email</span>
-        <input type="email" name="email" placeholder={lookup.email} required />
+        <input type="email" name="email" placeholder={lookup.email} />
       </label>
       <hr/><label>
         <span>Change password</span>
@@ -16,7 +16,7 @@ export default function UserSearchForm({ errorMessage, onSubmit, lookup }) {
       </label><hr/>
       <label>
         <span>Share key</span>
-        <input type="text" name="shareKey" placeholder={lookup.shareKey} required />
+        <input type="text" name="shareKey" placeholder={lookup.shareKey} />
       </label>
       <label>
         <span>Profile picture</span>
