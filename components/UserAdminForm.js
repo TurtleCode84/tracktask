@@ -27,18 +27,18 @@ export default function UserSearchForm({ errorMessage, onSubmit, lookup }) {
         <input type="url" name="profilePicture" value={lookup.history.notes} />
       </label><hr/>
       <h2>Permissions:</h2>
-      <label>
+      <label for="verified">
         <span>Verified</span>
-        <input type="checkbox" name="verified" value={lookup.permissions.verified} />
       </label>
-      <label>
+      <input type="checkbox" name="verified" id="verified" value={lookup.permissions.verified} />
+      <label for="admin">
         <span>Admin</span>
-        <input type="checkbox" name="admin" value={lookup.permissions.admin} />
       </label>
-      <label>
+      <input type="checkbox" name="admin" id="admin" value={lookup.permissions.admin} />
+      <label for="banned">
         <span>Banned</span>
-        <input type="checkbox" name="banned" value={lookup.permissions.banned} />
       </label>
+      <input type="checkbox" name="banned" id="banned" value={lookup.permissions.banned} />
       <label>
         <span>Ban reason</span>
         <input type="text" name="banReason" value={lookup.history.banReason} />
@@ -63,12 +63,6 @@ export default function UserSearchForm({ errorMessage, onSubmit, lookup }) {
           border: 1px solid #ccc;
           border-radius: 4px;
           max-width: 400px;
-        }
-        input[type="checkbox"] {
-          float: left !important;
-          width: auto !important;
-          max-width: auto !important;
-          margin: 0 0 0 !important;
         }
         .error {
           color: brown;
