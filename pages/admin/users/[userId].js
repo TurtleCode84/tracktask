@@ -43,12 +43,14 @@ export default function UserAdmin() {
       <Link href="/admin/users">Back to user search</Link><br/>
       {lookup ?
       <><p>{lookup.permissions.banned && <b>This user is banned.</b>}{' '}{lookup.permissions.banned && lookup.history.banReason && <i>Reason: {lookup.history.banReason}</i> }</p>
+      <h3>General information</h3>
       <p>User ID: {lookup._id}</p>
       <p>Username: {lookup.username}</p>
       <p>Email: <a href={`mailto:${lookup.email}`} target="_blank" rel="noreferrer">{lookup.email}</a></p>
       <p>Password (hashed): <pre>{lookup.password}</pre></p>
       <p>Share key: {lookup.shareKey}</p>
       <p>Profile picture: <Image src={lookup.profilePicture ? lookup.profilePicture : "/default-pfp.jpg" } width={32} height={32} alt=""/> ({lookup.profilePicture ? <a href={lookup.profilePicture} target="_blank" rel="noreferrer">link</a> : 'default'})</p>
+      <h3>History</h3>
       <p title={moment.unix(lookup.history.joined).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Joined: {moment.unix(lookup.history.joined).fromNow()}</p>
       <p>Join IP address: <a href={`https://whatismyipaddress.com/ip/${lookup.history.joinedIp}`} target="_blank" rel="noreferrer">{lookup.history.joinedIp}</a></p>
       <details>
@@ -57,36 +59,39 @@ export default function UserAdmin() {
         <ul>{ipList.length > 0 ? ipList : 'No IPs found'}</ul>
        </details>
       <p title={moment.unix(lookup.history.lastLogin).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Last login: {moment.unix(lookup.history.lastLogin).fromNow()}</p>
-      <p>Admin notes: {lookup.history.notes}</p>
+      <p>Admin notes: {lookup.history.notes ? lookup.history.notes : 'none'}</p>
       {!lookup.permissions.banned && <p>Last ban reason: {lookup.history.banReason ? lookup.history.banReason : 'none'}</p>}
-      <UserAdminForm
-          errorMessage={errorMsg}
-          lookup={lookup}
-          onSubmit={async function handleSubmit(event) {
-            event.preventDefault();
+      <hr/><br/>
+      <details>
+        <summary>Edit user info</summary>
+        <UserAdminForm
+            errorMessage={errorMsg}
+            lookup={lookup}
+            onSubmit={async function handleSubmit(event) {
+              event.preventDefault();
+  
+              const body = {
+                username: event.currentTarget.username.value,
+                email: event.currentTarget.email.value,
+              };
 
-            const body = {
-              username: event.currentTarget.username.value,
-              email: event.currentTarget.email.value,
-            };
-
-            {/*try {
-              const getUrl = await fetchJson("/api/admin/users/search", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(body),
-              })
-              router.push(`/admin/users/${getUrl?._id}`);
-            } catch (error) {
-              if (error instanceof FetchError) {
-                setErrorMsg(error.data.message);
-              } else {
-                console.error("An unexpected error happened:", error);
-              }
-            }*/}
-          }}
-      />
-      </>
+              {/*try {
+                const getUrl = await fetchJson("/api/admin/users/search", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify(body),
+                })
+                router.push(`/admin/users/${getUrl?._id}`);
+              } catch (error) {
+                if (error instanceof FetchError) {
+                  setErrorMsg(error.data.message);
+                } else {
+                  console.error("An unexpected error happened:", error);
+                }
+              }*/}
+            }}
+        />
+      </details></>
       :
       <>{error ? <p>{error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading user info...</p>}</>
       }
