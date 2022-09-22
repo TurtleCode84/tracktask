@@ -37,7 +37,7 @@ export default function UserSearchForm({ errorMessage, onSubmit, lookup }) {
       </label>
       <label>
         {lookup.permissions.banned ? <span>Unban user</span> : <span>Ban user</span>}
-        <input type="checkbox" name="banned" />
+        <input type="checkbox" name="toggleBanned" />
       </label>
       {!lookup.permissions.banned && <label>
         <span>Ban reason</span>
