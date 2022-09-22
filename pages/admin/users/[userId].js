@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
 import UserAdminForm from "components/UserAdminForm";
@@ -15,6 +15,7 @@ export default function UserAdmin() {
     adminOnly: true,
   });
   
+  const [errorMsg, setErrorMsg] = useState("");
   const router = useRouter();
   const { userId } = router.query;
   const { lookup, error } = useAdminUser(user, userId);
