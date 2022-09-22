@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
 import useUser from "lib/useUser";
@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import moment from "moment";
 import Link from "next/link";
 import Image from "next/image";
+import { FetchError } from "lib/fetchJson";
 
 export default function UserAdmin() {
   const { user, mutateUser } = useUser({
@@ -16,7 +17,19 @@ export default function UserAdmin() {
   
   const router = useRouter();
   const { userId } = router.query;
-  const { lookup } = useAdminUser(user, userId);
+  var lookup = {};
+  
+  try {
+    lookup = useAdminUser(user, userId);
+  } catch (error) {
+    if (error instanceof FetchError) {
+      setErrorMsg(error.data.message);
+    } else {
+      console.error("An unexpected error happened:", error);
+    }
+  }
+  
+  const [errorMsg, setErrorMsg] = useState("");
 
   if (!user || !user.isLoggedIn || !user.permissions.admin) {
     return (
@@ -60,7 +73,8 @@ export default function UserAdmin() {
       <p>Is banned: {lookup.permissions.banned ? <>&#9989;</> : <>&#10060;</>}</p>
       <p>Last ban reason: {lookup.history.banReason ? lookup.history.banReason : 'none'}</p></>
       :
-      <p style={{ fontStyle: "italic" }}>Loading user info...</p>
+      <><p style={{ fontStyle: "italic" }}>Loading user info...</p>
+      {errorMessage && <p className="error">{errorMessage}</p>}</>
       }
       <details>
         <summary>View raw JSON</summary>
