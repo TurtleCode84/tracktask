@@ -33,11 +33,11 @@ export default function UserSearchForm({ errorMessage, onSubmit, lookup }) {
       </label>
       <label>
         <span>Admin</span>
-        {lookup.permissions.verified ? <input type="checkbox" name="admin" checked /> : <input type="checkbox" name="admin" />}
+        {lookup.permissions.admin ? <input type="checkbox" name="admin" checked /> : <input type="checkbox" name="admin" />}
       </label>
       <label>
         <span>Banned</span>
-        {lookup.permissions.verified ? <input type="checkbox" name="banned" checked /> : <input type="checkbox" name="banned" />}
+        {lookup.permissions.banned ? <input type="checkbox" name="banned" checked /> : <input type="checkbox" name="banned" />}
       </label>
       <label>
         <span>Ban reason</span>
@@ -67,6 +67,7 @@ export default function UserSearchForm({ errorMessage, onSubmit, lookup }) {
         input[type="checkbox"] {
           margin: 0;
           vertical-align: middle;
+          width: 0 !important;
         }
         .error {
           color: brown;
