@@ -84,6 +84,7 @@ export default function UserAdmin() {
                 toggleBanned: event.currentTarget.toggleBanned.checked,
                 banReason: event.currentTarget.banReason.value,
               };
+              event.reset();
 
               try {
                 const getUrl = await fetchJson(`/api/admin/users/${lookup._id}`, {
