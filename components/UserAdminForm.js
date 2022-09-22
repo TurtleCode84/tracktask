@@ -42,7 +42,7 @@ export default function UserSearchForm({ errorMessage, onSubmit, lookup }) {
       <label>
         <span>Banned</span>
         <input type="checkbox" name="banned" id="banned" />
-        <Script id="checkAdmin">{`document.getElementById("banned").checked = lookup.permissions.banned;`}</Script>
+        <Script id="checkBanned">{`document.getElementById("banned").checked = lookup.permissions.banned;`}</Script>
       </label>
       <label>
         <span>Ban reason</span>
