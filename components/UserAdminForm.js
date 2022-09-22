@@ -11,8 +11,8 @@ export default function UserSearchForm({ errorMessage, onSubmit, lookup }) {
       </label>
       <hr/><label>
         <span>Change password</span>
-        <p style={{ fontStyle: "italic" }}>Current hashed password: <pre>{lookup.password}</pre></p>
-        <input type="password" name="password" />
+        <input type="password" placeholder="New password" name="password" />
+        <input type="password" placeholder="Retype new password" name="cpassword" />
       </label><hr/>
       <label>
         <span>Share key</span>
@@ -65,8 +65,8 @@ export default function UserSearchForm({ errorMessage, onSubmit, lookup }) {
           max-width: 400px;
         }
         input[type="checkbox"] {
-          vertical-align: left !important;
-          display: inline-block !important;
+          vertical-align: left;
+          display: inline-flex;
         }
         .error {
           color: brown;
