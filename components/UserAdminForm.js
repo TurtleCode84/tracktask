@@ -68,7 +68,7 @@ export default function UserSearchForm({ errorMessage, onSubmit, lookup }) {
           margin: 0;
           vertical-align: middle;
           width: 15px !important;
-          margin-bottom: 5px;
+          margin-bottom: 10px;
         }
         .error {
           color: brown;
