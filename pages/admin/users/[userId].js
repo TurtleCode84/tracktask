@@ -1,6 +1,7 @@
 import React from "react";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
+import UserAdminForm from "components/UserAdminForm";
 import useUser from "lib/useUser";
 import useAdminUser from "lib/useAdminUser";
 import { useRouter } from 'next/router';
@@ -56,7 +57,35 @@ export default function UserAdmin() {
        </details>
       <p title={moment.unix(lookup.history.lastLogin).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Last login: {moment.unix(lookup.history.lastLogin).fromNow()}</p>
       <p>Admin notes: {lookup.history.notes}</p>
-      {!lookup.permissions.banned && <p>Last ban reason: {lookup.history.banReason ? lookup.history.banReason : 'none'}</p>}</>
+      {!lookup.permissions.banned && <p>Last ban reason: {lookup.history.banReason ? lookup.history.banReason : 'none'}</p>}
+      <UserAdminForm
+          errorMessage={errorMsg}
+          lookup={lookup}
+          onSubmit={async function handleSubmit(event) {
+            event.preventDefault();
+
+            const body = {
+              username: event.currentTarget.username.value,
+              email: event.currentTarget.email.value,
+            };
+
+            {/*try {
+              const getUrl = await fetchJson("/api/admin/users/search", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body),
+              })
+              router.push(`/admin/users/${getUrl?._id}`);
+            } catch (error) {
+              if (error instanceof FetchError) {
+                setErrorMsg(error.data.message);
+              } else {
+                console.error("An unexpected error happened:", error);
+              }
+            }*/}
+          }}
+      />
+      </>
       :
       <>{error ? <p>{error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading user info...</p>}</>
       }
