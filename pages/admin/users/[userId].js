@@ -36,7 +36,7 @@ export default function UserAdmin() {
     <Layout>
       <h1>TrackTask User Admin &#128737;</h1>
       <h2>
-        Viewing information for {lookup ? lookup.username : userId} [{user.permissions.verified ? <>&#9989;</> : null}{user.permissions.admin ? <>&#128737;</> : null}{user.permissions.banned ? <>&#10060;</> : null}]:
+        Viewing information for {lookup ? lookup.username : userId} [{lookup.permissions.verified ? <>&#9989;</> : null}{lookup.permissions.admin ? <>&#128737;</> : null}{lookup.permissions.banned ? <>&#10060;</> : null}]:
       </h2>
       <Link href="/admin/users">Back to user search</Link><br/>
       {lookup ?
