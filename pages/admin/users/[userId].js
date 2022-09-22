@@ -60,8 +60,7 @@ export default function UserAdmin() {
       <p>Is banned: {lookup.permissions.banned ? <>&#9989;</> : <>&#10060;</>}</p>
       <p>Last ban reason: {lookup.history.banReason ? lookup.history.banReason : 'none'}</p></>
       :
-      <>{lookup === undefined && <p style={{ fontStyle: "italic" }}>Loading user info...</p>}
-      {lookup.status === '404' && <p>User does not exist</p>}</>
+      <p style={{ fontStyle: "italic" }}>Loading user info...</p>
       }
       <details>
         <summary>View raw JSON</summary>
