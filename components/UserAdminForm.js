@@ -28,18 +28,18 @@ export default function UserSearchForm({ errorMessage, onSubmit, lookup }) {
       </label><hr/>
       <h2>Permissions:</h2>
       <label>
-        <span>Verified</span>
-        {lookup.permissions.verified ? <input type="checkbox" name="verified" checked /> : <input type="checkbox" name="verified" />}
+        {lookup.permissions.verified ? <span>Unverify user</span> : <span>Verify user</span>}
+        <input type="checkbox" name="toggleVerified" />
       </label>
       <label>
-        <span>Admin</span>
-        {lookup.permissions.admin ? <input type="checkbox" name="admin" checked /> : <input type="checkbox" name="admin" />}
+        {lookup.permissions.admin ? <span>Remove admin from user</span> : <span>Make user admin</span>}
+        <input type="checkbox" name="toggleAdmin" disabled />
       </label>
       <label>
-        <span>Banned</span>
-        {lookup.permissions.banned ? <input type="checkbox" name="banned" checked /> : <input type="checkbox" name="banned" />}
+        {lookup.permissions.banned ? <span>Unban user</span> : <span>Ban user</span>}
+        <input type="checkbox" name="banned" />
       </label>
-      {lookup.permissions.banned && <label>
+      {!lookup.permissions.banned && <label>
         <span>Ban reason</span>
         <input type="text" name="banReason" value={lookup.history.banReason} />
       </label>}
@@ -67,7 +67,7 @@ export default function UserSearchForm({ errorMessage, onSubmit, lookup }) {
         input[type="checkbox"] {
           margin: 0;
           vertical-align: middle;
-          width: auto !important;
+          width: 15 !important;
         }
         .error {
           color: brown;
