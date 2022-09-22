@@ -29,15 +29,15 @@ export default function UserSearchForm({ errorMessage, onSubmit, lookup }) {
       <h2>Permissions:</h2>
       <label>
         <span>Verified</span>
-        <input type="checkbox" name="verified" id="verified" {lookup.permissions.verified ? <>checked</> : null} />
+        <input type="checkbox" name="verified" id="verified" {lookup.permissions.verified ? `checked="checked"` : null} />
       </label>
       <label>
         <span>Admin</span>
-        <input type="checkbox" name="admin" id="admin" {lookup.permissions.admin ? <>checked</> : null} />
+        <input type="checkbox" name="admin" id="admin" {lookup.permissions.admin ? `checked="checked"` : null} />
       </label>
       <label>
         <span>Banned</span>
-        <input type="checkbox" name="banned" id="banned" {lookup.permissions.banned ? <>checked</> : null} />
+        <input type="checkbox" name="banned" id="banned" {lookup.permissions.banned ? `checked="checked"` : null} />
       </label>
       <label>
         <span>Ban reason</span>
