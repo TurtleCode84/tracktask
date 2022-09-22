@@ -71,24 +71,33 @@ export default function UserAdmin() {
               event.preventDefault();
   
               const body = {
+                id: lookup._id,
                 username: event.currentTarget.username.value,
                 email: event.currentTarget.email.value,
+                password: event.currentTarget.password.value,
+                shareKey: event.currentTarget.shareKey.value,
+                profilePicture: event.currentTarget.profilePicture.value,
+                notes: event.currentTarget.notes.value,
+                toggleVerified: event.currentTarget.toggleVerified.checked,
+                toggleAdmin: event.currentTarget.toggleAdmin.checked,
+                toggleBanned: event.currentTarget.toggleBanned.checked,
+                banReason: event.currentTarget.banReason.value,
               };
 
-              {/*try {
-                const getUrl = await fetchJson("/api/admin/users/search", {
+              try {
+                const getUrl = await fetchJson(`/api/admin/users/${lookup._id}`, {
                   method: "POST",
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify(body),
                 })
-                router.push(`/admin/users/${getUrl?._id}`);
+                router.push("https://google.com");
               } catch (error) {
                 if (error instanceof FetchError) {
                   setErrorMsg(error.data.message);
                 } else {
                   console.error("An unexpected error happened:", error);
                 }
-              }*/}
+              }
             }}
         />
       </details></>
