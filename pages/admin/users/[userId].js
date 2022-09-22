@@ -39,7 +39,7 @@ export default function UserAdmin() {
         Viewing information for {lookup ? lookup.username : userId}:
       </h2>
       <Link href="/admin/users">Back to user search</Link><br/>
-      {lookup?._id !== undefined &&
+      {lookup ?
       <><p>User ID: {lookup._id}</p>
       <p>Username: {lookup.username}</p>
       <p>Email: <a href={`mailto:${lookup.email}`} target="_blank" rel="noreferrer">{lookup.email}</a></p>
@@ -59,9 +59,9 @@ export default function UserAdmin() {
       <p>Is verified: {lookup.permissions.verified ? <>&#9989;</> : <>&#10060;</>}</p>
       <p>Is banned: {lookup.permissions.banned ? <>&#9989;</> : <>&#10060;</>}</p>
       <p>Last ban reason: {lookup.history.banReason ? lookup.history.banReason : 'none'}</p></>
+      :
+      <p style={{ fontStyle: "italic" }}>Loading user info...</p>
       }
-      {lookup ? null : <p style={{ fontStyle: "italic" }}>Loading user info...</p>}
-      {lookup?._id === undefined && <p>User does not exist</p>}
       <details>
         <summary>View raw JSON</summary>
         <pre>{JSON.stringify(lookup, null, 2)}</pre>
