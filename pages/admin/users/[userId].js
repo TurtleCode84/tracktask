@@ -64,7 +64,7 @@ export default function UserAdmin() {
       <hr/>
       <details>
         <summary>Edit user info</summary>
-        <UserAdminForm
+        <br/><UserAdminForm
             errorMessage={errorMsg}
             lookup={lookup}
             onSubmit={async function handleSubmit(event) {
