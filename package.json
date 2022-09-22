@@ -21,7 +21,6 @@
     "uuid": "^9.0.0",
     "iron-session": "^6.2.0",
     "react-google-recaptcha-v3": "^1.10.0",
-    "vercel-toast": "^1.6.2"
   },
   "devDependencies": {
     "eslint": "8.23.1",
