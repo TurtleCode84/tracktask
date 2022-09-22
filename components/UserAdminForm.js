@@ -39,10 +39,10 @@ export default function UserSearchForm({ errorMessage, onSubmit, lookup }) {
         <span>Banned</span>
         {lookup.permissions.banned ? <input type="checkbox" name="banned" checked /> : <input type="checkbox" name="banned" />}
       </label>
-      <label>
+      {lookup.permissions.banned && <label>
         <span>Ban reason</span>
         <input type="text" name="banReason" value={lookup.history.banReason} />
-      </label>
+      </label>}
 
       <button type="submit">Edit user data</button>
 
