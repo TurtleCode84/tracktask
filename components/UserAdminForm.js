@@ -27,17 +27,17 @@ export default function UserSearchForm({ errorMessage, onSubmit, lookup }) {
         <input type="url" name="profilePicture" value={lookup.history.notes} />
       </label><hr/>
       <h2>Permissions:</h2>
-      <label>
+      <label for="verified">
         <span>Verified</span>
-        <input type="checkbox" name="verified" value={lookup.permissions.verified} />
+        <input type="checkbox" name="verified" id="verified" value={lookup.permissions.verified} />
       </label>
-      <label>
+      <label for="admin">
         <span>Admin</span>
-        <input type="checkbox" name="admin" value={lookup.permissions.admin} />
+        <input type="checkbox" name="admin" id="admin" value={lookup.permissions.admin} />
       </label>
-      <label>
+      <label for="banned">
         <span>Banned</span>
-        <input type="checkbox" name="banned" value={lookup.permissions.banned} />
+        <input type="checkbox" name="banned" id="banned" value={lookup.permissions.banned} />
       </label>
       <label>
         <span>Ban reason</span>
