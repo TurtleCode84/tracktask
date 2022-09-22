@@ -61,7 +61,7 @@ export default function UserAdmin() {
       <p>Last ban reason: {lookup.history.banReason ? lookup.history.banReason : 'none'}</p></>
       :
       <><p style={{ fontStyle: "italic" }}>Loading user info...</p>
-      {error ? <p>{error.message}</p> : null}</>
+      {error ? <p>{error.data.message}</p> : null}</>
       }
       <details>
         <summary>View raw JSON</summary>
