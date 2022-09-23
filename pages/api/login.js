@@ -53,7 +53,7 @@ export default withIronSessionApiRoute(async (req, res) => {
           "history.loginIpList": ip,
         },
       };
-      const ipUpdate = await db.collection('users').updateOne(query, ipUpdateDoc);
+      const ipUpdate = await db.collection('users').updateOne(query, ipUpdateDoc); // Is assigning the const here unecessary?
       const user = { isLoggedIn: true, id: userInfo._id, username: userInfo.username, profilePicture: userInfo.profilePicture, permissions: userInfo.permissions, history: { "banReason": userInfo.history.banReason } };
       req.session.user = user;
       await req.session.save();
