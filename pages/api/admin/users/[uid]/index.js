@@ -2,6 +2,7 @@ import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "lib/session";
 import { ObjectId } from 'mongodb'
 import clientPromise from "lib/mongodb";
+import { hash } from 'bcryptjs';
 
 export default withIronSessionApiRoute(adminUserRoute, sessionOptions);
 
@@ -36,6 +37,15 @@ async function adminUserRoute(req, res) {
     var updateUser = {};
     if (body.username) updateUser.username = body.username;
     if (body.username) updateUser.email = body.email;
+    if (body.password) updateUser.password = await hash(body.password, 10);
+    if (body.shareKey) updateUser.shareKey = body.shareKey;
+    if (body.profilePicture) updateUser.profilePicture = body.profilePicture;
+    if (body.notes) updateUser.history.notes = body.notes;
+    const query = { _id: body.id }
+    const updateDoc = {
+      $set: updateUser,
+    };
+    await db.collection('users').updateOne(query, updateDoc);
     res.status(400).json({ message: "Under construction" });
   } else {
     res.status(405).json({ message: "Method not allowed" });
