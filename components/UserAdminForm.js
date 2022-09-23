@@ -1,6 +1,6 @@
-export default function UserSearchForm({ errorMessage, onSubmit, lookup }) {
+export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
   return (
-    <form onSubmit={onSubmit}>
+    <form id="userAdminForm" onSubmit={onSubmit}>
       <label>
         <span>Username</span>
         <input type="text" name="username" placeholder={lookup.username} />
