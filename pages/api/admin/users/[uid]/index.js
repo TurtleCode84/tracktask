@@ -32,12 +32,11 @@ async function adminUserRoute(req, res) {
       res.status(200).json([]);
     }
   } else if (req.method === 'POST') {
-    const body = req.body;
-    if (body) {
-      res.status(400).json({ message: "Under construction" });
-    } else {
-      res.status(422).json({ message: "You didn\'t make any changes" });
-    }
+    const body = await req.body;
+    var updateUser = {};
+    if (body.username) updateUser.username = body.username;
+    if (body.username) updateUser.email = body.email;
+    res.status(400).json({ message: "Under construction" });
   } else {
     res.status(405).json({ message: "Method not allowed" });
   }
