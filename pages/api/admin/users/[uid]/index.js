@@ -6,13 +6,12 @@ import clientPromise from "lib/mongodb";
 export default withIronSessionApiRoute(adminUserRoute, sessionOptions);
 
 async function adminUserRoute(req, res) {
+  const user = req.session.user;
+  if (!user || !user.isLoggedIn || !user.permissions.admin ) {
+    res.status(401).json({ message: "Unauthorized" });
+    return;
+  }
   if (req.method === 'GET') {
-    const user = req.session.user;
-    if (!user || !user.isLoggedIn || !user.permissions.admin ) {
-      res.status(401).json({ message: "Unauthorized" });
-      return;
-    }
-    
     const { uid } = req.query
     if (!ObjectId.isValid(uid)) {
       res.status(422).json({ message: "Invalid user ID" });
@@ -33,7 +32,12 @@ async function adminUserRoute(req, res) {
       res.status(200).json([]);
     }
   } else if (req.method === 'POST') {
-    res.status(400).json({ message: "Under construction" });
+    const body = req.body;
+    if (body) {
+      res.status(400).json({ message: "Under construction" });
+    } else {
+      res.status(422).json({ message: "You didn\'t make any changes" });
+    }
   } else {
     res.status(405).json({ message: "Method not allowed" });
   }
