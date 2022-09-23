@@ -96,7 +96,6 @@ export default function UserAdmin() {
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify(body),
                 })
-                document.getElementById("userAdminForm").reset();
                 router.reload();
               } catch (error) {
                 if (error instanceof FetchError) {
