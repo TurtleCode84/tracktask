@@ -34,6 +34,8 @@ async function adminUserRoute(req, res) {
     }
   } else if (req.method === 'POST') {
     const body = await req.body;
+    const client = await clientPromise;
+    const db = client.db("data");
     var updateUser = {};
     if (body.username) {updateUser.username = body.username};
     if (body.email) {updateUser.email = body.email};
