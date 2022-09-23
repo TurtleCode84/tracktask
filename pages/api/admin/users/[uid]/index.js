@@ -48,7 +48,7 @@ async function adminUserRoute(req, res) {
       $set: updateUser,
     };
     const updated = await db.collection('users').updateOne(query, updateDoc);
-    res.status(400).json({ message: updated });
+    res.json(updated);
   } else {
     res.status(405).json({ message: "Method not allowed" });
   }
