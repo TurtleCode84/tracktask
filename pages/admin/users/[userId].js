@@ -70,6 +70,11 @@ export default function UserAdmin() {
             lookup={lookup}
             onSubmit={async function handleSubmit(event) {
               event.preventDefault();
+              
+              if (event.currentTarget.password.value !== event.currentTarget.cpassword.value) {
+                setErrorMsg("Passwords do not match!");
+                return;
+              }
   
               const body = {
                 id: lookup._id,
