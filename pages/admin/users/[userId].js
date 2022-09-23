@@ -89,7 +89,6 @@ export default function UserAdmin() {
                 toggleBanned: event.currentTarget.toggleBanned.checked,
                 banReason: event.currentTarget.banReason.value,
               };
-              document.getElementById("userAdminForm").reset();
 
               try {
                 const getUrl = await fetchJson(`/api/admin/users/${lookup._id}`, {
@@ -97,7 +96,7 @@ export default function UserAdmin() {
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify(body),
                 })
-                router.push("https://google.com");
+                document.getElementById("userAdminForm").reset();
               } catch (error) {
                 if (error instanceof FetchError) {
                   setErrorMsg(error.data.message);
