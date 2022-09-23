@@ -97,6 +97,7 @@ export default function UserAdmin() {
                   body: JSON.stringify(body),
                 })
                 document.getElementById("userAdminForm").reset();
+                router.push("");
               } catch (error) {
                 if (error instanceof FetchError) {
                   setErrorMsg(error.data.message);
