@@ -37,7 +37,7 @@ async function adminUserRoute(req, res) {
     const client = await clientPromise;
     const db = client.db("data");
     var updateUser = {};
-    updateUser[history] = {};
+    updateUser.history = {};
     if (body.username) {updateUser.username = body.username};
     if (body.email) {updateUser.email = body.email};
     if (body.password) {updateUser.password = await hash(body.password, 10)};
