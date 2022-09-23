@@ -36,7 +36,7 @@ async function adminUserRoute(req, res) {
     const body = await req.body;
     var updateUser = {};
     if (body.username) updateUser.username = body.username;
-    if (body.username) updateUser.email = body.email;
+    if (body.email) updateUser.email = body.email;
     if (body.password) updateUser.password = await hash(body.password, 10);
     if (body.shareKey) updateUser.shareKey = body.shareKey;
     if (body.profilePicture) updateUser.profilePicture = body.profilePicture;
