@@ -77,7 +77,6 @@ export default function UserAdmin() {
               }
   
               const body = {
-                id: lookup._id,
                 username: event.currentTarget.username.value,
                 email: event.currentTarget.email.value,
                 password: event.currentTarget.password.value,
