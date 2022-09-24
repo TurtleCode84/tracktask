@@ -24,7 +24,7 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
       </label>
       <label>
         <span>Admin notes</span>
-        <textarea name="notes" placeholder={lookup.history.notes} disabled />
+        <textarea name="notes" rows="4" cols="60" placeholder={lookup.history.notes} disabled />
       </label><hr/>
       <h2>Permissions:</h2>
       <label>
@@ -69,6 +69,9 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
           vertical-align: middle;
           width: 15px !important;
           margin-bottom: 10px;
+        }
+        textarea {
+          resize: false;
         }
         .error {
           color: brown;
