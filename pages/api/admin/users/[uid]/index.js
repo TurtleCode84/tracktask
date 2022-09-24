@@ -13,7 +13,7 @@ async function adminUserRoute(req, res) {
     return;
   }
   if (req.method === 'GET') {
-    const { uid } = req.query
+    const { uid } = req.query;
     if (!ObjectId.isValid(uid)) {
       res.status(422).json({ message: "Invalid user ID" });
       return;
@@ -34,6 +34,7 @@ async function adminUserRoute(req, res) {
     }
   } else if (req.method === 'POST') {
     const body = await req.body;
+    const { uid } = req.query;
     const client = await clientPromise;
     const db = client.db("data");
     var updateUser = {};
@@ -42,11 +43,18 @@ async function adminUserRoute(req, res) {
     if (body.password) {updateUser.password = await hash(body.password, 10)};
     if (body.shareKey) {updateUser.shareKey = body.shareKey};
     if (body.removeProfilePicture) {updateUser.profilePicture = ""} else if (body.profilePicture) {updateUser.profilePicture = body.profilePicture};
-    const query = { _id: ObjectId(body.id) }
+    const query = { _id: ObjectId(uid) }
     const updateDoc = {
       $set: updateUser,
     };
     const updated = await db.collection('users').updateOne(query, updateDoc);
+    if (body.notes) {
+      const notesUpdateDoc = {
+        $set: {'history.notes': body.notes},
+      };
+      const updatedNotes = await db.collection('users').updateOne(query, notesUpdateDoc);
+      res.json(updatedNotes);
+    }
     res.json(updated);
   } else {
     res.status(405).json({ message: "Method not allowed" });
