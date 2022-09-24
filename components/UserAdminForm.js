@@ -24,7 +24,7 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
       </label>
       <label>
         <span>Remove profile picture</span>
-        <input type="checkbox" name="removeProfilePicture" disabled />
+        <input type="checkbox" name="removeProfilePicture" />
       </label>
       <label>
         <span>Admin notes</span>
