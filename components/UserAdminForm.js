@@ -21,6 +21,8 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
       <label>
         <span>Profile picture</span>
         <input type="url" name="profilePicture" placeholder={lookup.profilePicture} />
+      </label>
+      <label>
         <p>Remove profile picture</p>
         <input type="checkbox" name="removeProfilePicture" disabled />
       </label>
