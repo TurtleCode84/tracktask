@@ -52,8 +52,7 @@ async function adminUserRoute(req, res) {
       const notesUpdateDoc = {
         $set: {'history.notes': body.notes},
       };
-      const updatedNotes = await db.collection('users').updateOne(query, notesUpdateDoc);
-      res.json(updatedNotes);
+      const updatedNotes = await db.collection('users').updateOne(query, notesUpdateDoc); // Does not catch errors, could be a problem if updated succeeds but updatedNotes does not?
     }
     res.json(updated);
   } else {
