@@ -28,7 +28,7 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
       </label>
       <label>
         <span>Admin notes</span>
-        <textarea name="notes" rows="4" cols="50" placeholder={lookup.history.notes} />
+        <textarea name="notes" rows="4" cols="30" placeholder={lookup.history.notes} />
       </label><hr/>
       <h2>Permissions:</h2>
       <label>
