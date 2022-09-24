@@ -24,12 +24,12 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
       </label>
       <label>
         <span>Admin notes</span>
-        <textarea name="notes" placeholder={lookup.history.notes} />
+        <textarea name="notes" placeholder={lookup.history.notes} disabled />
       </label><hr/>
       <h2>Permissions:</h2>
       <label>
         {lookup.permissions.verified ? <span>Unverify user</span> : <span>Verify user</span>}
-        <input type="checkbox" name="toggleVerified" />
+        <input type="checkbox" name="toggleVerified" disabled />
       </label>
       <label>
         {lookup.permissions.admin ? <span>Remove admin from user</span> : <span>Make user admin</span>}
@@ -37,11 +37,11 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
       </label>
       <label>
         {lookup.permissions.banned ? <span>Unban user</span> : <span>Ban user</span>}
-        <input type="checkbox" name="toggleBanned" />
+        <input type="checkbox" name="toggleBanned" disabled />
       </label>
       <label>
         {lookup.permissions.banned ? <span>Edit ban reason</span> : <span>Ban reason</span>}
-        <input type="text" name="banReason" />
+        <input type="text" name="banReason" disabled />
       </label>
 
       <button type="submit">Edit user data</button>
