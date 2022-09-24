@@ -42,6 +42,9 @@ async function adminUserRoute(req, res) {
     if (body.password) {updateUser.password = await hash(body.password, 10)};
     if (body.shareKey) {updateUser.shareKey = body.shareKey};
     if (body.profilePicture) {updateUser.profilePicture = body.profilePicture};
+    if (!updateUser) {
+      res.status(422).json({ message: "You didn\`t change anything" });
+    }
     const query = { _id: ObjectId(body.id) }
     const updateDoc = {
       $set: updateUser,
