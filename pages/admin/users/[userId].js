@@ -83,6 +83,7 @@ export default function UserAdmin() {
                 password: event.currentTarget.password.value,
                 shareKey: event.currentTarget.shareKey.value,
                 profilePicture: event.currentTarget.profilePicture.value,
+                removeProfilePicture: event.currentTarget.removeProfilePicture.checked,
                 notes: event.currentTarget.notes.value,
                 toggleVerified: event.currentTarget.toggleVerified.checked,
                 toggleAdmin: event.currentTarget.toggleAdmin.checked,
