@@ -41,7 +41,7 @@ async function adminUserRoute(req, res) {
     if (body.email) {updateUser.email = body.email.toLowerCase()};
     if (body.password) {updateUser.password = await hash(body.password, 10)};
     if (body.shareKey) {updateUser.shareKey = body.shareKey};
-    if (body.profilePicture) {updateUser.profilePicture = body.profilePicture};
+    if (body.removeProfilePicture) {updateUser.profilePicture = ""} else if (body.profilePicture) {updateUser.profilePicture = body.profilePicture};
     const query = { _id: ObjectId(body.id) }
     const updateDoc = {
       $set: updateUser,
