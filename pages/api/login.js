@@ -7,6 +7,14 @@ export default withIronSessionApiRoute(async (req, res) => {
   if (req.method === 'POST') {
     const { username, password } = await req.body;
     
+    //Check if IP banned
+    const ip = req.headers["x-forwarded-for"].split(',')[0];
+    const bannedIps = process.env.IPBAN.split(',');
+    if (bannedIps.includes(ip)) {
+      res.status(403).json({ message: 'Your IP address has been banned from logging in due to repeated abuse of the platform. If you believe this may have been a mistake, please contact a TrackTask administrator.' });
+      return;
+    }
+    
     //Validate
     if (!username || !password) {
       res.status(401).json({ message: "Invalid data" });
@@ -44,7 +52,6 @@ export default withIronSessionApiRoute(async (req, res) => {
     }
     //Otherwise...
     try {
-      const ip = req.headers["x-forwarded-for"].split(',')[0];
       const ipUpdateDoc = { //update user IP and lastLogin
         $set: {
           "history.lastLogin": Math.floor(Date.now()/1000),
