@@ -23,9 +23,8 @@ export default function TasksCreate() {
   return (
     <Layout>
       <h1>
-        Create a task:
+        Create a new task:
       </h1>
-      <h2>General information</h2>
       <TaskCreateForm
         errorMessage={errorMsg}
         onSubmit={async function handleSubmit(event) {
