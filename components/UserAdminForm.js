@@ -63,7 +63,7 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
         }
       </label>
 
-      <button type="submit">Edit user data</button>
+      <button type="submit" id="editUserBtn">Edit user data</button>
 
       {errorMessage && <p className="error">{errorMessage}</p>}
 
