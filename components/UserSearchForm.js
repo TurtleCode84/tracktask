@@ -10,7 +10,6 @@ export default function UserSearchForm({ errorMessage, onSubmit }) {
         <select name="query" required>
           <option value="username">Username</option>
           <option value="uid">User ID</option>
-          <option value="email">Email</option>
         </select>
       </label>
 
