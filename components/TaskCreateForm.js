@@ -8,7 +8,7 @@ export default function TaskCreateForm({ errorMessage, onSubmit }) {
       <label>
         <span>Description</span>
         <textarea name="description" rows="4" cols="30" required />
-      </label>
+      </label><br/>
       <label>
         <span>Due Date (optional)</span>
         <input type="datetime-local" name="dueDate" />
