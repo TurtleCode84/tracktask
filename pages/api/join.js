@@ -10,6 +10,14 @@ async function joinRoute(req, res) {
   if (req.method === 'POST') {
     const { username, password, email } = await req.body;
     
+    //Check if IP banned
+    const ip = req.headers["x-forwarded-for"].split(',')[0];
+    const bannedIps = process.env.IPBAN.split(',');
+    if (bannedIps.includes(ip)) {
+      res.status(403).json({ message: 'Your IP address has been banned from creating accounts due to repeated abuse of the platform. If you believe this may have been a mistake, please contact a TrackTask administrator.' });
+      return;
+    }
+    
     //Validate
     if (!username || !password) {
       res.status(401).json({ message: "Invalid data" });
@@ -34,13 +42,6 @@ async function joinRoute(req, res) {
     const userExists = await db.collection("users").countDocuments(query);
     if (userExists > 0) {
       res.status(401).json({ message: "Username is not available, please choose something different." }); // user already exists
-      return;
-    }
-    //Check if IP banned
-    const ip = req.headers["x-forwarded-for"].split(',')[0];
-    const bannedIps = process.env.IPBAN.split(',');
-    if (bannedIps.includes(ip)) {
-      res.status(403).json({ message: 'Your IP address has been banned from creating accounts due to repeated abuse of the platform. If you believe this may have been a mistake, please contact a TrackTask administrator.' });
       return;
     }
     //Otherwise...
