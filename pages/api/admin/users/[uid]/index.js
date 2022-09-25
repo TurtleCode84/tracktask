@@ -35,7 +35,7 @@ async function adminUserRoute(req, res) {
   } else if (req.method === 'POST') {
     const body = await req.body;
     const { uid } = req.query;
-    if (process.env.SUPERADMIN === uid.toString() && user._id !== uid) {
+    if (process.env.SUPERADMIN === uid.toString() && user._id !== uid.toString()) {
       res.status(403).json({ message: "You do not have permission to modify this user." });
     }
     const client = await clientPromise;
