@@ -2,7 +2,7 @@ export default function UserSearchForm({ errorMessage, onSubmit }) {
   return (
     <form onSubmit={onSubmit}>
       <label>
-        <span>Find...</span>
+        <span>Username or User ID</span>
         <input type="text" name="usernameuid" required />
       </label>
       <label>
