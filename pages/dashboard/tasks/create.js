@@ -5,7 +5,8 @@ import Loading from "components/Loading";
 import TaskCreateForm from "components/TaskCreateForm";
 import useUser from "lib/useUser";
 import fetchJson, { FetchError } from "lib/fetchJson";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
+import Link from "next/link";
 
 export default function TasksCreate() {
   const { user } = useUser({
@@ -25,6 +26,7 @@ export default function TasksCreate() {
       <h1>
         Create a new task:
       </h1>
+      <Link href="/dashboard">Back to dashboard</Link>
       <TaskCreateForm
         errorMessage={errorMsg}
         onSubmit={async function handleSubmit(event) {
