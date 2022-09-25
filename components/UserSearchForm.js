@@ -15,7 +15,7 @@ export default function UserSearchForm({ errorMessage, onSubmit }) {
         </select>
       </label>
 
-      <br/><button type="submit">Find user</button>
+      <br/><button type="submit" id="findUserBtn">Find user</button>
 
       {errorMessage && <p className="error">{errorMessage}</p>}
 
