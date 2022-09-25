@@ -44,12 +44,23 @@ async function joinRoute(req, res) {
       res.status(401).json({ message: "Username is not available, please choose something different." }); // user already exists
       return;
     }
+    
+    //Check existing email
+    if (email) {
+      const query = { email: email.toLowerCase() };
+      const emailExists = await db.collection("users").countDocuments(query);
+      if (emailExists > 0) {
+        res.status(401).json({ message: "Email is not available, please choose something different." }); // email already exists
+        return;
+      }
+    }
+    
     //Otherwise...
     try {
       const newUser = {
-        username: username,
+        username: username.toLowerCase(),
         password: await hash(password, 10),
-        email: email,
+        email: email.toLowerCase(),
         history: {
           joined: Math.floor(Date.now()/1000),
           lastLogin: 0,
