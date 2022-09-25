@@ -4,6 +4,7 @@ import Layout from "components/Layout";
 import LoginForm from "components/LoginForm";
 import Link from "next/link";
 import fetchJson, { FetchError } from "lib/fetchJson";
+import { useRouter } from 'next/router'
 
 export default function Login() {
   // here we just check if user is already logged in and redirect to dashboard
@@ -13,6 +14,12 @@ export default function Login() {
   });
   
   const [errorMsg, setErrorMsg] = useState("");
+  const router = useRouter();
+  const { joined } = router.query;
+  var joinMsg;
+  if (joined === "true") {
+    joinMsg = "Account successfully created! You can log in now."
+  }
 
   return (
     <Layout>
@@ -21,6 +28,7 @@ export default function Login() {
         <hr/><br/>
         <LoginForm
           errorMessage={errorMsg}
+          joinMessage={joinMsg}
           onSubmit={async function handleSubmit(event) {
             event.preventDefault();
 
