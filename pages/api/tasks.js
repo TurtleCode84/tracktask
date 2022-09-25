@@ -2,19 +2,19 @@ import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "lib/session";
 import { ObjectId } from 'mongodb'
 import clientPromise from "lib/mongodb";
+import moment from "moment";
 
 export default withIronSessionApiRoute(tasksRoute, sessionOptions);
 
 async function tasksRoute(req, res) {
+  const user = req.session.user;
+  if (!user || !user.isLoggedIn || user.permissions.banned ) {
+    res.status(401).json({ message: "Unauthorized" });
+    return;
+  }
+  const client = await clientPromise;
+  const db = client.db("data");
   if (req.method === 'GET') {
-    const user = req.session.user;
-    if (!user || !user.isLoggedIn || user.permissions.banned ) {
-      res.status(401).json({ message: "Unauthorized" });
-      return;
-    }
-  
-    const client = await clientPromise;
-    const db = client.db("data");
     const query = { owner: ObjectId(user.id), hidden: false };
     const options = {
       sort: { priority: -1, dueDate: 1 },
@@ -28,8 +28,35 @@ async function tasksRoute(req, res) {
       res.status(200).json([]);
     }
   } else if (req.method === 'POST') {
-    res.status(418).json({ message: "Under construction" });
-    return;
+    const { name, description, dueDate, markCompleted, markPriority } = await req.body;
+    if (!name || !description) {
+      res.status(422).json({ message: "Invalid data" });
+      return;
+    }
+    // Otherwise...
+    try {
+      const newTask = {
+        name: name.trim(),
+        description: description.trim(),
+        hidden: false,
+        dueDate: moment(dueDate, moment.DATETIME_LOCAL).unix(),
+        owner: ObjectId(user.id),
+        completion: {},
+        priority: markPriority,
+        collections: [],
+      }
+      if (markCompleted) {
+        completion.completed = Math.floor(Date.now()/1000);
+        completion.completedBy = ObjectId(user.id);
+      } else {
+        completion.completed = 0;
+        completion.completedBy = "";
+      }
+      const createdTask = await db.collection('users').insertOne(newTask);
+      res.json(createdTask);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
   } else {
     res.status(405).json({ message: "Method not allowed" });
     return;
