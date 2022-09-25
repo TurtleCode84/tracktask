@@ -11,6 +11,11 @@ export default function Admin() {
     adminOnly: true,
   });
   const { users } = useAdminUsers(user);
+  const recentUsersList = users?.map((recentUser) =>
+    <li key={recentUser._id}>
+      <Link href=`/admin/users/${recentUser._id}`>{recentUser.username}</Link> - Joined {recentUser.history.joined > 0 ? moment.unix(recentUser.history.joined).fromNow() : 'never'}
+    </li>
+  );
 
   if (!user || !user.isLoggedIn || !user.permissions.admin) {
     return (
@@ -25,7 +30,7 @@ export default function Admin() {
       </h2>
       <h3>Recently created users:</h3>
       <ul>
-        <li>Coming soon</li>
+        {recentUsersList ? recentUsersList : 'No users found'}
       </ul>
       <p>All admin pages:</p>
       <ul>
