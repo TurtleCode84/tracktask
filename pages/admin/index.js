@@ -13,7 +13,7 @@ export default function Admin() {
   const { users } = useAdminUsers(user);
   const recentUsersList = users?.map((recentUser) =>
     <li key={recentUser._id}>
-      <Link href="/admin/users/`${recentUser._id}`">{recentUser.username}</Link> - Joined {recentUser.history.joined > 0 ? moment.unix(recentUser.history.joined).fromNow() : 'never'}
+      <Link href={`/admin/users/`${recentUser._id}`}>{recentUser.username}</Link> - Joined {recentUser.history.joined > 0 ? moment.unix(recentUser.history.joined).fromNow() : 'never'}
     </li>
   );
 
@@ -30,7 +30,7 @@ export default function Admin() {
       </h2>
       <h3>Recently created users:</h3>
       <ul>
-        {recentUsersList ? recentUsersList : 'No users found'}
+        {recentUsersList ? recentUsersList : 'Loading recent users...'}
       </ul>
       <p>All admin pages:</p>
       <ul>
