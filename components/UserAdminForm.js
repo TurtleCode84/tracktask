@@ -32,8 +32,13 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
       </label><hr/>
       <h2>Permissions:</h2>
       <label>
-        {lookup.permissions.verified ? <span>Unverify user</span> : <span>Verify user</span>}
-        <input type="checkbox" name="toggleVerified" disabled />
+        {lookup.permissions.verified ?
+        <><span>Unverify user</span>
+        <input type="checkbox" name="unverify" /></>
+        :
+        <><span>Verify user</span>
+        <input type="checkbox" name="verify" /></>
+        }
       </label>
       <label>
         {lookup.permissions.admin ? <span>Remove admin from user</span> : <span>Make user admin</span>}
