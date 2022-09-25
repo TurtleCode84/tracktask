@@ -2,6 +2,7 @@ import React from "react";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
 import useUser from "lib/useUser";
+import useAdminUsers from "lib/useAdminUsers";
 import Link from "next/link";
 
 export default function Admin() {
@@ -9,6 +10,7 @@ export default function Admin() {
     redirectTo: "/dashboard",
     adminOnly: true,
   });
+  const { users } = useAdminUsers(user);
 
   if (!user || !user.isLoggedIn || !user.permissions.admin) {
     return (
@@ -21,6 +23,10 @@ export default function Admin() {
       <h2>
         Welcome back{user ? `, ${user.username}` : null}!
       </h2>
+      <h3>Recently created users:</h3>
+      <ul>
+        <li>Coming soon</li>
+      </ul>
       <p>All admin pages:</p>
       <ul>
         <li><Link href="/admin/users">User Admin</Link></li>
