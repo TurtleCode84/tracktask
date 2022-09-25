@@ -65,6 +65,13 @@ export default function Header() {
                   </a>
                 </Link>
               </li>
+              {user?.isLoggedIn === true && (
+                <li>
+                  <Link href="/tasks/new">
+                    <a>+ New task</a>
+                  </Link>
+                </li>
+              )}
               {user?.permissions.admin === true && (
                 <li>
                   <Link href="/admin">
