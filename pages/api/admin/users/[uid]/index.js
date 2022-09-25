@@ -2,7 +2,8 @@ import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "lib/session";
 import { ObjectId } from 'mongodb'
 import clientPromise from "lib/mongodb";
-import { hash } from 'bcryptjs';
+import { hash } from "bcryptjs";
+import {v4 as uuidv4} from "uuid";
 
 export default withIronSessionApiRoute(adminUserRoute, sessionOptions);
 
@@ -45,7 +46,7 @@ async function adminUserRoute(req, res) {
     if (body.username) {updateUser.username = body.username.toLowerCase()};
     if (body.email) {updateUser.email = body.email.toLowerCase()};
     if (body.password) {updateUser.password = await hash(body.password, 10)};
-    if (body.shareKey) {updateUser.shareKey = body.shareKey};
+    if (body.resetShareKey) {updateUser.shareKey = uuidv4()};
     if (body.removeProfilePicture) {updateUser.profilePicture = ""} else if (body.profilePicture) {updateUser.profilePicture = body.profilePicture};
     const query = { _id: ObjectId(uid) }
     const updateDoc = {
