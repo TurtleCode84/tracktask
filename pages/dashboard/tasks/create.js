@@ -26,7 +26,6 @@ export default function TasksCreate() {
       <h1>
         Create a new task:
       </h1>
-      <Link href="/dashboard">Back to dashboard</Link>
       <TaskCreateForm
         errorMessage={errorMsg}
         onSubmit={async function handleSubmit(event) {
@@ -58,6 +57,7 @@ export default function TasksCreate() {
           }
         }}
       />
+      <Link href="/dashboard">Back to dashboard</Link>
     </Layout>
   );
 }
