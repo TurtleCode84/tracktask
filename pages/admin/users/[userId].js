@@ -80,7 +80,7 @@ export default function UserAdmin() {
                 username: event.currentTarget.username.value,
                 email: event.currentTarget.email.value,
                 password: event.currentTarget.password.value,
-                shareKey: event.currentTarget.shareKey.value,
+                resetShareKey: event.currentTarget.resetShareKey.checked,
                 profilePicture: event.currentTarget.profilePicture.value,
                 removeProfilePicture: event.currentTarget.removeProfilePicture.checked,
                 notes: event.currentTarget.notes.value,
