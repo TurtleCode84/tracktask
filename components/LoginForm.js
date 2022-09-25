@@ -13,7 +13,7 @@ export default function LoginForm({ errorMessage, onSubmit, joinMessage }) {
       <button type="submit" id="loginBtn">Login</button>
 
       {errorMessage && <p className="error">{errorMessage}</p>}
-      {joinMessage && <p className="success">{joinMessage}</p>}
+      {joinMessage && !errorMessage && <p className="success">{joinMessage}</p>}
 
       <style jsx>{`
         form,
