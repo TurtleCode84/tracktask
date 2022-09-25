@@ -65,6 +65,11 @@ async function adminUserRoute(req, res) {
         $set: {'permissions.banned': body.ban, 'history.banReason': body.banReason},
       };
       const updatedBan = await db.collection('users').updateOne(query, banUpdateDoc); // See above
+    } else if (body.banReason) {
+      const banReasonUpdateDoc = {
+        $set: {'history.banReason': body.banReason},
+      };
+      const updatedBan = await db.collection('users').updateOne(query, banReasonUpdateDoc); // See above
     }
     res.json(updated);
   } else {
