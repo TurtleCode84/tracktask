@@ -17,11 +17,11 @@ async function adminUsersRoute(req, res) {
       res.status(422).json({ message: "You must specify the query parameters \'sort\' and \'count\'" });
       return;
     }
+    const client = await clientPromise;
+    const db = client.db("data");
     if (sort === "joined") {
-      const client = await clientPromise;
-      const db = client.db("data");
       try {
-        const getUsers = await db.collection("users").find().projection({ _id: 1, username: 1, 'history.joined': 1 }).limit(count).sort({ 'history.joined': -1 }).toArray();
+        const getUsers = await db.collection("users").find()/*.projection({ _id: 1, username: 1, 'history.joined': 1 }).limit(count).sort({ 'history.joined': -1 })*/.toArray();
         if (getUsers) {
           res.json(getUsers);
         } else {
