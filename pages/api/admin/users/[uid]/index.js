@@ -60,16 +60,21 @@ async function adminUserRoute(req, res) {
       };
       const updatedVerify = await db.collection('users').updateOne(query, verifyUpdateDoc); // See above
     }
-    if (body.ban !== undefined) { // true or false
+    if (body.ban !== undefined && body.ban) { // true or false
       const banUpdateDoc = {
         $set: {'permissions.banned': body.ban, 'history.banReason': body.banReason},
       };
       const updatedBan = await db.collection('users').updateOne(query, banUpdateDoc); // See above
-    } else if (body.banReason) {
+    } else if (body.ban !== undefined && !body.ban) {
+      const banUpdateDoc = {
+        $set: {'permissions.banned': body.ban},
+      };
+      const updatedBan = await db.collection('users').updateOne(query, banUpdateDoc); // See above
+    } else if (body.ban === undefined && body.banReason) {
       const banReasonUpdateDoc = {
         $set: {'history.banReason': body.banReason},
       };
-      const updatedBan = await db.collection('users').updateOne(query, banReasonUpdateDoc); // See above
+      const updatedBanReason = await db.collection('users').updateOne(query, banReasonUpdateDoc); // See above
     }
     res.json(updated);
   } else {
