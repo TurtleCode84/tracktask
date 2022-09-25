@@ -54,8 +54,13 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
         }
       </label>
       <label>
-        {lookup.permissions.banned ? <span>Edit ban reason</span> : <span>Ban reason</span>}
-        <input type="text" name="banReason" />
+        {lookup.permissions.banned ?
+        <><span>Edit ban reason</span>
+        <input type="text" placeholder={lookup.history.banReason} name="banReason" /></>
+        :
+        <><span>Ban reason</span>
+        <input type="text" name="banReason" /></>
+        }
       </label>
 
       <button type="submit">Edit user data</button>
