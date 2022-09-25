@@ -45,12 +45,17 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
         <input type="checkbox" name="toggleAdmin" disabled />
       </label>
       <label>
-        {lookup.permissions.banned ? <span>Unban user</span> : <span>Ban user</span>}
-        <input type="checkbox" name="toggleBanned" disabled />
+        {lookup.permissions.banned ?
+        <><span>Unban user</span>
+        <input type="checkbox" name="unban" /></>
+        :
+        <><span>Ban user</span>
+        <input type="checkbox" name="ban" /></>
+        }
       </label>
       <label>
         {lookup.permissions.banned ? <span>Edit ban reason</span> : <span>Ban reason</span>}
-        <input type="text" name="banReason" disabled />
+        <input type="text" name="banReason" />
       </label>
 
       <button type="submit">Edit user data</button>
