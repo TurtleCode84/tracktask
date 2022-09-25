@@ -32,6 +32,7 @@ export default function UsersAdmin() {
           errorMessage={errorMsg}
           onSubmit={async function handleSubmit(event) {
             event.preventDefault();
+            document.getElementById("findUserBtn").disabled = true;
 
             const body = {
               usernameuid: event.currentTarget.usernameuid.value,
@@ -51,6 +52,7 @@ export default function UsersAdmin() {
               } else {
                 console.error("An unexpected error happened:", error);
               }
+              document.getElementById("findUserBtn").disabled = false;
             }
           }}
       />
