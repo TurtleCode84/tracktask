@@ -39,18 +39,22 @@ async function tasksRoute(req, res) {
         name: name.trim(),
         description: description.trim(),
         hidden: false,
-        dueDate: moment(dueDate, moment.DATETIME_LOCAL).unix(),
         owner: ObjectId(user.id),
         completion: {},
         priority: markPriority,
         collections: [],
       }
-      if (markCompleted) {
-        completion.completed = Math.floor(Date.now()/1000);
-        completion.completedBy = ObjectId(user.id);
+      if (dueDate) {
+        newTask.dueDate = moment(dueDate, moment.DATETIME_LOCAL).unix();
       } else {
-        completion.completed = 0;
-        completion.completedBy = "";
+        newTask.dueDate = 0;
+      }
+      if (markCompleted) {
+        newTask.completion.completed = Math.floor(Date.now()/1000);
+        newTask.completion.completedBy = ObjectId(user.id);
+      } else {
+        newTask.completion.completed = 0;
+        newTask.completion.completedBy = "";
       }
       const createdTask = await db.collection('users').insertOne(newTask);
       res.json(createdTask);
