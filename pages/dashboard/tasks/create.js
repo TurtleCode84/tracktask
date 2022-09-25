@@ -5,6 +5,7 @@ import Loading from "components/Loading";
 import TaskCreateForm from "components/TaskCreateForm";
 import useUser from "lib/useUser";
 import fetchJson, { FetchError } from "lib/fetchJson";
+import { useRouter } from 'next/router'
 
 export default function TasksCreate() {
   const { user } = useUser({
