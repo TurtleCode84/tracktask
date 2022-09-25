@@ -20,7 +20,7 @@ async function joinRoute(req, res) {
     
     //Validate
     if (!username || !password) {
-      res.status(401).json({ message: "Invalid data" });
+      res.status(422).json({ message: "Invalid data" });
       return;
     }
     
