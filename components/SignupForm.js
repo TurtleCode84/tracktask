@@ -18,7 +18,7 @@ export default function SignupForm({ errorMessage, onSubmit }) {
         <input type="password" name="cpassword" required />
       </label>
 
-      <button type="submit">Sign up</button>
+      <button type="submit" id="signupBtn">Sign up</button>
 
       {errorMessage && <p className="error">{errorMessage}</p>}
 
