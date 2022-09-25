@@ -27,7 +27,7 @@ async function adminUsersRoute(req, res) {
       }
   
       try {
-        const getUsers = await db.collection("users").find(options);
+        const getUsers = await db.collection("users").find(options).toArray();
         if (getUsers) {
           res.json(getUsers);
         } else {
