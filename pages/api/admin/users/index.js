@@ -20,19 +20,15 @@ async function adminUsersRoute(req, res) {
     if (sort === "joined") {
       const client = await clientPromise;
       const db = client.db("data");
-      const options = {
-        projection: { _id: 1, username: 1, 'history.joined': 1 },
-        sort: { 'history.joined': -1 },
-      }
       try {
-        const getUsers = await db.collection("users").find(options).limit(parseInt(count)).toArray();
+        const getUsers = await db.collection("users").find().projection({ _id: 1, username: 1, 'history.joined': 1 }).limit(count).sort({ 'history.joined': -1 }).toArray();
         if (getUsers) {
           res.json(getUsers);
         } else {
           res.status(404).json({ message: "No users found" });
         }
       } catch (error) {
-        res.status(200).json([]); // ?
+        res.status(200).json({ message: error });
       }
     } else {
       res.status(422).json({ message: "Invalid sort query" });
