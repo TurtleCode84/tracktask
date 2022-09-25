@@ -60,6 +60,12 @@ async function adminUserRoute(req, res) {
       };
       const updatedVerify = await db.collection('users').updateOne(query, verifyUpdateDoc); // See above
     }
+    if (body.ban !== undefined) { // true or false
+      const banUpdateDoc = {
+        $set: {'permissions.banned': body.ban, 'history.banreason': body.banReason},
+      };
+      const updatedBan = await db.collection('users').updateOne(query, banUpdateDoc); // See above
+    }
     res.json(updated);
   } else {
     res.status(405).json({ message: "Method not allowed" });
