@@ -46,7 +46,7 @@ export default function TasksCreate() {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(body),
             })
-            router.push(`/dashboard`);
+            router.push(`/tasks/${getUrl.insertedId}`);
           } catch (error) {
             if (error instanceof FetchError) {
               setErrorMsg(error.data.message);
