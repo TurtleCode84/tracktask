@@ -84,8 +84,7 @@ export default function UserAdmin() {
                 profilePicture: event.currentTarget.profilePicture.value,
                 removeProfilePicture: event.currentTarget.removeProfilePicture.checked,
                 notes: event.currentTarget.notes.value,
-                toggleAdmin: event.currentTarget.toggleAdmin.checked,
-                toggleBanned: event.currentTarget.toggleBanned.checked,
+                //toggleAdmin: event.currentTarget.toggleAdmin.checked,
                 banReason: event.currentTarget.banReason.value,
               };
               
@@ -93,6 +92,11 @@ export default function UserAdmin() {
                 body.verify = true;
               } else if (event.currentTarget.unverify && event.currentTarget.unverify.checked) {
                 body.verify = false;
+              }
+              if (event.currentTarget.ban && event.currentTarget.ban.checked) {
+                body.ban = true;
+              } else if (event.currentTarget.unban && event.currentTarget.unban.checked) {
+                body.ban = false;
               }
 
               try {
