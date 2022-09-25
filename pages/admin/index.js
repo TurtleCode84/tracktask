@@ -32,6 +32,7 @@ export default function Admin() {
       <h3>Recently created users:</h3>
       <ul>
         {recentUsersList ? recentUsersList : 'Loading recent users...'}
+        {recentUsersList && recentUsersList === null && <>No users found</>}
       </ul>
       <p>All admin pages:</p>
       <ul>
