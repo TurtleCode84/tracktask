@@ -27,7 +27,7 @@ async function adminUsersRoute(req, res) {
           res.status(404).json({ message: "No users found" });
         }
       } catch (error) {
-        res.status(500).json(error);
+        res.status(500).json({ message: error.message });
       }
     } else {
       res.status(422).json({ message: "Invalid sort query" });
