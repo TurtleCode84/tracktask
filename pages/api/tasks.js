@@ -56,7 +56,7 @@ async function tasksRoute(req, res) {
         newTask.completion.completed = 0;
         newTask.completion.completedBy = "";
       }
-      const createdTask = await db.collection('users').insertOne(newTask);
+      const createdTask = await db.collection('tasks').insertOne(newTask);
       res.json(createdTask);
     } catch (error) {
       res.status(500).json({ message: error.message });
