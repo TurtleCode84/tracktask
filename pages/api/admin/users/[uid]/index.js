@@ -54,6 +54,12 @@ async function adminUserRoute(req, res) {
       };
       const updatedNotes = await db.collection('users').updateOne(query, notesUpdateDoc); // Does not catch errors, could be a problem if updated succeeds but updatedNotes does not?
     }
+    if (body.verify) { // true or false
+      const verifyUpdateDoc = {
+        $set: {'permissions.verified': body.verify},
+      };
+      const updatedVerify = await db.collection('users').updateOne(query, verifyUpdateDoc); // See above
+    }
     res.json(updated);
   } else {
     res.status(405).json({ message: "Method not allowed" });
