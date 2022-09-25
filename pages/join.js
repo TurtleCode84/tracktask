@@ -36,7 +36,7 @@ export default function Join() {
 
             try {
               mutateUser(
-                await fetchJson("/api/signup", {
+                await fetchJson("/api/join", {
                   method: "POST",
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify(body),
