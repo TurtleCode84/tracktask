@@ -1,4 +1,4 @@
-export default function LoginForm({ errorMessage, onSubmit }) {
+export default function LoginForm({ errorMessage, onSubmit, joinMessage }) {
   return (
     <form onSubmit={onSubmit}>
       <label>
@@ -13,6 +13,7 @@ export default function LoginForm({ errorMessage, onSubmit }) {
       <button type="submit">Login</button>
 
       {errorMessage && <p className="error">{errorMessage}</p>}
+      {joinMessage && <p className="success">{joinMessage}</p>}
 
       <style jsx>{`
         form,
@@ -31,6 +32,10 @@ export default function LoginForm({ errorMessage, onSubmit }) {
         }
         .error {
           color: brown;
+          margin: 1rem 0 0;
+        }
+        .success {
+          color: darkgreen;
           margin: 1rem 0 0;
         }
       `}</style>
