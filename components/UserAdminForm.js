@@ -15,8 +15,8 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
         <input type="password" placeholder="Retype new password" name="cpassword" />
       </label><hr/>
       <label>
-        <span>Share key</span>
-        <input type="text" name="shareKey" placeholder={lookup.shareKey} />
+        <span>Reset share key</span>
+        <input type="checkbox" name="resetShareKey" />
       </label>
       <label>
         <span>Profile picture</span>
