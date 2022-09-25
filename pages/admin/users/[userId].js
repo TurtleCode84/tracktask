@@ -70,9 +70,10 @@ export default function UserAdmin() {
             lookup={lookup}
             onSubmit={async function handleSubmit(event) {
               event.preventDefault();
-              
+              document.getElementById("editUserBtn").disabled = true;
               if (event.currentTarget.password.value !== event.currentTarget.cpassword.value) {
                 setErrorMsg("Passwords do not match!");
+                document.getElementById("editUserBtn").disabled = false;
                 return;
               }
               
@@ -112,6 +113,7 @@ export default function UserAdmin() {
                 } else {
                   console.error("An unexpected error happened:", error);
                 }
+                document.getElementById("editUserBtn").disabled = false;
               }
             }}
         />
