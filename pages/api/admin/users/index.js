@@ -21,7 +21,7 @@ async function adminUsersRoute(req, res) {
     const db = client.db("data");
     if (sort === "joined") {
       try {
-        const getUsers = await db.collection("users").find().projection({ _id: 1, username: 1, 'history.joined': 1 }).limit(parseInt(count)).sort({ 'history.joined': -1 }).toArray();
+        const getUsers = await db.collection("users").find().project({ _id: 1, username: 1, 'history.joined': 1 }).limit(parseInt(count)).sort({ 'history.joined': -1 }).toArray();
         if (getUsers) {
           res.json(getUsers);
         } else {
