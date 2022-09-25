@@ -90,9 +90,9 @@ export default function UserAdmin() {
               };
               
               if (event.currentTarget.verify && event.currentTarget.verify.checked) {
-                body.verify = "verify";
+                body.verify = true;
               } else if (event.currentTarget.unverify && event.currentTarget.unverify.checked) {
-                body.verify = "unverify";
+                body.verify = false;
               }
 
               try {
