@@ -25,11 +25,13 @@ export default function Join() {
           errorMessage={errorMsg}
           onSubmit={async function handleSubmit(event) {
             event.preventDefault();
+            document.getElementById("signupBtn").disabled = true;
             if (event.currentTarget.password.value !== event.currentTarget.cpassword.value) {
               setErrorMsg("Passwords do not match!");
+              document.getElementById("signupBtn").disabled = false;
               return;
             }
-
+            
             const body = {
               username: event.currentTarget.username.value,
               password: event.currentTarget.password.value,
@@ -49,6 +51,7 @@ export default function Join() {
               } else {
                 console.error("An unexpected error happened:", error);
               }
+              document.getElementById("signupBtn").disabled = false;
             }
           }}
         />
