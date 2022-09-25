@@ -10,7 +10,7 @@ export default function LoginForm({ errorMessage, onSubmit, joinMessage }) {
         <input type="password" name="password" required />
       </label>
 
-      <button type="submit">Login</button>
+      <button type="submit" id="loginBtn">Login</button>
 
       {errorMessage && <p className="error">{errorMessage}</p>}
       {joinMessage && <p className="success">{joinMessage}</p>}
