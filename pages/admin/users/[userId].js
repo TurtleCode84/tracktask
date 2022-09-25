@@ -49,7 +49,7 @@ export default function UserAdmin() {
       <p>Username: {lookup.username}</p>
       <p>Email: <a href={`mailto:${lookup.email}`} target="_blank" rel="noreferrer">{lookup.email}</a></p>
       <p>Password (hashed): <pre>{lookup.password}</pre></p>
-      <p>Share key: {lookup.shareKey ? <pre>lookup.shareKey</pre> : 'none'}</p>
+      <p>Share key: {lookup.shareKey ? <pre>{lookup.shareKey}</pre> : 'none'}</p>
       <p>Profile picture: <Image src={lookup.profilePicture ? lookup.profilePicture : "/default-pfp.jpg" } width={32} height={32} alt=""/> ({lookup.profilePicture ? <a href={lookup.profilePicture} target="_blank" rel="noreferrer">link</a> : 'default'})</p>
       <h3>History</h3>
       <p title={moment.unix(lookup.history.joined).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Joined: {lookup.history.joined > 0 ? moment.unix(lookup.history.joined).fromNow() : 'never'}</p>
