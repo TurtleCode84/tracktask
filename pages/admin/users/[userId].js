@@ -75,7 +75,7 @@ export default function UserAdmin() {
                 setErrorMsg("Passwords do not match!");
                 return;
               }
-  
+              
               const body = {
                 username: event.currentTarget.username.value,
                 email: event.currentTarget.email.value,
@@ -84,11 +84,16 @@ export default function UserAdmin() {
                 profilePicture: event.currentTarget.profilePicture.value,
                 removeProfilePicture: event.currentTarget.removeProfilePicture.checked,
                 notes: event.currentTarget.notes.value,
-                toggleVerified: event.currentTarget.toggleVerified.checked,
                 toggleAdmin: event.currentTarget.toggleAdmin.checked,
                 toggleBanned: event.currentTarget.toggleBanned.checked,
                 banReason: event.currentTarget.banReason.value,
               };
+              
+              if (event.currentTarget.verify && event.currentTarget.verify.checked) {
+                body.verify = "verify";
+              } else if (event.currentTarget.unverify && event.currentTarget.unverify.checked) {
+                body.verify = "unverify";
+              }
 
               try {
                 const getUrl = await fetchJson(`/api/admin/users/${lookup._id}`, {
