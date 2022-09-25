@@ -18,7 +18,7 @@ export default function Login() {
   const { joined } = router.query;
   var joinMsg;
   if (joined === "true") {
-    joinMsg = "Account successfully created! You can log in now."
+    joinMsg = "Account created! You can log in now."
   }
 
   return (
