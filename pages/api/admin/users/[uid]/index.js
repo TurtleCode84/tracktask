@@ -54,7 +54,7 @@ async function adminUserRoute(req, res) {
       };
       const updatedNotes = await db.collection('users').updateOne(query, notesUpdateDoc); // Does not catch errors, could be a problem if updated succeeds but updatedNotes does not?
     }
-    if (body.verify) { // true or false
+    if (body.verify !== undefined) { // true or false
       const verifyUpdateDoc = {
         $set: {'permissions.verified': body.verify},
       };
