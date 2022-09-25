@@ -31,6 +31,7 @@ export default function Login() {
           joinMessage={joinMsg}
           onSubmit={async function handleSubmit(event) {
             event.preventDefault();
+            document.getElementById("loginBtn").disabled = true;
 
             const body = {
               username: event.currentTarget.username.value,
@@ -52,6 +53,7 @@ export default function Login() {
               } else {
                 console.error("An unexpected error happened:", error);
               }
+              document.getElementById("loginBtn").disabled = false;
             }
           }}
         />
