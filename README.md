@@ -8,6 +8,12 @@ TrackTask is a Shareable Task Management system. Users can create tasks with nam
 Additionally, tasks can be (potentially must be) grouped in collections, which can be shared with other users and edited by them if they have the right permissions.
 I think it's pretty cool, otherwise I wouldn't have started making it... :P
 
+## Where is it?
+TrackTask lives at the following Vercel domains:
+<br>https://tracktask.vercel.app (production)
+<br>https://beta-tracktask.vercel.app (beta, currently a redirect to `dev`)
+<br>https://dev-tracktask.vercel.app (development)
+
 ## How can I help?
 These are the current positions in the project:
 - Project manager: [@Turtle84375](https://github.com/TurtleCode84)
