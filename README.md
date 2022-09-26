@@ -1,3 +1,4 @@
+<img src="/public/tracktask.png" width="1000"></img>
 # Welcome to TrackTask!
 If you're here, you're probably a member of TrackTask's development team! ~~(if not, get out of here you hacker)~~
 <br>Thanks for joining, every bit of help counts!
