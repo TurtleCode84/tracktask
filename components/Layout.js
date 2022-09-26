@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Script from "next/script";
 import Header from "components/Header";
 
 export default function Layout({ children }) {
@@ -30,7 +29,6 @@ export default function Layout({ children }) {
           padding-right: 1rem;
         }
       `}</style>
-      <Script src="https://console.re/connector.js" data-channel="try-01ef-62f0-2768" id="consolerescript" strategy="beforeInteractive"></Script>
       <Header />
 
       <main>
