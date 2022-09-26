@@ -7,7 +7,7 @@ export default function DueDate({ timestamp }) {
     );
   } else {
     return (
-      <>{moment.unix(timestamp).fromNow()}</>
+      <>{moment.unix(timestamp).local().fromNow()}</>
     );
   }
 }
