@@ -15,7 +15,7 @@ export default function Dashboard() {
   const sortedTasks = tasks?.sort((a, b) => (a.dueDate === 0 || b.priority) ? 1 : -1);
   const taskList = sortedTasks?.map((task) =>
     <li key={task._id}>
-      {task.priority ? <>&#10071;</> : null}{task.name} - {task.description} (due <DueDate timestamp={task.dueDate}/>{task.dueDate !== 0 ? <>, on {moment.unix(task.dueDate).utc().format("dddd, MMMM Do YYYY, h:mm:ss a")}</> : null})
+      {task.priority ? <>&#10071;</> : null}{task.name} - {task.description} (due <DueDate timestamp={task.dueDate}/>{task.dueDate !== 0 ? <>, on {moment.utc().unix(task.dueDate).local().format("dddd, MMMM Do YYYY, h:mm:ss a")}</> : null})
     </li>
   );
   
