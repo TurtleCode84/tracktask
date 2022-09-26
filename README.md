@@ -37,7 +37,7 @@ Working with the existing site framework, redesign and restructure to make Track
 ### Testers:
 Try everything in every way possible, create issues in this repository as you find bugs or problems, attempt to hack things so we can fix them, **report Javascript console errors**.
 
-## By accepting the invite for and contributing to this GitHub repository, you agree to all Contributor and Site Admin Rules.
+## By accepting the invite for and contributing to this GitHub repository, you agree to all Contributor and Site Admin Rules, as applicable.
 
 ## Contributor Rules:
 1. **Never** edit the `main` branch directly!
