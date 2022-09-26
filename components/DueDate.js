@@ -8,7 +8,7 @@ export default function DueDate({ timestamp }) {
   } else {
     const m = moment.unix(timestamp).utc().format();
     return (
-      <>{moment.utc(m).fromNow()}</>
+      <>{moment.local(m).fromNow()}</>
     );
   }
 }
