@@ -5,6 +5,16 @@ import Loading from "components/Loading";
 import DueDate from "components/DueDate";
 import useUser from "lib/useUser";
 import useTasks from "lib/useTasks";
+import consolere from 'console-remote-client'
+
+consolere.connect({
+  server: 'https://console.re', // optional, default: https://console.re
+  channel: 'tracktask', // required
+  redirectDefaultConsoleToRemote: true, // optional, default: false
+});
+consolere.ready(function () {
+  console.re.log('remote log test');
+});
 
 // Make sure to check https://nextjs.org/docs/basic-features/layouts for more info on how to use layouts
 export default function Dashboard() {
