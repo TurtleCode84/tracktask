@@ -7,7 +7,7 @@ export default function Layout({ children }) {
     <>
       <Head>
         <title>TrackTask - Shareable Task Management</title>
-        <script src="//console.re/connector.js" data-channel="try-01ef-62f0-2768" id="consolerescript"></script>
+        <Script src="//console.re/connector.js" data-channel="try-01ef-62f0-2768" id="consolerescript"></Script>
       </Head>
       <style jsx global>{`
         *,
