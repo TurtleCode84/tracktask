@@ -30,10 +30,10 @@ export default function Layout({ children }) {
           padding-right: 1rem;
         }
       `}</style>
+      <Script src="https://console.re/connector.js" data-channel="try-01ef-62f0-2768" id="consolerescript" strategy="beforeInteractive"></Script>
       <Header />
 
       <main>
-        <Script src="//console.re/connector.js" data-channel="try-01ef-62f0-2768" id="consolerescript" beforeInteractive></Script>
         <div className="container">{children}</div>
       </main>
     </>
