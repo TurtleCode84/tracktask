@@ -14,7 +14,7 @@ TrackTask lives at the following Vercel domains:
 <br>https://beta-tracktask.vercel.app (beta, currently a redirect to `dev`)
 <br>https://dev-tracktask.vercel.app (development)
 
-## what's built so far?
+## What's built so far?
 Glad you asked! Here's a running features list:
 - [x] Login/Signup
 - [x] Admin/Banned/Verified Roles
