@@ -25,7 +25,7 @@ Glad you asked! Here's a running features list:
 - [ ] Individual task UI (`/tasks/{id}`)
 - [ ] Collections
 - [ ] Reporting (for tasks, users, collections)
-... and more to come!
+<br>... and more to come!
 
 ## How can I help?
 These are the current positions in the project:
