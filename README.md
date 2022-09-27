@@ -30,7 +30,7 @@ Glad you asked! Here's a running features list:
 ## How can I help?
 These are the current positions in the project:
 - Project manager: [@Turtle84375](https://github.com/TurtleCode84)
-- Security analyst: (available, needed!)
+- Security analyst: (available)
 - Logo maker: [@daily_meme](https://wasteof.money/users/daily_meme)
 - Site admin: (available)
 - UI/Style expert: (available)
