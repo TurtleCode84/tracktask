@@ -18,7 +18,7 @@ export default function About() {
     <Layout>
       <h2>About TrackTask:</h2>
       <p style={{ fontStyle: "italic" }}>
-        Coming soon!
+        Page coming soon!
       </p>
 
       <style jsx>{`
