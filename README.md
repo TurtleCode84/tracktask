@@ -14,6 +14,19 @@ TrackTask lives at the following Vercel domains:
 <br>https://beta-tracktask.vercel.app (beta, currently a redirect to `dev`)
 <br>https://dev-tracktask.vercel.app (development)
 
+## what's built so far?
+Glad you asked! Here's a running features list:
+- [x] Login/Signup
+- [x] Admin/Banned/Verified Roles
+- [x] Admin panel w/ full ability to edit users and access to some recent stats
+- [x] Tasks (very basic, you can only add tasks at the moment and there are some timezone bugs to work out)
+- [x] IP banning and blacklisted usernames/emails (through Vercel dashboard)
+- [ ] About/FAQ (in progress, not complete)
+- [ ] Individual task UI (`/tasks/{id}`)
+- [ ] Collections
+- [ ] Reporting (for tasks, users, collections)
+... and more to come!
+
 ## How can I help?
 These are the current positions in the project:
 - Project manager: [@Turtle84375](https://github.com/TurtleCode84)
