@@ -24,7 +24,7 @@ Glad you asked! Here's a running features list:
 - [ ] About/FAQ (in progress, not complete)
 - [ ] Individual task UI (`/tasks/{id}`)
 - [ ] Collections
-- [ ] Reporting (for tasks, users, collections)
+- [ ] Reporting for admin attention (tasks, users, collections)
 <br>... and more to come!
 
 ## How can I help?
