@@ -11,7 +11,7 @@ export default function TaskCreateForm({ errorMessage, onSubmit }) {
       </label><br/>
       <label>
         <span>Due Date (optional)</span>
-        <input type="datetime" name="dueDate" />
+        <input type="datetime-local" name="dueDate" />
       </label>
       <label>
         <span>Mark as priority</span>
