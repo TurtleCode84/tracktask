@@ -45,7 +45,7 @@ async function tasksRoute(req, res) {
         collections: [],
       }
       if (dueDate) {
-        newTask.dueDate = moment(dueDate, moment.DATETIME_LOCAL).toDate();
+        newTask.dueDate = moment.utc(dueDate, moment.DATETIME_LOCAL).local().format();
       } else {
         newTask.dueDate = 0;
       }
