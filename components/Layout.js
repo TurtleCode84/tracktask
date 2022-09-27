@@ -28,13 +28,8 @@ export default function Layout({ children }) {
           padding-left: 1rem;
           padding-right: 1rem;
         }
-        
-        .global-message {
-          background: orange !important;
-          text-align: center !important;
-        }
       `}</style>
-      <nav class="global-message"><p>You are viewing the TrackTask Development release, stuff is going to not work (correct due dates, for example :P)</p></nav>
+      <nav style="background:orange !important, text-align:center !important"><p>You are viewing the TrackTask Development release, stuff is going to not work (correct due dates, for example :P)</p></nav>
       <Header />
 
       <main>
