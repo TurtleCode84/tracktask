@@ -29,6 +29,7 @@ export default function Layout({ children }) {
           padding-right: 1rem;
         }
       `}</style>
+      <nav><p>You are viewing the TrackTask Development release, stuff is going to not work (correct due dates, for example :P)</p></nav>
       <Header />
 
       <main>
