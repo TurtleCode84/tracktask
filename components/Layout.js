@@ -30,8 +30,8 @@ export default function Layout({ children }) {
         }
         
         .global-message {
-          background: orange;
-          text-align: center;
+          background: orange !important;
+          text-align: center !important;
         }
       `}</style>
       <nav class="global-message"><p>You are viewing the TrackTask Development release, stuff is going to not work (correct due dates, for example :P)</p></nav>
