@@ -29,7 +29,7 @@ export default function Layout({ children }) {
           padding-right: 1rem;
         }
       `}</style>
-      <nav style={{backgroundColor: "orange", textAlign: "center", height:40 + "px", fontWeight: 600, marginTop: -10 + "px", paddingBottom: 5 + "px"}}><p style={{paddingTop: 10 + "px"}}>You are viewing the TrackTask Development release, stuff is going to not work (correct due dates, for example :P)</p></nav>
+      <nav style={{backgroundColor: "orange", textAlign: "center", height:40 + "px", fontWeight: 600, marginTop: -20 + "px", paddingBottom: 5 + "px"}}><p style={{paddingTop: 10 + "px"}}>You are viewing the TrackTask Development release, stuff is going to not work (correct due dates, for example :P)</p></nav>
       <Header />
 
       <main>
