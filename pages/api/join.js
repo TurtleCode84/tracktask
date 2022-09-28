@@ -58,11 +58,13 @@ async function joinRoute(req, res) {
           loginIpList: [],
           banReason: "",
           notes: "",
+          warnings: [],
         },
         permissions: {
           admin: false,
           banned: false,
           verified: false,
+          warned: false,
         },
         shareKey: uuidv4(),
         profilePicture: "",
