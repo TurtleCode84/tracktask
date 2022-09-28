@@ -40,6 +40,7 @@ async function tasksRoute(req, res) {
         description: description.trim(),
         hidden: false,
         owner: ObjectId(user.id),
+        created: Math.floor(Date.now()/1000),
         completion: {},
         priority: markPriority,
         collections: [],
