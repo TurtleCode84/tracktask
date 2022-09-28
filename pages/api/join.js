@@ -48,7 +48,7 @@ async function joinRoute(req, res) {
     //Otherwise...
     try {
       db.collection('users').dropIndex( { "email": 1 } );
-      db.collection('users').createIndex( { "email": 1 }, { sparse: true } );
+      db.collection('users').createIndex( { "email": 1 }, { unique: false } );
       const newUser = {
         username: username.toLowerCase(),
         password: await hash(password, 10),
