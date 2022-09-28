@@ -77,6 +77,7 @@ export default function UserAdmin() {
         <p style={{ fontStyle: "italic" }}>(Newest to oldest)</p>
         <ul>{warningList?.length > 0 ? warningList : 'No warnings found'}</ul>
       </details>
+      <p>Acknowledged last warning: {lookup.history.warnings.length > 0 ? {lookup.permissions.warned ? <>&#9989;</> : <>&#10060;</>} : 'N/A'}</p>
       {!lookup.permissions.banned && <p>Last ban reason: {lookup.history.banReason ? lookup.history.banReason : 'none'}</p>}
       <hr/>
       <details>
