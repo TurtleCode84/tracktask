@@ -27,12 +27,15 @@ export default function UserAdmin() {
     );
   }
   
-  const sortedIpList = lookup?.history.loginIpList.slice(0, 5);
-  const ipList = sortedIpList?.map((ip, index) =>
-    <li key={index}>
-      <a href={`https://whatismyipaddress.com/ip/${ip}`} target="_blank" rel="noreferrer">{ip}</a>
-    </li>
-  );
+  var ipList
+  if (lookup?.history.loginIpList) {
+    const sortedIpList = lookup?.history.loginIpList.slice(0, 5);
+    ipList = sortedIpList?.map((ip, index) =>
+      <li key={index}>
+        <a href={`https://whatismyipaddress.com/ip/${ip}`} target="_blank" rel="noreferrer">{ip}</a>
+      </li>
+    );
+  }
   var warningList;
   if (lookup?.history.warnings) {
     warningList = lookup?.history.warnings.map((warning, index) =>
