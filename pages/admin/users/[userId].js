@@ -120,7 +120,6 @@ export default function UserAdmin() {
                 body.warning = event.currentTarget.warning.value;
               } else {
                 body.warn = false;
-                body.warning = "";
               }
               if (event.currentTarget.ban && event.currentTarget.ban.checked) {
                 body.ban = true;
