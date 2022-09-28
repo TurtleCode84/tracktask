@@ -31,11 +31,19 @@ export default function TasksCreate() {
         onSubmit={async function handleSubmit(event) {
           event.preventDefault();
           document.getElementById("createTaskBtn").disabled = true;
+          
+          var ISODueDate;
+          if (event.currentTarget.dueDate) {
+            const submittedDueDate = event.currentTarget.dueDate.value;
+            ISODueDate = submittedDueDate.toUTCString();
+          } else {
+            ISODueDate = "";
+          }
 
           const body = {
             name: event.currentTarget.name.value,
             description: event.currentTarget.description.value,
-            dueDate: event.currentTarget.dueDate.value,
+            dueDate: ISODueDate,
             markCompleted: event.currentTarget.markCompleted.checked,
             markPriority: event.currentTarget.markPriority.checked,
           };
