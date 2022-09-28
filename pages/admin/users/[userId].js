@@ -89,6 +89,10 @@ export default function UserAdmin() {
                 setErrorMsg("Passwords do not match!");
                 document.getElementById("editUserBtn").disabled = false;
                 return;
+              } else if (event.currentTarget.warn.checked && !event.currentTarget.warning.value) {
+                setErrorMsg("Warnings can\'t be blank!");
+                document.getElementById("editUserBtn").disabled = false;
+                return;
               }
               
               const body = {
@@ -100,6 +104,7 @@ export default function UserAdmin() {
                 removeProfilePicture: event.currentTarget.removeProfilePicture.checked,
                 notes: event.currentTarget.notes.value,
                 //toggleAdmin: event.currentTarget.toggleAdmin.checked,
+                //clearWarnings: event.currentTarget.clearWarnings.checked,
                 banReason: event.currentTarget.banReason.value,
               };
               
@@ -107,6 +112,12 @@ export default function UserAdmin() {
                 body.verify = true;
               } else if (event.currentTarget.unverify && event.currentTarget.unverify.checked) {
                 body.verify = false;
+              }
+              if (event.currentTarget.warn.checked) {
+                body.warn = true;
+                body.warning = event.currentTarget.warning.value;
+              } else {
+                body.warn = false;
               }
               if (event.currentTarget.ban && event.currentTarget.ban.checked) {
                 body.ban = true;
