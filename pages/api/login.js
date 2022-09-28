@@ -58,7 +58,7 @@ export default withIronSessionApiRoute(async (req, res) => {
         },
         $push: {
           "history.loginIpList": {
-            $each: ip,
+            $each: [ ip ],
             $position: 0,
           },
         },
