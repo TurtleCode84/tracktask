@@ -33,12 +33,14 @@ export default function UserAdmin() {
       <a href={`https://whatismyipaddress.com/ip/${ip}`} target="_blank" rel="noreferrer">{ip}</a>
     </li>
   );
-  
-  const warningList = lookup?.history.warnings.map((warning, index) =>
-    <li key={index}>
-      {warning}
-    </li>
-  );
+  var warningList;
+  if (lookup?.history.warnings) {
+    warningList = lookup?.history.warnings.map((warning, index) =>
+      <li key={index}>
+        {warning}
+      </li>
+    );
+  }
   
   return (
     <Layout>
