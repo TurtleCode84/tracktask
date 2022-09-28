@@ -33,10 +33,11 @@ export default function TasksCreate() {
           document.getElementById("createTaskBtn").disabled = true;
           
           var ISODueDate;
-          if (event.currentTarget.dueDate) {
+          if (event.currentTarget.dueDate.value) {
             const submittedDueDate = event.currentTarget.dueDate.value;
-            const offset = Date().getTimezoneOffset();
-            ISODueDate = "test";
+            const date = new Date();
+            const offset = date.getTimezoneOffset();
+            ISODueDate = offset;
           } else {
             ISODueDate = "";
           }
