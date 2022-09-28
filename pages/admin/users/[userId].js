@@ -69,7 +69,8 @@ export default function UserAdmin() {
       </details>
       <p title={moment.unix(lookup.history.lastLogin).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Last login: {lookup.history.lastLogin > 0 ? moment.unix(lookup.history.lastLogin).fromNow() : 'never'}</p>
       <p>Admin notes: {lookup.history.notes ? lookup.history.notes : 'none'}</p>
-      {warningList ? <><details>
+      {warningList &&
+      <><details>
         <summary>Warnings</summary>
         <p style={{ fontStyle: "italic" }}>(Newest to oldest)</p>
         <ul>{warningList.length > 0 ? warningList : 'No warnings found'}</ul>
