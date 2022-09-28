@@ -32,19 +32,18 @@ export default function TasksCreate() {
           event.preventDefault();
           document.getElementById("createTaskBtn").disabled = true;
           
-          var ISODueDate;
+          var utcDueDate;
           if (event.currentTarget.dueDate.value) {
-            const submittedDueDate = event.currentTarget.dueDate.value;
             const offset = new Date().getTimezoneOffset();
-            ISODueDate = moment(submittedDueDate, moment.HTML5_FMT.DATETIME_LOCAL).utcOffset(offset);
+            utcDueDate = moment(event.currentTarget.dueDate.value, moment.HTML5_FMT.DATETIME_LOCAL).utcOffset(offset);
           } else {
-            ISODueDate = "";
+            utcDueDate = "";
           }
 
           const body = {
             name: event.currentTarget.name.value,
             description: event.currentTarget.description.value,
-            dueDate: ISODueDate,
+            dueDate: utcDueDate,
             markCompleted: event.currentTarget.markCompleted.checked,
             markPriority: event.currentTarget.markPriority.checked,
           };
