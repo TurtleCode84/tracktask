@@ -27,11 +27,16 @@ export default function UserAdmin() {
     );
   }
   
-  const pureIpList = lookup?.history.loginIpList;
-  const sortedIpList = pureIpList?.reverse().slice(0, 5);
+  const sortedIpList = lookup?.history.loginIpList.slice(0, 5);
   const ipList = sortedIpList?.map((ip, index) =>
     <li key={index}>
       <a href={`https://whatismyipaddress.com/ip/${ip}`} target="_blank" rel="noreferrer">{ip}</a>
+    </li>
+  );
+  
+  const warningList = lookup?.history.warnings.map((warning, index) =>
+    <li key={index}>
+      {warning}
     </li>
   );
   
@@ -59,9 +64,14 @@ export default function UserAdmin() {
         <summary>Last 5 IP addresses</summary>
         <p style={{ fontStyle: "italic" }}>(Newest to oldest)</p>
         <ul>{ipList.length > 0 ? ipList : 'No IPs found'}</ul>
-       </details>
+      </details>
       <p title={moment.unix(lookup.history.lastLogin).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Last login: {lookup.history.lastLogin > 0 ? moment.unix(lookup.history.lastLogin).fromNow() : 'never'}</p>
       <p>Admin notes: {lookup.history.notes ? lookup.history.notes : 'none'}</p>
+      <details>
+        <summary>Warnings</summary>
+        <p style={{ fontStyle: "italic" }}>(Newest to oldest)</p>
+        <ul>{warningList.length > 0 ? warningList : 'No warnings found'}</ul>
+      </details>
       {!lookup.permissions.banned && <p>Last ban reason: {lookup.history.banReason ? lookup.history.banReason : 'none'}</p>}
       <hr/>
       <details>
