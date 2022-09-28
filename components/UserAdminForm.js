@@ -54,7 +54,7 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
       </label>
       <label>
         <span>Clear all warnings</span>
-        <input type="checkbox" name="clearWarnings" />
+        <input type="checkbox" name="clearWarnings" disabled />
       </label>
       <label>
         {lookup.permissions.banned ?
