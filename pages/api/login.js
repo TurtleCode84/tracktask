@@ -57,7 +57,10 @@ export default withIronSessionApiRoute(async (req, res) => {
           "history.lastLogin": Math.floor(Date.now()/1000),
         },
         $push: {
-          "history.loginIpList": ip,
+          "history.loginIpList": {
+            $each: ip,
+            $position: 0,
+          },
         },
       };
       const ipUpdate = await db.collection('users').updateOne(query, ipUpdateDoc); // Is assigning the const here unecessary?
