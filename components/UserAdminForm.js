@@ -50,7 +50,7 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
       </label>
       <label>
         <span>Warning</span>
-        <textarea name="warning" rows="4" cols="30" />
+        <input type="text" name="warning" />
       </label>
       <label>
         <span>Clear all warnings</span>
