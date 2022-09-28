@@ -35,7 +35,7 @@ export default function TasksCreate() {
           var ISODueDate;
           if (event.currentTarget.dueDate) {
             const submittedDueDate = event.currentTarget.dueDate.value;
-            const offset = submittedDueDate.getTimezoneOffset();
+            const offset = Date().getTimezoneOffset();
             ISODueDate = offset;
           } else {
             ISODueDate = "";
