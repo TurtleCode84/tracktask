@@ -29,7 +29,7 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
       <label>
         <span>Admin notes</span>
         <textarea name="notes" rows="4" cols="30" placeholder={lookup.history.notes} />
-      </label>
+      </label><hr/>
       <label>
         <span>Warn user</span>
         <input type="checkbox" name="warn" />
@@ -41,7 +41,7 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
       <label>
         <span>Clear all warnings</span>
         <input type="checkbox" name="clearWarnings" disabled />
-      </label><hr/>
+      </label>
       <h2>Permissions:</h2>
       <label>
         {lookup.permissions.verified ?
@@ -73,7 +73,7 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
         <><span>Ban reason</span>
         <input type="text" name="banReason" /></>
         }
-      </label>
+      </label><hr/>
 
       <button type="submit" id="editUserBtn">Edit user data</button>
 
