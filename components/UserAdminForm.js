@@ -45,6 +45,18 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
         <input type="checkbox" name="toggleAdmin" disabled />
       </label>
       <label>
+        <span>Warn user</span>
+        <input type="checkbox" name="warn" />
+      </label>
+      <label>
+        <span>Warning</span>
+        <textarea name="warning" rows="4" cols="30" />
+      </label>
+      <label>
+        <span>Clear all warnings</span>
+        <input type="checkbox" name="clearWarnings" />
+      </label>
+      <label>
         {lookup.permissions.banned ?
         <><span>Unban user</span>
         <input type="checkbox" name="unban" /></>
