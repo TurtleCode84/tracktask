@@ -56,5 +56,21 @@ export default function Dashboard() {
         Coming soon...
       </p>
     </Layout>
+    
+    <style jsx>{`
+      Layout,
+      li {
+        margin: "0.5em";
+        padding: "5px 5px 5px 5px";
+        border-style: "ridge";
+        border-weight: "5px";
+        borderRadius: "10px";
+        width: "auto";
+        transition: background 1s;
+      }
+      li:hover {
+        background: #d1d1d1;
+      }
+    `}</style>
   );
 }
