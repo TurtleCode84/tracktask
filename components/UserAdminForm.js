@@ -96,15 +96,12 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
               await fetchJson(`/api/admin/users/${lookup._id}`, { method: "DELETE" });
               router.push("/admin/users?deleted=true");
             } catch (error) {
-              if (error instanceof FetchError) {
-                setErrorMsg(error.data.message);
-              } else {
-                console.error("An unexpected error happened:", error);
-              }
+              document.getElementById("deleteUserMessage").innerHTML = error.data.message;
             }
           }
         }}
-      ><>&#9888;</> Delete user <>&#9888;</></a>
+      ><>&#9888;</> Delete user <>&#9888;</></a><hr/>
+      <p className="error" id="deleteUserMessage"></p>
 
       <style jsx>{`
         form,
