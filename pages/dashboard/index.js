@@ -44,26 +44,9 @@ export default function Dashboard() {
       {taskList?.length === 0 ? <p style={{ fontStyle: "italic" }}>Looks like you have no tasks!</p> : <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
       </>
       :
-      <><div className="list">
-        <ul>
-          {taskList}
-        </ul>
-        <style jsx>{`
-        .list > li {
-          margin: "0.5em";
-          padding: "5px 5px 5px 5px";
-          border-style: "ridge";
-          border-weight: "5px";
-          borderRadius: "10px";
-          width: "auto";
-          transition: background 1s;
-        }
-        .list:hover > li {
-          background: #d1d1d1;
-          cursor: pointer;
-        }
-      `}</style>
-      </div></>
+      <><ul>
+        {taskList}
+      </ul></>
       }
       
       <h2>Your collections:</h2>
