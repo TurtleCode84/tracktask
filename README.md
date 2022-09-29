@@ -61,7 +61,7 @@ Try everything in every way possible, create issues in this repository as you fi
 
 ## Contributor Rules:
 1. **Never** edit the `main` branch directly!
-2. Try to leave a brief description when you make a commit, it's okay if you forget occasionally but it helps everyone else know what you changed.
+2. Try to leave a brief description when you make a commit, it's okay if you forget occasionally but it helps everyone else know what you changed. I repeatedly ignore this rule, so don't worry too much about it.
 3. The `dev` branch is the main branch for testing, but to prevent confusion only one contributor or group of contributors should work on it at a time. If you need your own branch with a deployment preview to test something, please contact the Project Manager.
 <br>***Tip:** You can create your own branch and open a pull request for it, this will automatically create a preview deployment for you to inspect your changes.*
 4. Collaborate! Ask for help if you need it, opinions are readily available!
