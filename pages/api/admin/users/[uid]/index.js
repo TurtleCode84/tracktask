@@ -67,7 +67,12 @@ async function adminUserRoute(req, res) {
     if (body.warn && body.warning) {
       const warnUpdateDoc = {
         $set: {'permissions.warned': true},
-        $push: {'history.warnings': body.warning},
+        $push: {
+          'history.warnings': {
+            $each: [ body.warning ],
+            $position: 0,
+          },
+        },
       };
       const updatedWarn = await db.collection('users').updateOne(query, warnUpdateDoc); // See above
     }
