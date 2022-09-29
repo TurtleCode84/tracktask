@@ -45,10 +45,12 @@ export default function Dashboard() {
       </>
       :
       <>
-      <ul>
-        {taskList}
-      </ul>
+      <div className="list">
+        <ul>
+          {taskList}
+        </ul>
       </>
+      </div>
       }
       
       <h2>Your collections:</h2>
@@ -56,7 +58,7 @@ export default function Dashboard() {
         Coming soon...
       </p>
       <style jsx>{`
-        .list {
+        .list > li {
           margin: "0.5em";
           padding: "5px 5px 5px 5px";
           border-style: "ridge";
@@ -65,7 +67,7 @@ export default function Dashboard() {
           width: "auto";
           transition: background 1s;
         }
-        .list:hover {
+        .list:hover > li {
           background: #d1d1d1;
           cursor: pointer;
         }
