@@ -25,7 +25,7 @@ export default function Dashboard() {
     );
   }
   return (
-    <><Layout>
+    <Layout>
       <h1>
         {user ? 
         <>
@@ -55,22 +55,21 @@ export default function Dashboard() {
       <p style={{ fontStyle: "italic" }}>
         Coming soon...
       </p>
-    </Layout>
-    
-    <style jsx>{`
-      Layout,
-      li {
-        margin: "0.5em";
-        padding: "5px 5px 5px 5px";
-        border-style: "ridge";
-        border-weight: "5px";
-        borderRadius: "10px";
-        width: "auto";
-        transition: background 1s;
-      }
-      li:hover {
-        background: #d1d1d1;
-      }
-    `}</style></>
+      <style jsx>{`
+        li {
+          margin: "0.5em";
+          padding: "5px 5px 5px 5px";
+          border-style: "ridge";
+          border-weight: "5px";
+          borderRadius: "10px";
+          width: "auto";
+          transition: background 1s;
+        }
+        li:hover {
+          background: #d1d1d1;
+          cursor: pointer;
+        }
+      `}</style>
+    </Layout>    
   );
 }
