@@ -44,13 +44,11 @@ export default function Dashboard() {
       {taskList?.length === 0 ? <p style={{ fontStyle: "italic" }}>Looks like you have no tasks!</p> : <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
       </>
       :
-      <>
-      <div className="list">
+      <><div className="list">
         <ul>
           {taskList}
         </ul>
-      </>
-      </div>
+      </div></>
       }
       
       <h2>Your collections:</h2>
