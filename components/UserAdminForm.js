@@ -88,6 +88,7 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup, adminUID
           e.preventDefault();
           if (process.env.SUPERADMIN !== adminUID) {
             alert("You do not have permission to delete users!");
+            alert(process.env.SUPERADMIN + " " + adminUID);
             return;
           }
           const confirm = prompt("Are you sure? Deleting a user is irreversable, and will delete all of their tasks and collections as well! Type \"yes\" to confirm, not case sensitive.");
