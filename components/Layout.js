@@ -39,7 +39,7 @@ export default function Layout({ children }) {
           transition: background 1s;
         }
         .list:hover li {
-          background: #d1d1d1;
+          background: #9c9c9c;
           cursor: pointer;
         }
       `}</style>
