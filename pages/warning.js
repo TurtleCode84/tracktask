@@ -2,6 +2,7 @@ import React from "react";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
 import useUser from "lib/useUser";
+import fetchJson from "lib/fetchJson";
 
 export default function Warning() {
   const { user } = useUser({
