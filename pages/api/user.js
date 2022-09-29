@@ -17,7 +17,7 @@ async function userRoute(req, res) {
         isLoggedIn: true,
         email: userInfo.email,
         profilePicture: userInfo.profilePicture,
-        history: { joined: userInfo.history.joined, banReason: userInfo.history.banReason },
+        history: { joined: userInfo.history.joined, banReason: userInfo.history.banReason, warnings: userInfo.history.warnings },
         shareKey: userInfo.shareKey,
         permissions: userInfo.permissions,
       };
