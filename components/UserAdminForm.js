@@ -15,7 +15,7 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
       </label>
       <label>
         <span>Remove email</span>
-        <input type="checkbox" name="removeEmail" disabled />
+        <input type="checkbox" name="removeEmail" />
       </label>
       <hr/><label>
         <span>Change password</span>
