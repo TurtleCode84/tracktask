@@ -97,7 +97,7 @@ export default function UserAdmin() {
                 document.getElementById("editUserBtn").disabled = false;
                 return;
               } else if (event.currentTarget.clearWarnings.checked && process.env.SUPERADMIN !== user.id) {
-                setErrorMsg("You don\'t have permission to pardon users!");
+                setErrorMsg("You do not have permission to pardon users.");
                 document.getElementById("editUserBtn").disabled = false;
                 return;
               }
