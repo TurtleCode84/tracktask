@@ -15,6 +15,11 @@ export default function UsersAdmin() {
   
   const [errorMsg, setErrorMsg] = useState("");
   const router = useRouter();
+  const { deleted } = router.query;
+  var deletedMsg;
+  if (deleted === "true") {
+    deletedMsg = "User successfully deleted!"
+  }
 
   if (!user || !user.isLoggedIn || !user.permissions.admin) {
     return (
@@ -30,6 +35,7 @@ export default function UsersAdmin() {
       </h2>
       <UserSearchForm
           errorMessage={errorMsg}
+          deletedMessage={deletedMsg}
           onSubmit={async function handleSubmit(event) {
             event.preventDefault();
             document.getElementById("findUserBtn").disabled = true;
