@@ -1,7 +1,7 @@
 import fetchJson from "lib/fetchJson";
 import { useRouter } from "next/router";
 
-export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
+export default function UserAdminForm({ errorMessage, onSubmit, lookup, adminUID }) {
   const router = useRouter();
   return (
     <form id="userAdminForm" onSubmit={onSubmit}>
@@ -86,6 +86,10 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
       <a href={`/api/admin/users/${lookup._id}`}
         onClick={async (e) => {
           e.preventDefault();
+          if (process.env.SUPERADMIN !== adminUID) {
+            alert("You do not have permission to delete users!");
+            return;
+          }
           const confirm = prompt("Are you sure? Deleting a user is irreversable, and will delete all of their tasks and collections as well! Type \"yes\" to confirm, not case sensitive.");
           if (confirm.toLowerCase() === "yes") {
             await fetchJson(`/api/admin/users/${lookup._id}`, { method: "DELETE" });
