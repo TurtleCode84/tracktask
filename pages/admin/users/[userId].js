@@ -85,7 +85,6 @@ export default function UserAdmin() {
         <br/><UserAdminForm
             errorMessage={errorMsg}
             lookup={lookup}
-            adminUID={user.id}
             onSubmit={async function handleSubmit(event) {
               event.preventDefault();
               document.getElementById("editUserBtn").disabled = true;
