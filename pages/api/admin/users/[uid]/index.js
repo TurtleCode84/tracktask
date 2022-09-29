@@ -64,7 +64,7 @@ async function adminUserRoute(req, res) {
       };
       const updatedVerify = await db.collection('users').updateOne(query, verifyUpdateDoc); // See above
     }
-    if (body.warn && body.warning) {
+    if (body.warn && body.warning && !body.clearWarnings) {
       const warnUpdateDoc = {
         $set: {'permissions.warned': true},
         $push: {
@@ -72,6 +72,18 @@ async function adminUserRoute(req, res) {
             $each: [ body.warning ],
             $position: 0,
           },
+        },
+      };
+      const updatedWarn = await db.collection('users').updateOne(query, warnUpdateDoc); // See above
+    } else if (body.clearWarnings) {
+      if (process.env.SUPERADMIN !== user.id) {
+        res.status(403).json({ message: "You do not have permission to pardon users." });
+        return;
+      }
+      const warnUpdateDoc = {
+        $set: {
+          'permissions.warned': false,
+          'history.warnings': [],
         },
       };
       const updatedWarn = await db.collection('users').updateOne(query, warnUpdateDoc); // See above
