@@ -21,7 +21,7 @@ export default function Warning() {
 
       <p>To continue using TrackTask, please review and acknowledge the warning.<br/>The following warning was issued: <b>{user ? <>user.history.warnings[0]</> : 'loading...'}</b></p>
       
-      <a href="/api/user"
+      <a href={`/api/user`}
         onClick={async (e) => {
           e.preventDefault();
           await fetchJson("/api/user", {
