@@ -89,7 +89,11 @@ async function adminUserRoute(req, res) {
       const updatedBanReason = await db.collection('users').updateOne(query, banReasonUpdateDoc); // See above
     }
     res.json(updated);
+  } else if (req.method === 'DELETE') {
+    res.status(418).json({ message: "Under construction" });
+    return;
   } else {
     res.status(405).json({ message: "Method not allowed" });
+    return;
   }
 }
