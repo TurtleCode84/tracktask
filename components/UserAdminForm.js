@@ -13,6 +13,10 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
         <span>Email</span>
         <input type="email" name="email" placeholder={lookup.email} />
       </label>
+      <label>
+        <span>Remove email</span>
+        <input type="checkbox" name="removeEmail" disabled />
+      </label>
       <hr/><label>
         <span>Change password</span>
         <input type="password" placeholder="New password" name="password" />
@@ -44,7 +48,7 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
       </label>
       <label>
         <span>Clear all warnings</span>
-        <input type="checkbox" name="clearWarnings" disabled />
+        <input type="checkbox" name="clearWarnings" />
       </label>
       <h2>Permissions:</h2>
       <label>
