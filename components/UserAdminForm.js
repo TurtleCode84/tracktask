@@ -92,7 +92,7 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
             router.push("/admin/users?deleted=true");
           }
         }}
-      >{&#9888;} Delete user {&#9888;}</a>
+      ><>&#9888;}</> Delete user <>&#9888;</></a>
 
       <style jsx>{`
         form,
