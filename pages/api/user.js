@@ -6,7 +6,7 @@ import clientPromise from "lib/mongodb";
 export default withIronSessionApiRoute(userRoute, sessionOptions);
 
 async function userRoute(req, res) {
-  if (req.method === 'POST') {
+  if (req.method === 'GET') {
     if (req.session.user) {
       const client = await clientPromise;
       const db = client.db("data");
