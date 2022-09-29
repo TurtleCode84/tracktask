@@ -17,10 +17,6 @@ export default function TaskCreateForm({ errorMessage, onSubmit }) {
         <span>Mark as priority</span>
         <input type="checkbox" name="markPriority" />
       </label>
-      <label>
-        <span>Mark as completed</span>
-        <input type="checkbox" name="markCompleted" />
-      </label>
 
       <button type="submit" id="createTaskBtn">Create task</button>
 
