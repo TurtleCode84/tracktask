@@ -83,10 +83,10 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
 
       {errorMessage && <p className="error">{errorMessage}</p>}
        
-      <a href=`/admin/users/${lookup._id}/delete`
+      <a href={`/admin/users/${lookup._id}/delete`}
         onClick={async (e) => {
           e.preventDefault();
-          await fetchJson(`/api/admin/users/${lookup._id}`, { method: "DELETE" });
+          await fetchJson({`/api/admin/users/${lookup._id}`}, { method: "DELETE" });
           router.push("/admin/users?deleted=true");
         }}
       >( ! ) Delete user ( ! )</a>
