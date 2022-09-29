@@ -32,7 +32,7 @@ export default function Warning() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ acknowledgedWarning: true }),
           })
-          router.push("/dashboard");
+          router.reload();
         }}
       >Acknowledge warning</a>
 
