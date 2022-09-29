@@ -25,7 +25,7 @@ export default function Dashboard() {
     );
   }
   return (
-    <Layout>
+    <><Layout>
       <h1>
         {user ? 
         <>
@@ -71,6 +71,6 @@ export default function Dashboard() {
       li:hover {
         background: #d1d1d1;
       }
-    `}</style>
+    `}</style></>
   );
 }
