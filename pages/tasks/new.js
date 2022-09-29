@@ -44,7 +44,6 @@ export default function TasksCreate() {
             name: event.currentTarget.name.value,
             description: event.currentTarget.description.value,
             dueDate: utcDueDate,
-            markCompleted: event.currentTarget.markCompleted.checked,
             markPriority: event.currentTarget.markPriority.checked,
           };
 
