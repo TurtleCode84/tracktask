@@ -33,6 +33,30 @@ async function userRoute(req, res) {
       });
     }
   } else if (req.method === 'POST') {
+    const body = await req.body;
+    const user = req.session.user;
+    if (!user || !user.isLoggedIn || user.permissions.banned ) {
+      res.status(401).json({ message: "Unauthorized" });
+      return;
+    }
+    const client = await clientPromise;
+    const db = client.db("data");
+    const query = { _id: ObjectId(user.id) };
+    if (body.acknowledgedWarning) {
+      try {
+        const warnUpdateDoc = {
+          $set: {'permissions.warned': false},
+        };
+        const updatedWarn = await db.collection('users').updateOne(query, warnUpdateDoc);
+        res.json(updatedWarn);
+      } catch (error) {
+        res.status(500).json({ "message": error.data.message });
+      }
+    } else {
+      res.status(418).json({ message: "Under construction" });
+      return;
+    }
+  } else if (req.method === 'DELETE') {
     res.status(418).json({ message: "Under construction" });
     return;
   } else {
