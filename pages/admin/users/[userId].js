@@ -31,7 +31,7 @@ export default function UserAdmin() {
   if (lookup?.history.loginIpList) {
     const sortedIpList = lookup?.history.loginIpList.slice(0, 5);
     ipList = sortedIpList?.map((ip, index) =>
-      <li key={index}>
+      <li key={index} style={{ margin: "0.5em" }}>
         <a href={`https://whatismyipaddress.com/ip/${ip}`} target="_blank" rel="noreferrer">{ip}</a>
       </li>
     );
@@ -39,7 +39,7 @@ export default function UserAdmin() {
   var warningList = [];
   if (lookup?.history.warnings) {
     warningList = lookup?.history.warnings.map((warning, index) =>
-      <li key={index}>
+      <li key={index} style={{ margin: "0.5em" }}>
         {warning}
       </li>
     );
