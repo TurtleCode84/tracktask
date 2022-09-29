@@ -96,25 +96,25 @@ export default function UserAdmin() {
                 setErrorMsg("Warnings can\'t be blank!");
                 document.getElementById("editUserBtn").disabled = false;
                 return;
-              } else if (event.currentTarget.clearWarnings.checked && process.env.SUPERADMIN !== user.id) {
-                setErrorMsg("You do not have permission to pardon users.");
-                document.getElementById("editUserBtn").disabled = false;
-                return;
               }
               
               const body = {
                 username: event.currentTarget.username.value,
-                email: event.currentTarget.email.value,
                 password: event.currentTarget.password.value,
                 resetShareKey: event.currentTarget.resetShareKey.checked,
                 profilePicture: event.currentTarget.profilePicture.value,
                 removeProfilePicture: event.currentTarget.removeProfilePicture.checked,
                 notes: event.currentTarget.notes.value,
                 //toggleAdmin: event.currentTarget.toggleAdmin.checked,
-                //clearWarnings: event.currentTarget.clearWarnings.checked,
+                clearWarnings: event.currentTarget.clearWarnings.checked,
                 banReason: event.currentTarget.banReason.value,
               };
               
+              if (event.currentTarget.removeEmail.checked) {
+                body.email = "";
+              } else {
+                body.email = event.currentTarget.email.value;
+              }
               if (event.currentTarget.verify && event.currentTarget.verify.checked) {
                 body.verify = true;
               } else if (event.currentTarget.unverify && event.currentTarget.unverify.checked) {
