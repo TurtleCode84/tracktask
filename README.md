@@ -30,12 +30,13 @@ Glad you asked! Here's a running features list:
 ## How can I help?
 These are the current positions in the project:
 - Project manager: [@Turtle84375](https://github.com/TurtleCode84)
-- Security analyst: (available)
+- Security analyst: [@non-biased-news](https://wasteof.money/users/non-biased-news)
 - Logo maker: [@daily_meme](https://wasteof.money/users/daily_meme)
 - Site admin: (available)
 - UI/Style expert: (available)
 - Testers:
   - [@-crowbar-](https://wasteof.money/users/-crowbar-)
+  - [@ankit_anmol](https://wasteof.money/users/ankit_anmol)
   
 ## What do I do?
 ### Project Manager:
