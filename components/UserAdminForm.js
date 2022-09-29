@@ -87,7 +87,7 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
         onClick={async (e) => {
           e.preventDefault();
           const confirm = prompt("Are you sure? Deleting a user is irreversable, and will delete all of their tasks and collections as well! Type \"yes\" to confirm, not case sensitive.");
-          if (confirm.toLowerCase() === "yes") {
+          if (confirm.trim().toLowerCase() === "yes") {
             try {
               await fetchJson(`/api/admin/users/${lookup._id}`, { method: "DELETE" });
               router.push("/admin/users?deleted=true");
