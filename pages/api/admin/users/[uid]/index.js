@@ -89,7 +89,10 @@ async function adminUserRoute(req, res) {
     }
     res.json(updated);
   } else if (req.method === 'DELETE') {
-    if (process.env.SUPERADMIN !== uid) {
+    if (user.id === uid) {
+      res.status(401).json({ message: "You can\'t delete your own account from the admin panel." });
+      return;
+    } else if (process.env.SUPERADMIN !== uid) {
       res.status(403).json({ message: "You do not have permission to delete users." });
       return;
     }
