@@ -1,4 +1,4 @@
-import fetchJson from "lib/fetchJson";
+import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
 
 export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
@@ -88,8 +88,16 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
           e.preventDefault();
           const confirm = prompt("Are you sure? Deleting a user is irreversable, and will delete all of their tasks and collections as well! Type \"yes\" to confirm, not case sensitive.");
           if (confirm.toLowerCase() === "yes") {
-            await fetchJson(`/api/admin/users/${lookup._id}`, { method: "DELETE" });
-            router.push("/admin/users?deleted=true");
+            try {
+              await fetchJson(`/api/admin/users/${lookup._id}`, { method: "DELETE" });
+              router.push("/admin/users?deleted=true");
+            } catch (error) {
+              if (error instanceof FetchError) {
+                setErrorMsg(error.data.message);
+              } else {
+                console.error("An unexpected error happened:", error);
+              }
+            }
           }
         }}
       ><>&#9888;</> Delete user <>&#9888;</></a>
