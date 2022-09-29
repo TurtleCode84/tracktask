@@ -129,7 +129,7 @@ export default function UserAdmin() {
               }
 
               try {
-                const getUrl = await fetchJson(`/api/admin/users/${lookup._id}`, {
+                await fetchJson(`/api/admin/users/${lookup._id}`, {
                   method: "POST",
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify(body),
