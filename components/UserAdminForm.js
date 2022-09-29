@@ -77,19 +77,22 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
         <><span>Ban reason</span>
         <input type="text" name="banReason" /></>
         }
-      </label>
+      </label><hr/>
 
       <button type="submit" id="editUserBtn">Edit user data</button>
 
-      {errorMessage && <p className="error">{errorMessage}</p>}
+      {errorMessage && <p className="error">{errorMessage}</p>}<hr/>
        
-      <a href={`/admin/users/${lookup._id}/delete`}
+      <a href={`/api/admin/users/${lookup._id}`}
         onClick={async (e) => {
           e.preventDefault();
-          await fetchJson(`/api/admin/users/${lookup._id}`, { method: "DELETE" });
-          router.push("/admin/users?deleted=true");
+          const confirm = prompt("Are you sure? Deleting a user is irreversable! Type \"yes\" to confirm, not case sensitive.");
+          if (confirm.toLowerCase() === "yes") {
+            await fetchJson(`/api/admin/users/${lookup._id}`, { method: "DELETE" });
+            router.push("/admin/users?deleted=true");
+          }
         }}
-      >( ! ) Delete user ( ! )</a>
+      >{&#9888;} Delete user {&#9888;}</a>
 
       <style jsx>{`
         form,
