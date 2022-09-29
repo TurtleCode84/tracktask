@@ -32,7 +32,7 @@ export default function Warning() {
         }}
       >Acknowledge warning</a>
 
-      <p>Receiving multiple warnings over a short period of time may increase your chances of being banned.</p>
+      <p>Receiving multiple warnings over a short period of time may increase your chances of being banned.<br/>Please remember to follow TrackTask&apos;s Terms of Use (link coming soon).</p>
       
       <p><i>If you would like to contest this warning, please contact a TrackTask administrator.</i></p>
         
