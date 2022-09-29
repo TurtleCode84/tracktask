@@ -5,6 +5,7 @@ import Loading from "components/Loading";
 import DueDate from "components/DueDate";
 import useUser from "lib/useUser";
 import useTasks from "lib/useTasks";
+import Link from "next/link";
 
 // Make sure to check https://nextjs.org/docs/basic-features/layouts for more info on how to use layouts
 export default function Dashboard() {
@@ -15,7 +16,7 @@ export default function Dashboard() {
   const sortedTasks = tasks?.sort((a, b) => (a.dueDate === 0 || b.priority) ? 1 : -1);
   const taskList = sortedTasks?.map((task) =>
     <li key={task._id}>
-      {task.priority ? <>&#10071;</> : null}{task.name} - {task.description} (due <DueDate timestamp={task.dueDate}/>{task.dueDate !== 0 ? <>, on {moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}</> : null})
+      {task.priority ? <>&#10071;</> : null}<Link href=`/tasks/${task.id}`>{task.name}</Link> - {task.description.slice(0,10)}... (due <DueDate timestamp={task.dueDate}/>{task.dueDate !== 0 ? <>, on {moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}</> : null})
     </li>
   );
   
