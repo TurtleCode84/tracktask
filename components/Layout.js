@@ -29,16 +29,16 @@ export default function Layout({ children }) {
           padding-right: 1rem;
         }
 
-        .list li {
+        .list {
           margin: "0.5em";
           padding: "5px 5px 5px 5px";
           border-style: "ridge";
           border-weight: "5px";
-          borderRadius: "10px";
+          border-radius: "10px";
           width: "auto";
           transition: background 1s;
         }
-        .list:hover li {
+        .list:hover {
           background: #9c9c9c;
           cursor: pointer;
         }
