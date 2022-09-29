@@ -28,6 +28,20 @@ export default function Layout({ children }) {
           padding-left: 1rem;
           padding-right: 1rem;
         }
+
+        .list li {
+          margin: "0.5em";
+          padding: "5px 5px 5px 5px";
+          border-style: "ridge";
+          border-weight: "5px";
+          borderRadius: "10px";
+          width: "auto";
+          transition: background 1s;
+        }
+        .list:hover li {
+          background: #d1d1d1;
+          cursor: pointer;
+        }
       `}</style>
       <nav style={{backgroundColor: "orange", textAlign: "center", height:40 + "px", fontWeight: 600, marginTop: -20 + "px", paddingBottom: 5 + "px"}}><p style={{paddingTop: 13 + "px"}}>You are viewing the TrackTask Development release, some features may not work properly or may break your account.</p></nav>
       <Header />
