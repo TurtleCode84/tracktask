@@ -13,12 +13,12 @@ async function adminUserRoute(req, res) {
     res.status(401).json({ message: "Unauthorized" });
     return;
   }
+  const { uid } = req.query;
+  if (!ObjectId.isValid(uid)) {
+    res.status(422).json({ message: "Invalid user ID" });
+    return;
+  }
   if (req.method === 'GET') {
-    const { uid } = req.query;
-    if (!ObjectId.isValid(uid)) {
-      res.status(422).json({ message: "Invalid user ID" });
-      return;
-    }
     const client = await clientPromise;
     const db = client.db("data");
     const query = { _id: ObjectId(uid) };
@@ -35,7 +35,6 @@ async function adminUserRoute(req, res) {
     }
   } else if (req.method === 'POST') {
     const body = await req.body;
-    const { uid } = req.query;
     if (process.env.SUPERADMIN === uid && user.id !== uid) {
       res.status(403).json({ message: "You do not have permission to modify this user." });
       return;
@@ -90,8 +89,13 @@ async function adminUserRoute(req, res) {
     }
     res.json(updated);
   } else if (req.method === 'DELETE') {
-    res.status(200).json({ message: "Under construction" });
-    return;
+    if (process.env.SUPERADMIN !== uid) {
+      res.status(403).json({ message: "You do not have permission to delete users." });
+      return;
+    }
+    const query = { _id: uid };
+    const deletedUser = await db.collection('users').deleteOne(query);
+    res.json(deletedUser);
   } else {
     res.status(405).json({ message: "Method not allowed" });
     return;
