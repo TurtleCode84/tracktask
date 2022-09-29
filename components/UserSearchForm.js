@@ -1,4 +1,4 @@
-export default function UserSearchForm({ errorMessage, onSubmit }) {
+export default function UserSearchForm({ errorMessage, deletedMessage, onSubmit }) {
   return (
     <form onSubmit={onSubmit}>
       <label>
@@ -18,6 +18,7 @@ export default function UserSearchForm({ errorMessage, onSubmit }) {
       <br/><button type="submit" id="findUserBtn">Find user</button>
 
       {errorMessage && <p className="error">{errorMessage}</p>}
+      {deletedMessage && !errorMessage && <p className="success">{deletedMessage}</p>}
 
       <style jsx>{`
         form,
@@ -36,6 +37,10 @@ export default function UserSearchForm({ errorMessage, onSubmit }) {
         }
         .error {
           color: brown;
+          margin: 1rem 0 0;
+        }
+        .success {
+          color: darkgreen;
           margin: 1rem 0 0;
         }
       `}</style>
