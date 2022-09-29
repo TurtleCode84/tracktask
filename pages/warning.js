@@ -19,7 +19,7 @@ export default function Warning() {
       <h1>&#9888; Account Warned:</h1>
       <h2>You&apos;ve recieved a warning from a TrackTask administrator.</h2>
 
-      <p>To continue using TrackTask, please review and acknowledge the warning.<br/>The following warning was issued: <b>{user?.history.warnings ? user?.history.warnings[0] : 'loading...'}</b></p>
+      <p>To continue using TrackTask, please review and acknowledge the warning.<br/>The following warning was issued: <b>{user ? user.history.warnings[0] : 'loading...'}</b></p>
       
       <a href={`/api/user`}
         onClick={async (e) => {
