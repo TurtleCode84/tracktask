@@ -13,7 +13,7 @@ export default function Admin() {
   });
   const { users } = useAdminUsers(user);
   const recentUsersList = users?.map((recentUser) =>
-    <li key={recentUser._id}>
+    <li key={recentUser._id} style={{ margin: "0.5em" }}>
       <Link href={`/admin/users/${recentUser._id}`}>{recentUser.username}</Link> - Joined {recentUser.history.joined > 0 ? moment.unix(recentUser.history.joined).fromNow() : 'never'}
     </li>
   );
