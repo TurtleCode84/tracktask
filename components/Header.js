@@ -124,7 +124,7 @@ export default function Header() {
         }
 
         li {
-          margin-right: 3rem;
+          margin-right: 2.5rem;
           display: flex;
         }
 
