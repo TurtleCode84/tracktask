@@ -48,14 +48,7 @@ export default function Dashboard() {
         <ul>
           {taskList}
         </ul>
-      </div></>
-      }
-      
-      <h2>Your collections:</h2>
-      <p style={{ fontStyle: "italic" }}>
-        Coming soon...
-      </p>
-      <style jsx>{`
+        <style jsx>{`
         .list > li {
           margin: "0.5em";
           padding: "5px 5px 5px 5px";
@@ -70,6 +63,13 @@ export default function Dashboard() {
           cursor: pointer;
         }
       `}</style>
+      </div></>
+      }
+      
+      <h2>Your collections:</h2>
+      <p style={{ fontStyle: "italic" }}>
+        Coming soon...
+      </p>
     </Layout>    
   );
 }
