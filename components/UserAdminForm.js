@@ -1,4 +1,8 @@
+import fetchJson from "lib/fetchJson";
+import { useRouter } from "next/router";
+
 export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
+  const router = useRouter();
   return (
     <form id="userAdminForm" onSubmit={onSubmit}>
       <label>
@@ -73,11 +77,19 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
         <><span>Ban reason</span>
         <input type="text" name="banReason" /></>
         }
-      </label><hr/>
+      </label>
 
       <button type="submit" id="editUserBtn">Edit user data</button>
 
       {errorMessage && <p className="error">{errorMessage}</p>}
+       
+      <a href=`/admin/users/${lookup._id}/delete`
+        onClick={async (e) => {
+          e.preventDefault();
+          await fetchJson(`/api/admin/users/${lookup._id}`, { method: "DELETE" });
+          router.push("/admin/users?deleted=true");
+        }}
+      >( ! ) Delete user ( ! )</a>
 
       <style jsx>{`
         form,
