@@ -90,7 +90,7 @@ async function adminUserRoute(req, res) {
     }
     res.json(updated);
   } else if (req.method === 'DELETE') {
-    res.status(418).json({ message: "Under construction" });
+    res.status(200).json({ message: "Under construction" });
     return;
   } else {
     res.status(405).json({ message: "Method not allowed" });
