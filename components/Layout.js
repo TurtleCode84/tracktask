@@ -48,7 +48,7 @@ export default function Layout({ children }) {
           transition: filter 0.3s;
         }
         .list-hover:hover {
-          filter: brightness(0.8);
+          filter: brightness(0.9);
           cursor: pointer;
         }
       `}</style>
