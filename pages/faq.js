@@ -18,7 +18,7 @@ export default function Faq() {
     <Layout>
       <h2>Frequently Asked Questions:</h2>
       <p>
-        Everything you ever wanted to know about TrackTask, more or less.
+        Conflicting.
       </p>
 
       <ul>
