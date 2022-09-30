@@ -30,15 +30,10 @@ export default function Layout({ children }) {
         }
 
         .list {
-          margin: "0.5em";
-          padding: "5px 5px 5px 5px";
-          border: "5px ridge rgb(0, 0, 0)";
-          border-radius: "10px";
-          width: "auto";
           transition: background 1s;
         }
         .list:hover {
-          background: #9c9c9c;
+          background: #b0b0b0;
           cursor: pointer;
         }
       `}</style>
