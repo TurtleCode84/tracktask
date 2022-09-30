@@ -30,10 +30,10 @@ export default function Layout({ children }) {
         }
 
         .list-hover {
-          transition: background 1s;
+          transition: background 0.5s;
         }
         .list-hover:hover {
-          background: #b0b0b0;
+          background: #d6d6d6;
           cursor: pointer;
         }
       `}</style>
