@@ -46,7 +46,7 @@ export default function Dashboard() {
       {taskList?.length === 0 ? <p style={{ fontStyle: "italic" }}>Looks like you have no tasks!</p> : <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
       </>
       :
-      <><ul style={{ display: "inline-block" }}>
+      <><ul style={{ display: "table" }}>
         {taskList}
       </ul></>
       }
