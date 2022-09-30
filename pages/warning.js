@@ -3,7 +3,7 @@ import Layout from "components/Layout";
 import Loading from "components/Loading";
 import useUser from "lib/useUser";
 import fetchJson from "lib/fetchJson";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 
 export default function Warning() {
   const { user } = useUser({
