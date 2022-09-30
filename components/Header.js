@@ -116,13 +116,11 @@ export default function Header() {
         </ul>
       </nav>
       <style jsx>{`
+        navbar {
+          display: flex;
+        }
+      
         ul {
-          -ms-box-orient: horizontal;
-          display: -webkit-box;
-          display: -moz-box;
-          display: -ms-flexbox;
-          display: -moz-flex;
-          display: -webkit-flex;
           display: flex;
           list-style: none;
           margin-left: 0;
