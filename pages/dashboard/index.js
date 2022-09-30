@@ -5,17 +5,19 @@ import Loading from "components/Loading";
 import DueDate from "components/DueDate";
 import useUser from "lib/useUser";
 import useTasks from "lib/useTasks";
-import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function Dashboard() {
   const { user } = useUser({
     redirectTo: "/login",
   });
+  
   const { tasks } = useTasks(user);
+  const router = useRouter();
   const sortedTasks = tasks?.sort((a, b) => (a.dueDate === 0 || b.priority) ? 1 : -1);
   const taskList = sortedTasks?.map((task) =>
-    <li key={task._id} className="list-hover" style={{ margin: "0.5em", padding: "5px 5px 5px 5px", borderWeight: "5px", borderStyle: "ridge", borderRadius: "10px", width: "auto" }}>
-      {task.priority ? <>&#10071;</> : null}<Link href={`/tasks/${task._id}`}>{task.name}</Link> - {task.description.slice(0,20).trim()}... (due <DueDate timestamp={task.dueDate}/>{task.dueDate !== 0 ? <>, on {moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}</> : null})
+    <li key={task._id} className="list-hover" style={{ margin: "0.5em", padding: "5px 5px 5px 5px", borderWeight: "5px", borderStyle: "ridge", borderRadius: "10px", width: "auto" }} onclick={router.push(`/tasks/${task._id}`)}>
+      {task.priority ? <>&#10071;</> : null}<b>{task.name}</b> - {task.description.slice(0,20).trim()}... (due <DueDate timestamp={task.dueDate}/>{task.dueDate !== 0 ? <>, on {moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}</> : null})
     </li>
   );
   
