@@ -31,7 +31,7 @@ export default function Layout({ children }) {
         @media only screen and (max-width: 600px) {
           .container {
             max-width: 100%;
-            align-self: stretch;
+            display: flex;
           }
         }
         
