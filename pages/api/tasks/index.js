@@ -58,9 +58,6 @@ async function tasksRoute(req, res) {
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
-  } else if (req.method === 'DELETE') {
-    res.status(418).json({ message: "Under construction" });
-    return;
   } else {
     res.status(405).json({ message: "Method not allowed" });
     return;
