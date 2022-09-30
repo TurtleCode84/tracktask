@@ -116,7 +116,7 @@ export default function Header() {
           list-style: none;
           margin-left: 0;
           padding-left: 0;
-          min-width: 100%;
+          overflow-y: scroll;
         }
 
         li {
