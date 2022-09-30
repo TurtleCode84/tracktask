@@ -111,6 +111,11 @@ export default function Header() {
         </ul>
       </nav>
       <style jsx>{`
+        header {
+          position: absolute;
+          max-width: 100%;
+        }
+      
         ul {
           display: flex;
           list-style: none;
