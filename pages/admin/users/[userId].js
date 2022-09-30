@@ -59,7 +59,6 @@ export default function UserAdmin() {
       <p>User ID: {lookup._id}</p>
       <p>Username: {lookup.username}</p>
       <p>Email: {lookup.email ? <><a href={`mailto:${lookup.email}`} target="_blank" rel="noreferrer">{lookup.email}</a></> : 'none'}</p>
-      <p>Password (hashed): <pre>{lookup.password}</pre></p>
       <p>Share key: <pre>{lookup.shareKey}</pre></p>
       <p>Profile picture: <Image src={lookup.profilePicture ? lookup.profilePicture : "/default-pfp.jpg" } width={32} height={32} alt=""/> ({lookup.profilePicture ? <a href={lookup.profilePicture} target="_blank" rel="noreferrer">link</a> : 'default'})</p>
       <h3>History</h3>

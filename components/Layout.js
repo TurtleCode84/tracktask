@@ -45,10 +45,10 @@ export default function Layout({ children }) {
         }
 
         .list-hover {
-          transition: background 0.3s;
+          transition: filter 0.3s;
         }
         .list-hover:hover {
-          background: #d6d6d6;
+          filter: brightness(0.9);
           cursor: pointer;
         }
       `}</style>
