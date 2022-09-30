@@ -21,12 +21,23 @@ export default function Layout({ children }) {
             "Helvetica Neue", Arial, Noto Sans, sans-serif, "Apple Color Emoji",
             "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
         }
-
-        .container {
-          max-width: 65rem;
-          margin: 1.5rem auto;
-          padding-left: 1rem;
-          padding-right: 1rem;
+        
+        @media only screen and (max-width: 600px) {
+          .container {
+            max-width: 65rem;
+            margin: 1.5rem auto;
+            padding-left: 1rem;
+            padding-right: 1rem;
+          }
+        }
+        
+        @media only screen and (min-width: 600px) {
+          .container {
+            max-width: 100%;
+            margin: 1.5rem auto;
+            padding-left: 1rem;
+            padding-right: 1rem;
+          }
         }
 
         .list-hover {
