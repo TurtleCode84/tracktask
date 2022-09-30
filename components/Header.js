@@ -124,6 +124,12 @@ export default function Header() {
           margin-right: 2.5rem;
           display: flex;
         }
+        
+        @media only screen and (max-width: 600px) {
+          li {
+            margin-right: 2rem;
+          }
+        }
 
         li:first-child {
           margin-left: auto;
