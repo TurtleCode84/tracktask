@@ -121,6 +121,7 @@ export default function Header() {
           list-style: none;
           margin-left: 0;
           padding-left: 0;
+          width: 100%;
         }
 
         li {
