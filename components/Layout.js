@@ -29,10 +29,10 @@ export default function Layout({ children }) {
           padding-right: 1rem;
         }
 
-        .list {
+        .list-hover {
           transition: background 1s;
         }
-        .list:hover {
+        .list-hover:hover {
           background: #b0b0b0;
           cursor: pointer;
         }
