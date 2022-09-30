@@ -18,7 +18,7 @@ export default function Faq() {
     <Layout>
       <h2>Frequently Asked Questions:</h2>
       <p>
-        Conflicting.
+        Word.
       </p>
 
       <ul>
