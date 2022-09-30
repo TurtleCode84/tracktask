@@ -29,9 +29,11 @@ export default function Layout({ children }) {
         }
         
         @media only screen and (max-width: 600px) {
+          body {
+            min-width: 100%;
+          }
           .container {
             max-width: 100%;
-            position: absolute;
           }
         }
         
