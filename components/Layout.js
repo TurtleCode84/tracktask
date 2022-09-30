@@ -22,21 +22,21 @@ export default function Layout({ children }) {
             "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
         }
         
+        .container {
+          margin: 1.5rem auto;
+          padding-left: 1rem;
+          padding-right: 1rem;
+        }
+        
         @media only screen and (max-width: 600px) {
           .container {
-            max-width: 65rem;
-            margin: 1.5rem auto;
-            padding-left: 1rem;
-            padding-right: 1rem;
+            max-width: 100%;
           }
         }
         
         @media only screen and (min-width: 600px) {
           .container {
-            max-width: 100%;
-            margin: 1.5rem auto;
-            padding-left: 1rem;
-            padding-right: 1rem;
+            max-width: 65rem;
           }
         }
 
