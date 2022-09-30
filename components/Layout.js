@@ -31,8 +31,7 @@ export default function Layout({ children }) {
         @media only screen and (max-width: 600px) {
           .container {
             max-width: 100%;
-            display: inline-flex;
-            overflow: auto;
+            position: absolute;
           }
         }
         
