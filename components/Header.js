@@ -111,16 +111,13 @@ export default function Header() {
         </ul>
       </nav>
       <style jsx>{`
-        nav {
-          overflow: auto;
-          white-space: nowrap;
-        }
-      
         ul {
           display: flex;
           list-style: none;
           margin-left: 0;
           padding-left: 0;
+          overflow: auto;
+          white-space: nowrap;
         }
 
         li {
