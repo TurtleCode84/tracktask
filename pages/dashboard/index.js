@@ -15,7 +15,7 @@ export default function Dashboard() {
   const sortedTasks = tasks?.sort((a, b) => (a.dueDate === 0 || b.priority) ? 1 : -1);
   const taskList = sortedTasks?.map((task) =>
     <li key={task._id} className="list-hover" style={{ margin: "0.5em", padding: "5px 5px 5px 5px", borderWeight: "5px", borderStyle: "ridge", borderRadius: "10px", width: "auto" }}>
-      <div className="list-hover">{task.priority ? <>&#10071;</> : null}<Link href={`/tasks/${task._id}`}>{task.name}</Link> - {task.description.slice(0,20).trim()}... (due <DueDate timestamp={task.dueDate}/>{task.dueDate !== 0 ? <>, on {moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}</> : null})</div>
+      {task.priority ? <>&#10071;</> : null}<Link href={`/tasks/${task._id}`}>{task.name}</Link> - {task.description.slice(0,20).trim()}... (due <DueDate timestamp={task.dueDate}/>{task.dueDate !== 0 ? <>, on {moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}</> : null})
     </li>
   );
   
