@@ -30,7 +30,8 @@ export default function Layout({ children }) {
         
         @media only screen and (max-width: 600px) {
           body {
-            min-width: 100%;
+            display: flex;
+            overflow: auto;
           }
           .container {
             max-width: 100%;
