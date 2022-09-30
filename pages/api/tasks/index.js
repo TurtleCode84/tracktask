@@ -18,7 +18,7 @@ async function tasksRoute(req, res) {
     const query = { owner: ObjectId(user.id), hidden: false };
     const options = {
       sort: { priority: -1, dueDate: 1 },
-      projection: { name: 1, description: 1, dueDate: 1, owner: 1, completion: 1, priority: 1 },
+      projection: { name: 1, description: 1, dueDate: 1, owner: 1, completion: 1, priority: 1, collections: 1 },
     };
 
     try {
