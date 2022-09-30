@@ -45,7 +45,7 @@ export default function Layout({ children }) {
         }
 
         .list-hover {
-          transition: background 0.5s;
+          transition: background 0.3s;
         }
         .list-hover:hover {
           background: #d6d6d6;
