@@ -24,7 +24,7 @@ async function adminTaskRoute(req, res) {
       _id: ObjectId(id),
       $or: [
         { owner: ObjectId(user.id) },
-        { 'sharing.sharedWith': {$in: [ ObjectId(user.id) ]} },
+        { 'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: ObjectId(user.id)}} },
       ],
     };
     try {
