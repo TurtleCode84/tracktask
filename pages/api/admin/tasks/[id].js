@@ -5,7 +5,7 @@ import clientPromise from "lib/mongodb";
 
 export default withIronSessionApiRoute(adminTaskRoute, sessionOptions);
 
-async function adminUserRoute(req, res) {
+async function adminTaskRoute(req, res) {
   if (req.method === 'GET') {
     const user = req.session.user;
     if (!user || !user.isLoggedIn || !user.permissions.admin ) {
