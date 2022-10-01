@@ -66,7 +66,8 @@ Try everything in every way possible, create issues in this repository as you fi
 ## Things to consider:
 - This is a DEVELOPMENT project, things are going to be incomplete. I'm working on adding all of the main structure, but I'm legally required to go to school, so I can't work on this 24/7 (just 23/7).
 - If it seems like I'm shooting down your ideas, I'm sorry, I'm literally writing this on a 3-hour bus ride after a cross-country meet, but some of my responses are via email and can't have as much detail or constructive feedback as they should.
-- That being said, I'm not on the computer _all_ the time, so there is a delay.
+- That being said, I'm not on the computer _all_ the time, so there is a delay in my responses.
+- I'm a high schooler, not a professional web developer. Yet.
 
 ## By accepting the invite for and contributing to this GitHub repository, you agree to all Contributor and Site Admin Rules, as applicable.
 
