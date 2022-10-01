@@ -46,7 +46,6 @@ async function tasksRoute(req, res) {
           completedBy: "",
         },
         priority: markPriority,
-        collections: [],
       }
       if (dueDate) {
         newTask.dueDate = moment(dueDate).unix();
