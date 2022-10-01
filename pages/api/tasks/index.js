@@ -14,7 +14,7 @@ async function tasksRoute(req, res) {
   }
   const client = await clientPromise;
   const db = client.db("data");
-  if (req.method === 'GET') {
+  if (req.method === 'GET') { // Get all unhidden tasks for the logged in user
     const query = { owner: ObjectId(user.id), hidden: false };
     const options = {
       sort: { priority: -1, dueDate: 1 },
@@ -27,7 +27,7 @@ async function tasksRoute(req, res) {
     } catch (error) {
       res.status(200).json([]);
     }
-  } else if (req.method === 'POST') {
+  } else if (req.method === 'POST') { // Create a new task
     const { name, description, dueDate, markCompleted, markPriority } = await req.body;
     if (!name || !description) {
       res.status(422).json({ message: "Invalid data" });
