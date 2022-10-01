@@ -3,6 +3,7 @@
 If you're here, you're probably a member of TrackTask's development team! ~~(if not, get out of here you hacker)~~
 <br>Thanks for joining, every bit of help counts!
 
+<hr>
 # Next Big Goal:
 - [ ] Complete the TrackTask framework to the point where we can actually use TrackTask to track what we still need to work on (lol)
 <hr>
