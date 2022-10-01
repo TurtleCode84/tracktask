@@ -3,6 +3,10 @@
 If you're here, you're probably a member of TrackTask's development team! ~~(if not, get out of here you hacker)~~
 <br>Thanks for joining, every bit of help counts!
 
+# Next Big Goal:
+- [ ] Complete the TrackTask framework to the point where we can actually use TrackTask to track what we still need to work on (lol)
+<hr>
+
 ## What is TrackTask?
 TrackTask is a Shareable Task Management system. Users can create tasks with names, descriptions, due dates, etc. and keep track of their completion & priority.
 Additionally, tasks can be (potentially must be) grouped in collections, which can be shared with other users and edited by them if they have the right permissions.
@@ -56,6 +60,11 @@ Working with the existing site framework, redesign and restructure to make Track
 
 ### Testers:
 Try everything in every way possible, create issues in this repository as you find bugs or problems, attempt to hack things so we can fix them, **report Javascript console errors**.
+
+## Things to consider:
+- This is a DEVELOPMENT project, things are going to be incomplete. I'm working on adding all of the main structure, but I'm legally required to go to school, so I can't work on this 24/7 (just 23/7).
+- If it seems like I'm shooting down your ideas, I'm sorry, I'm literally writing this on a 3-hour bus ride after a cross-country meet, but some of my responses are via email and can't have as much detail or constructive feedback as they should.
+- That being said, I'm not on the computer _all_ the time, so there is a delay.
 
 ## By accepting the invite for and contributing to this GitHub repository, you agree to all Contributor and Site Admin Rules, as applicable.
 
