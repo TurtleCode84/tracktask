@@ -31,8 +31,9 @@ async function adminTaskRoute(req, res) {
       var getTasks;
       if (!collection) {
         getTasks = await db.collection("tasks").findOne(query);
-      } else {
+      } else if (collection === "true") {
         getTasks = await db.collection("collections").findOne(query);
+        getTasks.tasks = await db.collection("tasks").find({ _id: {$in: getTasks.tasks} }).toArray();
       }
       if (!getTasks) {
         res.status(404).json({ message: "No tasks found" });
