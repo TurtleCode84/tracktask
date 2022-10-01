@@ -24,7 +24,7 @@ async function adminTaskRoute(req, res) {
       _id: ObjectId(id),
       $or: [
         { owner: ObjectId(user.id) },
-        { 'sharing.sharedWith': {$elemMatch: {id: ObjectId(user.id)}} },
+        { 'sharing.sharedWith.$': {$elemMatch: {id: ObjectId(user.id)}} },
       ],
     };
     try {
@@ -33,6 +33,10 @@ async function adminTaskRoute(req, res) {
         getTasks = await db.collection("tasks").findOne(query);
       } else {
         getTasks = await db.collection("collections").findOne(query);
+      }
+      if (!getTasks) {
+        res.status(404).json({ message: "No tasks found" });
+        return;
       }
       res.json(getTasks);
     } catch (error) {
