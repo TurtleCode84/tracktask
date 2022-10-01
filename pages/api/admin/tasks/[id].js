@@ -23,8 +23,8 @@ async function adminTaskRoute(req, res) {
     const query = {
       _id: ObjectId(id),
       $or: [
-        { owner: user.id },
-        { 'sharing.sharedWith': {$elemMatch: {id: user.id}} },
+        { owner: ObjectId(user.id) },
+        { 'sharing.sharedWith': {$elemMatch: {id: ObjectId(user.id)}} },
       ],
     };
     try {
