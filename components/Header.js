@@ -99,9 +99,9 @@ export default function Header() {
             </>
           )}
           <li>
-            <a href="https://github.com/vvo/iron-session">
+            <a href="/">
               <Image
-                src="/GitHub-Mark-Light-32px.png"
+                src="/tracktaskmini.png"
                 width="32"
                 height="32"
                 alt=""
