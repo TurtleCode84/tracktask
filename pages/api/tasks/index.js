@@ -35,7 +35,7 @@ async function tasksRoute(req, res) {
         query.dueDate = {$and: [{$gt: Math.floor(Date.now()/1000)}, {$not: 0}]};
       } else if (filter === "overdue") {
         query.dueDate = {$and: [{$lte: Math.floor(Date.now()/1000)}, {$not: 0}]};
-      };
+      }
       try {
         data = await db.collection("tasks").find(query, taskoptions).toArray();
       } catch (error) {
@@ -45,7 +45,7 @@ async function tasksRoute(req, res) {
       const collectionoptions = {
         sort: { created: -1 },
         projection: { name: 1, description: 1, created: 1, owner: 1, sharing: 1, tasks: 1 },
-      }
+      };
       try {
         data = await db.collection("collections").find(query, collectionoptions).toArray();
       } catch (error) {
@@ -85,7 +85,7 @@ async function tasksRoute(req, res) {
           completedBy: "",
         },
         priority: markPriority,
-      }
+      };
       if (dueDate) {
         newTask.dueDate = moment(dueDate).unix();
       } else {
@@ -95,6 +95,7 @@ async function tasksRoute(req, res) {
       res.json(createdTask);
     } catch (error) {
       res.status(500).json({ message: error.message });
+      return;
     }
   } else {
     res.status(405).json({ message: "Method not allowed" });
