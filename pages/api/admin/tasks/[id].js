@@ -6,25 +6,24 @@ import clientPromise from "lib/mongodb";
 export default withIronSessionApiRoute(adminTaskRoute, sessionOptions);
 
 async function adminTaskRoute(req, res) {
+  const user = req.session.user;
+  if (!user || !user.isLoggedIn || !user.permissions.admin ) {
+    res.status(401).json({ message: "Unauthorized" });
+    return;
+  }
+  const { id, collection } = req.query
+  if (!ObjectId.isValid(id)) {
+    res.status(422).json({ message: "Invalid object ID" });
+    return;
+  }
   if (req.method === 'GET') {
-    const user = req.session.user;
-    if (!user || !user.isLoggedIn || !user.permissions.admin ) {
-      res.status(401).json({ message: "Unauthorized" });
-      return;
-    }
-    
-    const { id, collection } = req.query
-    if (!ObjectId.isValid(id)) {
-      res.status(422).json({ message: "Invalid object ID" });
-      return;
-    }
     const client = await clientPromise;
     const db = client.db("data");
     const query = {
       _id: ObjectId(id),
       $or: [
         { owner: ObjectId(user.id) },
-        { 'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: ObjectId(user.id)}} },
+        { 'sharing.shared': true },
       ],
     };
     try {
@@ -50,8 +49,15 @@ async function adminTaskRoute(req, res) {
     res.status(418).json({ message: "Under construction" });
     return;
   } else if (req.method === 'DELETE') {
-    res.status(418).json({ message: "Under construction" });
-    return;
+    const client = await clientPromise;
+    const db = client.db("data");
+    var deletedItem;
+    if (collection !== "true") {
+      deletedItem = await db.collection("tasks").deleteOne({ _id: ObjectId(id) });
+    } else {
+      deletedItem = await db.collection("collections").deleteOne({ _id: ObjectId(id) });
+    }
+    res.json(deletedItem);
   } else {
     res.status(405).json({ message: "Method not allowed" });
     return;
