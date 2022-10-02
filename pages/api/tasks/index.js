@@ -28,37 +28,41 @@ async function tasksRoute(req, res) {
       projection: { name: 1, description: 1, dueDate: 1, owner: 1, completion: 1, priority: 1 },
     }
     var data;
-    try {
-      if (collections !== "true") {
-        if (filter === "recent") {
-          query.created = {$lt: (Math.floor(Date.now()/1000) + 86400)} };
-        } else if (filter === "upcoming") {
-          query.dueDate = {$and: [{$gt: Math.floor(Date.now()/1000)}, {$not: 0}]} };
-        } else if (filter === "overdue") {
-          query.dueDate = {$and: [{$lte: Math.floor(Date.now()/1000)}, {$not: 0}]} };
-        }
+    if (collections !== "true") {
+      if (filter === "recent") {
+        query.created = {$lt: (Math.floor(Date.now()/1000) + 86400)} };
+      } else if (filter === "upcoming") {
+        query.dueDate = {$and: [{$gt: Math.floor(Date.now()/1000)}, {$not: 0}]} };
+      } else if (filter === "overdue") {
+        query.dueDate = {$and: [{$lte: Math.floor(Date.now()/1000)}, {$not: 0}]} };
+      }
+      try {
         data = await db.collection("tasks").find(query, taskoptions).toArray();
-      } else {
-        const collectionoptions = {
-          sort: { created: -1 },
-          projection: { name: 1, description: 1, created: 1, owner: 1, sharing: 1, tasks: 1 },
-        }
+      } catch (error) {
+        res.status(200).json([]);
+      }
+    } else {
+      const collectionoptions = {
+        sort: { created: -1 },
+        projection: { name: 1, description: 1, created: 1, owner: 1, sharing: 1, tasks: 1 },
+      }
+      try {
         data = await db.collection("collections").find(query, collectionoptions).toArray();
-        for (var i=0; i<data.length; i++) {
-          data[i].tasks = await db.collection("tasks").find({ _id: {$in: data[i].tasks} }, taskoptions).toArray();
-        }
+      } catch (error) {
+        res.status(200).json([]);
       }
-      if (!data && collections !== "true") {
-        res.status(404).json({ message: "No tasks found" });
-        return;
-      } else if (!data) {
-        res.status(404).json({ message: "No collections found" });
-        return;
+      for (var i=0; i<data.length; i++) {
+        data[i].tasks = await db.collection("tasks").find({ _id: {$in: data[i].tasks} }, taskoptions).toArray();
       }
-      res.json(data);
-    } catch (error) {
-      res.status(200).json([]);
     }
+    if (!data && collections !== "true") {
+      res.status(404).json({ message: "No tasks found" });
+      return;
+    } else if (!data) {
+      res.status(404).json({ message: "No collections found" });
+      return;
+    }
+    res.json(data);
   } else if (req.method === 'POST') { // Create a new task
     const { name, description, dueDate, markCompleted, markPriority } = await req.body;
     if (!name || !description) {
