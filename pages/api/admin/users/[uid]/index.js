@@ -1,6 +1,6 @@
 import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "lib/session";
-import { ObjectId } from 'mongodb'
+import { ObjectId } from "mongodb";
 import clientPromise from "lib/mongodb";
 import { hash } from "bcryptjs";
 import {v4 as uuidv4} from "uuid";
@@ -115,9 +115,9 @@ async function adminUserRoute(req, res) {
     }
     const client = await clientPromise;
     const db = client.db("data");
-    const deletedUser = await db.collection('users').deleteOne({ _id: ObjectId(uid) });
-    const deletedTasks = await db.collection('tasks').deleteOne({ owner: ObjectId(uid) }); // See above
-    const deletedCollections = await db.collection('collections').deleteOne({ owner: ObjectId(uid) }); // See above
+    const deletedUser = await db.collection("users").deleteOne({ _id: ObjectId(uid) });
+    const deletedTasks = await db.collection("tasks").deleteOne({ owner: ObjectId(uid) }); // See above
+    const deletedCollections = await db.collection("collections").deleteOne({ owner: ObjectId(uid) }); // See above
     res.json(deletedUser);
   } else {
     res.status(405).json({ message: "Method not allowed" });
