@@ -56,10 +56,10 @@ async function tasksRoute(req, res) {
         data[i].tasks = await db.collection("tasks").find({ _id: {$in: data[i].tasks} }, taskoptions).toArray();
       }
     }
-    if (!data && collections !== "true") {
+    if (data.length === 0 && collections !== "true") {
       res.status(404).json({ message: "No tasks found" });
       return;
-    } else if (!data) {
+    } else if (data.length === 0) {
       res.status(404).json({ message: "No collections found" });
       return;
     }
