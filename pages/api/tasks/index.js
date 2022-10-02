@@ -36,11 +36,11 @@ async function tasksRoute(req, res) {
       } else if (filter === "overdue") {
         query.dueDate = {$and: [{$lte: Math.floor(Date.now()/1000)}, {$not: 0}]} };
       }
-      try {
+      //try {
         data = await db.collection("tasks").find(query, taskoptions).toArray();
-      } catch (error) {
+      /*} catch (error) {
         res.status(200).json([]);
-      }
+      }*/
     } else {
       const collectionoptions = {
         sort: { created: -1 },
