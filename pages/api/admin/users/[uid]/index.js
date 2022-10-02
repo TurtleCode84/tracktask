@@ -117,7 +117,7 @@ async function adminUserRoute(req, res) {
     const db = client.db("data");
     const deletedUser = await db.collection('users').deleteOne({ _id: ObjectId(uid) });
     const deletedTasks = await db.collection('tasks').deleteOne({ owner: ObjectId(uid) }); // See above
-    //const deletedCollections = await db.collection('collections').deleteOne({ owner: ObjectId(uid) }); // See above
+    const deletedCollections = await db.collection('collections').deleteOne({ owner: ObjectId(uid) }); // See above
     res.json(deletedUser);
   } else {
     res.status(405).json({ message: "Method not allowed" });
