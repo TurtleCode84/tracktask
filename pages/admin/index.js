@@ -11,10 +11,16 @@ export default function Admin() {
     redirectTo: "/dashboard",
     adminOnly: true,
   });
-  const { users } = useAdminUsers(user);
-  const recentUsersList = users?.map((recentUser) =>
-    <li key={recentUser._id} style={{ margin: "0.5em" }}>
-      <Link href={`/admin/users/${recentUser._id}`}>{recentUser.username}</Link> - Joined {recentUser.history.joined > 0 ? moment.unix(recentUser.history.joined).fromNow() : 'never'}
+  const { users: recentlyJoined } = useAdminUsers(user, "joined", 5);
+  const newUsersList = recentlyJoined?.map((newUser) =>
+    <li key={newUser._id} style={{ margin: "0.5em" }}>
+      <Link href={`/admin/users/${newUser._id}`}>{newUser.username}</Link> - Joined {newUser.history.joined > 0 ? moment.unix(newUser.history.joined).fromNow() : 'never'}
+    </li>
+  );
+  const { users: recentlyActive } = useAdminUsers(user, "login", 5);
+  const activeUsersList = recentlyActive?.map((activeUser) =>
+    <li key={activeUser._id} style={{ margin: "0.5em" }}>
+      <Link href={`/admin/users/${activeUser._id}`}>{activeUser.username}</Link> - Last login {activeUser.history.lastLogin > 0 ? moment.unix(activeUser.history.lastLogin).fromNow() : 'never'}
     </li>
   );
 
@@ -26,13 +32,16 @@ export default function Admin() {
   return (
     <Layout>
       <h1>TrackTask Admin Panel &#128737;</h1>
-      <h2>
-        Welcome back{user ? `, ${user.username}` : null}!
-      </h2>
-      <h3>Recently created users:</h3>
+      <h2>User Statistics</h2>
+      <h3>Recently active:</h3>
       <ul>
-        {recentUsersList ? recentUsersList : 'Loading recent users...'}
-        {recentUsersList && recentUsersList === null && <>No users found</>}
+        {activeUsersList ? activeUsersList : 'Loading active users...'}
+        {activeUsersList && activeUsersList === null && <>No active users found</>}
+      </ul>
+      <h3>Recently joined:</h3>
+      <ul>
+        {newUsersList ? newUsersList : 'Loading new users...'}
+        {newUsersList && newUsersList === null && <>No new users found</>}
       </ul>
       <p>All admin pages:</p>
       <ul>
