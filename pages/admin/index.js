@@ -32,6 +32,8 @@ export default function Admin() {
   return (
     <Layout>
       <h1>TrackTask Admin Panel &#128737;</h1>
+      <h2>Recent Reports</h2>
+      <p style={{fontStyle: italic}}>(Coming soon...)</p>
       <h2>User Statistics</h2>
       <h3>Recently active:</h3>
       <ul>
@@ -46,6 +48,7 @@ export default function Admin() {
       <p>All admin pages:</p>
       <ul>
         <li><Link href="/admin/users">User Admin</Link></li>
+        <li>Task Admin <p style={{fontStyle: italic}}>(Coming soon...)</p></li>
       </ul>
       <details>
         <summary>View my raw session info</summary>
