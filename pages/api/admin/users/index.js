@@ -29,6 +29,17 @@ async function adminUsersRoute(req, res) {
       } catch (error) {
         res.status(500).json({ message: error.message });
       }
+    } else if (sort === "login") {
+      try {
+        const getUsers = await db.collection("users").find().project({ _id: 1, username: 1, 'history.lastLogin': 1 }).limit(parseInt(count)).sort({ 'history.lastLogin': -1 }).toArray();
+        if (getUsers) {
+          res.json(getUsers);
+        } else {
+          res.status(404).json({ message: "No users found" });
+        }
+      } catch (error) {
+        res.status(500).json({ message: error.message });
+      }
     } else {
       res.status(422).json({ message: "Invalid sort query" });
       return;
