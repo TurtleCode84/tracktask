@@ -63,8 +63,7 @@ async function tasksRoute(req, res) {
       res.status(404).json({ message: "No collections found" });
       return;
     }
-    //res.json(data);
-    res.json({"message": "Good, you are here"});
+    res.json(data);
   } else if (req.method === 'POST') { // Create a new task
     const { name, description, dueDate, markCompleted, markPriority } = await req.body;
     if (!name || !description) {
