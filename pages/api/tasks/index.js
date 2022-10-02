@@ -30,11 +30,13 @@ async function tasksRoute(req, res) {
     var data;
     if (collections !== "true") {
       if (filter === "recent") {
-        query.created = {$lt: (Math.floor(Date.now()/1000) + 86400)};
+        query.created = {$lte: (Math.floor(Date.now()/1000) + 86400)};
       } else if (filter === "upcoming") {
-        query.$and = [{$gt: Math.floor(Date.now()/1000)}, {$ne: 0}];
+        query.dueDate = {$gt: Math.floor(Date.now()/1000)}; // {$ne: 0}
       } else if (filter === "overdue") {
-        query.$and = [{$lte: Math.floor(Date.now()/1000)}, {$ne: 0}];
+        query.dueDate = {$lte: Math.floor(Date.now()/1000)}; // {$ne: 0}
+      } else if (filter === "notdue") {
+        query.dueDate = 0;
       }
       try {
         data = await db.collection("tasks").find(query, taskoptions).toArray();
