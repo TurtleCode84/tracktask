@@ -3,11 +3,11 @@ export default function TaskCreateForm({ errorMessage, onSubmit }) {
     <form id="userAdminForm" onSubmit={onSubmit}>
       <label>
         <span>Name</span>
-        <input type="text" name="name" required />
+        <input type="text" name="name" maxlength="50" required />
       </label>
       <label>
         <span>Description</span>
-        <textarea name="description" rows="4" cols="30" required />
+        <textarea name="description" rows="4" cols="30" maxlength="500" required />
       </label><br/>
       <label>
         <span>Due Date (optional)</span>
