@@ -46,7 +46,7 @@ async function tasksRoute(req, res) {
         res.status(404).json({ message: "No tasks found" });
         return;
       } else if (!data) {
-        res.status(404).json({ message: "No collection found" });
+        res.status(404).json({ message: "No collections found" });
         return;
       }
       res.json(data);
