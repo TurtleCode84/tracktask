@@ -64,7 +64,7 @@ async function tasksRoute(req, res) {
       return;
     }
     //res.json(data);
-    res.json("message": "Good, you are here");
+    res.json({"message": "Good, you are here"});
   } else if (req.method === 'POST') { // Create a new task
     const { name, description, dueDate, markCompleted, markPriority } = await req.body;
     if (!name || !description) {
