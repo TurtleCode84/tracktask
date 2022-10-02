@@ -40,6 +40,9 @@ async function tasksRoute(req, res) {
       }
       try {
         data = await db.collection("tasks").find(query, taskoptions).toArray();
+        if (filter === "upcoming" || filter === "overdue") {
+          data = data.filter(task => task.created !== 0);
+        }
       } catch (error) {
         res.status(200).json([]);
         return;
