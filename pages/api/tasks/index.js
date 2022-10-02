@@ -39,7 +39,7 @@ async function tasksRoute(req, res) {
       try {
         data = await db.collection("tasks").find(query, taskoptions).toArray();
       } catch (error) {
-        res.status(200).json([]);
+        res.status(500).json([]);
         return;
       }
     } else {
@@ -50,7 +50,7 @@ async function tasksRoute(req, res) {
       try {
         data = await db.collection("collections").find(query, collectionoptions).toArray();
       } catch (error) {
-        res.status(500).json([]);
+        res.status(200).json([]);
       }
       for (var i=0; i<data.length; i++) {
         data[i].tasks = await db.collection("tasks").find({ _id: {$in: data[i].tasks} }, taskoptions).toArray();
