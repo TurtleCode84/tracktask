@@ -35,7 +35,7 @@ async function tasksRoute(req, res) {
       } else {
         const collectionoptions = {
           sort: { created: -1 },
-          projection: { name: 1, description: 1, created: 1, owner: 1, sharing: 1, tasks: 1 },
+          projection: { name: 1, description: 1, owner: 1, sharing: 1, tasks: 1 },
         }
         data = await db.collection("collections").find(query, collectionoptions).toArray();
         for (var i=0; i<data.length; i++) {
