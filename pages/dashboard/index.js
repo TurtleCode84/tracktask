@@ -23,7 +23,7 @@ export default function Dashboard() {
   const { tasks: collections } = useTasks(user, true, false);
   const collectionList = collections?.map((collection) =>
     <li key={collection._id} className="list-hover" style={{ margin: "0.5em", background: "#f8f8f8", padding: "5px", borderWidth: "2px", borderStyle: "solid", borderColor: "darkgray", borderRadius: "10px", width: "auto" }} onClick={() => router.push(`/tasks/${collection._id}`)}>
-      {collection.owner === user.id ? <><div title="You own this collection">&#128273;</div>{' '}</> : null}<b>{collection.name}</b> - {collection.description.slice(0,25).trim()}... (created <DueDate timestamp={collection.created}/>)
+      {collection.owner === user.id ? <><span title="You own this collection">&#128273;</span>{' '}</> : null}<b>{collection.name}</b> - {collection.description.slice(0,25).trim()}... (created <DueDate timestamp={collection.created}/>)
     </li>
   );
   
@@ -37,7 +37,7 @@ export default function Dashboard() {
       <h1>
         {user ? 
         <>
-        Welcome back, {user.username}!{user.permissions.verified ? <>{' '}<div title="Verified">&#9989;</div></> : null}{user.permissions.admin ? <>{' '}<div title="Admin">&#128737;</div></> : null}
+        Welcome back, {user.username}!{user.permissions.verified ? <>{' '}<span title="Verified">&#9989;</span></> : null}{user.permissions.admin ? <>{' '}<span title="Admin">&#128737;</span></> : null}
         </>
         :
         <>
