@@ -32,9 +32,8 @@ async function tasksRoute(req, res) {
     if (!name || !description) {
       res.status(422).json({ message: "Invalid data" });
       return;
-    }
-    if (name.trim().length > 50 || description.trim().length > 500) {
-      res.status(422).json({ message: "Invalid data. Length of title and description must not exceed 50 and 500 characters respectively." });
+    } else if (name.trim().length > 50 || description.trim().length > 500) {
+      res.status(422).json({ message: "Length of title and description must not exceed 50 and 500 characters respectively." });
       return;
     }
     // Otherwise...
