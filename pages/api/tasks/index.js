@@ -26,21 +26,21 @@ async function tasksRoute(req, res) {
     const taskoptions = {
       sort: { dueDate: 1, priority: -1 },
       projection: { name: 1, description: 1, dueDate: 1, owner: 1, completion: 1, priority: 1 },
-    }
+    };
     var data;
     if (collections !== "true") {
       if (filter === "recent") {
         query.created = {$lt: (Math.floor(Date.now()/1000) + 86400)} };
       } else if (filter === "upcoming") {
-        query.dueDate = {$and: [{$gt: Math.floor(Date.now()/1000)}, {$not: 0}]} };
+        query.dueDate = {$and: [{$gt: Math.floor(Date.now()/1000)}, {$not: 0}]};
       } else if (filter === "overdue") {
-        query.dueDate = {$and: [{$lte: Math.floor(Date.now()/1000)}, {$not: 0}]} };
-      }
-      //try {
+        query.dueDate = {$and: [{$lte: Math.floor(Date.now()/1000)}, {$not: 0}]};
+      };
+      try {
         data = await db.collection("tasks").find(query, taskoptions).toArray();
-      /*} catch (error) {
+      } catch (error) {
         res.status(200).json([]);
-      }*/
+      }
     } else {
       const collectionoptions = {
         sort: { created: -1 },
