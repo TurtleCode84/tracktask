@@ -38,7 +38,7 @@ async function tasksRoute(req, res) {
           projection: { name: 1, description: 1, created: 1, owner: 1, sharing: 1, tasks: 1 },
         }
         data = await db.collection("collections").find(query, collectionoptions).toArray();
-        for (var i; i<data.length; i++) {
+        for (var i=0; i<data.length; i++) {
           data[i].tasks = await db.collection("tasks").find({ _id: {$in: data[i].tasks} }, taskoptions).toArray();
         }
       }
