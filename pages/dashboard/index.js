@@ -12,18 +12,18 @@ export default function Dashboard() {
     redirectTo: "/login",
   });
   
+  const { collections } = useTasks(user, true, false);
+  const collectionList = collections?.map((collection) =>
+    <li key={collection._id} className="list-hover" style={{ margin: "0.5em", background: "#f8f8f8", padding: "5px", borderWidth: "2px", borderStyle: "solid", borderColor: "darkgray", borderRadius: "10px", width: "auto" }} onClick={() => router.push(`/collections/${collection._id}`)}>
+      {collection.owner === user.id ? <>&#128273;</> : null}<b>{collection.name}</b> - {collection.description.slice(0,25).trim()}... (created <DueDate timestamp={collection.created}/>)
+    </li>
+  );
   const { tasks } = useTasks(user, false, "upcoming");
   const router = useRouter();
   const sortedTasks = tasks?.sort((a, b) => (a.priority) ? 1 : -1);
   const taskList = sortedTasks?.map((task) =>
     <li key={task._id} className="list-hover" style={{ margin: "0.5em", background: "#f8f8f8", padding: "5px", borderWidth: "2px", borderStyle: "solid", borderColor: "darkgray", borderRadius: "10px", width: "auto" }} onClick={() => router.push(`/tasks/${task._id}`)}>
       {task.priority ? <>&#10071;</> : null}<b>{task.name}</b> - {task.description.slice(0,25).trim()}... (due <DueDate timestamp={task.dueDate}/>{task.dueDate !== 0 ? <>, on {moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}</> : null})
-    </li>
-  );
-  const { collections } = useTasks(user, true, false);
-  const collectionList = collections?.map((collection) =>
-    <li key={collection._id} className="list-hover" style={{ margin: "0.5em", background: "#f8f8f8", padding: "5px", borderWidth: "2px", borderStyle: "solid", borderColor: "darkgray", borderRadius: "10px", width: "auto" }} onClick={() => router.push(`/collections/${collection._id}`)}>
-      {collection.owner === user.id ? <>&#128273;</> : null}<b>{collection.name}</b> - {collection.description.slice(0,25).trim()}... (created <DueDate timestamp={collection.created}/>)
     </li>
   );
   
