@@ -15,8 +15,7 @@ async function tasksRoute(req, res) {
   const client = await clientPromise;
   const db = client.db("data");
   if (req.method === 'GET') { // Get all unhidden tasks or collections for the logged in user
-    const { collections } = req.query;
-    //const query = { owner: ObjectId(user.id), hidden: false };
+    const { collections, filter } = req.query;
     const query = {
       hidden: false,
       $or: [
@@ -25,13 +24,21 @@ async function tasksRoute(req, res) {
       ],
     };
     const taskoptions = {
-      sort: { priority: -1, dueDate: 1 },
-      projection: { name: 1, description: 1, dueDate: 1, owner: 1, completion: 1, priority: 1 },
-    };
+      sort: { dueDate: 1, priority: -1 },
+      projection = { name: 1, description: 1, dueDate: 1, owner: 1, completion: 1, priority: 1 },
+    }
     var data;
     try {
       if (collections !== "true") {
-        data = await db.collection("tasks").find(query, taskoptions).toArray();
+        if (!filter) {
+          data = await db.collection("tasks").find(query, taskoptions).toArray();
+        } else if (filter === "recent") {
+          data = await db.collection("tasks").find(query, taskoptions).filter({ created: {$lt: (Math.floor(Date.now()/1000) + 86400)} }).toArray();
+        } else if (filter === "upcoming") {
+          data = await db.collection("tasks").find(query, taskoptions).filter({ dueDate: {$and: [{$gt: Math.floor(Date.now()/1000)}, {$not: 0}]} }).toArray();
+        } else if (filter === "overdue") {
+          data = await db.collection("tasks").find(query, taskoptions).filter({ dueDate: {$and: [{$lte: Math.floor(Date.now()/1000)}, {$not: 0}]} }).toArray();
+        }
       } else {
         const collectionoptions = {
           sort: { created: -1 },
