@@ -11,16 +11,16 @@ export default function Admin() {
     redirectTo: "/dashboard",
     adminOnly: true,
   });
-  const { users: recentlyJoined } = useAdminUsers(user, "joined", 5);
-  const newUsersList = recentlyJoined?.map((newUser) =>
-    <li key={newUser._id} style={{ margin: "0.5em" }}>
-      <Link href={`/admin/users/${newUser._id}`}>{newUser.username}</Link> - Joined {newUser.history.joined > 0 ? moment.unix(newUser.history.joined).fromNow() : 'never'}
-    </li>
-  );
   const { users: recentlyActive } = useAdminUsers(user, "login", 5);
   const activeUsersList = recentlyActive?.map((activeUser) =>
     <li key={activeUser._id} style={{ margin: "0.5em" }}>
       <Link href={`/admin/users/${activeUser._id}`}>{activeUser.username}</Link> - Last login {activeUser.history.lastLogin > 0 ? moment.unix(activeUser.history.lastLogin).fromNow() : 'never'}
+    </li>
+  );
+  const { users: recentlyJoined } = useAdminUsers(user, "joined", 5);
+  const newUsersList = recentlyJoined?.map((newUser) =>
+    <li key={newUser._id} style={{ margin: "0.5em" }}>
+      <Link href={`/admin/users/${newUser._id}`}>{newUser.username}</Link> - Joined {newUser.history.joined > 0 ? moment.unix(newUser.history.joined).fromNow() : 'never'}
     </li>
   );
 
