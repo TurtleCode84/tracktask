@@ -39,7 +39,7 @@ async function tasksRoute(req, res) {
       try {
         data = await db.collection("tasks").find(query, taskoptions).toArray();
       } catch (error) {
-        res.status(500).json([]);
+        res.status(200).json([]);
         return;
       }
     } else {
@@ -56,10 +56,10 @@ async function tasksRoute(req, res) {
         data[i].tasks = await db.collection("tasks").find({ _id: {$in: data[i].tasks} }, taskoptions).toArray();
       }
     }
-    if (!data && collections !== "true") {
+    if (data === [] && collections !== "true") {
       res.status(404).json({ message: "No tasks found" });
       return;
-    } else if (!data) {
+    } else if (data === []) {
       res.status(404).json({ message: "No collections found" });
       return;
     }
