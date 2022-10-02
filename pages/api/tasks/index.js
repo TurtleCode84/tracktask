@@ -32,9 +32,9 @@ async function tasksRoute(req, res) {
       if (filter === "recent") {
         query.created = {$lt: (Math.floor(Date.now()/1000) + 86400)};
       } else if (filter === "upcoming") {
-        query.dueDate = [{$gt: Math.floor(Date.now()/1000)}, {$not: 0}];
+        query.dueDate = [{$gt: Math.floor(Date.now()/1000)}, {$ne: 0}];
       } else if (filter === "overdue") {
-        query.dueDate = [{$lte: Math.floor(Date.now()/1000)}, {$not: 0}];
+        query.dueDate = [{$lte: Math.floor(Date.now()/1000)}, {$ne: 0}];
       }
       try {
         data = await db.collection("tasks").find(query, taskoptions).toArray();
@@ -56,14 +56,15 @@ async function tasksRoute(req, res) {
         data[i].tasks = await db.collection("tasks").find({ _id: {$in: data[i].tasks} }, taskoptions).toArray();
       }
     }
-    if (data === [] && collections !== "true") {
+    if (!data && collections !== "true") {
       res.status(404).json({ message: "No tasks found" });
       return;
-    } else if (data === []) {
+    } else if (!data) {
       res.status(404).json({ message: "No collections found" });
       return;
     }
-    res.json(data);
+    //res.json(data);
+    res.json("message": "Good, you are here");
   } else if (req.method === 'POST') { // Create a new task
     const { name, description, dueDate, markCompleted, markPriority } = await req.body;
     if (!name || !description) {
