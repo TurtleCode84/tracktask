@@ -27,7 +27,7 @@ Glad you asked! Here's a running features list:
 - [x] Admin panel w/ full ability to edit users and access to some recent stats
 - [x] Tasks (with name, description, due date, priority, and completion)
 - [x] IP banning and blacklisted usernames/emails (through Vercel dashboard)
-- [ ] Individual task UI (`/tasks/{id}`)
+- [x] Individual task UI (`/tasks/{id}`)
 - [ ] About/FAQ (in progress, not complete)
 - [ ] Collections
 - [ ] Reporting for admin attention (tasks, users, collections)
