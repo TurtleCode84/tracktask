@@ -13,7 +13,7 @@ export default function Task() {
   const { user } = useUser({
     redirectTo: "/login",
   });
-  const { tasks } = useTasks(user, false, "");
+  const { tasks } = useTask(user, false, "all");
   
   //const [errorMsg, setErrorMsg] = useState("");
   const router = useRouter();
@@ -34,7 +34,7 @@ export default function Task() {
       <><h3>General information</h3>
       <p>Description: {task.description}</p>
       <p title={moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Due date: {task.dueDate > 0 ? <>{moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}{' '}({moment.unix(task.dueDate).fromNow()})</> : 'never'}</p>
-      <p>Priority: {task.completion.priority ? <>&#9989;</> : <>&#10060;</>}</p>
+      <p>Priority: {task.priority ? <>&#9989;</> : <>&#10060;</>}</p>
       <p>Completed: {task.completion.completed > 0 ? <>&#9989;</> : <>&#10060;</>}</p>
       {task.completion.completed > 0 && <>
       <p>Completed on: {moment.unix(task.completion.completed).format("dddd, MMMM Do YYYY, h:mm:ss a")}{' '}({moment.unix(task.completion.completed).fromNow()})</p>
