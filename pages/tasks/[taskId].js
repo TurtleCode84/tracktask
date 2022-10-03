@@ -53,7 +53,7 @@ export default function Task() {
             onSubmit={async function handleSubmit(event) {
               event.preventDefault();
               document.getElementById("editTaskBtn").disabled = true;
-              
+              /*
               var utcDueDate;
               if (event.currentTarget.dueDate.value) {
                 const offset = new Date().getTimezoneOffset();
@@ -95,7 +95,7 @@ export default function Task() {
                   console.error("An unexpected error happened:", error);
                 }
                 document.getElementById("editTaskBtn").disabled = false;
-              }
+              }*/
             }}
         />
         </details></>
