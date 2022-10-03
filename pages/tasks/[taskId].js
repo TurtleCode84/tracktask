@@ -48,7 +48,7 @@ export default function Task() {
         <details>
           <summary>Edit task</summary>
           <p style={{ fontStyle: "italic" }}>(Coming soon...)</p>
-          <br/><TaskEditForm
+          <br/>{/*<TaskEditForm
             errorMessage={errorMsg}
             task={task}
             onSubmit={async function handleSubmit(event) {
@@ -97,7 +97,7 @@ export default function Task() {
                 document.getElementById("editTaskBtn").disabled = false;
               }
             }}
-        />
+        />*/}
         </details></>
       :
         <>{error || clientError ? <p>{clientError ? clientError : error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading task...</p>}</>
