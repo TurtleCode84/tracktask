@@ -5,7 +5,7 @@ export default function TaskEditForm({ errorMessage, onSubmit, task }) {
   const router = useRouter();
   return (
     <form id="taskEditForm" onSubmit={onSubmit}>
-      <label>
+      {/*<label>
         <span>Name</span>
         <input type="text" name="name" placeholder={task.name} maxlength="55" />
       </label>
@@ -34,13 +34,13 @@ export default function TaskEditForm({ errorMessage, onSubmit, task }) {
         <><span>Mark as completed</span>
         <input type="checkbox" name="complete" /></>
         }
-      </label><hr/>
+      </label><hr/>*/
 
       <button type="submit" id="editTaskBtn">Edit task data</button>
 
       {errorMessage && <p className="error">{errorMessage}</p>}<hr/>
        
-      <a href={`/api/tasks/${task._id}`}
+      {/*<a href={`/api/tasks/${task._id}`}
         onClick={async (e) => {
           e.preventDefault();
           const confirm = prompt("Are you sure? Deleting a task is irreversable! Type \"yes\" to confirm.");
@@ -53,7 +53,7 @@ export default function TaskEditForm({ errorMessage, onSubmit, task }) {
             }
           }
         }}
-      ><>&#9888;</> Delete task <>&#9888;</></a>
+      ><>&#9888;</> Delete task <>&#9888;</></a>*/}
       <p className="error" id="deleteTaskMessage"></p>
 
       <style jsx>{`
