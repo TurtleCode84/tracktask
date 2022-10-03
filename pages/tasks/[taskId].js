@@ -19,7 +19,7 @@ export default function Task() {
   const router = useRouter();
   const { taskId } = router.query;
   const preTask = tasks?.filter(item => item._id === taskId);
-  const task = preTask?[0];
+  const task = preTask[0];
   
   if (!user || !user.isLoggedIn || user.permissions.banned) {
     return (
