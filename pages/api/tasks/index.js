@@ -88,10 +88,7 @@ async function tasksRoute(req, res) {
         created: Math.floor(Date.now()/1000),
         completion: {
           completed: 0,
-          completedBy: {
-            id: "",
-            username: "",
-          },
+          completedBy: "",
         },
         priority: markPriority,
       };
