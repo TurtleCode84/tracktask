@@ -33,7 +33,7 @@ export default function Task() {
       {task ?
       <><h3>General information</h3>
       <p>Description: {task.description}</p>
-      <p title={moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Due date: {task.dueDate > 0 ? <>{moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}{' '}({moment.unix(task.dueDate).fromNow()})</> : 'never'}</p>*/}
+      <p title={moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Due date: {task.dueDate > 0 ? <>{moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}{' '}({moment.unix(task.dueDate).fromNow()})</> : 'never'}</p>
       {/*<p>Priority: {task.priority ? <>&#9989;</> : <>&#10060;</>}</p>
       <p>Completed: {task.completion.completed > 0 ? <>&#9989;</> : <>&#10060;</>}</p>
       {task.completion.completed > 0 && <>
