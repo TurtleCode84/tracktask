@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
-import TaskEditForm from "components/TaskEditForm";
+//import TaskEditForm from "components/TaskEditForm";
+import TaskCreateForm from "components/TaskCreateForm";
 import useUser from "lib/useUser";
 import useTasks from "lib/useTasks";
 import fetchJson, { FetchError } from "lib/fetchJson";
@@ -47,7 +48,45 @@ export default function Task() {
         <hr/>
         <details>
           <summary>Edit task</summary>
-          <br/><TaskEditForm
+          <TaskCreateForm
+            errorMessage={errorMsg}
+            onSubmit={async function handleSubmit(event) {
+              event.preventDefault();
+              document.getElementById("createTaskBtn").disabled = true;
+          
+              var utcDueDate;
+              if (event.currentTarget.dueDate.value) {
+                const offset = new Date().getTimezoneOffset();
+                utcDueDate = moment(event.currentTarget.dueDate.value, moment.HTML5_FMT.DATETIME_LOCAL).utcOffset(offset);
+              } else {
+                utcDueDate = "";
+              }
+
+              const body = {
+                name: event.currentTarget.name.value,
+                description: event.currentTarget.description.value,
+                dueDate: utcDueDate,
+                markPriority: event.currentTarget.markPriority.checked,
+              };
+
+              try {
+                const getUrl = await fetchJson("/api/tasks", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify(body),
+                })
+                router.push(`/tasks/${getUrl.insertedId}`);
+              } catch (error) {
+                if (error instanceof FetchError) {
+                  setErrorMsg(error.data.message);
+                } else {
+                  console.error("An unexpected error happened:", error);
+                }
+                document.getElementById("createTaskBtn").disabled = false;
+              }
+            }}
+          />
+          {/*<br/><TaskEditForm
             errorMessage={errorMsg}
             task={task}
             onSubmit={async function handleSubmit(event) {
@@ -97,7 +136,7 @@ export default function Task() {
                 document.getElementById("editTaskBtn").disabled = false;
               }
             }}
-        />
+        />*/}
         </details></>
       :
         <>{error || clientError ? <p>{clientError ? clientError : error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading task...</p>}</>
