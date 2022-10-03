@@ -5,11 +5,11 @@ export default function TaskEditForm({ errorMessage, onSubmit, task }) {
   const router = useRouter();
   return (
     <form id="taskEditForm" onSubmit={onSubmit}>
-      {/*<label>
+      <label>
         <span>Name</span>
         <input type="text" name="name" placeholder={task.name} maxlength="55" />
       </label>
-      <label>
+      {/*<label>
         <span>Description</span>
         <textarea name="description" rows="4" cols="30" placeholder={task.description} maxlength="500" />
       </label><hr/>
