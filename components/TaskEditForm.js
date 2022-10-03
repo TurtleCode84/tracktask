@@ -9,11 +9,11 @@ export default function TaskEditForm({ errorMessage, onSubmit, task }) {
         <span>Name</span>
         <input type="text" name="name" placeholder={task.name} maxlength="55" />
       </label>
-      {/*<label>
+      <label>
         <span>Description</span>
         <textarea name="description" rows="4" cols="30" placeholder={task.description} maxlength="500" />
       </label><hr/>
-      <label>
+      {/*<label>
         <span>Due Date</span>
         <input type="datetime-local" name="dueDate" min="1970-01-01T00:00" />
       </label>
