@@ -55,21 +55,21 @@ export default function Task() {
               event.preventDefault();
               document.getElementById("editTaskBtn").disabled = true;
               
-              {/*var utcDueDate;
+              /*var utcDueDate;
               if (event.currentTarget.dueDate.value) {
                 const offset = new Date().getTimezoneOffset();
                 utcDueDate = moment(event.currentTarget.dueDate.value, moment.HTML5_FMT.DATETIME_LOCAL).utcOffset(offset);
               } else {
                 utcDueDate = "";
-              }*/}
+              }*/
               
               const body = {
                 name: event.currentTarget.name.value,
                 description: event.currentTarget.description.value,
-                {/*dueDate: utcDueDate,*/}
+                /*dueDate: utcDueDate,*/
               };
               
-              {/*if (event.currentTarget.priority && event.currentTarget.priority.checked) {
+              /*if (event.currentTarget.priority && event.currentTarget.priority.checked) {
                 body.priority = true;
               } else if (event.currentTarget.unpriority && event.currentTarget.unpriority.checked) {
                 body.priority = false;
@@ -80,7 +80,7 @@ export default function Task() {
                 body.completion.completedBy = user.id;
               } else if (event.currentTarget.uncomplete && event.currentTarget.uncomplete.checked) {
                 body.completion.completed = 0;
-              }*/}
+              }*/
 
               try {
                 await fetchJson(`/api/tasks/${task._id}`, {
