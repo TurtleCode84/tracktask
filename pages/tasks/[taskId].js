@@ -79,7 +79,7 @@ export default function Task() {
                 body.completion.completedBy = user.id;
               } else if (event.currentTarget.uncomplete && event.currentTarget.uncomplete.checked) {
                 body.completion.completed = 0;
-              }*/
+              }
 
               try {
                 await fetchJson(`/api/tasks/${task._id}`, {
@@ -95,7 +95,7 @@ export default function Task() {
                   console.error("An unexpected error happened:", error);
                 }
                 document.getElementById("editTaskBtn").disabled = false;
-              }
+              }*/
             }}
         />
         </details></>
