@@ -18,8 +18,7 @@ export default function Task() {
   //const [errorMsg, setErrorMsg] = useState("");
   const router = useRouter();
   const { taskId } = router.query;
-  const preTask = await tasks?.filter(item => item._id === taskId);
-  const task = preTask[0];
+  const task = tasks?.filter(item => item._id === taskId)?.[0];
   
   if (!user || !user.isLoggedIn || user.permissions.banned) {
     return (
