@@ -19,6 +19,10 @@ export default function Task() {
   const router = useRouter();
   const { taskId } = router.query;
   const task = tasks?.filter(item => item._id === taskId)?.[0];
+  var clientError;
+  if (!task) {
+    clientError = "Task not found";
+  }
   
   if (!user || !user.isLoggedIn || user.permissions.banned) {
     return (
@@ -46,7 +50,7 @@ export default function Task() {
           <p style={{ fontStyle: "italic" }}>(Coming soon...)</p>
         </details></>
       :
-        <>{error ? <p>{error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading task...</p>}</>
+        <>{error || clientError ? <p>{clientError ? clientError : error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading task...</p>}</>
       }
     </Layout>
   );
