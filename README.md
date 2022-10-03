@@ -39,7 +39,7 @@ These are the current positions in the project:
 - Security analyst: [@non-biased-news](https://wasteof.money/users/non-biased-news)
 - Logo maker: [@daily_meme](https://wasteof.money/users/daily_meme)
 - Site admin: (available)
-- UI/Style expert: (available)
+- UI/Style expert: [@micahlt](https://wasteof.money/users/micahlt)
 - Testers:
   - [@-crowbar-](https://wasteof.money/users/-crowbar-)
   - [@ankit_anmol](https://wasteof.money/users/ankit_anmol)
