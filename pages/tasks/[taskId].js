@@ -29,7 +29,7 @@ export default function Task() {
   
   return (
     <Layout>
-      <h2>{task ? {task.name} : 'Loading...'}:</h2>
+      <h2>{task ? task.name : 'Loading...'}:</h2>
       <Link href="/dashboard">Back to dashboard</Link><br/>
       {task ?
       <><h3>General information</h3>
