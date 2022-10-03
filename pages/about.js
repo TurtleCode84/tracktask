@@ -17,9 +17,12 @@ export default function About() {
   return (
     <Layout>
       <h2>About TrackTask:</h2>
-      <p style={{ fontStyle: "italic" }}>
-        Page coming soon!
-      </p>
+      <p>TrackTask is an STM - a Shareable Task Management system created by 
+        <a href="https://wasteof.money/@turtle84375">
+          @turtle84375
+        </a> 
+        with help from others in the TrackTask team.
+       </p> //we need to add who else is in the team
 
       <style jsx>{`
         li {
