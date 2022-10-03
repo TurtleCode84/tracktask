@@ -13,7 +13,7 @@ export default function Task() {
   const { user } = useUser({
     redirectTo: "/login",
   });
-  const { tasks } = useTask(user, false, "all");
+  const { tasks } = useTasks(user, false, "all");
   
   //const [errorMsg, setErrorMsg] = useState("");
   const router = useRouter();
