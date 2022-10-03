@@ -3,7 +3,7 @@ export default function TaskCreateForm({ errorMessage, onSubmit }) {
     <form id="userAdminForm" onSubmit={onSubmit}>
       <label>
         <span>Name</span>
-        <input type="text" name="name" maxlength="50" required />
+        <input type="text" name="name" maxlength="55" required />
       </label>
       <label>
         <span>Description</span>
