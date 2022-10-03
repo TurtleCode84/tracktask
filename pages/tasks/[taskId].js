@@ -20,7 +20,7 @@ export default function Task() {
   const { taskId } = router.query;
   const task = tasks?.filter(item => item._id === taskId)?.[0];
   var clientError;
-  if (!task) {
+  if (tasks && !task) {
     clientError = "Task not found";
   }
   
