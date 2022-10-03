@@ -47,8 +47,7 @@ export default function Task() {
         <hr/>
         <details>
           <summary>Edit task</summary>
-          <p style={{ fontStyle: "italic" }}>(Coming soon...)</p>
-          <br/>{/*<TaskEditForm
+          <br/><TaskEditForm
             errorMessage={errorMsg}
             task={task}
             onSubmit={async function handleSubmit(event) {
@@ -74,6 +73,7 @@ export default function Task() {
               } else if (event.currentTarget.unpriority && event.currentTarget.unpriority.checked) {
                 body.priority = false;
               }
+              body.completion = {};
               if (event.currentTarget.complete && event.currentTarget.complete.checked) {
                 body.completion.completed = Math.floor(Date.now()/1000);
                 body.completion.completedBy = user.id;
@@ -97,7 +97,7 @@ export default function Task() {
                 document.getElementById("editTaskBtn").disabled = false;
               }
             }}
-        />*/}
+        />
         </details></>
       :
         <>{error || clientError ? <p>{clientError ? clientError : error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading task...</p>}</>
