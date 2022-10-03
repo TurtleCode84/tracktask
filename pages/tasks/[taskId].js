@@ -13,11 +13,13 @@ export default function Task() {
   const { user } = useUser({
     redirectTo: "/login",
   });
-  //const { tasks } = useTasks(user);
+  const { tasks } = useTasks(user, false, "");
   
   //const [errorMsg, setErrorMsg] = useState("");
   const router = useRouter();
   const { taskId } = router.query;
+  const preTask = tasks.filter(item => item._id === taskId);
+  const task = preTask[0];
   
   if (!user || !user.isLoggedIn || user.permissions.banned) {
     return (
@@ -27,17 +29,22 @@ export default function Task() {
   
   return (
     <Layout>
-      <h2>Viewing task {taskId}:</h2>
+      <h2>{task ? {task.name} : 'Loading...'}:</h2>
       <Link href="/dashboard">Back to dashboard</Link><br/>
-      {user ?
+      {task ?
       <><h3>General information</h3>
-      <p>(stuff)</p>
-      {user.permissions.verified && <><h3>Sharing</h3>
-      <p>(more stuff)</p></>}
+      <p>Description: {task.description}</p>
+      <p title={moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Due date: {task.dueDate > 0 ? <>{moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}{' '}({moment.unix(task.dueDate).fromNow()})</> : 'never'}</p>
+      <p>Priority: {task.completion.priority ? <>&#9989;</> : <>&#10060;</>}</p>
+      <p>Completed: {task.completion.completed > 0 ? <>&#9989;</> : <>&#10060;</>}</p>
+      {task.completion.completed > 0 && <>
+      <p>Completed on: {moment.unix(task.completion.completed).format("dddd, MMMM Do YYYY, h:mm:ss a")}{' '}({moment.unix(task.completion.completed).fromNow()})</p>
+      <p>Completed by: {task.completion.completedBy}</p>
+      </>}
       <hr/>
       <details>
         <summary>Edit task</summary>
-        <br/><p>(there will be something here eventually)</p>
+        <p style={{ fontStyle: "italic" }}>(Coming soon...)</p>
       </details></>
       :
       <>{error ? <p>{error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading task...</p>}</>
