@@ -34,7 +34,7 @@ export default function TaskEditForm({ errorMessage, onSubmit, task }) {
         <><span>Mark as completed</span>
         <input type="checkbox" name="complete" /></>
         }
-      </label><hr/>*/
+      </label><hr/>*/}
 
       <button type="submit" id="editTaskBtn">Edit task data</button>
 
