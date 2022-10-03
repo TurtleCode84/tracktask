@@ -103,6 +103,32 @@ async function tasksRoute(req, res) {
       res.status(500).json({ message: error.message });
       return;
     }
+  } else if (req.method === 'DELETE') { // Deletes a task or collection
+    const { id, collection } = req.query;
+    if (!ObjectId(id).isValid()) {
+      res.status(422).json({ message: "Invalid object ID" });
+      return;
+    }
+    const query = {
+      hidden: false,
+      _id: ObjectId(id),
+      $or: [
+        { owner: ObjectId(user.id) },
+        { 'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: ObjectId(user.id)}} },
+      ],
+    };
+    try {
+      if (collection !== true) {
+        const deletedItem = await db.collection("tasks").deleteOne(query);
+        res.json(deletedItem);
+      } else {
+        const deletedItem = await db.collection("collections").deleteOne(query);
+        res.json(deletedItem);
+      }
+    } catch (error) {
+      res.status(500).json({ message: error.data.message });
+      return;
+    }
   } else {
     res.status(405).json({ message: "Method not allowed" });
     return;
