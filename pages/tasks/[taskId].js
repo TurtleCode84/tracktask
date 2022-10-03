@@ -54,15 +54,6 @@ export default function Task() {
             onSubmit={async function handleSubmit(event) {
               event.preventDefault();
               document.getElementById("editTaskBtn").disabled = true;
-              {/*if (event.currentTarget.password.value !== event.currentTarget.cpassword.value) {
-                setErrorMsg("Passwords do not match!");
-                document.getElementById("editUserBtn").disabled = false;
-                return;
-              } else if (event.currentTarget.warn.checked && !event.currentTarget.warning.value) {
-                setErrorMsg("Warnings can\'t be blank!");
-                document.getElementById("editUserBtn").disabled = false;
-                return;
-              }*/}
               
               var utcDueDate;
               if (event.currentTarget.dueDate.value) {
