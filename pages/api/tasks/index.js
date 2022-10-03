@@ -129,6 +129,37 @@ async function tasksRoute(req, res) {
       res.status(500).json({ message: error.data.message });
       return;
     }
+  } else if (req.method === 'PATCH') { // Updates a task (collections coming soon)
+    const body = await req.body;
+    const { id, collection } = req.query;
+    if (!ObjectId(id).isValid()) {
+      res.status(422).json({ message: "Invalid object ID" });
+      return;
+    }
+    const query = {
+      hidden: false,
+      _id: ObjectId(id),
+      $or: [
+        { owner: ObjectId(user.id) },
+        { 'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: ObjectId(user.id)}} },
+      ],
+    };
+    var updateDoc = {};
+    if (body.name) {updateDoc.name = body.name.trim().slice(0, 55)}; // If you're really going to try to pass the limit via API...
+    if (body.description) {updateDoc.description = body.description.trim().slice(0, 500)};
+    if (body.dueDate) {updateDoc.dueDate = moment(body.dueDate).unix()};
+    try {
+      if (collection !== true) {
+        const updatedTask = await db.collection("tasks").updateOne(query, updateDoc);
+        res.json(updatedTask);
+      } else {
+        res.status(418).json({ message: "Under construction" });
+        return;
+      }
+    } catch (error) {
+      res.status(500).json({ message: error.data.message });
+      return;
+    }
   } else {
     res.status(405).json({ message: "Method not allowed" });
     return;
