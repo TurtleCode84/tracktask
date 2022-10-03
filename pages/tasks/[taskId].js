@@ -30,8 +30,8 @@ export default function Task() {
     <Layout>
       <h2>{task ? task.name : 'Loading...'}:</h2>
       <Link href="/dashboard">Back to dashboard</Link><br/>
-      {task &&
-      <><h3>General information</h3>
+      {task ? <>
+      <h3>General information</h3>
       <p>Description: {task.description}</p>
       {/*<p title={moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Due date: {task.dueDate > 0 ? <>{moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}{' '}({moment.unix(task.dueDate).fromNow()})</> : 'never'}</p>
       <p>Priority: {task.priority ? <>&#9989;</> : <>&#10060;</>}</p>
