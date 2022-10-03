@@ -48,66 +48,28 @@ export default function Task() {
         <hr/>
         <details>
           <summary>Edit task</summary>
-          <TaskCreateForm
-            errorMessage={errorMsg}
-            onSubmit={async function handleSubmit(event) {
-              event.preventDefault();
-              document.getElementById("createTaskBtn").disabled = true;
-          
-              var utcDueDate;
-              if (event.currentTarget.dueDate.value) {
-                const offset = new Date().getTimezoneOffset();
-                utcDueDate = moment(event.currentTarget.dueDate.value, moment.HTML5_FMT.DATETIME_LOCAL).utcOffset(offset);
-              } else {
-                utcDueDate = "";
-              }
-
-              const body = {
-                name: event.currentTarget.name.value,
-                description: event.currentTarget.description.value,
-                dueDate: utcDueDate,
-                markPriority: event.currentTarget.markPriority.checked,
-              };
-
-              try {
-                const getUrl = await fetchJson("/api/tasks", {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify(body),
-                })
-                router.push(`/tasks/${getUrl.insertedId}`);
-              } catch (error) {
-                if (error instanceof FetchError) {
-                  setErrorMsg(error.data.message);
-                } else {
-                  console.error("An unexpected error happened:", error);
-                }
-                document.getElementById("createTaskBtn").disabled = false;
-              }
-            }}
-          />
-          {/*<br/><TaskEditForm
+          <br/><TaskEditForm
             errorMessage={errorMsg}
             task={task}
             onSubmit={async function handleSubmit(event) {
               event.preventDefault();
               document.getElementById("editTaskBtn").disabled = true;
               
-              var utcDueDate;
+              {/*var utcDueDate;
               if (event.currentTarget.dueDate.value) {
                 const offset = new Date().getTimezoneOffset();
                 utcDueDate = moment(event.currentTarget.dueDate.value, moment.HTML5_FMT.DATETIME_LOCAL).utcOffset(offset);
               } else {
                 utcDueDate = "";
-              }
+              }*/}
               
               const body = {
                 name: event.currentTarget.name.value,
                 description: event.currentTarget.description.value,
-                dueDate: utcDueDate,
+                {/*dueDate: utcDueDate,*/}
               };
               
-              if (event.currentTarget.priority && event.currentTarget.priority.checked) {
+              {/*if (event.currentTarget.priority && event.currentTarget.priority.checked) {
                 body.priority = true;
               } else if (event.currentTarget.unpriority && event.currentTarget.unpriority.checked) {
                 body.priority = false;
@@ -118,7 +80,7 @@ export default function Task() {
                 body.completion.completedBy = user.id;
               } else if (event.currentTarget.uncomplete && event.currentTarget.uncomplete.checked) {
                 body.completion.completed = 0;
-              }
+              }*/}
 
               try {
                 await fetchJson(`/api/tasks/${task._id}`, {
@@ -136,7 +98,7 @@ export default function Task() {
                 document.getElementById("editTaskBtn").disabled = false;
               }
             }}
-        />*/}
+        />
         </details></>
       :
         <>{error || clientError ? <p>{clientError ? clientError : error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading task...</p>}</>
