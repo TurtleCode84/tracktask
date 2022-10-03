@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
-//import TaskEditForm from "components/TaskEditForm";
+import TaskEditForm from "components/TaskEditForm";
 import useUser from "lib/useUser";
 import useTasks from "lib/useTasks";
 import fetchJson, { FetchError } from "lib/fetchJson";
@@ -15,7 +15,7 @@ export default function Task() {
   });
   const { tasks, error } = useTasks(user, false, "all");
   
-  //const [errorMsg, setErrorMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
   const router = useRouter();
   const { taskId } = router.query;
   const task = tasks?.filter(item => item._id === taskId)?.[0];
@@ -48,6 +48,65 @@ export default function Task() {
         <details>
           <summary>Edit task</summary>
           <p style={{ fontStyle: "italic" }}>(Coming soon...)</p>
+          <br/><TaskEditForm
+            errorMessage={errorMsg}
+            task={task}
+            onSubmit={async function handleSubmit(event) {
+              event.preventDefault();
+              document.getElementById("editTaskBtn").disabled = true;
+              {/*if (event.currentTarget.password.value !== event.currentTarget.cpassword.value) {
+                setErrorMsg("Passwords do not match!");
+                document.getElementById("editUserBtn").disabled = false;
+                return;
+              } else if (event.currentTarget.warn.checked && !event.currentTarget.warning.value) {
+                setErrorMsg("Warnings can\'t be blank!");
+                document.getElementById("editUserBtn").disabled = false;
+                return;
+              }*/}
+              
+              var utcDueDate;
+              if (event.currentTarget.dueDate.value) {
+                const offset = new Date().getTimezoneOffset();
+                utcDueDate = moment(event.currentTarget.dueDate.value, moment.HTML5_FMT.DATETIME_LOCAL).utcOffset(offset);
+              } else {
+                utcDueDate = "";
+              }
+              
+              const body = {
+                name: event.currentTarget.name.value,
+                description: event.currentTarget.description.value,
+                dueDate: utcDueDate,
+              };
+              
+              if (event.currentTarget.priority && event.currentTarget.priority.checked) {
+                body.priority = true;
+              } else if (event.currentTarget.unpriority && event.currentTarget.unpriority.checked) {
+                body.priority = false;
+              }
+              if (event.currentTarget.complete && event.currentTarget.complete.checked) {
+                body.completion.completed = Math.floor(Date.now()/1000);
+                body.completion.completedBy = user.id;
+              } else if (event.currentTarget.uncomplete && event.currentTarget.uncomplete.checked) {
+                body.completion.completed = 0;
+              }
+
+              try {
+                await fetchJson(`/api/tasks/${task._id}`, {
+                  method: "PATCH",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify(body),
+                })
+                router.reload();
+              } catch (error) {
+                if (error instanceof FetchError) {
+                  setErrorMsg(error.data.message);
+                } else {
+                  console.error("An unexpected error happened:", error);
+                }
+                document.getElementById("editTaskBtn").disabled = false;
+              }
+            }}
+        />
         </details></>
       :
         <>{error || clientError ? <p>{clientError ? clientError : error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading task...</p>}</>
