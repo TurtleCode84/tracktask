@@ -27,7 +27,7 @@ export default function TaskEditForm({ errorMessage, onSubmit, task }) {
         }
       </label>
       <label>
-        {lookup.completion.completed ?
+        {task.completion.completed ?
         <><span>Mark as not completed</span>
         <input type="checkbox" name="uncomplete" /></>
         :
@@ -40,7 +40,7 @@ export default function TaskEditForm({ errorMessage, onSubmit, task }) {
 
       {errorMessage && <p className="error">{errorMessage}</p>}<hr/>
        
-      {/*<a href={`/api/tasks/${task._id}`}
+      <a href={`/api/tasks/${task._id}`}
         onClick={async (e) => {
           e.preventDefault();
           const confirm = prompt("Are you sure? Deleting a task is irreversable! Type \"yes\" to confirm.");
@@ -53,7 +53,7 @@ export default function TaskEditForm({ errorMessage, onSubmit, task }) {
             }
           }
         }}
-      ><>&#9888;</> Delete task <>&#9888;</></a>*/}
+      ><>&#9888;</> Delete task <>&#9888;</></a>
       <p className="error" id="deleteTaskMessage"></p>
 
       <style jsx>{`
