@@ -17,7 +17,7 @@ export default function About() {
   return (
     <Layout>
       <h2>About TrackTask:</h2>
-      <p>
+      <p style={{ fontSize:0.75em }}>
       TrackTask is a Shareable Task Management system. Users can create tasks with all relevant information and keep track of their completion & priority. Additionally,
       tasks can be grouped in collections, which can be shared with other users to work as a team and get work done in an organized way!
       It is created by <a href="https://wasteof.money/@turtle84375">@turtle84375</a> with help from others in the TrackTask team.
