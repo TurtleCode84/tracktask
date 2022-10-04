@@ -13,7 +13,7 @@ export default function TaskEditForm({ errorMessage, onSubmit, task }) {
         <span>Description</span>
         <textarea name="description" rows="4" cols="30" placeholder={task.description} maxlength="500" />
       </label><hr/>
-      {/*<label>
+      <label>
         <span>Due Date</span>
         <input type="datetime-local" name="dueDate" min="1970-01-01T00:00" />
       </label>
@@ -34,7 +34,7 @@ export default function TaskEditForm({ errorMessage, onSubmit, task }) {
         <><span>Mark as completed</span>
         <input type="checkbox" name="complete" /></>
         }
-      </label><hr/>*/}
+      </label><hr/>
 
       <button type="submit" id="editTaskBtn">Edit task data</button>
 
