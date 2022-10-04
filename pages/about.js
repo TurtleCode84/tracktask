@@ -32,6 +32,7 @@ export default function About() {
       </ul>
       <p>And of course, we can't have credits without mentioning the amazing people who have helped build and run TrackTask...</p>
       <ul>
+        <li><a href="https://wasteof.money/users/daily_meme">@daily_meme</a>, logo designer</li>
         <li><a href="https://wasteof.money/users/radi8">@radi8</a>, tester & developer</li>
         <li><a href="https://wasteof.money/users/ankit_anmol">@ankit_anmol</a>, tester & developer</li>
         {/*<li><a href="https://wasteof.money/users/micahlt">@micahlt</a>, UI/styling</li>*/}
