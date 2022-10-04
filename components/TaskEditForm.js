@@ -40,13 +40,13 @@ export default function TaskEditForm({ errorMessage, onSubmit, task }) {
 
       {errorMessage && <p className="error">{errorMessage}</p>}<hr/>
        
-      <a href={`/api/tasks/${task._id}`}
+      <a href={`/api/tasks?id=${task._id}`}
         onClick={async (e) => {
           e.preventDefault();
           const confirm = prompt("Are you sure? Deleting a task is irreversable! Type \"yes\" to confirm.");
           if (confirm.trim().toLowerCase() === "yes") {
             try {
-              await fetchJson(`/api/tasks/${task._id}`, { method: "DELETE" });
+              await fetchJson(`/api/tasks?id=${task._id}`, { method: "DELETE" });
               router.push("/dashboard?deleted=true");
             } catch (error) {
               document.getElementById("deleteTaskMessage").innerHTML = error.data.message;
