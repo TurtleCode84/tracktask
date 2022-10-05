@@ -68,10 +68,8 @@ export default function Task() {
                 dueDate: utcDueDate,
               };
               
-              if (event.currentTarget.priority && event.currentTarget.priority.checked) {
-                body.priority = true;
-              } else if (event.currentTarget.priority) {
-                body.priority = false;
+              if (event.currentTarget.priority) {
+                body.priority = event.currentTarget.priority.checked;
               }
               body.completion = {};
               if (event.currentTarget.complete && event.currentTarget.complete.checked) {
