@@ -155,8 +155,8 @@ async function tasksRoute(req, res) {
       }
     }
     if (body.priority !== undefined) {updateDoc.priority = body.priority}
-    updateDoc.completion = {};
     if (body.completion && body.completion.completed) {
+      updateDoc.completion = {};
       updateDoc.completion.completed = body.completion.completed;
       updateDoc.completion.completedBy = body.completion.completedBy;
     }
