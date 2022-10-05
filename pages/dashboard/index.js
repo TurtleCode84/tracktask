@@ -14,8 +14,7 @@ export default function Dashboard() {
   
   const { tasks: upcomingTasks } = useTasks(user, false, "upcoming");
   const router = useRouter();
-  const sortedTasks = upcomingTasks?.sort((a, b) => (b.priority) ? 1 : -1);
-  const upcomingTaskList = sortedTasks?.map((task) =>
+  const upcomingTaskList = upcomingTasks?.map((task) =>
     <li key={task._id} className="list-hover" style={{ margin: "0.5em", background: "#f8f8f8", padding: "5px", borderWidth: "2px", borderStyle: "solid", borderColor: "darkgray", borderRadius: "10px", width: "auto" }} onClick={() => router.push(`/tasks/${task._id}`)}>
       {task.priority ? <><span title="Priority">&#10071;</span></> : null}<b>{task.name}</b> - {task.description.slice(0,25).trim()}... (due <DueDate timestamp={task.dueDate}/>{task.dueDate !== 0 ? <>, on {moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}</> : null})
     </li>
