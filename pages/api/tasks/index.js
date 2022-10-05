@@ -105,7 +105,7 @@ async function tasksRoute(req, res) {
     }
   } else if (req.method === 'DELETE') { // Deletes a task or collection
     const { id, collection } = req.query;
-    if (!ObjectId(id).isValid()) {
+    if (!ObjectId.isValid(id)) {
       res.status(422).json({ message: "Invalid object ID" });
       return;
     }
@@ -132,7 +132,7 @@ async function tasksRoute(req, res) {
   } else if (req.method === 'PATCH') { // Updates a task (collections coming soon)
     const body = await req.body;
     const { id, collection } = req.query;
-    if (!ObjectId(id).isValid()) {
+    if (!ObjectId.isValid(id)) {
       res.status(422).json({ message: "Invalid object ID" });
       return;
     }
