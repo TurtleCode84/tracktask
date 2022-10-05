@@ -7,11 +7,11 @@ export default function TaskEditForm({ errorMessage, onSubmit, task }) {
     <form id="taskEditForm" onSubmit={onSubmit}>
       <label>
         <span>Name</span>
-        <input type="text" name="name" value={task.name} maxlength="55" />
+        <input type="text" name="name" defaultValue={task.name} maxlength="55" />
       </label>
       <label>
         <span>Description</span>
-        <textarea name="description" rows="4" cols="30" value={task.description} maxlength="500" />
+        <textarea name="description" rows="4" cols="30" defaultValue={task.description} maxlength="500" />
       </label><hr/>
       <label>
         <span>Due Date</span>
