@@ -39,7 +39,6 @@ export default function Join() {
             await executeRecaptcha("joinFormSubmit").then((gReCaptchaToken) => {
               catchToken = gReCaptchaToken;
               console.log(catchToken);
-            });
             console.log("^ that's the token");
               
             if (event.currentTarget.password.value !== event.currentTarget.cpassword.value) {
@@ -77,6 +76,7 @@ export default function Join() {
               document.getElementById("signupBtn").disabled = false;
             }
             console.log("Made it to the end??");
+            });
           }}
         />
         <p>Already have an account?{' '}
