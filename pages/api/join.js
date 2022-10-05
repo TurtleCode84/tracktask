@@ -11,7 +11,27 @@ async function joinRoute(req, res) {
     const { username, password, email, gReCaptchaToken } = await req.body;
     
     //Check if robot
-    const captchaResponse = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+    fetch("https://www.google.com/recaptcha/api/siteverify", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: `secret=${process.env.RECAPTCHA_SECRET}&response=${req.body.gRecaptchaToken}`,
+    })
+      .then((reCaptchaRes) => reCaptchaRes.json())
+      .then((reCaptchaRes) => {
+        console.log(
+          reCaptchaRes,
+          "Response from Google reCaptcha verification API"
+        );
+        if (reCaptchaRes?.score <= 0.5) {
+          res.status(403).json({
+            status: "failure",
+            message: "Google ReCaptcha Failure",
+          });
+        }
+      });
+    /*const captchaResponse = await fetch("https://www.google.com/recaptcha/api/siteverify", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ secret: process.env.RECAPTCHA_SECRET, response: gReCaptchaToken }),
@@ -19,7 +39,7 @@ async function joinRoute(req, res) {
     if (!captchaResponse || !captchaResponse.success || captchaResponse.action !== "joinFormSubmit" || captchaResponse.score <= 0.5) {
       res.status(401).json({ message: "reCAPTCHA verification failed, please try again." });
       return;
-    }
+    }*/
     
     //Check if IP banned
     const ip = req.headers["x-forwarded-for"].split(',')[0];
