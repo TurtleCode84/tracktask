@@ -19,7 +19,7 @@ async function joinRoute(req, res) {
     if (!captchaResponse || !captchaResponse.success || captchaResponse.action !== "joinFormSubmit" || captchaResponse.score <= 0.5) {
       res.status(401).json({ message: "reCAPTCHA verification failed, please try again." });
       return;
-    }*/
+    }
     
     //Check if IP banned
     const ip = req.headers["x-forwarded-for"].split(',')[0];
