@@ -42,7 +42,7 @@ export default function Task() {
         <p>Completed: {task.completion.completed > 0 ? <>&#9989;</> : <>&#10060;</>}</p>
         {task.completion.completed > 0 && <>
         <p>Completed on: {moment.unix(task.completion.completed).format("dddd, MMMM Do YYYY, h:mm:ss a")}{' '}({moment.unix(task.completion.completed).fromNow()})</p>
-        <p>Completed by: {task.completion.completedBy}</p>
+        {user.permissions.verified ? <p>Completed by: {task.completion.completedBy}</p> : null}
         </>}
         <hr/>
         <details>
