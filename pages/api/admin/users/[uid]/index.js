@@ -42,17 +42,25 @@ async function adminUserRoute(req, res) {
     const client = await clientPromise;
     const db = client.db("data");
     var updateUser = {};
-    if (body.username) {updateUser.username = body.username.toLowerCase()};
-    if (body.email) {updateUser.email = body.email.toLowerCase()};
-    if (body.password) {updateUser.password = await hash(body.password, 10)};
-    if (body.resetShareKey) {updateUser.shareKey = uuidv4()};
-    if (body.removeProfilePicture) {updateUser.profilePicture = ""} else if (body.profilePicture) {updateUser.profilePicture = body.profilePicture};
+    if (body.username) {
+      const taken = await db.collection('users').countDocuments({ username: body.username.trim().toLowerCase() });
+      if (taken > 0) {
+        res.status(422).json({ message: "Username is already taken!" });
+        return;
+      } else {
+        updateUser.username = body.username.trim().toLowerCase()
+      }
+    }
+    if (body.email !== undefined) {updateUser.email = body.email.trim().toLowerCase()}
+    if (body.password) {updateUser.password = await hash(body.password, 10)}
+    if (body.resetShareKey) {updateUser.shareKey = uuidv4()}
+    if (body.profilePicture !== undefined) {updateUser.profilePicture = body.profilePicture}
     const query = { _id: ObjectId(uid) }
     const updateDoc = {
       $set: updateUser,
     };
     const updated = await db.collection('users').updateOne(query, updateDoc);
-    if (body.notes) {
+    if (body.notes !== undefined) {
       const notesUpdateDoc = {
         $set: {'history.notes': body.notes},
       };

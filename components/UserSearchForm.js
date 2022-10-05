@@ -2,7 +2,7 @@ export default function UserSearchForm({ errorMessage, deletedMessage, onSubmit 
   return (
     <form autocomplete="off" onSubmit={onSubmit}>
       <label>
-        <span>Username or User ID</span>
+        <span>Keyword...</span>
         <input type="text" name="usernameuid" required />
       </label>
       <label>

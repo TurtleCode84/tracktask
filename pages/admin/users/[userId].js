@@ -96,39 +96,22 @@ export default function UserAdmin() {
                 return;
               }
               
-              const body = {
-                username: event.currentTarget.username.value,
-                password: event.currentTarget.password.value,
-                resetShareKey: event.currentTarget.resetShareKey.checked,
-                profilePicture: event.currentTarget.profilePicture.value,
-                removeProfilePicture: event.currentTarget.removeProfilePicture.checked,
-                notes: event.currentTarget.notes.value,
-                //toggleAdmin: event.currentTarget.toggleAdmin.checked,
-                clearWarnings: event.currentTarget.clearWarnings.checked,
-                banReason: event.currentTarget.banReason.value,
-              };
-              
-              if (event.currentTarget.removeEmail.checked) {
-                body.email = "";
-              } else {
-                body.email = event.currentTarget.email.value;
-              }
-              if (event.currentTarget.verify && event.currentTarget.verify.checked) {
-                body.verify = true;
-              } else if (event.currentTarget.unverify && event.currentTarget.unverify.checked) {
-                body.verify = false;
-              }
+              const body = {};
+              if (event.currentTarget.username.value !== event.currentTarget.username.defaultValue) {body.username = event.currentTarget.username.value}
+              if (event.currentTarget.email.value !== event.currentTarget.email.defaultValue) {body.email = event.currentTarget.email.value}
+              if (event.currentTarget.password.value) {body.password = event.currentTarget.password.value}
+              if (event.currentTarget.resetShareKey.checked) {body.resetShareKey = event.currentTarget.resetShareKey.checked}
+              if (event.currentTarget.profilePicture.value !== event.currentTarget.profilePicture.defaultValue) {body.profilePicture = event.currentTarget.profilePicture.value}
+              if (event.currentTarget.notes.value !== event.currentTarget.notes.defaultValue) {body.notes = event.currentTarget.notes.value}
+              if (event.currentTarget.clearWarnings.checked) {body.clearWarnings = event.currentTarget.clearWarnings.checked}
+              if (event.currentTarget.banReason.value !== event.currentTarget.banReason.defaultValue) {body.banReason = event.currentTarget.banReason.value}
               if (event.currentTarget.warn.checked) {
-                body.warn = true;
+                body.warn = event.currentTarget.warn.checked;
                 body.warning = event.currentTarget.warning.value;
-              } else {
-                body.warn = false;
               }
-              if (event.currentTarget.ban && event.currentTarget.ban.checked) {
-                body.ban = true;
-              } else if (event.currentTarget.unban && event.currentTarget.unban.checked) {
-                body.ban = false;
-              }
+              if (event.currentTarget.verify.checked !== event.currentTarget.verify.defaultChecked) {body.verify = event.currentTarget.verify.checked}
+              //if (event.currentTarget.admin.checked !== event.currentTarget.admin.defaultChecked) {body.admin = event.currentTarget.admin.checked}
+              if (event.currentTarget.ban.checked !== event.currentTarget.ban.defaultChecked) {body.ban = event.currentTarget.ban.checked}
 
               try {
                 await fetchJson(`/api/admin/users/${lookup._id}`, {
