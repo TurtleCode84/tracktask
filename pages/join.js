@@ -44,6 +44,7 @@ export default function Join() {
               email: event.currentTarget.email.value,
               gReCaptchaToken: await executeRecaptcha("joinFormSubmit"),
             };
+            console.log(body.gReCaptchaToken);
 
             try {
               await fetchJson("/api/join", {
