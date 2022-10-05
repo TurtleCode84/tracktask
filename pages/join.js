@@ -28,12 +28,11 @@ export default function Join() {
           onSubmit={async function handleSubmit(event) {
             event.preventDefault();
             document.getElementById("signupBtn").disabled = true;
-            /*if (!executeRecaptcha) {
+            if (!executeRecaptcha) {
               setErrorMsg("reCAPTCHA not available, please try again.");
               document.getElementById("signupBtn").disabled = false;
               return;
-            }*/
-            if (event.currentTarget.password.value !== event.currentTarget.cpassword.value) {
+            } else if (event.currentTarget.password.value !== event.currentTarget.cpassword.value) {
               setErrorMsg("Passwords do not match!");
               document.getElementById("signupBtn").disabled = false;
               return;
@@ -44,7 +43,6 @@ export default function Join() {
               email: event.currentTarget.email.value,
               gReCaptchaToken: await executeRecaptcha("joinFormSubmit"),
             };
-            console.log(body.gReCaptchaToken);
 
             try {
               await fetchJson("/api/join", {
