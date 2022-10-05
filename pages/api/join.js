@@ -12,7 +12,7 @@ async function joinRoute(req, res) {
     
     //Check if robot
     try {
-      fetch("https://www.google.com/recaptcha/api/siteverify", {
+      await fetch("https://www.google.com/recaptcha/api/siteverify", {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
