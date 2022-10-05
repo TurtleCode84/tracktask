@@ -35,10 +35,8 @@ export default function Join() {
               return;
             }
             console.log("captcha validator exists, getting token");
-            var catchToken;
-            await executeRecaptcha("joinFormSubmit").then((gReCaptchaToken) => {
-              catchToken = gReCaptchaToken;
-              console.log(catchToken);
+            const token = await executeRecaptcha("joinFormSubmit");
+            console.log(token);
             console.log("^ that's the token");
               
             if (event.currentTarget.password.value !== event.currentTarget.cpassword.value) {
@@ -52,7 +50,7 @@ export default function Join() {
               username: event.currentTarget.username.value,
               password: event.currentTarget.password.value,
               email: event.currentTarget.email.value,
-              gReCaptchaToken: catchToken,
+              gReCaptchaToken: token,
             };
             console.log("I made the body:");
             console.log(body);
@@ -76,7 +74,6 @@ export default function Join() {
               document.getElementById("signupBtn").disabled = false;
             }
             console.log("Made it to the end??");
-            });
           }}
         />
         <p>Already have an account?{' '}
