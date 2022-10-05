@@ -15,7 +15,7 @@ export default function TaskEditForm({ errorMessage, onSubmit, task }) {
         <textarea name="description" rows="4" cols="30" defaultValue={task.description} maxlength="500" />
       </label><hr/>
       <label>
-        <span>Due Date (<a href={`/task/${task._id}`}
+        <span>Due Date (<a style={{fontWeight: "400"}} href={`/task/${task._id}`}
         onClick={async (e) => {
           e.preventDefault();
           document.getElementById("editTaskBtn").disabled = true;
