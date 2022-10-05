@@ -147,7 +147,13 @@ async function tasksRoute(req, res) {
     var updateDoc = {};
     if (body.name) {updateDoc.name = body.name.trim().slice(0, 55)} // If you're really going to try to pass the limit via API...
     if (body.description) {updateDoc.description = body.description.trim().slice(0, 500)}
-    if (body.dueDate) {updateDoc.dueDate = moment(body.dueDate).unix()}
+    if (body.dueDate !== undefined) {
+      if (body.dueDate) {
+        updateDoc.dueDate = moment(body.dueDate).unix();
+      } else {
+        updateDoc.dueDate = 0;
+      }
+    }
     if (body.priority) {updateDoc.priority = body.priority}
     updateDoc.completion = {};
     if (body.completion && body.completion.completed) {
