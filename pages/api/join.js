@@ -3,7 +3,6 @@ import { hash } from 'bcryptjs';
 import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "lib/session";
 import { v4 as uuidv4 } from "uuid";
-import fetchJson, { FetchError } from "lib/fetchJson";
 
 export default withIronSessionApiRoute(joinRoute, sessionOptions);
 
@@ -12,7 +11,7 @@ async function joinRoute(req, res) {
     const { username, password, email, gReCaptchaToken } = await req.body;
     
     //Check if robot
-    const captchaResponse = await fetchJson("https://www.google.com/recaptcha/api/siteverify", {
+    const captchaResponse = await fetch("https://www.google.com/recaptcha/api/siteverify", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ secret: process.env.RECAPTCHA_SECRET, response: gReCaptchaToken }),
