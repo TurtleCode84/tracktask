@@ -70,7 +70,7 @@ async function tasksRoute(req, res) {
     }
     res.json(data);
   } else if (req.method === 'POST') { // Create a new task
-    const { name, description, dueDate, markCompleted, markPriority } = await req.body;
+    const { name, description, dueDate, markPriority } = await req.body;
     if (!name || !description) {
       res.status(422).json({ message: "Invalid data" });
       return;
@@ -150,7 +150,7 @@ async function tasksRoute(req, res) {
     if (body.dueDate) {updateDoc.dueDate = moment(body.dueDate).unix()}
     if (body.priority) {updateDoc.priority = body.priority}
     updateDoc.completion = {};
-    if (body.completion.completed) {
+    if (body.completion && body.completion.completed) {
       updateDoc.completion.completed = body.completion.completed;
       updateDoc.completion.completedBy = body.completion.completedBy;
     }
