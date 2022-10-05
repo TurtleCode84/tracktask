@@ -33,11 +33,8 @@ export default function Join() {
               document.getElementById("signupBtn").disabled = false;
               return;
             }
-            var catchToken;
-            await executeRecaptcha("joinFormSubmit").then((gReCaptchaToken) => {
-              catchToken = gReCaptchaToken;
-              console.log(catchToken);
-            });
+            const { gReCaptchaToken } = await executeRecaptcha("joinFormSubmit");
+            console.log(gReCaptchaToken);
               
             if (event.currentTarget.password.value !== event.currentTarget.cpassword.value) {
               setErrorMsg("Passwords do not match!");
