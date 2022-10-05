@@ -70,7 +70,7 @@ export default function Task() {
               
               if (event.currentTarget.priority && event.currentTarget.priority.checked) {
                 body.priority = true;
-              } else if (event.currentTarget.unpriority && event.currentTarget.unpriority.checked) {
+              } else if (event.currentTarget.priority) {
                 body.priority = false;
               }
               body.completion = {};
