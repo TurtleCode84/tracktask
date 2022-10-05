@@ -34,8 +34,7 @@ export default function Join() {
               return;
             }
             var catchToken;
-            executeRecaptcha("joinFormSubmit").then((gReCaptchaToken) => {
-              alert(gReCaptchaToken);
+            await executeRecaptcha("joinFormSubmit").then((gReCaptchaToken) => {
               catchToken = gReCaptchaToken;
             });
               
