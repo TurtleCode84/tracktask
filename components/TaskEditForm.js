@@ -15,16 +15,15 @@ export default function TaskEditForm({ errorMessage, onSubmit, task }) {
         <textarea name="description" rows="4" cols="30" defaultValue={task.description} maxlength="500" />
       </label><hr/>
       <label>
-        <span>Due Date</span>
-        <input type="datetime-local" id="dueDate" name="dueDate" defaultValue={task.dueDate !== 0 && moment.unix(task.dueDate).format(moment.HTML5_FMT.DATETIME_LOCAL)} min="1970-01-01T00:00" />
-        <a href={`/task/${task._id}`}
+        <span>Due Date (<a href={`/task/${task._id}`}
         onClick={async (e) => {
           e.preventDefault();
           document.getElementById("editTaskBtn").disabled = true;
           document.getElementById("dueDate").value = "";
           document.getElementById("editTaskBtn").disabled = false;
         }}
-        >Remove due date</a>
+        >remove</a>)</span>
+        <input type="datetime-local" id="dueDate" name="dueDate" defaultValue={task.dueDate !== 0 && moment.unix(task.dueDate).format(moment.HTML5_FMT.DATETIME_LOCAL)} min="1970-01-01T00:00" />
       </label>
       <label>
         <span>Priority&#10071;</span>
