@@ -149,8 +149,8 @@ async function tasksRoute(req, res) {
     if (body.description) {updateDoc.description = body.description.trim().slice(0, 500)}
     if (body.dueDate) {updateDoc.dueDate = moment(body.dueDate).unix()}
     if (body.priority) {updateDoc.priority = body.priority}
+    updateDoc.completion = {};
     if (body.completion.completed) {
-      updateDoc.completion = {};
       updateDoc.completion.completed = body.completion.completed;
       updateDoc.completion.completedBy = body.completion.completedBy;
     }
