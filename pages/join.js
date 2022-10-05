@@ -32,8 +32,7 @@ export default function Join() {
               setErrorMsg("reCAPTCHA not available, please try again.");
               document.getElementById("signupBtn").disabled = false;
               return;
-            }
-            const token = await executeRecaptcha("joinFormSubmit");*/
+            }*/
             if (event.currentTarget.password.value !== event.currentTarget.cpassword.value) {
               setErrorMsg("Passwords do not match!");
               document.getElementById("signupBtn").disabled = false;
@@ -43,7 +42,7 @@ export default function Join() {
               username: event.currentTarget.username.value,
               password: event.currentTarget.password.value,
               email: event.currentTarget.email.value,
-              gReCaptchaToken: "test",
+              gReCaptchaToken: executeRecaptcha("joinFormSubmit"),
             };
 
             try {
