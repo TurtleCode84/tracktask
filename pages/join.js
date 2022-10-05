@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import useUser from "lib/useUser";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import Layout from "components/Layout";
 import SignupForm from "components/SignupForm";
 import Link from "next/link";
@@ -15,6 +16,7 @@ export default function Join() {
 
   const [errorMsg, setErrorMsg] = useState("");
   const router = useRouter();
+  const { executeRecaptcha } = useGoogleReCaptcha();
 
   return (
     <Layout>
@@ -26,33 +28,43 @@ export default function Join() {
           onSubmit={async function handleSubmit(event) {
             event.preventDefault();
             document.getElementById("signupBtn").disabled = true;
-            if (event.currentTarget.password.value !== event.currentTarget.cpassword.value) {
-              setErrorMsg("Passwords do not match!");
+            if (!executeRecaptcha) {
+              setErrorMsg("reCAPTCHA not available, please try again.");
               document.getElementById("signupBtn").disabled = false;
               return;
             }
-            
-            const body = {
-              username: event.currentTarget.username.value,
-              password: event.currentTarget.password.value,
-              email: event.currentTarget.email.value
-            };
-
-            try {
-              await fetchJson("/api/join", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(body),
-              })
-              router.push('/login?joined=true');
-            } catch (error) {
-              if (error instanceof FetchError) {
-                setErrorMsg(error.data.message);
-              } else {
-                console.error("An unexpected error happened:", error);
+            executeRecaptcha("joinFormSubmit").then((gReCaptchaToken) => {
+              alert(gReCaptchaToken);
+              
+              if (event.currentTarget.password.value !== event.currentTarget.cpassword.value) {
+                setErrorMsg("Passwords do not match!");
+                document.getElementById("signupBtn").disabled = false;
+                return;
               }
-              document.getElementById("signupBtn").disabled = false;
-            }
+            
+              const body = {
+                username: event.currentTarget.username.value,
+                password: event.currentTarget.password.value,
+                email: event.currentTarget.email.value,
+                gRecaptchaToken: gReCaptchaToken,
+              };
+
+              try {
+                await fetchJson("/api/join", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify(body),
+                })
+                router.push('/login?joined=true');
+              } catch (error) {
+                if (error instanceof FetchError) {
+                  setErrorMsg(error.data.message);
+                } else {
+                  console.error("An unexpected error happened:", error);
+                }
+                document.getElementById("signupBtn").disabled = false;
+              }
+            });
           }}
         />
         <p>Already have an account?{' '}
