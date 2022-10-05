@@ -1,6 +1,6 @@
 export default function TaskCreateForm({ errorMessage, onSubmit }) {
   return (
-    <form id="userAdminForm" onSubmit={onSubmit}>
+    <form id="userAdminForm" autocomplete="off" onSubmit={onSubmit}>
       <label>
         <span>Name</span>
         <input type="text" name="name" maxlength="55" required />
