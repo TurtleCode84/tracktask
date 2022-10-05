@@ -67,8 +67,8 @@ export default function Task() {
                 }
               }
               if (event.currentTarget.priority.checked !== event.currentTarget.priority.defaultChecked) {body.priority = event.currentTarget.priority.checked;}
-              body.completion = {};
               if (event.currentTarget.complete.checked !== event.currentTarget.complete.defaultChecked) {
+                body.completion = {};
                 if (event.currentTarget.complete.checked) {
                   body.completion.completed = Math.floor(Date.now()/1000);
                   body.completion.completedBy = user.id;
