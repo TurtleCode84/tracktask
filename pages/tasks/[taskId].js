@@ -54,31 +54,24 @@ export default function Task() {
               event.preventDefault();
               document.getElementById("editTaskBtn").disabled = true;
               
-              var utcDueDate;
-              if (event.currentTarget.dueDate.value) {
+              const body = {};
+              if (event.currentTarget.name.value !== event.currentTarget.name.defaultValue) {body.name = event.currentTarget.name.value};
+              if (event.currentTarget.description.value !== event.currentTarget.description.defaultValue) {body.description = event.currentTarget.description.value};
+              if (event.currentTarget.dueDate.value !== event.currentTarget.dueDate.defaultValue) {
                 const offset = new Date().getTimezoneOffset();
-                utcDueDate = moment(event.currentTarget.dueDate.value, moment.HTML5_FMT.DATETIME_LOCAL).utcOffset(offset);
-              } else {
-                utcDueDate = "";
+                const utcDueDate = moment(event.currentTarget.dueDate.value, moment.HTML5_FMT.DATETIME_LOCAL).utcOffset(offset);
+                body.dueDate = utcDueDate;
               }
-              
-              const body = {
-                name: event.currentTarget.name.value,
-                description: event.currentTarget.description.value,
-                dueDate: utcDueDate,
-              };
-              
-              if (event.currentTarget.priority && event.currentTarget.priority.checked) {
-                body.priority = true;
-              } else if (event.currentTarget.unpriority && event.currentTarget.unpriority.checked) {
-                body.priority = false;
-              }
-              body.completion = {};
-              if (event.currentTarget.complete && event.currentTarget.complete.checked) {
-                body.completion.completed = Math.floor(Date.now()/1000);
-                body.completion.completedBy = user.id;
-              } else if (event.currentTarget.uncomplete && event.currentTarget.uncomplete.checked) {
-                body.completion.completed = 0;
+              if (event.currentTarget.priority.checked !== event.currentTarget.priority.defaultChecked) {body.priority = event.currentTarget.priority.checked;}
+              if (event.currentTarget.complete.checked !== event.currentTarget.complete.defaultChecked) {
+                body.completion = {};
+                if (event.currentTarget.complete.checked) {
+                  body.completion.completed = Math.floor(Date.now()/1000);
+                  body.completion.completedBy = user.id;
+                } else {
+                  body.completion.completed = 0;
+                  body.completion.completedBy = "";
+                }
               }
 
               try {
