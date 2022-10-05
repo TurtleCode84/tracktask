@@ -7,15 +7,11 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
     <form id="userAdminForm" autocomplete="off" onSubmit={onSubmit}>
       <label>
         <span>Username</span>
-        <input type="text" name="username" placeholder={lookup.username} />
+        <input type="text" name="username" defaultValue={lookup.username} />
       </label>
       <label>
         <span>Email</span>
-        <input type="email" name="email" placeholder={lookup.email} />
-      </label>
-      <label>
-        <span>Remove email</span>
-        <input type="checkbox" name="removeEmail" />
+        <input type="email" name="email" defaultValue={lookup.email} />
       </label>
       <hr/><label>
         <span>Change password</span>
@@ -28,15 +24,11 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
       </label>
       <label>
         <span>Profile picture</span>
-        <input type="url" name="profilePicture" placeholder={lookup.profilePicture} />
-      </label>
-      <label>
-        <span>Remove profile picture</span>
-        <input type="checkbox" name="removeProfilePicture" />
+        <input type="url" name="profilePicture" defaultValue={lookup.profilePicture} />
       </label>
       <label>
         <span>Admin notes</span>
-        <textarea name="notes" rows="4" cols="30" placeholder={lookup.history.notes} />
+        <textarea name="notes" rows="4" cols="30" defaultValue={lookup.history.notes} />
       </label><hr/>
       <label>
         <span>Warn user</span>
@@ -52,31 +44,21 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
       </label>
       <h2>Permissions:</h2>
       <label>
-        {lookup.permissions.verified ?
-        <><span>Unverify user</span>
-        <input type="checkbox" name="unverify" /></>
-        :
-        <><span>Verify user</span>
-        <input type="checkbox" name="verify" /></>
-        }
+        <span>Verified</span>
+        <input type="checkbox" name="verify" defaultChecked={lookup.permissions.verified} />
       </label>
       <label>
-        {lookup.permissions.admin ? <span>Remove admin from user</span> : <span>Make user admin</span>}
-        <input type="checkbox" name="toggleAdmin" disabled />
+        <span>Admin</span>
+        <input type="checkbox" name="admin" defaultChecked={lookup.permissions.admin} disabled />
       </label>
       <label>
-        {lookup.permissions.banned ?
-        <><span>Unban user</span>
-        <input type="checkbox" name="unban" /></>
-        :
-        <><span>Ban user</span>
-        <input type="checkbox" name="ban" /></>
-        }
+        <span>Banned</span>
+        <input type="checkbox" name="ban" defaultChecked={lookup.permissions.banned} />
       </label>
       <label>
         {lookup.permissions.banned ?
         <><span>Edit ban reason</span>
-        <input type="text" placeholder={lookup.history.banReason} name="banReason" /></>
+        <input type="text" defaultValue={lookup.history.banReason} name="banReason" /></>
         :
         <><span>Ban reason</span>
         <input type="text" name="banReason" /></>
