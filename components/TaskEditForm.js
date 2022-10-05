@@ -1,10 +1,11 @@
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
+import moment from "moment";
 
 export default function TaskEditForm({ errorMessage, onSubmit, task }) {
   const router = useRouter();
   return (
-    <form id="taskEditForm" onSubmit={onSubmit}>
+    <form id="taskEditForm" autocomplete="off" onSubmit={onSubmit}>
       <label>
         <span>Name</span>
         <input type="text" name="name" defaultValue={task.name} maxlength="55" />
@@ -15,25 +16,15 @@ export default function TaskEditForm({ errorMessage, onSubmit, task }) {
       </label><hr/>
       <label>
         <span>Due Date</span>
-        <input type="datetime-local" name="dueDate" min="1970-01-01T00:00" />
+        <input type="datetime-local" name="dueDate" defaultValue={moment.unix(task.dueDate).format(moment.HTML5_FMT.DATETIME_LOCAL)} min="1970-01-01T00:00" />
       </label>
       <label>
-        {task.priority ?
-        <><span>Unmark as priority</span>
-        <input type="checkbox" name="unpriority" /></>
-        :
-        <><span>Mark as priority</span>
-        <input type="checkbox" name="priority" /></>
-        }
+        <span>Priority</span>
+        <input type="checkbox" name="priority" defaultChecked={task.priority} /></>
       </label>
       <label>
-        {task.completion.completed ?
-        <><span>Mark as not completed</span>
-        <input type="checkbox" name="uncomplete" /></>
-        :
-        <><span>Mark as completed</span>
-        <input type="checkbox" name="complete" /></>
-        }
+        <span>Completed</span>
+        <input type="checkbox" name="complete" defaultChecked={task.completion.completed ? true : false} /></>
       </label><hr/>
 
       <button type="submit" id="editTaskBtn">Edit task data</button>
