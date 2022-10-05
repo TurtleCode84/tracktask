@@ -36,6 +36,7 @@ export default function Join() {
             var catchToken;
             await executeRecaptcha("joinFormSubmit").then((gReCaptchaToken) => {
               catchToken = gReCaptchaToken;
+              console.log(catchToken);
             });
               
             if (event.currentTarget.password.value !== event.currentTarget.cpassword.value) {
