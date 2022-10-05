@@ -148,16 +148,17 @@ async function tasksRoute(req, res) {
     if (body.name) {updateDoc.name = body.name.trim().slice(0, 55)}; // If you're really going to try to pass the limit via API...
     if (body.description) {updateDoc.description = body.description.trim().slice(0, 500)};
     if (body.dueDate) {updateDoc.dueDate = moment(body.dueDate).unix()};
+    updateDoc = {
+      $set: updateDoc,
+    }
     try {
-      /*if (collection !== true) {
+      if (collection !== true) {
         const updatedTask = await db.collection("tasks").updateOne(query, updateDoc);
         res.json(updatedTask);
       } else {
         res.status(418).json({ message: "Under construction" });
         return;
-      }*/
-      res.status(200).json({ message: "Unit test" });
-      return;
+      }
     } catch (error) {
       res.status(500).json(error);
       return;
