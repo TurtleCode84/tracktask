@@ -68,9 +68,7 @@ export default function Task() {
                 dueDate: utcDueDate,
               };
               
-              if (event.currentTarget.priority) {
-                body.priority = event.currentTarget.priority.checked;
-              }
+              body.priority = Boolean(event.currentTarget.priority.checked);
               body.completion = {};
               if (event.currentTarget.complete && event.currentTarget.complete.checked) {
                 body.completion.completed = Math.floor(Date.now()/1000);
