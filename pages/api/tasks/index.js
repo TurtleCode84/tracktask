@@ -137,8 +137,8 @@ async function tasksRoute(req, res) {
       return;
     }
     const query = {
-      hidden: false,
       _id: ObjectId(id),
+      hidden: false,
       $or: [
         { owner: ObjectId(user.id) },
         { 'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: ObjectId(user.id)}} },
@@ -157,7 +157,7 @@ async function tasksRoute(req, res) {
         return;
       }
     } catch (error) {
-      res.status(500).json(error);
+      res.status(501).json(error);
       return;
     }
   } else {
