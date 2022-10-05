@@ -19,7 +19,7 @@ export default function TaskEditForm({ errorMessage, onSubmit, task }) {
         <input type="datetime-local" name="dueDate" defaultValue={task.dueDate !== 0 && moment.unix(task.dueDate).format(moment.HTML5_FMT.DATETIME_LOCAL)} min="1970-01-01T00:00" />
       </label>
       <label>
-        <span>Priority &#10071;</span>
+        <span>Priority&#10071;</span>
         <input type="checkbox" name="priority" defaultChecked={task.priority} />
       </label>
       <label>
