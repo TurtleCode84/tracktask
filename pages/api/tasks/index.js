@@ -126,7 +126,7 @@ async function tasksRoute(req, res) {
         res.json(deletedItem);
       }
     } catch (error) {
-      res.status(500).json({ message: error.data.message });
+      res.status(500).json(error);
       return;
     }
   } else if (req.method === 'PATCH') { // Updates a task (collections coming soon)
@@ -157,7 +157,7 @@ async function tasksRoute(req, res) {
         return;
       }
     } catch (error) {
-      res.status(500).json({ message: error.data.message });
+      res.status(500).json(error);
       return;
     }
   } else {
