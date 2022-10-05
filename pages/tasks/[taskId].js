@@ -82,7 +82,7 @@ export default function Task() {
               }
 
               try {
-                await fetchJson(`/api/tasks/${task._id}`, {
+                await fetchJson(`/api/tasks?id=${task._id}`, {
                   method: "PATCH",
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify(body),
