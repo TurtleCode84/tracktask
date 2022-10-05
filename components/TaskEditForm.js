@@ -20,7 +20,7 @@ export default function TaskEditForm({ errorMessage, onSubmit, task }) {
       <label>
         {task.priority ?
         <><span>Mark as priority</span>
-        <input type="checkbox" name="priority" checked /></>
+        <input type="checkbox" name="priority" defaultChecked="true" /></>
         :
         <><span>Mark as priority</span>
         <input type="checkbox" name="priority" /></>
