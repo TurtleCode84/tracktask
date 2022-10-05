@@ -66,7 +66,7 @@ export default function Task() {
                   body.dueDate = "";
                 }
               }
-              if (event.currentTarget.priority.checked !== event.currentTarget.priority.defaultChecked) {body.priority = event.currentTarget.priority.checked;}
+              if (event.currentTarget.priority.checked !== event.currentTarget.priority.defaultChecked) {body.priority = event.currentTarget.priority.checked}
               if (event.currentTarget.complete.checked !== event.currentTarget.complete.defaultChecked) {
                 body.completion = {};
                 if (event.currentTarget.complete.checked) {
