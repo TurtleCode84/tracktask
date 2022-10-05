@@ -2,10 +2,22 @@ import clientPromise from "lib/mongodb";
 import { compare } from 'bcryptjs';
 import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "lib/session";
+import fetchJson from "lib/fetchJson";
 
 export default withIronSessionApiRoute(async (req, res) => {
   if (req.method === 'POST') {
-    const { username, password } = await req.body;
+    const { username, password, gReCaptchaToken } = await req.body;
+    
+    //Check if robot
+    const captchaResponse = await fetchJson("https://www.google.com/recaptcha/api/siteverify", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded", },
+      body: `secret=${process.env.RECAPTCHA_SECRET}&response=${gReCaptchaToken}`,
+    })
+    if (!captchaResponse || !captchaResponse.success || captchaResponse.action !== "loginFormSubmit" || captchaResponse.score <= 0.5) {
+      res.status(401).json({ message: "reCAPTCHA verification failed, please try again." });
+      return;
+    }
     
     //Check if IP banned
     const ip = req.headers["x-forwarded-for"].split(',')[0];
