@@ -38,17 +38,12 @@ export default function Join() {
             const token = await executeRecaptcha("joinFormSubmit");
             console.log(token);
             console.log("^ that's the token");
-            console.log("do I pass this next block?");  
-            if (event.currentTarget.password.value !== event.currentTarget.cpassword.value) {
-              console.log("oof");
+            console.log(typeof token);
+            /*if (event.currentTarget.password.value !== event.currentTarget.cpassword.value) {
               setErrorMsg("Passwords do not match!");
               document.getElementById("signupBtn").disabled = false;
               return;
-            } else {
-              console.log("noice");
-            }
-            console.log("cool");
-            
+            }*/            
             console.log("I made it here");
             const body = {
               username: event.currentTarget.username.value,
