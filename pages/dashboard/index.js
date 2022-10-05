@@ -54,7 +54,7 @@ export default function Dashboard() {
       <h2>Upcoming tasks:</h2>
       {upcomingTaskList === undefined || upcomingTasksError ?
       <>
-      {upcomingTasksError ? <p style={{ fontStyle: "italic" }}>{upcomingTasksError}</p> : <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
+      {upcomingTasksError ? <p style={{ fontStyle: "italic" }}>{upcomingTasksError.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
       </>
       :
       <><ul style={{ display: "table" }}>
@@ -65,7 +65,7 @@ export default function Dashboard() {
       <h2>Recently added:</h2>
       {recentTaskList === undefined || recentTasksError ?
       <>
-      {recentTasksError ? <p style={{ fontStyle: "italic" }}>{recentTasksError}</p> : <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
+      {recentTasksError ? <p style={{ fontStyle: "italic" }}>{recentTasksError.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
       </>
       :
       <><ul style={{ display: "table" }}>
@@ -76,7 +76,7 @@ export default function Dashboard() {
       <h2>Your collections:</h2>
       {collectionList === undefined || collectionsError ?
       <>
-      {collectionsError ? <p style={{ fontStyle: "italic" }}>{collectionsError}</p> : <p style={{ fontStyle: "italic" }}>Loading collections...</p>}
+      {collectionsError ? <p style={{ fontStyle: "italic" }}>{collectionsError.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading collections...</p>}
       </>
       :
       <><ul style={{ display: "table" }}>
