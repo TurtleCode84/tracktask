@@ -33,37 +33,40 @@ export default function Join() {
               document.getElementById("signupBtn").disabled = false;
               return;
             }
-            const { gReCaptchaToken } = await executeRecaptcha("joinFormSubmit");
-            console.log(gReCaptchaToken);
+            var catchToken;
+            await executeRecaptcha("joinFormSubmit").then((gReCaptchaToken) => {
+              catchToken = gReCaptchaToken;
+              console.log(catchToken);
               
-            if (event.currentTarget.password.value !== event.currentTarget.cpassword.value) {
-              setErrorMsg("Passwords do not match!");
-              document.getElementById("signupBtn").disabled = false;
-              return;
-            }
-            
-            const body = {
-              username: event.currentTarget.username.value,
-              password: event.currentTarget.password.value,
-              email: event.currentTarget.email.value,
-              gRecaptchaToken: catchToken,
-            };
-
-            try {
-              await fetchJson("/api/join", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(body),
-              })
-              router.push('/login?joined=true');
-            } catch (error) {
-              if (error instanceof FetchError) {
-                setErrorMsg(error.data.message);
-              } else {
-                console.error("An unexpected error happened:", error);
+              if (event.currentTarget.password.value !== event.currentTarget.cpassword.value) {
+                setErrorMsg("Passwords do not match!");
+                document.getElementById("signupBtn").disabled = false;
+                return;
               }
-              document.getElementById("signupBtn").disabled = false;
-            }
+            
+              const body = {
+                username: event.currentTarget.username.value,
+                password: event.currentTarget.password.value,
+                email: event.currentTarget.email.value,
+                gRecaptchaToken: catchToken,
+              };
+
+              try {
+                await fetchJson("/api/join", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify(body),
+                })
+                router.push('/login?joined=true');
+              } catch (error) {
+                if (error instanceof FetchError) {
+                  setErrorMsg(error.data.message);
+                } else {
+                  console.error("An unexpected error happened:", error);
+                }
+                document.getElementById("signupBtn").disabled = false;
+              }
+            });
           }}
         />
         <p>Already have an account?{' '}
