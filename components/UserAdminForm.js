@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
   const router = useRouter();
   return (
-    <form id="userAdminForm" onSubmit={onSubmit}>
+    <form id="userAdminForm" autocomplete="off" onSubmit={onSubmit}>
       <label>
         <span>Username</span>
         <input type="text" name="username" placeholder={lookup.username} />
