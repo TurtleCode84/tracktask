@@ -58,13 +58,17 @@ export default function Task() {
               if (event.currentTarget.name.value !== event.currentTarget.name.defaultValue) {body.name = event.currentTarget.name.value};
               if (event.currentTarget.description.value !== event.currentTarget.description.defaultValue) {body.description = event.currentTarget.description.value};
               if (event.currentTarget.dueDate.value !== event.currentTarget.dueDate.defaultValue) {
-                const offset = new Date().getTimezoneOffset();
-                const utcDueDate = moment(event.currentTarget.dueDate.value, moment.HTML5_FMT.DATETIME_LOCAL).utcOffset(offset);
-                body.dueDate = utcDueDate;
+                if (event.currentTarget.dueDate.value) {
+                  const offset = new Date().getTimezoneOffset();
+                  const utcDueDate = moment(event.currentTarget.dueDate.value, moment.HTML5_FMT.DATETIME_LOCAL).utcOffset(offset);
+                  body.dueDate = utcDueDate;
+                } else {
+                  body.dueDate = "";
+                }
               }
               if (event.currentTarget.priority.checked !== event.currentTarget.priority.defaultChecked) {body.priority = event.currentTarget.priority.checked;}
+              body.completion = {};
               if (event.currentTarget.complete.checked !== event.currentTarget.complete.defaultChecked) {
-                body.completion = {};
                 if (event.currentTarget.complete.checked) {
                   body.completion.completed = Math.floor(Date.now()/1000);
                   body.completion.completedBy = user.id;
