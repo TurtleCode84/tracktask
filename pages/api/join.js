@@ -11,11 +11,7 @@ async function joinRoute(req, res) {
     const { username, password, email, gReCaptchaToken } = await req.body;
     
     //Check if robot
-    if (gReCaptchaToken) {
-      res.status(422).json({ message: gReCaptchaToken });
-      return;
-    }
-    /*const captchaResponse = await fetchJSON("https://www.google.com/recaptcha/api/siteverify", {
+    const captchaResponse = await fetchJSON("https://www.google.com/recaptcha/api/siteverify", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ secret: process.env.RECAPTCHA_SECRET, response: gReCaptchaToken }),
