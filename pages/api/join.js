@@ -11,26 +11,33 @@ async function joinRoute(req, res) {
     const { username, password, email, gReCaptchaToken } = await req.body;
     
     //Check if robot
-    fetch("https://www.google.com/recaptcha/api/siteverify", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: `secret=${process.env.RECAPTCHA_SECRET}&response=${req.body.gRecaptchaToken}`,
-    })
-      .then((reCaptchaRes) => reCaptchaRes.json())
-      .then((reCaptchaRes) => {
-        console.log(
-          reCaptchaRes,
-          "Response from Google reCaptcha verification API"
-        );
-        if (reCaptchaRes?.score <= 0.5) {
-          res.status(403).json({
-            status: "failure",
-            message: "Google ReCaptcha Failure",
-          });
-        }
+    try {
+      fetch("https://www.google.com/recaptcha/api/siteverify", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: `secret=${process.env.RECAPTCHA_SECRET}&response=${req.body.gRecaptchaToken}`,
+      })
+        .then((reCaptchaRes) => reCaptchaRes.json())
+        .then((reCaptchaRes) => {
+          console.log(
+            reCaptchaRes,
+            "Response from Google reCaptcha verification API"
+          );
+          if (reCaptchaRes?.score <= 0.5) {
+            res.status(403).json({
+              status: "failure",
+              message: "Google ReCaptcha Failure",
+            });
+          }
+        });
+    } catch (err) {
+      res.status(405).json({
+        status: "failure",
+        message: "Error submitting the enquiry form",
       });
+    }
     /*const captchaResponse = await fetch("https://www.google.com/recaptcha/api/siteverify", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
