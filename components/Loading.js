@@ -2,7 +2,7 @@ import Layout from "components/Layout";
 
 export default function Loading() {
   return (
-    <Layout>
+    <><Layout>
       <div id="loading">
         <div class="dot a"></div>
         <div class="dot b"></div>
@@ -46,5 +46,6 @@ export default function Loading() {
   animation-delay: 0.6s;
 }
     `}
+    </style></>
   );
 }
