@@ -51,7 +51,7 @@ export default function TaskEditForm({ errorMessage, onSubmit, task }) {
             }
           }
         }}
-      ><>&#9888;</> Delete task <>&#9888;</></a>
+      ><button><>&#9888;</> Delete task <>&#9888;</></button></a>
       <p className="error" id="deleteTaskMessage"></p>
 
       <style jsx>{`
