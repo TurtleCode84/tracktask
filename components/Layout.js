@@ -52,7 +52,7 @@ export default function Layout({ children }) {
           cursor: pointer;
         }
       `}</style>
-      <nav style={{backgroundColor: "orange", textAlign: "center", height:40 + "px", fontWeight: 600, marginTop: -20 + "px", paddingBottom: 5 + "px", minHeight: "min-content"}}><p style={{paddingTop: 13 + "px"}}>You are viewing the TrackTask Development release, some features may not work properly or may break your account.</p></nav>
+      {process.env.NODE_ENV !== "production" && <nav style={{backgroundColor: "orange", textAlign: "center", height:40 + "px", fontWeight: 600, marginTop: -20 + "px", paddingBottom: 5 + "px", minHeight: "min-content"}}><p style={{paddingTop: 13 + "px"}}>You are viewing a TrackTask Development release, some features may not work properly or may break your account.</p></nav>}
       <Header />
 
       <main>
