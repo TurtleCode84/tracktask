@@ -14,10 +14,10 @@ export default withIronSessionApiRoute(async (req, res) => {
       headers: { "Content-Type": "application/x-www-form-urlencoded", },
       body: `secret=${process.env.RECAPTCHA_SECRET}&response=${gReCaptchaToken}`,
     })
-    if (!captchaResponse || !captchaResponse.success || captchaResponse.action !== "loginFormSubmit" || captchaResponse.score <= 0.5) {
-      res.status(401).json({ message: "reCAPTCHA verification failed, please try again." });
-      return;
-    }
+    //if (!captchaResponse || !captchaResponse.success || captchaResponse.action !== "loginFormSubmit" || captchaResponse.score <= 0.5) {
+      //res.status(401).json({ message: "reCAPTCHA verification failed, please try again." });
+      //return;
+    //}
     
     //Check if IP banned
     const ip = req.headers["x-forwarded-for"].split(',')[0];
