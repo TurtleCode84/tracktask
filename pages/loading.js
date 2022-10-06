@@ -6,7 +6,7 @@ import Image from "next/image";
 export default function Loader() {
   return (
     <Layout>
-      An easteregg maybe?
+      <p>An easteregg maybe?</p>
       <Loading/>
     </Layout>
   );
