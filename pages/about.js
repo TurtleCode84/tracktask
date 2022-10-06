@@ -4,15 +4,6 @@ import Loading from "components/Loading";
 import Image from "next/image";
 
 export default function About() {
-  {/*const { user } = useUser({
-    redirectTo: "/dashboard",
-    redirectIfFound: true,
-  });
-  if (!user || user.isLoggedIn) {
-    return (
-      <Loading/>
-    );
-  }*/}
   return (
     <Layout>
       <h2>About TrackTask:</h2>
