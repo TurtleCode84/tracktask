@@ -18,7 +18,7 @@ export default function Home() {
     <Layout>
       <h1>
         <span style={{ marginRight: ".3em", verticalAlign: "middle" }}>
-          <Image src="/GitHub-Mark-32px.png" width="32" height="32" alt="" />
+          <Image src="/tracktaskmini.png" width="32" height="32" alt="" />
         </span>
         TrackTask - Shareable Task Management
       </h1>
