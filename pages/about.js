@@ -2,7 +2,6 @@ import React from "react";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
 import Image from "next/image";
-{/*import useUser from "lib/useUser";*/}
 
 export default function About() {
   {/*const { user } = useUser({
