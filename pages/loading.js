@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function Loader() {
   return (
-    where do I exist?
+    <p>where do I exist?</p>
     <Loading/>
   );
 }
