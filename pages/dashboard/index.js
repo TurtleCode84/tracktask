@@ -72,8 +72,8 @@ export default function Dashboard() {
       <><ul style={{ display: "table" }}>
         {recentTaskList}
       </ul>
-      <Link href="/tasks">View all tasks</Link></>
       }
+      <Link href="/tasks">View all tasks</Link></>
       
       <h2>Your collections:</h2>
       {collectionList === undefined || collectionsError ?
