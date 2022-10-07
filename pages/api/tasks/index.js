@@ -9,7 +9,7 @@ export default withIronSessionApiRoute(tasksRoute, sessionOptions);
 async function tasksRoute(req, res) {
   const user = req.session.user;
   if (!user || !user.isLoggedIn || user.permissions.banned ) {
-    res.status(401).json({ message: "Unauthorized" });
+    res.status(401).json({ message: "Loading tasks..." });
     return;
   }
   const client = await clientPromise;
@@ -65,10 +65,10 @@ async function tasksRoute(req, res) {
       }
     }
     if (data.length === 0 && collections !== "true") {
-      res.status(404).json({ message: "No tasks found" });
+      res.status(404).json({ message: "No tasks found!" });
       return;
     } else if (data.length === 0) {
-      res.status(404).json({ message: "No collections found" });
+      res.status(404).json({ message: "No collections found!" });
       return;
     }
     res.json(data);
