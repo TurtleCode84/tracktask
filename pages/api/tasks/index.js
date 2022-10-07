@@ -30,7 +30,7 @@ async function tasksRoute(req, res) {
     var data;
     if (collections !== "true") {
       if (filter === "recent") {
-        query.created = {$gte: (Math.floor(Date.now()/1000) - 86400)};
+        query.created = {$gte: (Math.floor(Date.now()/1000) - 172800)}; // 2 days ago
       } else if (filter === "upcoming") {
         query.dueDate = {$gt: Math.floor(Date.now()/1000)};
       } else if (filter === "overdue") {
