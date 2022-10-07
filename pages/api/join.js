@@ -41,7 +41,7 @@ async function joinRoute(req, res) {
       if (username.toLowerCase().includes(element.toLowerCase()) || email.toLowerCase().includes(element.toLowerCase())) {
         return true;
       }
-    };
+    )};
     if (contains) {
       res.status(403).json({ message: "The username or email you provided is not allowed, please choose something else." });
       return;
