@@ -9,7 +9,7 @@ export default function About() {
       <h1>About TrackTask:</h1>
       <p>
       TrackTask is a Shareable Task Management system. Users can create tasks with all relevant information and keep track of their completion & priority.
-      Additionally, tasks can be grouped in collections, which can be shared with other users to work as a team and get work done in an organized way!
+      Additionally, tasks can be grouped in collections, which can be shared with other users to work as a team and get work done in an organized way!<br/>
       <br/>It was created by <a href="https://wasteof.money/users/turtlecode84" target="_blank" rel="noreferrer">TurtleCode84</a> and is actively developed with help from the other members of the TrackTask team.
       </p>
       <h2>Credits:</h2>
