@@ -24,7 +24,7 @@ async function tasksRoute(req, res) {
       ],
     };
     const taskoptions = {
-      sort: { priority: -1, dueDate: 1 },
+      sort: { completed: -1, priority: -1, dueDate: 1 },
       projection: { name: 1, description: 1, dueDate: 1, created: 1, owner: 1, completion: 1, priority: 1 },
     };
     var data;
