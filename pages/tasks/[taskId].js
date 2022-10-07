@@ -38,10 +38,32 @@ export default function Task() {
         <><h3>General information</h3>
         <p>Description: {task.description}</p>
         <p title={moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Due date: {task.dueDate > 0 ? <>{moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}{' '}({moment.unix(task.dueDate).fromNow()})</> : 'never'}</p>
-        {task.completion.completed > 0 && <>
+        {task.completion.completed > 0 ? <>
         <p>Completed on: {moment.unix(task.completion.completed).format("dddd, MMMM Do YYYY, h:mm:ss a")}{' '}({moment.unix(task.completion.completed).fromNow()})</p>
         {user.permissions.verified ? <p>Completed by: {task.completion.completedBy}</p> : null}
-        </>}
+        </>
+        :
+        <><a href={`/api/tasks?id=${task._id}`}
+        onClick={async (e) => {
+          e.preventDefault();
+          document.getElementById("markCompleteBtn").disabled = true;
+          try {
+            await fetchJson(`/api/tasks?id=${task._id}`, {
+              method: "PATCH",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ 'completion.completed': Math.floor(Date.now()/1000), 'completion.completedBy': user.id }),
+            })
+            router.reload();
+          } catch (error) {
+            if (error instanceof FetchError) {
+              setErrorMsg(error.data.message);
+            } else {
+              console.error("An unexpected error happened:", error);
+            }
+            document.getElementById("markCompleteBtn").disabled = false;
+          }
+        }}
+        ><button id="markCompleteBtn">Mark completed <>&#9989;</></button></a></>}
         <hr/>
         <details>
           <summary>Edit task</summary>
