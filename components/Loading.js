@@ -9,7 +9,7 @@ export default function Loading() {
         <div class="dot c"></div>
       </div>
     </Layout>
-    <style jsx>{`
+    <style jsx global>{`
       #loading {
         display: flex;
         margin: 50px auto;
