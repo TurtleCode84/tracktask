@@ -6,7 +6,7 @@ import Image from "next/image";
 export default function About() {
   return (
     <Layout>
-      <h2>About TrackTask:</h2>
+      <h1>About TrackTask:</h1>
       <p>
       TrackTask is a Shareable Task Management system. Users can create tasks with all relevant information and keep track of their completion & priority.
       <br/>Additionally, tasks can be grouped in collections, which can be shared with other users to work as a team and get work done in an organized way!
@@ -24,7 +24,7 @@ export default function About() {
       <ul>
         <li><a href="https://wasteof.money/users/daily_meme" target="_blank" rel="noreferrer">@daily_meme</a>, logo designer</li>
         <li><a href="https://wasteof.money/users/radi8" target="_blank" rel="noreferrer">@radi8</a>, tester & developer</li>
-        <li><a href="https://github.com/ankit_anmol" target="_blank" rel="noreferrer">@ankit_anmol</a>, tester & developer</li>
+        <li><a href="https://github.com/quantum-codes" target="_blank" rel="noreferrer">@ankit_anmol</a>, tester & developer</li>
         <li><a href="https://github.com/micahlt" target="_blank" rel="noreferrer">@micahlt</a>, UI/styling</li>
         <li><a href="https://wasteof.money/users/reid" target="_blank" rel="noreferrer">@reid</a>, tester</li>
         <li><a href="https://github.com/turtlecode84" target="_blank" rel="noreferrer">@turtlecode84</a>, project manager</li>
@@ -34,9 +34,6 @@ export default function About() {
       <style jsx>{`
         li {
           margin-bottom: 0.5rem;
-          font-size: 90%;
-        }
-        p {
           font-size: 90%;
         }
       `}</style>
