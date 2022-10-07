@@ -82,7 +82,7 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
             }
           }
         }}
-      ><>&#9888;</> Delete user <>&#9888;</></a>
+      ><button><>&#9888;</> Delete user <>&#9888;</></button></a>
       <p className="error" id="deleteUserMessage"></p>
 
       <style jsx>{`
