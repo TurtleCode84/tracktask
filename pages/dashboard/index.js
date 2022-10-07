@@ -3,6 +3,7 @@ import moment from "moment";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
 import DueDate from "components/DueDate";
+import Link from "next/link";
 import useUser from "lib/useUser";
 import useTasks from "lib/useTasks";
 import { useRouter } from "next/router";
@@ -70,7 +71,8 @@ export default function Dashboard() {
       :
       <><ul style={{ display: "table" }}>
         {recentTaskList}
-      </ul></>
+      </ul>
+      <Link href="/tasks">View all tasks</Link></>
       }
       
       <h2>Your collections:</h2>
