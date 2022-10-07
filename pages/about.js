@@ -24,10 +24,10 @@ export default function About() {
       <ul>
         <li><a href="https://wasteof.money/users/daily_meme" target="_blank" rel="noreferrer">@daily_meme</a>, logo designer</li>
         <li><a href="https://wasteof.money/users/radi8" target="_blank" rel="noreferrer">@radi8</a>, tester & developer</li>
-        <li><a href="https://wasteof.money/users/ankit_anmol" target="_blank" rel="noreferrer">@ankit_anmol</a>, tester & developer</li>
-        <li><a href="https://wasteof.money/users/micahlt" target="_blank" rel="noreferrer">@micahlt</a>, UI/styling</li>
+        <li><a href="https://github.com/ankit_anmol" target="_blank" rel="noreferrer">@ankit_anmol</a>, tester & developer</li>
+        <li><a href="https://github.com/micahlt" target="_blank" rel="noreferrer">@micahlt</a>, UI/styling</li>
         <li><a href="https://wasteof.money/users/reid" target="_blank" rel="noreferrer">@reid</a>, tester</li>
-        <li><a href="https://wasteof.money/users/turtlecode84" target="_blank" rel="noreferrer">@turtlecode84</a>, project manager</li>
+        <li><a href="https://github.com/turtlecode84" target="_blank" rel="noreferrer">@turtlecode84</a>, project manager</li>
         <li>Anyone else who gave suggestions or feedback!</li>
       </ul>
 
