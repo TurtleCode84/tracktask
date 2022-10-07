@@ -28,20 +28,23 @@ async function tasksRoute(req, res) {
       projection: { name: 1, description: 1, dueDate: 1, created: 1, owner: 1, completion: 1, priority: 1 },
     };
     var data;
-    query.completion = {};
     if (collections !== "true") {
       if (filter === "recent") {
         query.created = {$gte: (Math.floor(Date.now()/1000) - 172800)}; // 2 days ago
+        //query.completion = {};
         //query.completion.completed = 0; // Decide if we want to include completed tasks in "recently added"
       } else if (filter === "upcoming") {
         query.dueDate = {$gt: Math.floor(Date.now()/1000)};
+        query.completion = {};
         query.completion.completed = 0;
       } else if (filter === "overdue") {
         query.dueDate = {$lte: Math.floor(Date.now()/1000)};
+        query.completion = {};
         query.completion.completed = 0;
       } else if (filter === "notdue") {
         query.dueDate = 0;
       } else if (filter === "completed") {
+        query.completion = {};
         query.completion.completed = {$ne: 0};
       }
       try {
