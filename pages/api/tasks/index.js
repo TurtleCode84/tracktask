@@ -25,12 +25,12 @@ async function tasksRoute(req, res) {
     };
     const taskoptions = {
       sort: { priority: -1, dueDate: 1 },
-      projection: { name: 1, description: 1, dueDate: 1, owner: 1, completion: 1, priority: 1 },
+      projection: { name: 1, description: 1, dueDate: 1, created: 1, owner: 1, completion: 1, priority: 1 },
     };
     var data;
     if (collections !== "true") {
       if (filter === "recent") {
-        query.created = {$lte: (Math.floor(Date.now()/1000) - 86400)};
+        query.created = {$lte: (Math.floor(Date.now()/1000) + 86400)};
       } else if (filter === "upcoming") {
         query.dueDate = {$gt: Math.floor(Date.now()/1000)};
       } else if (filter === "overdue") {
