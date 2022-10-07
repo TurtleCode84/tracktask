@@ -37,7 +37,12 @@ async function joinRoute(req, res) {
     }
     
     const blacklist = process.env.BLACKLIST.split(',');
-    if (blacklist.includes(username) || blacklist.includes(email)) {
+    const contains = blacklist.some(element => {
+      if (username.toLowerCase().includes(element.toLowerCase()) || email.toLowerCase().includes(element.toLowerCase())) {
+        return true;
+      }
+    }
+    if (contains) {
       res.status(403).json({ message: "The username or email you provided is not allowed, please choose something else." });
       return;
     } else if (username.includes("@") || username.includes(" ") || username.includes("`") || username.includes("&") || username.includes("\"")) {
