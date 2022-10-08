@@ -110,7 +110,7 @@ export default function UserAdmin() {
                 body.warning = event.currentTarget.warning.value;
               }
               if (event.currentTarget.verify.checked !== event.currentTarget.verify.defaultChecked) {body.verify = event.currentTarget.verify.checked}
-              //if (event.currentTarget.admin.checked !== event.currentTarget.admin.defaultChecked) {body.admin = event.currentTarget.admin.checked}
+              if (event.currentTarget.admin.checked !== event.currentTarget.admin.defaultChecked) {body.admin = event.currentTarget.admin.checked}
               if (event.currentTarget.ban.checked !== event.currentTarget.ban.defaultChecked) {body.ban = event.currentTarget.ban.checked}
 
               try {
