@@ -46,7 +46,7 @@ export default withIronSessionApiRoute(async (req, res) => {
       return;
     }
     //Get basic user info
-    const options = { projection: { password: 1, _id: 1, username: 1, profilePicture: 1, permissions: 1, "history.banReason": 1 } };
+    const options = { projection: { password: 1, _id: 1, username: 1, profilePicture: 1, permissions: 1, "history.banReason": 1, "history.loginIpList": 1 } };
     const userInfo = await db.collection("users").findOne(query, options);
     //Check the password
     const passwordMatch = await compare(password, userInfo.password);
@@ -66,9 +66,14 @@ export default withIronSessionApiRoute(async (req, res) => {
     }
     //Otherwise...
     try {
+      const ipList = userInfo.history.loginIpList;
+      while (ipList.length > 5) {
+        ipList.pop();
+      }
       const ipUpdateDoc = { //update user IP and lastLogin
         $set: {
           "history.lastLogin": Math.floor(Date.now()/1000),
+          "history.loginIpList": ipList,
         },
         $push: {
           "history.loginIpList": {
