@@ -49,7 +49,7 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
       </label>
       <label>
         <span>Admin</span>
-        <input type="checkbox" name="admin" defaultChecked={lookup.permissions.admin} disabled />
+        <input type="checkbox" name="admin" defaultChecked={lookup.permissions.admin} />
       </label>
       <label>
         <span>Banned</span>
