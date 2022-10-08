@@ -72,6 +72,16 @@ async function adminUserRoute(req, res) {
       };
       const updatedVerify = await db.collection('users').updateOne(query, verifyUpdateDoc); // See above
     }
+    if (body.admin !== undefined) { // true or false
+      if (process.env.SUPERADMIN !== user.id) {
+        res.status(403).json({ message: "You do not have permission to edit this user\'s admin status." });
+        return;
+      }
+      const adminUpdateDoc = {
+        $set: {'permissions.admin': body.admin},
+      };
+      const updatedAdmin = await db.collection('users').updateOne(query, adminUpdateDoc); // See above
+    }
     if (body.warn && body.warning && !body.clearWarnings) {
       const warnUpdateDoc = {
         $set: {'permissions.warned': true},
