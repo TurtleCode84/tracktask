@@ -66,10 +66,6 @@ export default withIronSessionApiRoute(async (req, res) => {
     }
     //Otherwise...
     try {
-      const ipList = userInfo.history.loginIpList;
-      while (ipList.length > 5) {
-        ipList.pop();
-      }
       const ipUpdateDoc = { //update user IP and lastLogin
         $set: {
           "history.lastLogin": Math.floor(Date.now()/1000),
@@ -79,6 +75,7 @@ export default withIronSessionApiRoute(async (req, res) => {
           "history.loginIpList": {
             $each: [ ip ],
             $position: 0,
+            $slice: 5,
           },
         },
       };
