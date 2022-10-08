@@ -69,7 +69,6 @@ export default withIronSessionApiRoute(async (req, res) => {
       const ipUpdateDoc = { //update user IP and lastLogin
         $set: {
           "history.lastLogin": Math.floor(Date.now()/1000),
-          "history.loginIpList": ipList,
         },
         $push: {
           "history.loginIpList": {
