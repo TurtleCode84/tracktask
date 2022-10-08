@@ -73,7 +73,7 @@ async function adminUserRoute(req, res) {
       const updatedVerify = await db.collection('users').updateOne(query, verifyUpdateDoc); // See above
     }
     if (body.admin !== undefined) { // true or false
-      if (process.env.SUPERADMIN !== user.id) {
+      if (process.env.SUPERADMIN !== user.id || user.id === uid) {
         res.status(403).json({ message: "You do not have permission to edit this user\'s admin status." });
         return;
       }
