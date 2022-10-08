@@ -47,11 +47,17 @@ export default function Task() {
         onClick={async (e) => {
           e.preventDefault();
           document.getElementById("markCompleteBtn").disabled = true;
+          const body = {
+            completion: {
+              completed: Math.floor(Date.now()/1000),
+              completedBy: user.id,
+            },
+          };
           try {
             await fetchJson(`/api/tasks?id=${task._id}`, {
               method: "PATCH",
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ 'completion.completed': Math.floor(Date.now()/1000), 'completion.completedBy': user.id }),
+              body: JSON.stringify(body),
             })
             router.reload();
           } catch (error) {
