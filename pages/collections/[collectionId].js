@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
-import CollectionEditForm from "components/CollectionEditForm";
+import DueDate from "components/DueDate";
+//import CollectionEditForm from "components/CollectionEditForm";
 import useUser from "lib/useUser";
 import useTasks from "lib/useTasks";
 import fetchJson, { FetchError } from "lib/fetchJson";
