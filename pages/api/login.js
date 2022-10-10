@@ -22,7 +22,7 @@ export default withIronSessionApiRoute(async (req, res) => {
     }
     
     //Check if IP banned
-    const ip = req.headers["cf-connecting-ip"];
+    const ip = req.headers["x-vercel-forwarded-for"]; // All IPs
     //const ip = req.headers["x-vercel-forwarded-for"].split(',')[0]; // Does NOT work with Cloudflare proxy
     const bannedIps = process.env.IPBAN.split(',');
     if (bannedIps.includes(ip)) {
@@ -75,7 +75,7 @@ export default withIronSessionApiRoute(async (req, res) => {
           "history.loginIpList": {
             $each: [ ip ],
             $position: 0,
-            $slice: 5,
+            $slice: 10,
           },
         },
       };
