@@ -52,13 +52,6 @@ export default function Layout({ children }) {
           filter: brightness(0.9);
           cursor: pointer;
         }
-        
-        .footer Link:link {
-          color: gray;
-        }
-        .footer Link:visited {
-          color: gray;
-        }
       `}</style>
       {process.env.VERCEL_ENV !== "production" && <nav style={{backgroundColor: "orange", textAlign: "center", height:40 + "px", fontWeight: 600, marginTop: -20 + "px", paddingBottom: 5 + "px", minHeight: "min-content"}}><p style={{paddingTop: 13 + "px"}}>You are viewing a TrackTask Development release, some features may not work properly or may break your account.</p></nav>}
       <Header />
@@ -67,7 +60,7 @@ export default function Layout({ children }) {
         <div className="container">{children}</div>
       </main>
 
-      <hr/><span className="footer" style={{ color: "gray", display: "table", margin: 0 + " auto" }}>Copyright &#169; 2022 TrackTask STM, All Rights Reserved - <Link href="/privacy" style={{ color: "inherit" }}>Privacy</Link> - <Link href="#" style={{ color: "inherit" }}>Terms of Use</Link></span>
+      <br/><span style={{ color: "gray", display: "table", margin: 0 + " auto" }}>Copyright &#169; 2022 TrackTask STM, All Rights Reserved - <Link href="/privacy" style={{ color: "gray" }}>Privacy</Link> - <Link href="/terms" style={{ color: "gray" }}>Terms of Use</Link></span>
     </>
   );
 }
