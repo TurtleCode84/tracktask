@@ -60,7 +60,7 @@ export default function Layout({ children }) {
         <div className="container">{children}</div>
       </main>
 
-      <br/><span style={{ color: "gray", display: "table", margin: 0 + " auto" }}>Copyright &#169; 2022 TrackTask STM, All Rights Reserved - <Link href="/privacy" style={{ color: "gray" }}>Privacy</Link> - <Link href="/terms" style={{ color: "gray" }}>Terms of Use</Link></span>
+      <br/><span style={{ color: "gray", display: "table", margin: 0 + " auto", position: "fixed", bottom: 0 }}>Copyright &#169; 2022 TrackTask STM, All Rights Reserved - <Link href="/privacy">Privacy</Link> - <Link href="/terms">Terms of Use</Link></span>
     </>
   );
 }
