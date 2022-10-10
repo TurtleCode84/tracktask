@@ -53,10 +53,10 @@ export default function Layout({ children }) {
           cursor: pointer;
         }
         
-        .footer a:link {
+        .footer Link:link {
           color: gray;
         }
-        .footer a:visited {
+        .footer Link:visited {
           color: gray;
         }
       `}</style>
@@ -67,7 +67,7 @@ export default function Layout({ children }) {
         <div className="container">{children}</div>
       </main>
 
-      <hr/><span class="footer" style={{ color: "gray", display: "table", margin: 0 + " auto" }}>Copyright &#169; 2022 TrackTask STM, All Rights Reserved - <Link href="/privacy" style={{ color: "inherit" }}>Privacy</Link> - <Link href="#" style={{ color: "inherit" }}>Terms of Use</Link></span>
+      <hr/><span className="footer" style={{ color: "gray", display: "table", margin: 0 + " auto" }}>Copyright &#169; 2022 TrackTask STM, All Rights Reserved - <Link href="/privacy" style={{ color: "inherit" }}>Privacy</Link> - <Link href="#" style={{ color: "inherit" }}>Terms of Use</Link></span>
     </>
   );
 }
