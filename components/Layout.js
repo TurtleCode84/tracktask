@@ -62,7 +62,7 @@ export default function Layout({ children }) {
         }
         
         .material-symbols-outlined {
-          font-color: #006dbe !important;
+          color: #006dbe;
           font-variation-settings:
             'FILL' 1,
             'wght' 400,
