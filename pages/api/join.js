@@ -25,8 +25,12 @@ async function joinRoute(req, res) {
     }
     
     //Check if IP banned
-    const ipHeader = req.headers["x-forwarded-for"].split(',');
-    const ip = ipHeader[ipHeader.length-1];
+    var ip;
+    if (req.headers["cf-connecting-ip"]) {
+      ip = req.headers["cf-connecting-ip"];
+    } else {
+      ip = req.headers["x-forwarded-for"].split(',')[0];
+    }
     const bannedIps = process.env.IPBAN.split(',');
     if (bannedIps.includes(ip)) {
       res.status(403).json({ message: "Your IP address has been banned from creating accounts due to repeated abuse of the platform. If you believe this may have been a mistake, please contact a TrackTask administrator." });
