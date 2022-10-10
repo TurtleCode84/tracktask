@@ -14,7 +14,7 @@ export default function Terms() {
         <li>The following activities are prohibited:</li>
         <ul>
           <li>Spamming or attempting to spam on any part of the site.</li>
-          <li>&quot;Hacking&quot;, attempting to gain unauthorized access, or performing unauthorized actions on any part of the site. This includes unauthorized use of another user&apos;s account.</i></li>
+          <li>&quot;Hacking&quot;, attempting to gain unauthorized access, or performing unauthorized actions on any part of the site. This includes unauthorized use of another user&apos;s account.</li>
           <li>Bypassing any security measure or account protection put in place by the site&apos;s developers to provide a secure user experience.</li>
           <li>Shared accounts (accounts used by multiple individuals). <i>Note: Alt accounts, while not specifically prohibited, are discouraged and may be banned without warning.</i></li>
           <li>Causing undue strain or stress on the site or its counterparts. IP addresses of suspected &quot;request spammers&quot; will be blocked without warning.</li>
