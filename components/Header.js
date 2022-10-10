@@ -78,6 +78,7 @@ export default function Header() {
                 </li>
               )}
               <li>
+                {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
                 <a
                   href="/api/logout"
                   onClick={async (e) => {
