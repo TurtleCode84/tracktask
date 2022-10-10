@@ -17,13 +17,16 @@ async function joinRoute(req, res) {
       headers: { "Content-Type": "application/x-www-form-urlencoded", },
       body: `secret=${process.env.RECAPTCHA_SECRET}&response=${gReCaptchaToken}`,
     })
-    if (!captchaResponse || !captchaResponse.success || captchaResponse.action !== "joinFormSubmit" || captchaResponse.score <= 0.5) {
-      res.status(401).json({ message: "reCAPTCHA verification failed, please try again." });
-      return;
+    if (process.env.VERCEL_ENV !== "preview") {
+      if (!captchaResponse || !captchaResponse.success || captchaResponse.action !== "joinFormSubmit" || captchaResponse.score <= 0.5) {
+        res.status(401).json({ message: "reCAPTCHA verification failed, please try again." });
+        return;
+      }
     }
     
     //Check if IP banned
-    const ip = req.headers["x-forwarded-for"].split(',')[0];
+    const ipHeader = req.headers["x-forwarded-for"].split(',');
+    const ip = ipHeader[ipHeader.length-1];
     const bannedIps = process.env.IPBAN.split(',');
     if (bannedIps.includes(ip)) {
       res.status(403).json({ message: "Your IP address has been banned from creating accounts due to repeated abuse of the platform. If you believe this may have been a mistake, please contact a TrackTask administrator." });
