@@ -60,13 +60,16 @@ export default function Header() {
                   </a>
                 </Link>
               </li>
-              {user?.isLoggedIn === true && (
-                <li>
-                  <Link href="/tasks/new">
-                    <a>+ New task</a>
-                  </Link>
-                </li>
-              )}
+              <li>
+                <Link href="/tasks/new">
+                  <a>+ New task</a>
+                </Link>
+              </li>
+              <li>
+                <Link href="/dashboard/settings">
+                  <a>Settings</a>
+                </Link>
+              </li>
               {user?.permissions.admin === true && (
                 <li>
                   <Link href="/admin">
@@ -75,8 +78,6 @@ export default function Header() {
                 </li>
               )}
               <li>
-                {/* In this case, we're fine with linking with a regular a in case of no JavaScript */}
-                {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
                 <a
                   href="/api/logout"
                   onClick={async (e) => {
@@ -121,6 +122,9 @@ export default function Header() {
         }
         
         @media only screen and (max-width: 600px) {
+          ul {
+            padding-left: 10px;
+          }
           li {
             margin-right: 2rem;
           }
