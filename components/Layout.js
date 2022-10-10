@@ -62,8 +62,8 @@ export default function Layout({ children }) {
         }
         
         .material-symbols-outlined {
-          display: inline-flex;
-          align-items: center;
+          display: inline-block;
+          vertical-align: -5px;
           font-size: inherit;
           font-variation-settings:
             'FILL' 1,
