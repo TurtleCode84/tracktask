@@ -43,7 +43,7 @@ export default function Dashboard() {
       <h1>
         {user ? 
         <>
-        Welcome back, {user.username}!{user.permissions.verified ? <>{' '}<span title="Verified">&#9989;</span></> : null}{user.permissions.admin ? <>{' '}<span title="Admin">&#128737;</span></> : null}
+        Welcome back, {user.username}!{user.permissions.verified ? <>{' '}<span title="Verified" className="material-symbols-outlined">verified_user</span></> : null}{user.permissions.admin ? <>{' '}<span title="Admin">&#128737;</span></> : null}
         </>
         :
         <>
