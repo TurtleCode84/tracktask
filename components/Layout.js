@@ -62,7 +62,7 @@ export default function Layout({ children }) {
         }
         
         .material-symbols-outlined {
-          display: flex;
+          display: inline-flex;
           align-items: center;
           font-size: inherit;
           font-variation-settings:
