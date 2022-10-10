@@ -22,8 +22,12 @@ export default withIronSessionApiRoute(async (req, res) => {
     }
     
     //Check if IP banned
-    const ip = req.headers["cf-connecting-ip"].split(','); // All IPs
-    //const ip = req.headers["x-vercel-forwarded-for"].split(',')[0]; // Does NOT work with Cloudflare proxy
+    var ip;
+    if (req.headers["cf-connecting-ip"]) {
+      ip = req.headers["cf-connecting-ip"];
+    } else {
+      ip = req.headers["x-forwarded-for"].split(',')[0];
+    }
     const bannedIps = process.env.IPBAN.split(',');
     if (bannedIps.includes(ip)) {
       res.status(403).json({ message: 'Your IP address has been banned from logging in due to repeated abuse of the platform. If you believe this may have been a mistake, please contact a TrackTask administrator.' });
@@ -73,9 +77,9 @@ export default withIronSessionApiRoute(async (req, res) => {
         },
         $push: {
           "history.loginIpList": {
-            $each: ip,
+            $each: [ ip ],
             $position: 0,
-            $slice: 15,
+            $slice: 5,
           },
         },
       };
