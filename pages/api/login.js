@@ -22,7 +22,7 @@ export default withIronSessionApiRoute(async (req, res) => {
     }
     
     //Check if IP banned
-    const ip = req.headers["CF-Connecting-IP"];
+    const ip = req.headers["cf-connecting-ip"];
     //const ip = req.headers["x-forwarded-for"].split(',')[0];
     const bannedIps = process.env.IPBAN.split(',');
     if (bannedIps.includes(ip)) {
