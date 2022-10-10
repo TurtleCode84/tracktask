@@ -62,11 +62,11 @@ export default function Layout({ children }) {
         }
         
         .material-symbols-outlined {
-          vertical-align: middle;
+          vertical-align: baseline;
           font-size: inherit;
           font-variation-settings:
             'FILL' 1,
-            'wght' 400,
+            'wght' 550,
             'GRAD' 0,
             'opsz' 48
         }
