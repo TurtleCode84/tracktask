@@ -66,7 +66,7 @@ export default function Layout({ children }) {
           'FILL' 1,
           'wght' 400,
           'GRAD' 0,
-          'opsz' 48
+          'opsz' 58
         }
       `}</style>
       {process.env.VERCEL_ENV !== "production" && <nav style={{backgroundColor: "orange", textAlign: "center", height:40 + "px", fontWeight: 600, marginTop: -20 + "px", paddingBottom: 5 + "px", minHeight: "min-content"}}><p style={{paddingTop: 13 + "px"}}>You are viewing a TrackTask Development release, some features may not work properly or may break your account.</p></nav>}
