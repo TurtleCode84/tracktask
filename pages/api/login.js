@@ -22,8 +22,7 @@ export default withIronSessionApiRoute(async (req, res) => {
     }
     
     //Check if IP banned
-    const ipHeader = req.headers["x-forwarded-for"].split(',');
-    const ip = ipHeader[1];
+    const ip = req.headers["x-vercel-forwarded-for"].split(',')[0];
     const bannedIps = process.env.IPBAN.split(',');
     if (bannedIps.includes(ip)) {
       res.status(403).json({ message: 'Your IP address has been banned from logging in due to repeated abuse of the platform. If you believe this may have been a mistake, please contact a TrackTask administrator.' });
