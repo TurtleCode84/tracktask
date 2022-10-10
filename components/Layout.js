@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Header from "components/Header";
+import Link from "next/link";
 
 export default function Layout({ children }) {
   return (
@@ -58,6 +59,8 @@ export default function Layout({ children }) {
       <main>
         <div className="container">{children}</div>
       </main>
+
+      <hr/><span style={{ color: "gray" }}><p>Copyright &#169; 2022 TrackTask STM, All Rights Reserved - <Link href="/privacy">Privacy</Link> - <Link href="#">Terms of Use</Link></span>
     </>
   );
 }
