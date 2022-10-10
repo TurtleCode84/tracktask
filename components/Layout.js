@@ -67,7 +67,7 @@ export default function Layout({ children }) {
         <div className="container">{children}</div>
       </main>
 
-      <br/><span style={{ fontSize: "90%", color: "gray", display: "table", margin: 0 + " auto" }}>Copyright &#169; 2022 TrackTask STM, All Rights Reserved - <Link href="/privacy"><a className="footer">Privacy</a></Link> - <Link href="/terms"><a className="footer">Terms of Use</a></Link></span>
+      <br/><span style={{ fontSize: "90%", textAlign: "center", color: "gray", display: "table", margin: 0 + " auto", paddingBottom: "5px" }}>Copyright &#169; 2022 TrackTask STM, All Rights Reserved - <Link href="/privacy"><a className="footer">Privacy</a></Link> - <Link href="/terms"><a className="footer">Terms of Use</a></Link></span>
     </>
   );
 }
