@@ -6,7 +6,7 @@ export default function Privacy() {
   return (
     <Layout>
       <h1>Privacy Policy:</h1>
-      <h2>In order for TrackTask to function, we have to collect some information. Here&apos;s what we collect and how we use it...
+      <h2>In order for TrackTask to function, we have to collect some information. Here&apos;s what we collect and how we use it...</h2>
       <ul>
         <li>TrackTask is deployed to the web using <a href="https://vercel.com" target="_blank" rel="noreferrer">Vercel</a>. This platform allows us to easily develop the site and provides us with some site performance analytics & API request logging. You should review their Privacy Policy and Terms of Use on their website for more information.</li>
         <li>For DNS and security, we use Cloudflare to protect our domains and prevent abuse of our services. You should read their <a href="https://www.cloudflare.com/privacypolicy" target="_blank" rel="noreferrer">Privacy Policy</a> to see what information they collect and how they use it.</li>
