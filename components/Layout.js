@@ -53,10 +53,10 @@ export default function Layout({ children }) {
           cursor: pointer;
         }
         
-        .footer a {
+        a.footer {
           color: gray;
         }
-        .footer a:visited {
+        a.footer:visited {
           color: gray;
         }
       `}</style>
