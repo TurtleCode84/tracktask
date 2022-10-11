@@ -67,7 +67,7 @@ export default function Layout({ children }) {
           font-size: inherit;
           font-variation-settings:
             'FILL' 1,
-            'wght' 600,
+            'wght' 550,
             'GRAD' 0,
             'opsz' 48
         }
