@@ -72,7 +72,7 @@ export default function Layout({ children }) {
             'opsz' 48
         }
         .icon-list {
-          font-size: 24px;
+          font-size: 18px;
           vertical-align: -1px !important;
         }
       `}</style>
