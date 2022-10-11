@@ -17,19 +17,19 @@ export default function Dashboard() {
   const router = useRouter();
   const upcomingTaskList = upcomingTasks?.map((task) =>
     <li key={task._id} className="list-hover" style={{ margin: "0.5em", background: "#f8f8f8", padding: "5px", borderWidth: "2px", borderStyle: "solid", borderColor: "darkgray", borderRadius: "10px", width: "auto" }} onClick={() => router.push(`/tasks/${task._id}`)}>
-      {task.completion.completed !== 0 ? <><span title="Completed">&#9989;{' '}</span></> : null}{task.priority ? <><span title="Priority">&#10071;</span></> : null}<b>{task.name}</b> - {task.description.slice(0,25).trim()}... (due <DueDate timestamp={task.dueDate}/>{task.dueDate !== 0 ? <>, on {moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}</> : null})
+      {task.completion.completed !== 0 ? <span title="Completed" style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">task_alt</span> : null}{task.priority ? <span title="Priority" style={{ color: "red" }} className="material-symbols-outlined icon-list">priority_high</span> : null}{' '}<b>{task.name}</b> - {task.description.slice(0,25).trim()}... (due <DueDate timestamp={task.dueDate}/>{task.dueDate !== 0 ? <>, on {moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}</> : null})
     </li>
   );
   const { tasks: recentTasks, error: recentTasksError } = useTasks(user, false, "recent");
   const recentTaskList = recentTasks?.map((task) =>
     <li key={task._id} className="list-hover" style={{ margin: "0.5em", background: "#f8f8f8", padding: "5px", borderWidth: "2px", borderStyle: "solid", borderColor: "darkgray", borderRadius: "10px", width: "auto" }} onClick={() => router.push(`/tasks/${task._id}`)}>
-      {task.completion.completed !== 0 ? <><span title="Completed">&#9989;{' '}</span></> : null}{task.priority ? <><span title="Priority">&#10071;</span></> : null}<b>{task.name}</b> - {task.description.slice(0,25).trim()}... (due <DueDate timestamp={task.dueDate}/>{task.dueDate !== 0 ? <>, on {moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}</> : null})
+      {task.completion.completed !== 0 ? <span title="Completed" style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">task_alt</span> : null}{task.priority ? <span title="Priority" style={{ color: "red" }} className="material-symbols-outlined icon-list">priority_high</span> : null}{' '}<b>{task.name}</b> - {task.description.slice(0,25).trim()}... (due <DueDate timestamp={task.dueDate}/>{task.dueDate !== 0 ? <>, on {moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}</> : null})
     </li>
   );
   const { tasks: collections, error: collectionsError } = useTasks(user, true, false);
   const collectionList = collections?.map((collection) =>
     <li key={collection._id} className="list-hover" style={{ margin: "0.5em", background: "#f8f8f8", padding: "5px", borderWidth: "2px", borderStyle: "solid", borderColor: "darkgray", borderRadius: "10px", width: "auto" }} onClick={() => router.push(`/collections/${collection._id}`)}>
-      {collection.owner === user.id ? <><span title="You own this collection">&#128273;</span>{' '}</> : null}<b>{collection.name}</b> - {collection.description.slice(0,25).trim()}... (created <DueDate timestamp={collection.created}/>)
+      {collection.owner === user.id ? <span title="Private" style={{ color: "lightslategray" }} className="material-symbols-outlined icon-list">lock</span> : null}{' '}<b>{collection.name}</b> - {collection.description.slice(0,25).trim()}... (created <DueDate timestamp={collection.created}/>)
     </li>
   );
   
@@ -43,7 +43,7 @@ export default function Dashboard() {
       <h1>
         {user ? 
         <>
-        Welcome back, {user.username}!{user.permissions.verified ? <>{' '}<span title="Verified">&#9989;</span></> : null}{user.permissions.admin ? <>{' '}<span title="Admin">&#128737;</span></> : null}
+        Welcome back, {user.username}!{user.permissions.verified ? <>{' '}<span title="Verified" style={{ color: "#006dbe" }} className="material-symbols-outlined">verified</span></> : null}{user.permissions.admin ? <>{' '}<span title="Admin" style={{ color: "slategray" }} className="material-symbols-outlined">verified_user</span></> : null}
         </>
         :
         <>
@@ -55,7 +55,7 @@ export default function Dashboard() {
       <h2>Upcoming tasks:</h2>
       {upcomingTaskList === undefined || upcomingTasksError ?
       <>
-      {upcomingTasksError ? <p style={{ fontStyle: "italic" }}>{upcomingTasksError.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
+      {upcomingTasksError ? <p style={{ fontStyle: "italic" }}>{upcomingTasksError.data ? upcomingTasksError.data.message : upcomingTasksError.message}</p> : <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
       </>
       :
       <><ul style={{ display: "table" }}>
@@ -66,7 +66,7 @@ export default function Dashboard() {
       <h2>Recently added:</h2>
       {recentTaskList === undefined || recentTasksError ?
       <>
-      {recentTasksError ? <p style={{ fontStyle: "italic" }}>{recentTasksError.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
+      {recentTasksError ? <p style={{ fontStyle: "italic" }}>{recentTasksError.data ? recentTasksError.data.message : recentTasksError.message}</p> : <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
       </>
       :
       <><ul style={{ display: "table" }}>
@@ -78,7 +78,7 @@ export default function Dashboard() {
       <h2>Your collections:</h2>
       {collectionList === undefined || collectionsError ?
       <>
-      {collectionsError ? <p style={{ fontStyle: "italic" }}>{collectionsError.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading collections...</p>}
+      {collectionsError ? <p style={{ fontStyle: "italic" }}>{collectionsError.data? collectionsError.data.message : collectionsError.message}</p> : <p style={{ fontStyle: "italic" }}>Loading collections...</p>}
       </>
       :
       <><ul style={{ display: "table" }}>
