@@ -73,7 +73,7 @@ export default function Layout({ children }) {
         }
         .icon-list {
           font-size: 18px;
-          font-weight: 700;
+          font-weight: 700 !important;
           vertical-align: -3px !important;
         }
       `}</style>
