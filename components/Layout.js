@@ -67,13 +67,12 @@ export default function Layout({ children }) {
           font-size: inherit;
           font-variation-settings:
             'FILL' 1,
-            'wght' 550,
+            'wght' 600,
             'GRAD' 0,
             'opsz' 48
         }
         .icon-list {
           font-size: 18px;
-          font-weight: 700 !important;
           vertical-align: -3px !important;
         }
       `}</style>
