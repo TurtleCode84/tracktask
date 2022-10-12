@@ -75,7 +75,7 @@ export default function UserAdmin() {
         <p style={{ fontStyle: "italic" }}>(Newest to oldest)</p>
         <ul>{warningList?.length > 0 ? warningList : 'No warnings found'}</ul>
       </details>
-      <p>Acknowledged last warning: {lookup.history.warnings.length > 0 ? <>{lookup.permissions.warned ? <span style={{ color: "red" }} className="material-symbols-outlined">close</span> : <span style={{ color: "darkgreen" }} className="material-symbols-outlined">done</span>}</> : 'N\/A'}</p>
+      <p>Acknowledged last warning: {lookup.history.warnings.length > 0 ? <>{lookup.permissions.warned ? <span style={{ color: "red" }} className="material-symbols-outlined icon-list">close</span> : <span style={{ color: "darkgreen" }} className="material-symbols-outlined">done</span>}</> : 'N\/A'}</p>
       {!lookup.permissions.banned && <p>Last ban reason: {lookup.history.banReason ? lookup.history.banReason : 'none'}</p>}
       <hr/>
       <details>
