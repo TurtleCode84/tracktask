@@ -29,7 +29,7 @@ export default function UsersAdmin() {
   
   return (
     <Layout>
-      <h1>TrackTask User Admin &#128737;</h1>
+      <h1>TrackTask User Admin <span style={{ color: "slategray" }} className="material-symbols-outlined">admin_panel_settings</span></h1>
       <h2>
         Search for user:
       </h2>
