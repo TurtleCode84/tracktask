@@ -49,6 +49,7 @@ export default function Admin() {
       <ul>
         <li><Link href="/admin/users">User Admin</Link></li>
         <li>Task Admin <span style={{fontStyle: "italic"}}>(Coming soon...)</span></li>
+        <li>Reports <span style={{fontStyle: "italic"}}>(Coming soon...)</span></li>
       </ul>
       <details>
         <summary>View my raw session info</summary>
