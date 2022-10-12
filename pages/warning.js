@@ -39,7 +39,7 @@ export default function Warning() {
 
       <p>Receiving multiple warnings over a short period of time may increase your chances of being banned.<br/>Please remember to follow TrackTask&apos;s <Link href="/terms">Terms of Use</Link>.</p>
       
-      <p><i>If you would like to contest this warning, please contact a TrackTask administrator.</i></p>
+      <p style={{ fontStyle: "italic" }}>If you would like to contest this warning, please contact us at <a href="mailto:appeals@tracktask.eu.org">appeals@tracktask.eu.org</a>.</p>
         
     </Layout>
   );
