@@ -20,7 +20,7 @@ export default function Admin() {
   const { users: recentlyJoined } = useAdminUsers(user, "joined", 5);
   const newUsersList = recentlyJoined?.map((newUser) =>
     <li key={newUser._id} style={{ margin: "0.5em" }}>
-      <Link href={`/admin/users/${newUser._id}`}>{newUser.username}</Link>{activeUser.permissions.verified ? <span title="Verified" style={{ color: "#006dbe" }} className="material-symbols-outlined">verified</span> : null}{activeUser.permissions.admin ? <span title="Admin" style={{ color: "slategray" }} className="material-symbols-outlined">verified_user</span> : null}{activeUser.permissions.banned ? <span title="Banned" style={{ color: "red" }} className="material-symbols-outlined">block</span> : null} - Joined {newUser.history.joined > 0 ? moment.unix(newUser.history.joined).fromNow() : 'never'}
+      <Link href={`/admin/users/${newUser._id}`}>{newUser.username}</Link>{newUser.permissions.verified ? <span title="Verified" style={{ color: "#006dbe" }} className="material-symbols-outlined">verified</span> : null}{newUser.permissions.admin ? <span title="Admin" style={{ color: "slategray" }} className="material-symbols-outlined">verified_user</span> : null}{newUser.permissions.banned ? <span title="Banned" style={{ color: "red" }} className="material-symbols-outlined">block</span> : null} - Joined {newUser.history.joined > 0 ? moment.unix(newUser.history.joined).fromNow() : 'never'}
     </li>
   );
 
