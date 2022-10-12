@@ -69,7 +69,7 @@ export default function Task() {
             document.getElementById("markCompleteBtn").disabled = false;
           }
         }}
-        ><button id="markCompleteBtn">Mark completed <span style={{ color: "darkgreen" }} className="material-symbols-outlined">task_alt</span></button></a></>}
+        ><button id="markCompleteBtn">Mark completed <span style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">task_alt</span></button></a></>}
         <hr/>
         <details>
           <summary>Edit task</summary>
