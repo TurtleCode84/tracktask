@@ -96,14 +96,12 @@ export default function Header() {
             </>
           )}
           <li>
-            <Link href="/">
-              <Image
-                src="/tracktaskmini.png"
-                width="32"
-                height="32"
-                alt=""
-              />
-            </Link>
+            <Image
+              src="/tracktaskmini.png"
+              width="32"
+              height="32"
+              alt=""
+            />
           </li>
         </ul>
       </nav>
