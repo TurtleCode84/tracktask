@@ -1,6 +1,7 @@
 import React from "react";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
+import Link from "next/link";
 import useUser from "lib/useUser";
 
 export default function Banned() {
@@ -16,7 +17,7 @@ export default function Banned() {
   }
   return (
     <Layout>
-      <h1>&#10060; Account Banned:</h1>
+      <h1><span style={{ color: "red" }} className="material-symbols-outlined">block</span> Account Banned:</h1>
       <h2>
         Your TrackTask account was banned by an administrator.
       </h2>
@@ -26,10 +27,8 @@ export default function Banned() {
           The following ban reason was given: <b>{user.history.banReason}</b>
         </p>
       )}
-      
-      <p>
-        <i>If you would like to appeal to this decision, please read about our appeals process on our FAQ page.</i>
-      </p>
+
+      <p style={{ fontStyle: "italic" }}>If you would like to appeal to this decision, please review TrackTask&apos;s <Link href="/terms">Terms of Use</Link> and then contact us at <a href="mailto:appeals@tracktask.eu.org">appeals@tracktask.eu.org</a>.</p>
     </Layout>
   );
 }
