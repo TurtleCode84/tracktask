@@ -16,9 +16,8 @@ I think it's pretty cool, otherwise I wouldn't have started making it... :P
 
 ## Where is it?
 TrackTask lives at the following Vercel domains:
-<br>https://tracktask.vercel.app (production)
-<br>https://beta-tracktask.vercel.app (beta, currently a redirect to `dev`)
-<br>https://dev-tracktask.vercel.app (development)
+<br>https://tracktask.eu.org (production)
+<br>https://dev.tracktask.eu.org (development)
 
 ## What's built so far?
 Glad you asked! Here's a running features list:
