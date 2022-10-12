@@ -44,15 +44,15 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
       </label>
       <h2>Permissions:</h2>
       <label>
-        <span>Verified</span>
+        <span>Verified <span style={{ color: "#006dbe" }} className="material-symbols-outlined icon-list">verified</span></span>
         <input type="checkbox" name="verify" defaultChecked={lookup.permissions.verified} />
       </label>
       <label>
-        <span>Admin</span>
+        <span>Admin <span style={{ color: "slategray" }} className="material-symbols-outlined icon-list">verified_user</span></span>
         <input type="checkbox" name="admin" defaultChecked={lookup.permissions.admin} />
       </label>
       <label>
-        <span>Banned</span>
+        <span>Banned <span style={{ color: "red" }} className="material-symbols-outlined icon-list">block</span></span>
         <input type="checkbox" name="ban" defaultChecked={lookup.permissions.banned} />
       </label>
       <label>
