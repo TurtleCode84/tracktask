@@ -51,7 +51,7 @@ export default function TaskEditForm({ errorMessage, onSubmit, task }) {
             }
           }
         }}
-      ><button><>&#9888;</> Delete task <>&#9888;</></button></a>
+      ><button><span style={{ color: "orange" }} className="material-symbols-outlined icon-list">warning</span> Delete task <span style={{ color: "orange" }} className="material-symbols-outlined icon-list">warning</span></button></a>
       <p className="error" id="deleteTaskMessage"></p>
 
       <style jsx>{`
