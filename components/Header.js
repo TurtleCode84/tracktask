@@ -122,7 +122,7 @@ export default function Header() {
         
         @media only screen and (max-width: 600px) {
           ul {
-            padding-left: 20px;
+            padding-left: 2rem;
           }
           li {
             margin-right: 2rem;
