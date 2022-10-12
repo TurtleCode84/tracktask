@@ -1,6 +1,7 @@
 import React from "react";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
+import Link from "next/link";
 import useUser from "lib/useUser";
 import fetchJson from "lib/fetchJson";
 import { useRouter } from "next/router";
@@ -19,7 +20,7 @@ export default function Warning() {
   }
   return (
     <Layout>
-      <h1><span style={{ color: "gold" }} className="material-symbols-outlined">warning</span> Account Warned:</h1>
+      <h1><span style={{ color: "orange" }} className="material-symbols-outlined">warning</span> Account Warned:</h1>
       <h2>You&apos;ve recieved a warning from a TrackTask administrator.</h2>
 
       <p>To continue using TrackTask, please review and acknowledge the warning.<br/>The following warning was issued: <b>{user ? user.history.warnings[0] : 'loading...'}</b></p>
@@ -36,7 +37,7 @@ export default function Warning() {
         }}
       >Acknowledge warning</a>
 
-      <p>Receiving multiple warnings over a short period of time may increase your chances of being banned.<br/>Please remember to follow TrackTask&apos;s Terms of Use (link coming soon).</p>
+      <p>Receiving multiple warnings over a short period of time may increase your chances of being banned.<br/>Please remember to follow TrackTask&apos;s <Link href="/terms">Terms of Use</Link>.</p>
       
       <p><i>If you would like to contest this warning, please contact a TrackTask administrator.</i></p>
         
