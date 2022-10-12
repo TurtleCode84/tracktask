@@ -47,9 +47,9 @@ export default function UserAdmin() {
   
   return (
     <Layout>
-      <h1>TrackTask User Admin &#128737;</h1>
+      <h1>TrackTask User Admin <span style={{ color: "slategray" }} className="material-symbols-outlined">admin_panel_settings</span></h1>
       <h2>
-        Viewing information for {lookup ? lookup.username : userId} [{lookup?.permissions.verified ? <>&#9989;</> : null}{lookup?.permissions.admin ? <>&#128737;</> : null}{lookup?.permissions.banned ? <>&#10060;</> : null}]:
+        Viewing information for {lookup ? lookup.username : userId} [{lookup?.permissions.verified ? <span title="Verified" style={{ color: "#006dbe" }} className="material-symbols-outlined">verified</span> : null}{lookup?.permissions.admin ? <span title="Admin" style={{ color: "slategray" }} className="material-symbols-outlined">verified_user</span> : null}{lookup?.permissions.banned ? <span title="Banned" style={{ color: "red" }} className="material-symbols-outlined">block</span> : null}]:
       </h2>
       <Link href="/admin/users">Back to user search</Link><br/>
       <Link href="/admin">Back to admin dashboard</Link><br/>
@@ -75,7 +75,7 @@ export default function UserAdmin() {
         <p style={{ fontStyle: "italic" }}>(Newest to oldest)</p>
         <ul>{warningList?.length > 0 ? warningList : 'No warnings found'}</ul>
       </details>
-      <p>Acknowledged last warning: {lookup.history.warnings.length > 0 ? <>{lookup.permissions.warned ? <>&#10060;</> : <>&#9989;</>}</> : 'N\/A'}</p>
+      <p>Acknowledged last warning: {lookup.history.warnings.length > 0 ? <>{lookup.permissions.warned ? <span style={{ color: "red" }} className="material-symbols-outlined">close</span> : <span style={{ color: "darkgreen" }} className="material-symbols-outlined">done</span>}</> : 'N\/A'}</p>
       {!lookup.permissions.banned && <p>Last ban reason: {lookup.history.banReason ? lookup.history.banReason : 'none'}</p>}
       <hr/>
       <details>
