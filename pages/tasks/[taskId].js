@@ -32,7 +32,7 @@ export default function Task() {
   
   return (
     <Layout>
-      <h2>{task ? <>{task.completion.completed > 0 ? <><span title="Completed">&#9989;</span>{' '}</> : null}{task.priority ? <><span title="Priority">&#10071;</span></> : null}{task.name}:</> : 'Loading...'}</h2>
+      <h2>{task ? <>{task.completion.completed > 0 ? <><span title="Completed" style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">task_alt</span>{' '}</> : null}{task.priority ? <><span title="Priority" style={{ color: "red" }} className="material-symbols-outlined icon-list">priority_high</span>{' '}</> : null}{task.name}:</> : 'Loading...'}</h2>
       <Link href="/dashboard">Back to dashboard</Link><br/>
       {task ?
         <><h3>General information</h3>
@@ -69,7 +69,7 @@ export default function Task() {
             document.getElementById("markCompleteBtn").disabled = false;
           }
         }}
-        ><button id="markCompleteBtn">Mark completed <>&#9989;</></button></a></>}
+        ><button id="markCompleteBtn">Mark completed <span style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">task_alt</span></button></a></>}
         <hr/>
         <details>
           <summary>Edit task</summary>
