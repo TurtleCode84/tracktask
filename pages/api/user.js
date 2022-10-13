@@ -113,7 +113,7 @@ async function userRoute(req, res) {
     const db = client.db("data");
     const deletedTasks = await db.collection("tasks").deleteMany({ owner: ObjectId(user.id) });
     const deletedCollections = await db.collection("collections").deleteMany({ owner: ObjectId(user.id) });
-    const deletedUser = await db.collection("users").deleteOne({ id: ObjectId(user.id) });
+    const deletedUser = await db.collection("users").deleteOne({ _id: ObjectId(user.id) });
     res.json(deletedUser);
   } else {
     res.status(405).json({ message: "Method not allowed" });
