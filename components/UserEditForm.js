@@ -16,6 +16,7 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
       </label>
       <hr/><label>
         <span>Change password</span>
+        <input type="password" placeholder="Old password" name="opassword" />
         <input type="password" placeholder="New password" name="password" />
         <input type="password" placeholder="Retype new password" name="cpassword" />
       </label><hr/>
