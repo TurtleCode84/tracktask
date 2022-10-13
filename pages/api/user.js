@@ -73,7 +73,7 @@ async function userRoute(req, res) {
       //1
       if (body.email !== undefined) {updateUser.email = body.email.trim().toLowerCase()}
       if (body.password) {
-        const oldPass = await db.collection("users").project({ password: 1 }).find(query);
+        const oldPass = await db.collection("users").find(query).project({ password: 1 });
         const newPass = await hash(body.password, 10);
         const passwordMatch = await compare(newPass, oldPass.password);
         if (passwordMatch) {
