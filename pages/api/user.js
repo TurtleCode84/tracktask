@@ -21,6 +21,7 @@ async function userRoute(req, res) {
           username: "",
           permissions: {},
         });
+        return;
       }
       const user = {
         ...req.session.user,
