@@ -2,10 +2,8 @@ import React, { useState } from "react";
 import moment from "moment";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
-import DueDate from "components/DueDate";
-import Link from "next/link";
+import UserEditForm from "components/UserEditForm";
 import useUser from "lib/useUser";
-import useTasks from "lib/useTasks";
 import { useRouter } from "next/router";
 
 export default function Settings() {
