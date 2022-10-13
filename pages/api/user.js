@@ -15,6 +15,7 @@ async function userRoute(req, res) {
       const query = { _id: ObjectId(req.session.user.id) };
       const userInfo = await db.collection("users").findOne(query);
       if (!userInfo) {
+        await req.session.destroy();
         res.json({
           isLoggedIn: false,
           id: "",
