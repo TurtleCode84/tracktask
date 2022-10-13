@@ -4,6 +4,6 @@ import { sessionOptions } from "lib/session";
 export default withIronSessionApiRoute(logoutRoute, sessionOptions);
 
 async function logoutRoute(req, res) {
-  req.session.destroy();
+  await req.session.destroy();
   res.json({ isLoggedIn: false, id: "", username: "", permissions: {} });
 }
