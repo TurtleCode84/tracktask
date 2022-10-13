@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import moment from "moment";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
@@ -13,6 +13,9 @@ export default function Settings() {
     redirectTo: "/login",
   });
   
+  const [errorMsg, setErrorMsg] = useState("");
+  const router = useRouter();
+  
   if (!user || !user.isLoggedIn || user.permissions.banned) {
     return (
       <Loading/>
@@ -21,7 +24,7 @@ export default function Settings() {
   return (
     <Layout>
       <h1>Edit your account:</h1>
-      <UserAdminForm
+      <UserEditForm
           errorMessage={errorMsg}
           user={user}
           onSubmit={async function handleSubmit(event) {
