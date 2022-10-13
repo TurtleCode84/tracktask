@@ -14,6 +14,10 @@ async function userRoute(req, res) {
       const db = client.db("data");
       const query = { _id: ObjectId(req.session.user.id) };
       const userInfo = await db.collection("users").findOne(query);
+      if (!userInfo) {
+        res.status(404).json({ message: "User does not exist!" });
+        return;
+      }
       const user = {
         ...req.session.user,
         isLoggedIn: true,
