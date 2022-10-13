@@ -57,8 +57,16 @@ async function userRoute(req, res) {
       return;
     }
   } else if (req.method === 'DELETE') {
-    res.status(418).json({ message: "Under construction" });
-    return;
+    if (user.permissions.admin) {
+      res.status(403).json({ message: "Trying to take the easy way out, huh? I don\'t think so..." });
+      return;
+    }
+    const client = await clientPromise;
+    const db = client.db("data");
+    const deletedTasks = await db.collection("tasks").deleteMany({ owner: ObjectId(user._id) });
+    const deletedCollections = await db.collection("collections").deleteMany({ owner: ObjectId(user._id) });
+    const deletedUser = await db.collection("users").deleteOne({ _id: ObjectId(user._id) });
+    res.json(deletedUser);
   } else {
     res.status(405).json({ message: "Method not allowed" });
     return;
