@@ -1,5 +1,6 @@
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 export default function UserEditForm({ errorMessage, onSubmit, user }) {
   const router = useRouter();
@@ -7,11 +8,11 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
     <form id="userEditForm" autocomplete="off" onSubmit={onSubmit}>
       <label>
         <span>Username</span>
-        <input type="text" name="username" defaultValue={lookup.username} />
+        <input type="text" name="username" defaultValue={user.username} />
       </label>
       <label>
         <span>Email</span>
-        <input type="email" name="email" defaultValue={lookup.email} />
+        <input type="email" name="email" defaultValue={user.email} />
       </label>
       <hr/><label>
         <span>Change password</span>
@@ -23,8 +24,8 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
         <input type="checkbox" name="resetShareKey" />
       </label>
       <label>
-        <span>Profile picture</span>
-        <input type="url" name="profilePicture" defaultValue={lookup.profilePicture} />
+        <span>Profile picture <Image src={user.profilePicture ? user.profilePicture : "/default-pfp.jpg" } width={32} height={32} alt=""/> ({user.profilePicture ? <a href={user.profilePicture} target="_blank" rel="noreferrer">link</a> : 'default'})</span>
+        <input type="url" name="profilePicture" defaultValue={user.profilePicture} />
       </label>
       <h2>Preferences:</h2>
       <p style={{ fontStyle: "italic" }}>Coming soon...</p><hr/>
