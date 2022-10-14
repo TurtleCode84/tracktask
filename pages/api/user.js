@@ -74,16 +74,15 @@ async function userRoute(req, res) {
           res.status(422).json({ message: "Username is already taken!" });
           return;
         } else {
-          updateUser.username = body.username.trim().toLowerCase()
+          updateUser.username = body.username.trim().toLowerCase();
         }
       } else if (!user.permissions.verified) {
         res.status(401).json({ message: "Only verified users can change their username!" });
         return;
       }
-      //1
       if (body.email !== undefined) {updateUser.email = body.email.trim().toLowerCase()}
       if (body.password) {
-        const oldPass = await db.collection("users").find(query).project({ password: 1 });
+        const oldPass = await db.collection("users").find(query).project({ password: 1 }).toArray();
         const newPass = await hash(body.password, 10);
         const passwordMatch = await compare(newPass, oldPass.password);
         if (passwordMatch) {
@@ -93,7 +92,6 @@ async function userRoute(req, res) {
           return;
         }
       }
-      //2
       if (body.resetShareKey) {updateUser.shareKey = uuidv4()}
       if (body.profilePicture !== undefined) {updateUser.profilePicture = body.profilePicture}
       const updateDoc = {
@@ -101,7 +99,6 @@ async function userRoute(req, res) {
       };
       const updated = await db.collection('users').updateOne(query, updateDoc);
       res.json(updated);
-      //end
     }
   } else if (req.method === 'DELETE') {
     const user = req.session.user;
