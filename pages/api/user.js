@@ -82,14 +82,13 @@ async function userRoute(req, res) {
       }
       if (body.email !== undefined) {updateUser.email = body.email.trim().toLowerCase()}
       if (body.newPassword && body.oldPassword) {
-        const currPass = await db.collection("users").find(query).project({ password: 1 }).toArray(); // current password hash
-        const oldPass = await hash(body.oldPassword, 10); // hashed user input for old password
-        const passwordMatch = await compare(oldPass, currPass[0].password);
-        if (passwordMatch) {
-          updateUser.password = await hash(body.newPassword, 10);
-        } else {
+        const currPass = await db.collection("users").findOne(query, { projection: { password: 1 } }); // current password hash
+        const passwordMatch = await compare(body.oldPassword, currPass.password);
+        if (!passwordMatch) {
           res.status(401).json({ message: "Incorrect current password!" });
           return;
+        } else {
+          updateUser.password = await hash(body.newPassword, 10);
         }
       }
       if (body.resetShareKey) {updateUser.shareKey = uuidv4()}
