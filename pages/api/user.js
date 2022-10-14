@@ -84,7 +84,7 @@ async function userRoute(req, res) {
       if (body.password) {
         const oldPass = await db.collection("users").find(query).project({ password: 1 }).toArray();
         const newPass = await hash(body.password, 10);
-        const passwordMatch = await compare(newPass, oldPass);
+        const passwordMatch = await compare(newPass, oldPass.password);
         if (passwordMatch) {
           updateUser.password = await hash(body.password, 10);
         } else {
