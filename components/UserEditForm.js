@@ -8,7 +8,7 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
     <form id="userEditForm" autocomplete="off" onSubmit={onSubmit}>
       <label>
         <span>Username</span>
-        <input type="text" name="username" defaultValue={user.username} />
+        <input type="text" name="username" defaultValue={user.username} required />
       </label>
       <label>
         <span>Email</span>
