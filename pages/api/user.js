@@ -65,7 +65,6 @@ async function userRoute(req, res) {
         res.status(500).json({ "message": error.data.message });
       }
     } else {
-      //start
       var updateUser = {};
       const query = { _id: ObjectId(user.id) }
       if (body.username && user.permissions.verified) {
@@ -82,9 +81,9 @@ async function userRoute(req, res) {
       }
       if (body.email !== undefined) {updateUser.email = body.email.trim().toLowerCase()}
       if (body.password) {
-        const oldPass = await db.collection("users").findOne(query).project({ password: 1 });
+        const oldPass = await db.collection("users").find(query).project({ password: 1 }).toArray();
         const newPass = await hash(body.password, 10);
-        const passwordMatch = await compare(newPass, oldPass.password);
+        const passwordMatch = await compare(newPass, oldPass);
         if (passwordMatch) {
           updateUser.password = await hash(body.password, 10);
         } else {
