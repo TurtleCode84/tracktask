@@ -81,12 +81,12 @@ async function userRoute(req, res) {
         return;
       }
       if (body.email !== undefined) {updateUser.email = body.email.trim().toLowerCase()}
-      if (body.password) {
-        const oldPass = await db.collection("users").find(query).project({ password: 1 }).toArray();
-        const newPass = await hash(body.password, 10);
-        const passwordMatch = await compare(newPass, oldPass[0].password);
+      if (body.newPassword) {
+        const currPass = await db.collection("users").find(query).project({ password: 1 }).toArray();
+        const oldPass = await hash(body.oldPassword, 10);
+        const passwordMatch = await compare(oldPass, currPass[0].password);
         if (passwordMatch) {
-          updateUser.password = await hash(body.password, 10);
+          updateUser.password = await hash(body.newPassword, 10);
         } else {
           res.status(401).json({ message: "Incorrect current password!" });
           return;
