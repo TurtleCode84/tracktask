@@ -27,6 +27,7 @@ async function userRoute(req, res) {
       const user = {
         ...req.session.user,
         isLoggedIn: true,
+        username: userInfo.username,
         email: userInfo.email,
         profilePicture: userInfo.profilePicture,
         history: { joined: userInfo.history.joined, banReason: userInfo.history.banReason, warnings: userInfo.history.warnings },
