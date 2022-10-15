@@ -83,7 +83,7 @@ async function userRoute(req, res) {
       if (body.email !== undefined) {updateUser.email = body.email.trim().toLowerCase()}
       if (body.newPassword && body.oldPassword) {
         const currPass = await db.collection("users").findOne(query, { projection: { password: 1 } }); // current password hash
-        const passwordMatch = await compare(body.oldPassword, currPass.password);
+        const passwordMatch = await compare(body.oldPassword, currPass.password); // string vs hash
         if (!passwordMatch) {
           res.status(401).json({ message: "Incorrect current password!" });
           return;
