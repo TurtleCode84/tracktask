@@ -38,9 +38,9 @@ export default function Settings() {
             const body = {};
             if (event.currentTarget.username.value !== event.currentTarget.username.defaultValue) {body.username = event.currentTarget.username.value}
             if (event.currentTarget.email.value !== event.currentTarget.email.defaultValue) {body.email = event.currentTarget.email.value}
-            if (event.currentTarget.password.value) {
-              body.newPassword = event.currentTarget.password.value
-              body.oldPassword = event.currentTarget.opassword.value
+            if (event.currentTarget.password.value !== "") {
+              body.newPassword = event.currentTarget.password.value;
+              body.oldPassword = event.currentTarget.opassword.value;
             }
             if (event.currentTarget.resetShareKey.checked) {body.resetShareKey = event.currentTarget.resetShareKey.checked}
             if (event.currentTarget.profilePicture.value !== event.currentTarget.profilePicture.defaultValue) {body.profilePicture = event.currentTarget.profilePicture.value}
