@@ -12,6 +12,7 @@ export default function Header() {
     <header>
       <nav>
         <ul>
+          {user?.isLoggedIn === false && (<>
           <li>
             <Link href="/">
               <a>Home</a>
@@ -22,25 +23,34 @@ export default function Header() {
               <a>About</a>
             </Link>
           </li>
-          {user?.isLoggedIn === false && (
-            <li>
-              <Link href="/login">
-                <a>Login</a>
-              </Link>
-            </li>
-          )}
-          {user?.isLoggedIn === false && (
-            <li>
-              <Link href="/join">
-                <a>Join</a>
-              </Link>
-            </li>
-          )}
+          <li>
+            <Link href="/login">
+              <a>Login</a>
+            </Link>
+          </li>
+          <li>
+            <Link href="/join">
+              <a>Join</a>
+            </Link>
+          </li>
+          </>)}
           {user?.isLoggedIn === true && (
             <>
               <li>
                 <Link href="/dashboard">
+                  <a>Dashboard</a>
+                </Link>
+              </li>
+              <li>
+                <Link href="/dashboard/settings">
                   <a>
+                    <Image
+                      src={user.profilePicture ? user.profilePicture : "/default-pfp.jpg" }
+                      width={32}
+                      height={32}
+                      alt=""
+                    />
+                    Account
                     <span
                       style={{
                         marginRight: ".3em",
@@ -49,25 +59,13 @@ export default function Header() {
                         overflow: "hidden",
                       }}
                     >
-                      <Image
-                        src={user.profilePicture ? user.profilePicture : "/default-pfp.jpg" }
-                        width={32}
-                        height={32}
-                        alt=""
-                      />
                     </span>
-                    Dashboard
                   </a>
                 </Link>
               </li>
               <li>
                 <Link href="/tasks/new">
-                  <a>+ New task</a>
-                </Link>
-              </li>
-              <li>
-                <Link href="/dashboard/settings">
-                  <a>Settings</a>
+                  <a><span style={{ color: "white" }} className="material-symbols-outlined icon-list">add_task</span> New task</a>
                 </Link>
               </li>
               {user?.permissions.admin === true && (
