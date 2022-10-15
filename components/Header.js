@@ -65,7 +65,7 @@ export default function Header() {
               </li>
               <li>
                 <Link href="/tasks/new">
-                  <a><span style={{ color: "white" }} className="material-symbols-outlined icon-list">add_task</span> New task</a>
+                  <a><span style={{ color: "white", margin: 0 }} className="material-symbols-outlined icon-list">add_task</span>{' '}New task</a>
                 </Link>
               </li>
               {user?.permissions.admin === true && (
