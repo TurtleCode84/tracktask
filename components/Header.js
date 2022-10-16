@@ -42,7 +42,7 @@ export default function Header() {
                 </Link>
               </li>
               <li>
-                <Link href="/dashboard/settings">
+                <Link href="/dashboard/account">
                   <a>
                     <Image
                       src={user.profilePicture ? user.profilePicture : "/default-pfp.jpg" }
