@@ -28,8 +28,7 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
         <span>Profile picture <Image src={user.profilePicture ? user.profilePicture : "/default-pfp.jpg" } width={32} height={32} alt=""/> ({user.profilePicture ? <a href={user.profilePicture} target="_blank" rel="noreferrer">link</a> : 'default'})</span>
         <input type="url" name="profilePicture" defaultValue={user.profilePicture} />
       </label>
-      <h2>Preferences:</h2>
-      <p style={{ fontStyle: "italic" }}>Coming soon...</p><hr/>
+      <p style={{ fontStyle: "italic" }}>Preferences coming soon...</p><hr/>
 
       <button type="submit" id="editUserBtn">Edit account details</button>
 
@@ -38,7 +37,7 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
       <a href={`/api/user`}
         onClick={async (e) => {
           e.preventDefault();
-          const confirm = prompt("Are you sure? Deleting your account is irreversable, and will remove all of their tasks and collections as well! Type \"yes\" to confirm.");
+          const confirm = prompt("Are you sure? Deleting your account is irreversable and will remove all of your tasks and collections! Type \"yes\" to confirm.");
           if (confirm.trim().toLowerCase() === "yes") {
             try {
               await fetchJson(`/api/user`, { method: "DELETE" });
