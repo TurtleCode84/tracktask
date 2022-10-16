@@ -65,7 +65,7 @@ export default withIronSessionApiRoute(async (req, res) => {
         res.status(401).json({ message: 'Your account has been banned for the following reason: ' + userInfo.history.banReason + '. Please contact us at appeals@tracktask.eu.org if you would like to appeal or request more information.' });
         return;
       } else {
-        res.status(401).json({ message: 'Your account has been banned, please contact us at appeals@tracktask.eu.org if you would like to appeal or request more information. });
+        res.status(401).json({ message: 'Your account has been banned, please contact us at appeals@tracktask.eu.org if you would like to appeal or request more information.' });
         return;
       }
     }
