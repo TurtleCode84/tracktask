@@ -30,7 +30,7 @@ export default withIronSessionApiRoute(async (req, res) => {
     }
     const bannedIps = process.env.IPBAN.split(',');
     if (bannedIps.includes(ip)) {
-      res.status(403).json({ message: 'Your IP address has been banned from logging in due to repeated abuse of the platform. If you believe this may have been a mistake, please contact a TrackTask administrator.' });
+      res.status(403).json({ message: 'Your IP address has been banned from logging in due to repeated abuse of the platform. If you believe this may have been a mistake or would like to appeal, please contact us at appeals@tracktask.eu.org.' });
       return;
     }
     
@@ -59,13 +59,13 @@ export default withIronSessionApiRoute(async (req, res) => {
       res.status(401).json({ message: 'Incorrect username or password' }); // password is incorrect
       return;
     }
-    //Check if banned (beta)
+    //Check if banned
     if (userInfo.permissions.banned) {
       if (userInfo.history.banReason) {
-        res.status(401).json({ message: 'Your account has been banned for the following reason: ' + userInfo.history.banReason + ' Please contact a TrackTask administrator for more information.' }); // password is incorrect
+        res.status(401).json({ message: 'Your account has been banned for the following reason: ' + userInfo.history.banReason + '. Please contact us at appeals@tracktask.eu.org if you would like to appeal or request more information.' });
         return;
       } else {
-        res.status(401).json({ message: 'Your account has been banned, please contact a TrackTask administrator for more information.' }); // password is incorrect
+        res.status(401).json({ message: 'Your account has been banned, please contact us at appeals@tracktask.eu.org if you would like to appeal or request more information. });
         return;
       }
     }
@@ -83,7 +83,7 @@ export default withIronSessionApiRoute(async (req, res) => {
           },
         },
       };
-      const ipUpdate = await db.collection('users').updateOne(query, ipUpdateDoc); // Is assigning the const here unecessary?
+      const ipUpdate = await db.collection('users').updateOne(query, ipUpdateDoc);
       const user = { isLoggedIn: true, id: userInfo._id, username: userInfo.username, profilePicture: userInfo.profilePicture, permissions: userInfo.permissions, history: { "banReason": userInfo.history.banReason } };
       req.session.user = user;
       await req.session.save();
