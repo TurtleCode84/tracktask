@@ -24,7 +24,7 @@ export default function Settings() {
   }
   return (
     <Layout>
-      <h1>Your account <span style={{ color: "darkgray" }} className="material-symbols-outlined">manage_accounts</span></h1>
+      <h1>Your account <span style={{ color: "dimgray" }} className="material-symbols-outlined">manage_accounts</span></h1>
       <Link href="/dashboard">Back to dashboard</Link><br/>
       <h3>General information</h3>
       <p>Username: {user.username}{' '}{user.permissions.verified ? <span title="Verified" style={{ color: "#006dbe" }} className="material-symbols-outlined icon-list">verified</span> : null}{user.permissions.admin ? <span title="Admin" style={{ color: "slategray" }} className="material-symbols-outlined icon-list">verified_user</span> : null}</p>
@@ -34,6 +34,8 @@ export default function Settings() {
       <p>Profile picture: <Image src={user.profilePicture ? user.profilePicture : "/default-pfp.jpg" } width={32} height={32} alt=""/> ({user.profilePicture ? <a href={user.profilePicture} target="_blank" rel="noreferrer">link</a> : 'default'})</p>
       <h3>History</h3>
       <p title={moment.unix(user.history.joined).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Joined: {user.history.joined > 0 ? moment.unix(user.history.joined).fromNow() : 'never'}</p>
+      <p>Total tasks: unknown</p>
+      <p>Total collections: unknown</p>
       <hr/>
       <details>
         <summary>Edit account details</summary>
