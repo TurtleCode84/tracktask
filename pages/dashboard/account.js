@@ -4,6 +4,8 @@ import moment from "moment";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
 import UserEditForm from "components/UserEditForm";
+import Link from "next/link";
+import Image from "next/image";
 import useUser from "lib/useUser";
 import { useRouter } from "next/router";
 
