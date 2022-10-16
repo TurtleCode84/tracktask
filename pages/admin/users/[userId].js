@@ -49,7 +49,7 @@ export default function UserAdmin() {
     <Layout>
       <h1>TrackTask User Admin <span style={{ color: "slategray" }} className="material-symbols-outlined">admin_panel_settings</span></h1>
       <h2>
-        Viewing information for {lookup ? lookup.username : userId} [{lookup?.permissions.verified ? <span title="Verified" style={{ color: "#006dbe" }} className="material-symbols-outlined">verified</span> : null}{lookup?.permissions.admin ? <span title="Admin" style={{ color: "slategray" }} className="material-symbols-outlined">verified_user</span> : null}{lookup?.permissions.banned ? <span title="Banned" style={{ color: "red" }} className="material-symbols-outlined">block</span> : null}]:
+        Viewing information for {lookup ? lookup.username : userId}{' '}{lookup?.permissions.verified ? <span title="Verified" style={{ color: "#006dbe" }} className="material-symbols-outlined">verified</span> : null}{lookup?.permissions.admin ? <span title="Admin" style={{ color: "slategray" }} className="material-symbols-outlined">verified_user</span> : null}{lookup?.permissions.banned ? <span title="Banned" style={{ color: "red" }} className="material-symbols-outlined">block</span> : null}:
       </h2>
       <Link href="/admin/users">Back to user search</Link><br/>
       <Link href="/admin">Back to admin dashboard</Link><br/>
