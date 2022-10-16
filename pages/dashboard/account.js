@@ -24,12 +24,10 @@ export default function Settings() {
   }
   return (
     <Layout>
-      <h1>Your account <span style={{ color: "gray" }} className="material-symbols-outlined">manage_accounts</span></h1>
-      <h2>
-        {user.username}{' '}{user.permissions.verified ? <span title="Verified" style={{ color: "#006dbe" }} className="material-symbols-outlined">verified</span> : null}{user.permissions.admin ? <span title="Admin" style={{ color: "slategray" }} className="material-symbols-outlined">verified_user</span> : null}:
-      </h2>
+      <h1>Your account <span style={{ color: "darkgray" }} className="material-symbols-outlined">manage_accounts</span></h1>
       <Link href="/dashboard">Back to dashboard</Link><br/>
       <h3>General information</h3>
+      <p>Username: {user.username}{' '}{user.permissions.verified ? <span title="Verified" style={{ color: "#006dbe" }} className="material-symbols-outlined icon-list">verified</span> : null}{user.permissions.admin ? <span title="Admin" style={{ color: "slategray" }} className="material-symbols-outlined icon-list">verified_user</span> : null}</p>
       <p>User ID: {user.id}</p>
       <p>Email: {user.email ? <><a href={`mailto:${user.email}`} target="_blank" rel="noreferrer">{user.email}</a></> : 'none'}</p>
       {user.permissions.verified ? <p>Share key: <pre>{user.shareKey}</pre></p> : null}
