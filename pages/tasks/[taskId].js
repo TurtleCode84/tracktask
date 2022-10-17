@@ -28,7 +28,7 @@ export default function Task() {
   if (clientError !== null) {
     isCollection = true;
     filterMode = false;
-    const collection = tasks?.filter(item => item.tasks.includes(taskId))?.[0];
+    const collection = tasks?.filter(item => item.tasks?.includes(taskId))?.[0];
     task = collection?.tasks.filter(item => item._id === taskId)?.[0];
     if (collection && task) {
       clientError = "";
