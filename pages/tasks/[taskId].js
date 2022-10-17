@@ -38,7 +38,7 @@ export default function Task() {
   return (
     <Layout>
       <h2>{task ? <>{task.completion.completed > 0 ? <><span title="Completed" style={{ color: "darkgreen" }} className="material-symbols-outlined">task_alt</span>{' '}</> : null}{task.priority ? <><span title="Priority" style={{ color: "red" }} className="material-symbols-outlined">priority_high</span>{' '}</> : null}{task.name}:</> : 'Loading...'}</h2>
-      <Link href="/dashboard">Back to dashboard</Link><br/>
+      <Link href="" onClick={() => router.back()}>Go back</Link><br/>
       {task ?
         <><h3>General information</h3>
         <p>Description:</p>{' '}<textarea value={task.description} rows="4" cols="70" disabled /><br/>
