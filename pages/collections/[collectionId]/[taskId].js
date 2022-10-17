@@ -19,7 +19,7 @@ export default function Task() {
   const router = useRouter();
   const { collectionId, taskId } = router.query;
   const collection = collections?.filter(item => item._id === collectionId)?.[0];
-  const task = collection?.tasks?.filter(item => item._id === taskId);
+  const task = collection?.tasks.filter(item => item._id === taskId)?.[0];
   var clientError;
   if (collections && !collection) {
     clientError = "No collection found";
