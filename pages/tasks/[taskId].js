@@ -18,10 +18,18 @@ export default function Task() {
   const [errorMsg, setErrorMsg] = useState("");
   const router = useRouter();
   const { taskId } = router.query;
-  const task = tasks?.filter(item => item._id === taskId)?.[0];
+  var task = tasks?.filter(item => item._id === taskId)?.[0];
   var clientError;
   if (tasks && !task) {
     clientError = "Task not found";
+  }
+  if (clientError !== null) {
+    const { tasks: collections, error } = useTasks(user, true, false);
+    const collection = collections?.filter(item => item.tasks.includes(taskId))?.[0];
+    task = collection?.tasks.filter(item => item._id === taskId)?.[0];
+    if (collection && task) {
+      clientError = "";
+    }
   }
   
   if (!user || !user.isLoggedIn || user.permissions.banned) {
