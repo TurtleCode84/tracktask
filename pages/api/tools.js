@@ -14,7 +14,7 @@ async function toolsRoute(req, res) {
   }
   const client = await clientPromise;
   const db = client.db("data");
-  { tool, param } = req.query;
+  const { tool, param } = req.query;
   if (req.method === 'GET') {
     if (tool) {
       if (tool === "userInfo") {
