@@ -41,7 +41,7 @@ export default function Task() {
       <Link href="/dashboard">Back to dashboard</Link><br/>
       {task ?
         <><h3>General information</h3>
-        <p>Description: {task.description}</p>
+        <p>Description:</p>{' '}<textarea value={task.description} rows="3" cols="70" disabled /><br/>
         <p title={moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Due date: {task.dueDate > 0 ? <>{moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}{' '}({moment.unix(task.dueDate).fromNow()})</> : 'never'}</p>
         {task.completion.completed > 0 ? <>
         <p>Completed on: {moment.unix(task.completion.completed).format("dddd, MMMM Do YYYY, h:mm:ss a")}{' '}({moment.unix(task.completion.completed).fromNow()})</p>
