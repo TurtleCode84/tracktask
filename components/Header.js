@@ -48,8 +48,8 @@ export default function Header() {
                       style={{
                         marginRight: ".3em",
                         verticalAlign: "middle",
-                        min-height: "100%",
-                        min-width: "100%",
+                        height: "100%",
+                        width: "100%",
                         borderRadius: "100%",
                         overflow: "hidden",
                       }}
