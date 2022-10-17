@@ -25,7 +25,7 @@ export default function Task() {
     clientError = "Task not found";
   }
   if (clientError !== null) {
-    const collection = collections?.filter(item => item.tasks.includes(taskId))?.[0];
+    const collection = collections?.filter(item => item.tasks.some((element) => element._id === taskId))?.[0];
     task = collection?.tasks.filter(item => item._id === taskId)?.[0];
     if (collection && task) {
       clientError = "";
