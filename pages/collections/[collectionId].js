@@ -38,7 +38,7 @@ export default function Collection() {
   
   return (
     <Layout>
-      {collection?.sharing.shared ? <span title="Shared" style={{ color: "lightslategray" }} className="material-symbols-outlined icon-list">group</span> : <span title="Private" style={{ color: "lightslategray" }} className="material-symbols-outlined icon-list">lock</span>}{' '}<h2>{collection ? <>{collection.name}:</> : 'Loading...'}</h2>
+      {collection?.sharing.shared ? <span title="Shared" style={{ color: "lightslategray" }} className="material-symbols-outlined">group</span> : <span title="Private" style={{ color: "lightslategray" }} className="material-symbols-outlined">lock</span>}{' '}<h2>{collection ? <>{collection.name}:</> : 'Loading...'}</h2>
       <Link href="/dashboard">Back to dashboard</Link><br/>
       {collection ?
         <><h3>General information</h3>
