@@ -26,7 +26,7 @@ export default function Task() {
   }
   var clientError;
   if (tasks && !task) {
-    clientError = "Task not found";
+    clientError = "Task not found!";
   }
   
   if (!user || !user.isLoggedIn || user.permissions.banned) {
