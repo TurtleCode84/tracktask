@@ -29,7 +29,7 @@ export default function Dashboard() {
   const { tasks: collections, error: collectionsError } = useTasks(user, true, false);
   const collectionList = collections?.map((collection) =>
     <li key={collection._id} className="list-hover" style={{ margin: "0.5em", background: "#f8f8f8", padding: "5px", borderWidth: "2px", borderStyle: "solid", borderColor: "darkgray", borderRadius: "10px", width: "auto" }} onClick={() => router.push(`/collections/${collection._id}`)}>
-      {collection.owner === user.id ? <span title="Private" style={{ color: "lightslategray" }} className="material-symbols-outlined icon-list">lock</span> : null}{' '}<b>{collection.name}</b> - {collection.description.slice(0,25).trim()}... (created <DueDate timestamp={collection.created}/>)
+      {collection.sharing.shared ? <span title="Shared" style={{ color: "lightslategray" }} className="material-symbols-outlined icon-list">group</span> : <span title="Private" style={{ color: "lightslategray" }} className="material-symbols-outlined icon-list">lock</span>}{' '}<b>{collection.name}</b> - {collection.description.slice(0,25).trim()}... (created <DueDate timestamp={collection.created}/>)
     </li>
   );
   
