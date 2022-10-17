@@ -13,7 +13,9 @@ export default function Task() {
   const { user } = useUser({
     redirectTo: "/login",
   });
-  const { tasks, error } = useTasks(user, false, "all");
+  var isCollection = false;
+  var filterMode = "all";
+  const { tasks, error } = useTasks(user, isCollection, filterMode);
   
   const [errorMsg, setErrorMsg] = useState("");
   const router = useRouter();
@@ -24,8 +26,9 @@ export default function Task() {
     clientError = "Task not found";
   }
   if (clientError !== null) {
-    const { tasks: collections, error } = useTasks(user, true, false);
-    const collection = collections?.filter(item => item.tasks.includes(taskId))?.[0];
+    isCollection = true;
+    filterMode = false;
+    const collection = tasks?.filter(item => item.tasks.includes(taskId))?.[0];
     task = collection?.tasks.filter(item => item._id === taskId)?.[0];
     if (collection && task) {
       clientError = "";
