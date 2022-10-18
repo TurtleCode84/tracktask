@@ -63,7 +63,7 @@ export default function Dashboard() {
       </ul></>
       }
       
-      <h2 style={{ color: "darkred" }}>Past due date:</h2>
+      <h2>Past due date:</h2>
       {overdueTaskList === undefined || overdueTasksError ?
       <>
       {overdueTasksError ? <p style={{ fontStyle: "italic" }}>{overdueTasksError.data ? overdueTasksError.data.message : overdueTasksError.message}</p> : <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
