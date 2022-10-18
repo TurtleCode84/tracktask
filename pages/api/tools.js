@@ -46,6 +46,7 @@ async function toolsRoute(req, res) {
         getStats._id = ObjectId(param); // Not strictly necessary
         getStats.tasks = await db.collection("tasks").countDocuments(query);
         getStats.collections = await db.collection("collections").countDocuments(query);
+        res.json(getStats);
       } else {
         res.status(418).json({ message: "Under construction" });
         return;
