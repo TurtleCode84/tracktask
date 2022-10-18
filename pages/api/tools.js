@@ -18,7 +18,26 @@ async function toolsRoute(req, res) {
   if (req.method === 'GET') {
     if (tool) {
       if (tool === "userInfo") {
-        //get public user info
+        const query = { _id: ObjectId(param) };
+        const getUser = await db.collection("users").findOne(query, { projection: { username: 1, profilePicture: 1, 'permissions.verified': 1 } });
+        if (getUser) {
+          res.json(getUser);
+        } else {
+          res.status(404).json({ message: "User does not exist" });
+          return;
+        }
+      } else if (tool === "userStats" && user.permissions.admin) {
+        const query = {
+          hidden: false,
+          $or: [
+            { owner: ObjectId(param) },
+            { 'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: ObjectId(param)}} },
+          ],
+        };
+        const getStats = {};
+        getStats._id = ObjectId(param); // Not strictly necessary
+        getStats.tasks = await db.collection("tasks").countDocuments(query);
+        getStats.collections = await db.collection("collections").countDocuments(query);
       } else {
         res.status(418).json({ message: "Under construction" });
         return;
