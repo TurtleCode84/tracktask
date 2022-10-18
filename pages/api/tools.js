@@ -19,7 +19,7 @@ async function toolsRoute(req, res) {
     if (tool) {
       if (tool === "userInfo") {
         if (!ObjectId.isValid(param)) {
-          res.status(422).json({ message: "Invalid user ID!" });
+          res.status(422).json({ message: "Invalid user ID" });
           return;
         }
         const query = { _id: ObjectId(param) };
