@@ -31,7 +31,7 @@ export default function Task() {
     clientError = "Task not found!";
   }
   
-  const { info: completer, error: toolError } = useTool(user, "userInfo", task.completion.completedBy);
+  const { info: completer, error: toolError } = useTool(user, "userInfo", task?.completion.completedBy);
   
   if (!user || !user.isLoggedIn || user.permissions.banned) {
     return (
