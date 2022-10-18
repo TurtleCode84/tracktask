@@ -18,6 +18,10 @@ async function toolsRoute(req, res) {
   if (req.method === 'GET') {
     if (tool) {
       if (tool === "userInfo") {
+        if (!ObjectId.isValid(param)) {
+          res.status(422).json({ message: "Invalid user ID!" });
+          return;
+        }
         const query = { _id: ObjectId(param) };
         const getUser = await db.collection("users").findOne(query, { projection: { username: 1, profilePicture: 1, 'permissions.verified': 1 } });
         if (getUser) {
@@ -27,6 +31,10 @@ async function toolsRoute(req, res) {
           return;
         }
       } else if (tool === "userStats" && user.permissions.admin) {
+        if (!ObjectId.isValid(param)) {
+          res.status(422).json({ message: "Invalid user ID!" });
+          return;
+        }
         const query = {
           hidden: false,
           $or: [
