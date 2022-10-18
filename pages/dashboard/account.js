@@ -30,7 +30,7 @@ export default function Settings() {
       <p>Username: {user.username}{' '}{user.permissions.verified ? <span title="Verified" style={{ color: "#006dbe" }} className="material-symbols-outlined icon-list">verified</span> : null}{user.permissions.admin ? <span title="Admin" style={{ color: "slategray" }} className="material-symbols-outlined icon-list">verified_user</span> : null}</p>
       <p>User ID: {user.id}</p>
       <p>Email: {user.email ? <><a href={`mailto:${user.email}`} target="_blank" rel="noreferrer">{user.email}</a></> : 'none'}</p>
-      {user.permissions.verified ? <p>Share key: <pre>{user.shareKey}</pre></p> : null}
+      {user.permissions.verified ? <p>Share key: <pre>{user.shareKey ? user.shareKey : 'none'}</pre></p> : null}
       <p>Profile picture: <Image src={user.profilePicture ? user.profilePicture : "/default-pfp.jpg" } width={32} height={32} alt=""/> ({user.profilePicture ? <a href={user.profilePicture} target="_blank" rel="noreferrer">link</a> : 'default'})</p>
       <h3>History</h3>
       <p title={moment.unix(user.history.joined).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Joined: {user.history.joined > 0 ? moment.unix(user.history.joined).fromNow() : 'never'}</p>
