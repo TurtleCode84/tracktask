@@ -58,35 +58,25 @@ export default function Dashboard() {
         }
       </h1>
 
-      <h2>Upcoming tasks:</h2>
-      {upcomingTaskList === undefined || upcomingTasksError ?
-      <>
-      {upcomingTasksError ? <p style={{ fontStyle: "italic" }}>{upcomingTasksError.data ? upcomingTasksError.data.message : upcomingTasksError.message}</p> : <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
-      </>
-      :
-      <><ul style={{ display: "table" }}>
+      {upcomingTaskList === undefined || overdueTaskList === undefined || notdueTaskList === undefined ? <Loading/> : null}
+      
+      {!upcomingTasksError &&
+      <><h2>Upcoming tasks:</h2>
+      <ul style={{ display: "table" }}>
         {upcomingTaskList}
       </ul></>
       }
       
-      <h2>Past due date:</h2>
-      {overdueTaskList === undefined || overdueTasksError ?
-      <>
-      {overdueTasksError ? <p style={{ fontStyle: "italic" }}>{overdueTasksError.data ? overdueTasksError.data.message : overdueTasksError.message}</p> : <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
-      </>
-      :
-      <><ul style={{ display: "table" }}>
+      {!overdueTasksError &&
+      <><h2>Past due date:</h2>
+      <ul style={{ display: "table" }}>
         {overdueTaskList}
       </ul></>
       }
       
-      <h2>Not due:</h2>
-      {notdueTaskList === undefined || notdueTasksError ?
-      <>
-      {notdueTasksError ? <p style={{ fontStyle: "italic" }}>{notdueTasksError.data ? notdueTasksError.data.message : notdueTasksError.message}</p> : <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
-      </>
-      :
-      <><ul style={{ display: "table" }}>
+      {!notdueTasksError &&
+      <><h2>Not due:</h2>
+      <ul style={{ display: "table" }}>
         {notdueTaskList}
       </ul></>
       }
