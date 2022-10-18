@@ -2,7 +2,7 @@ import clientPromise from "lib/mongodb";
 import { hash } from 'bcryptjs';
 import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "lib/session";
-import { v4 as uuidv4 } from "uuid";
+//import { v4 as uuidv4 } from "uuid"; //unused dependency
 import fetchJson from "lib/fetchJson";
 
 export default withIronSessionApiRoute(joinRoute, sessionOptions);
@@ -92,7 +92,6 @@ async function joinRoute(req, res) {
           verified: false,
           warned: false,
         },
-        shareKey: uuidv4(),
         profilePicture: "",
       }
       const createdUser = await db.collection('users').insertOne(newUser);
