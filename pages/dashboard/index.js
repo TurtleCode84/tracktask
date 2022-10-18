@@ -20,8 +20,8 @@ export default function Dashboard() {
       {task.completion.completed !== 0 ? <span title="Completed" style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">task_alt</span> : null}{task.priority ? <span title="Priority" style={{ color: "red" }} className="material-symbols-outlined icon-list">priority_high</span> : null}{' '}<b>{task.name}</b> - {task.description.slice(0,30).trim()}... (due <DueDate timestamp={task.dueDate}/>)
     </li>
   );
-  const { tasks: recentTasks, error: recentTasksError } = useTasks(user, false, "recent");
-  const recentTaskList = recentTasks?.map((task) =>
+  const { tasks: overdueTasks, error: overdueTasksError } = useTasks(user, false, "overdue");
+  const overdueTaskList = overdueTasks?.map((task) =>
     <li key={task._id} title={task.dueDate !== 0 ? moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a") : 'No due date'} className="list-hover" style={{ margin: "0.5em", background: "#f8f8f8", padding: "5px", borderWidth: "2px", borderStyle: "solid", borderColor: "darkgray", borderRadius: "10px", width: "auto" }} onClick={() => router.push(`/tasks/${task._id}`)}>
       {task.completion.completed !== 0 ? <span title="Completed" style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">task_alt</span> : null}{task.priority ? <span title="Priority" style={{ color: "red" }} className="material-symbols-outlined icon-list">priority_high</span> : null}{' '}<b>{task.name}</b> - {task.description.slice(0,30).trim()}... (due <DueDate timestamp={task.dueDate}/>)
     </li>
@@ -63,14 +63,14 @@ export default function Dashboard() {
       </ul></>
       }
       
-      <h2>Recently added:</h2>
-      {recentTaskList === undefined || recentTasksError ?
+      <h2 style={{ color: "darkred" }}>Past due date:</h2>
+      {overdueTaskList === undefined || overdueTasksError ?
       <>
-      {recentTasksError ? <p style={{ fontStyle: "italic" }}>{recentTasksError.data ? recentTasksError.data.message : recentTasksError.message}</p> : <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
+      {overdueTasksError ? <p style={{ fontStyle: "italic" }}>{overdueTasksError.data ? overdueTasksError.data.message : overdueTasksError.message}</p> : <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
       </>
       :
       <><ul style={{ display: "table" }}>
-        {recentTaskList}
+        {overdueTaskList}
       </ul></>
       }
       <Link href="/tasks">View all tasks</Link>
