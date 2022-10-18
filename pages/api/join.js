@@ -77,9 +77,14 @@ async function joinRoute(req, res) {
         username: username.toLowerCase(),
         password: await hash(password, 10),
         email: email.toLowerCase(),
+        profilePicture: "",
         history: {
           joined: Math.floor(Date.now()/1000),
           lastLogin: 0,
+          lastEdit: {
+            timestamp: "",
+            by: "",
+          },
           joinedIp: ip,
           loginIpList: [],
           banReason: "",
@@ -92,7 +97,6 @@ async function joinRoute(req, res) {
           verified: false,
           warned: false,
         },
-        profilePicture: "",
       }
       const createdUser = await db.collection('users').insertOne(newUser);
       res.json(createdUser);
