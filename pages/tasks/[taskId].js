@@ -49,7 +49,7 @@ export default function Task() {
         <p title={moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Due date: {task.dueDate > 0 ? <>{moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}{' '}({moment.unix(task.dueDate).fromNow()})</> : 'never'}</p>
         {task.completion.completed > 0 ? <>
         <p>Completed on: {moment.unix(task.completion.completed).format("dddd, MMMM Do YYYY, h:mm:ss a")}{' '}({moment.unix(task.completion.completed).fromNow()})</p>
-        {user.permissions.verified ? <p>Completed by: <span style={{ borderRadius: "100%", overflow: "hidden", marginRight: ".3em", verticalAlign: "middle" }}><Image src={completer.profilePicture ? completer.profilePicture : "/default-pfp.jpg" } width={32} height={32} alt=""/></span>{completer.username}</p> : null}
+        {user.permissions.verified ? <p>Completed by: <span style={{ borderRadius: "100%", overflow: "hidden", marginRight: ".3em", verticalAlign: "middle" }}><Image src={completer?.profilePicture ? completer.profilePicture : "/default-pfp.jpg" } width={32} height={32} alt=""/></span>{completer.username}</p> : null}
         </>
         :
         <><a href={`/api/tasks?id=${task._id}`}
