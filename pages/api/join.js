@@ -49,7 +49,7 @@ async function joinRoute(req, res) {
         return true;
       }
     });
-    if (contains) {
+    if (contains && blacklist) {
       res.status(403).json({ message: "The username or email you provided is not allowed, please choose something else." });
       return;
     } else if (username.includes("@") || username.includes(" ") || username.includes("`") || username.includes("&") || username.includes("\"")) {
