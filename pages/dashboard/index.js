@@ -2,6 +2,7 @@ import React from "react";
 import moment from "moment";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
+import Task from "components/Task";
 import Link from "next/link";
 import useUser from "lib/useUser";
 import useTasks from "lib/useTasks";
@@ -15,21 +16,15 @@ export default function Dashboard() {
   const { tasks: upcomingTasks, error: upcomingTasksError } = useTasks(user, false, "upcoming");
   const router = useRouter();
   const upcomingTaskList = upcomingTasks?.map((task) =>
-    <li key={task._id} title={task.dueDate !== 0 ? moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a") : 'No due date'} className="list-hover" style={{ margin: "0.5em", background: "#f8f8f8", padding: "5px", borderWidth: "2px", borderStyle: "solid", borderColor: "darkgray", borderRadius: "10px", width: "auto" }} onClick={() => router.push(`/tasks/${task._id}`)}>
-      {task.completion.completed !== 0 ? <span title="Completed" style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">task_alt</span> : null}{task.priority ? <span title="Priority" style={{ color: "red" }} className="material-symbols-outlined icon-list">priority_high</span> : null}{' '}<b>{task.name}</b> - {task.description.slice(0,30).trim()}... (due {task.dueDate !== 0 ? moment.unix(task.dueDate).fromNow() : 'never'})
-    </li>
+    <Task task={task}/>
   );
   const { tasks: overdueTasks, error: overdueTasksError } = useTasks(user, false, "overdue");
   const overdueTaskList = overdueTasks?.map((task) =>
-    <li key={task._id} title={task.dueDate !== 0 ? moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a") : 'No due date'} className="list-hover" style={{ margin: "0.5em", background: "#f8f8f8", padding: "5px", borderWidth: "2px", borderStyle: "solid", borderColor: "darkgray", borderRadius: "10px", width: "auto" }} onClick={() => router.push(`/tasks/${task._id}`)}>
-      {task.completion.completed !== 0 ? <span title="Completed" style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">task_alt</span> : null}{task.priority ? <span title="Priority" style={{ color: "red" }} className="material-symbols-outlined icon-list">priority_high</span> : null}{' '}<b>{task.name}</b> - {task.description.slice(0,30).trim()}... (due {task.dueDate !== 0 ? moment.unix(task.dueDate).fromNow() : 'never'})
-    </li>
+    <Task task={task}/>
   );
   const { tasks: notdueTasks, error: notdueTasksError } = useTasks(user, false, "notdue");
   const notdueTaskList = notdueTasks?.map((task) =>
-    <li key={task._id} title={task.dueDate !== 0 ? moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a") : 'No due date'} className="list-hover" style={{ margin: "0.5em", background: "#f8f8f8", padding: "5px", borderWidth: "2px", borderStyle: "solid", borderColor: "darkgray", borderRadius: "10px", width: "auto" }} onClick={() => router.push(`/tasks/${task._id}`)}>
-      {task.completion.completed !== 0 ? <span title="Completed" style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">task_alt</span> : null}{task.priority ? <span title="Priority" style={{ color: "red" }} className="material-symbols-outlined icon-list">priority_high</span> : null}{' '}<b>{task.name}</b> - {task.description.slice(0,30).trim()}... (due {task.dueDate !== 0 ? moment.unix(task.dueDate).fromNow() : 'never'})
-    </li>
+    <Task task={task}/>
   );
   const { tasks: collections, error: collectionsError } = useTasks(user, true, false);
   const collectionList = collections?.map((collection) =>
@@ -57,7 +52,7 @@ export default function Dashboard() {
         }
       </h1>
 
-      {upcomingTaskList !== undefined || overdueTaskList !== undefined || notdueTaskList !== undefined ? null : <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
+      {upcomingTaskList || overdueTaskList || notdueTaskList ? null : <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
       
       {!upcomingTasksError &&
       <><h2>Upcoming tasks:</h2>
