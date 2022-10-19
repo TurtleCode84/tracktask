@@ -3,6 +3,7 @@ import moment from "moment";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
 import Task from "components/Task";
+//import Collection from "components/Collection";
 import Link from "next/link";
 import useUser from "lib/useUser";
 import useTasks from "lib/useTasks";
