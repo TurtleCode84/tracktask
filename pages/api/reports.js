@@ -12,13 +12,32 @@ async function reportsRoute(req, res) {
     res.status(401).json({ message: "Unauthorized" });
     return;
   }
+  const client = await clientPromise;
+  const db = client.db("data");
   if (req.method === 'GET' && user.permissions.admin) {
-    res.status(418).json({ message: "Under construction" });
-    return;
+    const reports = await db.collection('reports').find().toArray();
+    res.json(reports);
   } else if (req.method === 'POST') {
-    //const { username, password, email } = await req.body;
-    res.status(418).json({ message: "Under construction" });
-    return;
+    const { type, reported, reason } = await req.body;
+    if (!type || !reported || !reason) {
+      res.status(422).json({ message: "Invalid data" });
+      return;
+    }
+    try {
+      const newReport = {
+        reporter: ObjectId(user.id),
+        type: type,
+        reason: reason.trim(),
+        reported: ObjectId(reported),
+        reviewed: false,
+        timestamp: Math.floor(Date.now()/1000),
+      };
+      const createdReport = await db.collection('reports').insertOne(newReport);
+      res.json(createdReport);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+      return;
+    }
   } else {
     res.status(405).json({ message: "Method not allowed" });
     return;
