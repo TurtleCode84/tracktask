@@ -2,7 +2,6 @@ import React from "react";
 import moment from "moment";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
-import DueDate from "components/DueDate";
 import Link from "next/link";
 import useUser from "lib/useUser";
 import useTasks from "lib/useTasks";
@@ -17,7 +16,7 @@ export default function Tasks() {
   const router = useRouter();
   const taskList = allTasks?.map((task) =>
     <li key={task._id} title={task.dueDate !== 0 ? moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a") : 'No due date'} className="list-hover" style={{ margin: "0.5em", background: "#f8f8f8", padding: "5px", borderWidth: "2px", borderStyle: "solid", borderColor: "darkgray", borderRadius: "10px", width: "auto" }} onClick={() => router.push(`/tasks/${task._id}`)}>
-      {task.completion.completed !== 0 ? <span title="Completed" style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">task_alt</span> : null}{task.priority ? <span title="Priority" style={{ color: "red" }} className="material-symbols-outlined icon-list">priority_high</span> : null}{' '}<b>{task.name}</b> - {task.description.slice(0,30).trim()}... (due <DueDate timestamp={task.dueDate}/>)
+      {task.completion.completed !== 0 ? <span title="Completed" style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">task_alt</span> : null}{task.priority ? <span title="Priority" style={{ color: "red" }} className="material-symbols-outlined icon-list">priority_high</span> : null}{' '}<b>{task.name}</b> - {task.description.slice(0,30).trim()}... (due {task.dueDate !== 0 ? moment.unix(task.dueDate).fromNow() : 'never'})
     </li>
   );
   
