@@ -16,15 +16,15 @@ export default function Dashboard() {
   const { tasks: upcomingTasks, error: upcomingTasksError } = useTasks(user, false, "upcoming");
   const router = useRouter();
   const upcomingTaskList = upcomingTasks?.map((task) =>
-    <Task task={task}/>
+    <Task task={task} key={task._id}/>
   );
   const { tasks: overdueTasks, error: overdueTasksError } = useTasks(user, false, "overdue");
   const overdueTaskList = overdueTasks?.map((task) =>
-    <Task task={task}/>
+    <Task task={task} key={task._id}/>
   );
   const { tasks: notdueTasks, error: notdueTasksError } = useTasks(user, false, "notdue");
   const notdueTaskList = notdueTasks?.map((task) =>
-    <Task task={task}/>
+    <Task task={task} key={task._id}/>
   );
   const { tasks: collections, error: collectionsError } = useTasks(user, true, false);
   const collectionList = collections?.map((collection) =>
