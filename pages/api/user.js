@@ -76,7 +76,7 @@ async function userRoute(req, res) {
         } else {
           updateUser.username = body.username.trim().toLowerCase();
         }
-      } else if (!user.permissions.verified) {
+      } else if (body.username) {
         res.status(401).json({ message: "Only verified users can change their username!" });
         return;
       }
