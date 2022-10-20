@@ -17,8 +17,8 @@ export default function Home() {
   }
   return (
     <Layout>
-      <h1 style={{ fontSize: 50, marginBottom: "-25px" }}>
-        <span style={{ marginRight: "-2.5rem", verticalAlign: "middle" }}>
+      <h1 style={{ fontSize: 50, marginBottom: "-35px" }}>
+        <span style={{ marginRight: "-1.3rem", verticalAlign: "middle" }}>
           <Image src="/tracktask.png" width="304.7" height="110" priority="true" quality="90" alt="TrackTask" /> {/* Ratio 2.77:1 */}
         </span>
         - Shareable Task Management
