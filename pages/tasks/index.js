@@ -6,7 +6,6 @@ import Task from "components/Task";
 import Link from "next/link";
 import useUser from "lib/useUser";
 import useTasks from "lib/useTasks";
-import { useRouter } from "next/router";
 
 export default function Tasks() {
   const { user } = useUser({
@@ -14,7 +13,6 @@ export default function Tasks() {
   });
   
   const { tasks: allTasks, error: allTasksError } = useTasks(user, false, "all");
-  const router = useRouter();
   const taskList = allTasks?.map((task) =>
     <Task task={task} key={task._id}/>
   );
