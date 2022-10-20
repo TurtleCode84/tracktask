@@ -7,7 +7,7 @@ export default function Layout({ children }) {
     <>
       <Head>
         <title>TrackTask - Shareable Task Management</title>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=optional" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" />
       </Head>
       <style jsx global>{`
         *,
