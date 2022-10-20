@@ -3,7 +3,6 @@ import Header from "components/Header";
 import Link from "next/link";
 
 export default function Layout({ children }) {
-  const env = process.env.VERCEL_ENV;
   return (
     <>
       <Head>
@@ -78,7 +77,7 @@ export default function Layout({ children }) {
           vertical-align: -3px !important;
         }
       `}</style>
-      {env !== "production" && <nav style={{backgroundColor: "orange", textAlign: "center", height:40 + "px", fontWeight: 600, marginTop: -20 + "px", paddingBottom: 5 + "px", minHeight: "min-content"}}><p style={{paddingTop: 13 + "px"}}>{env} You are viewing a TrackTask Development release, some features may not work properly or may break your account.</p></nav>}
+      {process.env.NEXT_PUBLIC_VERCEL_ENV !== "production" && <nav style={{backgroundColor: "orange", textAlign: "center", height:40 + "px", fontWeight: 600, marginTop: -20 + "px", paddingBottom: 5 + "px", minHeight: "min-content"}}><p style={{paddingTop: 13 + "px"}}>{process.env.NEXT_PUBLIC_VERCEL_ENV} You are viewing a TrackTask Development release, some features may not work properly or may break your account.</p></nav>}
       <Header />
 
       <main>
