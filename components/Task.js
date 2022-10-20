@@ -1,4 +1,6 @@
 import moment from "moment";
+import { useRouter } from "next/router";
+const router = useRouter();
 
 export default function Task({ task, key }) {
   return (
