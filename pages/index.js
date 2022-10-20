@@ -18,8 +18,8 @@ export default function Home() {
   return (
     <Layout>
       <h1 style={{ fontSize: 50 }}>
-        <span style={{ marginRight: ".3em", verticalAlign: "middle" }}>
-          <Image src="/tracktask.png" width="221.6" height="80" alt="TrackTask" />
+        <span style={{ verticalAlign: "middle" }}>
+          <Image src="/tracktask.png" width="249.3" height="80" alt="TrackTask" />
         </span>
         - Shareable Task Management
       </h1>
