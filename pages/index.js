@@ -17,7 +17,7 @@ export default function Home() {
   }
   return (
     <Layout>
-      <h1 style={{ fontSize: 50, marginBottom: "-35px" }}>
+      <h1 style={{ fontSize: 50, marginBottom: "-20px" }}>
         <span style={{ marginRight: "-1.3rem", verticalAlign: "middle" }}>
           <Image src="/tracktask.png" width="304.7" height="110" priority="true" quality="90" alt="TrackTask" /> {/* Ratio 2.77:1 */}
         </span>
@@ -38,7 +38,7 @@ export default function Home() {
         <li>And even more!</li>
       </ul>
 
-      <h3><Link href="/join">Sign up</Link> or <Link href="/join">login</Link> to get started!</h3>
+      <h3><Link href="/join">Sign up</Link> or <Link href="/login">login</Link> to get started!</h3>
 
       <style jsx>{`
         li {
