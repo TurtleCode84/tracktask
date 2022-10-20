@@ -58,7 +58,6 @@ export default function UserAdmin() {
       <h3>General information</h3>
       <p>User ID: {lookup._id}</p>
       <p>Email: {lookup.email ? <><a href={`mailto:${lookup.email}`} target="_blank" rel="noreferrer">{lookup.email}</a></> : 'none'}</p>
-      <p>Share key: <pre>{lookup.shareKey ? lookup.shareKey : 'none'}</pre></p>
       <p>Profile picture: <Image src={lookup.profilePicture ? lookup.profilePicture : "/default-pfp.jpg" } width={32} height={32} alt=""/> ({lookup.profilePicture ? <a href={lookup.profilePicture} target="_blank" rel="noreferrer">link</a> : 'default'})</p>
       <h3>History</h3>
       <p title={moment.unix(lookup.history.joined).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Joined: {lookup.history.joined > 0 ? moment.unix(lookup.history.joined).fromNow() : 'never'}</p>
@@ -100,7 +99,6 @@ export default function UserAdmin() {
               if (event.currentTarget.username.value !== event.currentTarget.username.defaultValue) {body.username = event.currentTarget.username.value}
               if (event.currentTarget.email.value !== event.currentTarget.email.defaultValue) {body.email = event.currentTarget.email.value}
               if (event.currentTarget.password.value) {body.password = event.currentTarget.password.value}
-              if (event.currentTarget.resetShareKey.checked) {body.resetShareKey = event.currentTarget.resetShareKey.checked}
               if (event.currentTarget.profilePicture.value !== event.currentTarget.profilePicture.defaultValue) {body.profilePicture = event.currentTarget.profilePicture.value}
               if (event.currentTarget.notes.value !== event.currentTarget.notes.defaultValue) {body.notes = event.currentTarget.notes.value}
               if (event.currentTarget.clearWarnings.checked) {body.clearWarnings = event.currentTarget.clearWarnings.checked}

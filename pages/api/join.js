@@ -2,7 +2,6 @@ import clientPromise from "lib/mongodb";
 import { hash } from 'bcryptjs';
 import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "lib/session";
-//import { v4 as uuidv4 } from "uuid"; //unused dependency
 import fetchJson from "lib/fetchJson";
 
 export default withIronSessionApiRoute(joinRoute, sessionOptions);

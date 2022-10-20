@@ -19,10 +19,6 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
         <input type="password" placeholder="Retype new password" name="cpassword" />
       </label><hr/>
       <label>
-        <span>Reset share key</span>
-        <input type="checkbox" name="resetShareKey" />
-      </label>
-      <label>
         <span>Profile picture</span>
         <input type="url" name="profilePicture" defaultValue={lookup.profilePicture} />
       </label>

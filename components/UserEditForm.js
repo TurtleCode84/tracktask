@@ -21,10 +21,6 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
         <input type="password" placeholder="Retype new password" name="cpassword" />
       </label><hr/>
       <label>
-        <span>Reset share key</span>
-        <input type="checkbox" name="resetShareKey" />
-      </label>
-      <label>
         <span>Profile picture <Image src={user.profilePicture ? user.profilePicture : "/default-pfp.jpg" } width={32} height={32} alt=""/> ({user.profilePicture ? <a href={user.profilePicture} target="_blank" rel="noreferrer">link</a> : 'default'})</span>
         <input type="url" name="profilePicture" defaultValue={user.profilePicture} />
       </label>
