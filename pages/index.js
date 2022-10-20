@@ -2,6 +2,7 @@ import React from "react";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
 import Image from "next/image";
+import Link from "next/link";
 import useUser from "lib/useUser";
 
 export default function Home() {
@@ -16,33 +17,29 @@ export default function Home() {
   }
   return (
     <Layout>
-      <h1>
+      <h1 style={{ fontSize: 50 }}>
         <span style={{ marginRight: ".3em", verticalAlign: "middle" }}>
-          <Image src="/tracktaskmini.png" width="32" height="32" alt="" />
+          <Image src="/tracktask.png" height="80" alt="TrackTask" />
         </span>
-        TrackTask - Shareable Task Management
+        - Shareable Task Management
       </h1>
 
-      <p>
-        A task tracking platform built on Next.js,{" "}
-        <b>perfect for keeping lists and sharing them with teams</b>.
-      </p>
+      <h1>
+        A task-tracking platform built on Next.js,{" "}
+        <i>perfect for keeping lists and sharing them with teams</i>.
+      </h1>
 
-      <p>
-        TrackTask is currently in development.
-      </p>
-
-      <h2>Features</h2>
-
+      <h2>What&apos;s inside?</h2>
       <ul>
-        <li>Coming soon...</li>
+        <li>Tasks with priority and completion labels,</li>
+        <li>A sorted dashboard so you can prioritize what needs to get done,</li>
+        <li>Collections to group your tasks or share them with others,</li>
+        <li>Regular feature updates and bug fixes,</li>
+        <li>And even more!</li>
       </ul>
 
-      <h2>More headers:</h2>
+      <h3><Link href="/join">Sign up</Link> or <Link href="/join">login</Link> to get started!</h3>
 
-      <ol>
-        <li>Something will go here, eventually.</li>
-      </ol>
       <style jsx>{`
         li {
           margin-bottom: 0.5rem;
