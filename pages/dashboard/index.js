@@ -53,7 +53,7 @@ export default function Dashboard() {
         }
       </h1>
 
-      {upcomingTaskList !== undefined && overdueTaskList !== undefined && notdueTaskList !== undefined && !upcomingTasksError && !overdueTasksError && !notdueTasksError ? null : <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
+      {upcomingTaskList === undefined || overdueTaskList === undefined || notdueTaskList === undefined || upcomingTasksError || overdueTasksError || notdueTasksError ? <p style={{ fontStyle: "italic" }}>Loading tasks...</p> : null}
       
       {!upcomingTasksError &&
       <><h2>Upcoming tasks:</h2>
