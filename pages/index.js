@@ -1,69 +1,50 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import React from "react";
+import Layout from "components/Layout";
+import Loading from "components/Loading";
+import Image from "next/image";
+import Link from "next/link";
+import useUser from "lib/useUser";
 
 export default function Home() {
+  const { user } = useUser({
+    redirectTo: "/dashboard",
+    redirectIfFound: true,
+  });
+  if (!user || user.isLoggedIn) {
+    return (
+      <Loading/>
+    );
+  }
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>TrackTask - Shareable Task Management</title>
-        <meta name="description" content="TrackTask: Shareable task management, made easier." />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <Layout>
+      <h1 style={{ fontSize: 50, marginBottom: "-20px", marginTop: "-2px" }}>
+        <span style={{ marginRight: "-1.3rem", verticalAlign: "middle" }}>
+          <Image src="/tracktask.png" width="304.7" height="110" quality="95" alt="TrackTask" priority /> {/* Ratio 2.77:1 */}
+        </span>
+        - Shareable Task Management
+      </h1>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          <a href="https://tracktask.vercel.app">TrackTask</a> - Shareable Task Management
-        </h1>
+      <h1>
+        A task-tracking platform built on Next.js,{" "}
+        <i>perfect for keeping lists and sharing them with teams</i>.
+      </h1>
 
-        <p className={styles.description}>
-          An easy-to-use platform for managing your tasks! Coming soon, powered by{' '}
-          <code className={styles.code}>Next.js</code>
-        </p>
+      <h2>What&apos;s inside?</h2>
+      <ul>
+        <li>Tasks with priority and completion labels,</li>
+        <li>A sorted dashboard so you can prioritize what needs to get done,</li>
+        <li>Collections to group your tasks or share them with others,</li>
+        <li>Regular feature updates and bug fixes,</li>
+        <li>And even more!</li>
+      </ul>
 
-        <div className={styles.grid}>
-          <a href="https://github.com/TurtleCode84" className={styles.card}>
-            <h2>Find me on GitHub &rarr;</h2>
-            <p>View my GitHub profile, public projects, and more.</p>
-          </a>
+      <h3><Link href="/join">Sign up</Link> or <Link href="/login">login</Link> to get started!</h3>
 
-          <a href="https://nextjs.org" className={styles.card}>
-            <h2>Learn about Next.js &rarr;</h2>
-            <p>Check out everything about Next.js on its website!</p>
-          </a>
-
-          <a
-            href="#"
-            className={styles.card}
-          >
-            <h2>Be a beta tester &rarr;</h2>
-            <p>Find out how to become a TrackTask Beta tester.</p>
-          </a>
-
-          <a
-            href="https://tracktask.vercel.app/api"
-            className={styles.card}
-          >
-            <h2>Try the API &rarr;</h2>
-            <p>
-              See an example of a Next.js API response.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by Next.js and{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
-    </div>
-  )
+      <style jsx>{`
+        li {
+          margin-bottom: 0.5rem;
+        }
+      `}</style>
+    </Layout>
+  );
 }
