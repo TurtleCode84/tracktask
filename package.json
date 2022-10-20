@@ -17,7 +17,6 @@
     "mongodb": "^4.9.1",
     "bcryptjs": "^2.4.3",
     "moment": "^2.29.4",
-    "uuid": "^9.0.0",
     "iron-session": "^6.2.0",
     "react-google-recaptcha-v3": "^1.10.0"
   },
