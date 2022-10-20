@@ -1,6 +1,5 @@
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
-import Image from "next/image";
 
 export default function UserEditForm({ errorMessage, onSubmit, user }) {
   const router = useRouter();
@@ -21,7 +20,7 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
         <input type="password" placeholder="Retype new password" name="cpassword" />
       </label><hr/>
       <label>
-        <span>Profile picture <Image src={user.profilePicture ? user.profilePicture : "/default-pfp.jpg" } width={32} height={32} alt=""/> ({user.profilePicture ? <a href={user.profilePicture} target="_blank" rel="noreferrer">link</a> : 'default'})</span>
+        <span>Profile picture</span>
         <input type="url" name="profilePicture" defaultValue={user.profilePicture} />
       </label>
       <p style={{ fontStyle: "italic" }}>Preferences coming soon...</p><hr/>
