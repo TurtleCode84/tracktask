@@ -38,7 +38,7 @@ export default function Home() {
         <li>And even more!</li>
       </ul>
 
-      <h3><Link href="/join">Sign up</Link> or <Link href="/login">login</Link> to get started!</h3>
+      <h3><Link href="/join">Sign up</Link> or <Link href="/login">login</Link> to get started!</h3><br/>
 
       <style jsx>{`
         li {
