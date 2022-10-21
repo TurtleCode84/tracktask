@@ -54,7 +54,7 @@ export default function CollectionsCreate() {
             document.getElementById("createCollectionBtn").disabled = false;
           }
         }}
-      />*/}
+      />
       <br/><Link href="/dashboard">Back to dashboard</Link>
     </Layout>
   );
