@@ -36,8 +36,8 @@ export default function CollectionsCreate() {
           const body = {
             name: event.currentTarget.name.value,
             description: event.currentTarget.description.value,
-            shared: event.currentTarget.shared.checked,
           };
+          if (event.currentTarget.shared) {body.shared: event.currentTarget.shared.checked} else {body.shared = false}
 
           try {
             const getUrl = await fetchJson("/api/tasks?collections=true", {
