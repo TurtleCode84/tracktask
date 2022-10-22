@@ -70,7 +70,7 @@ export default function Header() {
               </li>
               <li>
                 <Link href="/collections/new">
-                  <a><span style={{ color: "white", margin: "0 5px 0 0" }} className="material-symbols-outlined icon-list">playlist_add_check</span>New collection</a>
+                  <a><span style={{ color: "white", margin: "0 5px 0 0" }} className="material-symbols-outlined icon-list">library_add_check</span>New collection</a>
                 </Link>
               </li>
               {user?.permissions.admin === true && (
