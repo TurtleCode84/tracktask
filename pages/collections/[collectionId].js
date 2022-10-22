@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
 import Task from "components/Task";
-//import CollectionEditForm from "components/CollectionEditForm";
+import CollectionEditForm from "components/CollectionEditForm";
 import useUser from "lib/useUser";
 import useTasks from "lib/useTasks";
 import fetchJson, { FetchError } from "lib/fetchJson";
@@ -56,10 +56,38 @@ export default function Collection() {
         <hr/>
         <details>
           <summary>Edit collection</summary>
-          <p style={{ fontStyle: "italic" }}>Coming soon...</p>
+          <br/><CollectionEditForm
+            errorMessage={errorMsg}
+            collection={collection}
+            onSubmit={async function handleSubmit(event) {
+              event.preventDefault();
+              document.getElementById("editCollectionBtn").disabled = true;
+              
+              const body = {};
+              if (event.currentTarget.name.value !== event.currentTarget.name.defaultValue) {body.name = event.currentTarget.name.value};
+              if (event.currentTarget.description.value !== event.currentTarget.description.defaultValue) {body.description = event.currentTarget.description.value};
+              if (event.currentTarget.shared && event.currentTarget.shared.checked !== event.currentTarget.shared.defaultChecked) {body.shared = event.currentTarget.shared.checked}
+
+              try {
+                await fetchJson(`/api/tasks?collection=true&id=${collection._id}`, {
+                  method: "PATCH",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify(body),
+                })
+                router.reload();
+              } catch (error) {
+                if (error instanceof FetchError) {
+                  setErrorMsg(error.data.message);
+                } else {
+                  console.error("An unexpected error happened:", error);
+                }
+                document.getElementById("editCollectionBtn").disabled = false;
+              }
+            }}
+        />
         </details></>
       :
-        <>{error || clientError ? <p>{clientError ? clientError : error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading task...</p>}</>
+        <>{error || clientError ? <p>{clientError ? clientError : error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading collection...</p>}</>
       }
     </Layout>
   );
