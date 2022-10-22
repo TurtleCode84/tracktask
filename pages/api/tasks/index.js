@@ -72,39 +72,69 @@ async function tasksRoute(req, res) {
       return;
     }
     res.json(data);
-  } else if (req.method === 'POST') { // Create a new task
-    const { name, description, dueDate, markPriority } = await req.body;
-    if (!name || !description) {
-      res.status(422).json({ message: "Invalid data" });
-      return;
-    } else if (name.trim().length > 55 || description.trim().length > 500) {
-      res.status(422).json({ message: "Length of title and description must not exceed 55 and 500 characters respectively." });
-      return;
-    }
-    // Otherwise...
-    try {
-      const newTask = {
-        name: name.trim(),
-        description: description.trim(),
-        hidden: false,
-        owner: ObjectId(user.id),
-        created: Math.floor(Date.now()/1000),
-        completion: {
-          completed: 0,
-          completedBy: "",
-        },
-        priority: markPriority,
-      };
-      if (dueDate) {
-        newTask.dueDate = moment(dueDate).unix();
-      } else {
-        newTask.dueDate = 0;
+  } else if (req.method === 'POST') { // Create a new task or collection
+    const { collection } = req.query;
+    if (collection === "true") {
+      const { name, description, shared } = await req.body;
+      if (!name || !description) {
+        res.status(422).json({ message: "Invalid data" });
+        return;
+      } else if (name.trim().length > 55 || description.trim().length > 500) {
+        res.status(422).json({ message: "Length of title and description must not exceed 55 and 500 characters respectively." });
+        return;
       }
-      const createdTask = await db.collection('tasks').insertOne(newTask);
-      res.json(createdTask);
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-      return;
+      try {
+        const newCollection = {
+          name: name.trim(),
+          description: description.trim(),
+          sharing: {
+            shared: shared,
+            sharedWith: [],
+          },
+          hidden: false,
+          owner: ObjectId(user.id),
+          created: Math.floor(Date.now()/1000),
+          tasks: [],
+        };
+        const createdCollection = await db.collection('collections').insertOne(newCollection);
+        res.json(createdCollection);
+      } catch (error) {
+        res.status(500).json({ message: error.message });
+        return;
+      }
+    } else {
+      const { name, description, dueDate, markPriority } = await req.body;
+      if (!name || !description) {
+        res.status(422).json({ message: "Invalid data" });
+        return;
+      } else if (name.trim().length > 55 || description.trim().length > 500) {
+        res.status(422).json({ message: "Length of title and description must not exceed 55 and 500 characters respectively." });
+        return;
+      }
+      try {
+        const newTask = {
+          name: name.trim(),
+          description: description.trim(),
+          hidden: false,
+          owner: ObjectId(user.id),
+          created: Math.floor(Date.now()/1000),
+          completion: {
+            completed: 0,
+            completedBy: "",
+          },
+          priority: markPriority,
+        };
+        if (dueDate) {
+          newTask.dueDate = moment(dueDate).unix();
+        } else {
+          newTask.dueDate = 0;
+        }
+        const createdTask = await db.collection('tasks').insertOne(newTask);
+        res.json(createdTask);
+      } catch (error) {
+        res.status(500).json({ message: error.message });
+        return;
+      }
     }
   } else if (req.method === 'DELETE') { // Deletes a task or collection
     const { id, collection } = req.query;
@@ -121,7 +151,7 @@ async function tasksRoute(req, res) {
       ],
     };
     try {
-      if (collection !== true) {
+      if (collection !== "true") {
         const deletedItem = await db.collection("tasks").deleteOne(query);
         res.json(deletedItem);
       } else {
@@ -132,7 +162,7 @@ async function tasksRoute(req, res) {
       res.status(500).json(error);
       return;
     }
-  } else if (req.method === 'PATCH') { // Updates a task (collections coming soon)
+  } else if (req.method === 'PATCH') { // Updates a task or collection
     const body = await req.body;
     const { id, collection } = req.query;
     if (!ObjectId.isValid(id)) {
@@ -148,35 +178,49 @@ async function tasksRoute(req, res) {
       ],
     };
     var updateDoc = {};
-    if (body.name) {updateDoc.name = body.name.trim().slice(0, 55)} // If you're really going to try to pass the limit via API...
-    if (body.description) {updateDoc.description = body.description.trim().slice(0, 500)}
-    if (body.dueDate !== undefined) {
-      if (body.dueDate) {
-        updateDoc.dueDate = moment(body.dueDate).unix();
-      } else {
-        updateDoc.dueDate = 0;
+    if (collection !== "true") {
+      if (body.name) {updateDoc.name = body.name.trim().slice(0, 55)} // If you're really going to try to pass the limit via API...
+      if (body.description) {updateDoc.description = body.description.trim().slice(0, 500)}
+      if (body.dueDate !== undefined) {
+        if (body.dueDate) {
+          updateDoc.dueDate = moment(body.dueDate).unix();
+        } else {
+          updateDoc.dueDate = 0;
+        }
       }
-    }
-    if (body.priority !== undefined) {updateDoc.priority = body.priority}
-    if (body.completion) {
-      updateDoc.completion = {};
-      updateDoc.completion.completed = body.completion.completed;
-      updateDoc.completion.completedBy = body.completion.completedBy;
-    }
-    updateDoc = {
-      $set: updateDoc,
-    }
-    try {
-      if (collection !== true) {
+      if (body.priority !== undefined) {updateDoc.priority = body.priority}
+      if (body.completion) {
+        updateDoc.completion = {};
+        updateDoc.completion.completed = body.completion.completed;
+        updateDoc.completion.completedBy = body.completion.completedBy;
+      }
+      updateDoc = {
+        $set: updateDoc,
+      }
+      try {
         const updatedTask = await db.collection("tasks").updateOne(query, updateDoc);
         res.json(updatedTask);
-      } else {
-        res.status(418).json({ message: "Under construction" });
+      } catch (error) {
+        res.status(500).json(error);
         return;
       }
-    } catch (error) {
-      res.status(500).json(error);
-      return;
+    } else {
+      if (body.name) {updateDoc.name = body.name.trim().slice(0, 55)} // If you're really going to try to pass the limit via API...
+      if (body.description) {updateDoc.description = body.description.trim().slice(0, 500)}
+      if (body.shared !== undefined) {
+        updateDoc.sharing = {};
+        updateDoc.sharing.shared = body.shared;
+      }
+      updateDoc = {
+        $set: updateDoc,
+      }
+      try {
+        const updatedCollection = await db.collection("collections").updateOne(query, updateDoc);
+        res.json(updatedCollection);
+      } catch (error) {
+        res.status(500).json(error);
+        return;
+      }
     }
   } else {
     res.status(405).json({ message: "Method not allowed" });

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import moment from "moment";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
-//import CollectionCreateForm from "components/CollectionCreateForm";
+import CollectionCreateForm from "components/CollectionCreateForm";
 import useUser from "lib/useUser";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
@@ -26,43 +26,36 @@ export default function CollectionsCreate() {
       <h1>
         Create a new collection:
       </h1>
-      <p style={{ fontStyle: "italic" }}>Coming soon...</p>
-      {/*<CollectionCreateForm
+      <CollectionCreateForm
+        verified={user.permissions.verified}
         errorMessage={errorMsg}
         onSubmit={async function handleSubmit(event) {
           event.preventDefault();
-          document.getElementById("createTaskBtn").disabled = true;
-          
-          var utcDueDate;
-          if (event.currentTarget.dueDate.value) {
-            const offset = new Date().getTimezoneOffset();
-            utcDueDate = moment(event.currentTarget.dueDate.value, moment.HTML5_FMT.DATETIME_LOCAL).utcOffset(offset);
-          } else {
-            utcDueDate = "";
-          }
+          document.getElementById("createCollectionBtn").disabled = true;
 
           const body = {
             name: event.currentTarget.name.value,
             description: event.currentTarget.description.value,
           };
+          if (event.currentTarget.shared) {body.shared = event.currentTarget.shared.checked} else {body.shared = false}
 
           try {
-            const getUrl = await fetchJson("/api/tasks", {
+            const getUrl = await fetchJson("/api/tasks?collection=true", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(body),
             })
-            router.push(`/tasks/${getUrl.insertedId}`);
+            router.push(`/collections/${getUrl.insertedId}`);
           } catch (error) {
             if (error instanceof FetchError) {
               setErrorMsg(error.data.message);
             } else {
               console.error("An unexpected error happened:", error);
             }
-            document.getElementById("createTaskBtn").disabled = false;
+            document.getElementById("createCollectionBtn").disabled = false;
           }
         }}
-      />*/}
+      />
       <br/><Link href="/dashboard">Back to dashboard</Link>
     </Layout>
   );

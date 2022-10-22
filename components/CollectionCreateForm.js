@@ -1,6 +1,6 @@
-export default function TaskCreateForm({ errorMessage, onSubmit }) {
+export default function CollectionCreateForm({ verified, errorMessage, onSubmit }) {
   return (
-    <form id="taskCreateForm" autocomplete="off" onSubmit={onSubmit}>
+    <form id="collectionCreateForm" autocomplete="off" onSubmit={onSubmit}>
       <label>
         <span>Name</span>
         <input type="text" name="name" maxlength="55" required />
@@ -9,16 +9,14 @@ export default function TaskCreateForm({ errorMessage, onSubmit }) {
         <span>Description</span>
         <textarea name="description" rows="4" cols="30" maxlength="500" required />
       </label><br/>
+      {verified ? <>
       <label>
-        <span>Due Date (optional)</span>
-        <input type="datetime-local" name="dueDate" min="1970-01-01T00:00" />
-      </label>
-      <label>
-        <span>Mark as priority</span>
-        <input type="checkbox" name="markPriority" />
-      </label>
+        <span>Shared <span style={{ color: "lightslategray" }} className="material-symbols-outlined icon-list">group</span></span>
+        <input type="checkbox" name="shared" />
+      </label></>
+      : null}
 
-      <button type="submit" id="createTaskBtn">Create task</button>
+      <button type="submit" id="createCollectionBtn">Create collection</button>
 
       {errorMessage && <p className="error">{errorMessage}</p>}
 
