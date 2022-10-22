@@ -39,7 +39,7 @@ export default function Admin() {
   return (
     <><Layout>
       <h1>TrackTask Admin Panel <span style={{ color: "slategray" }} className="material-symbols-outlined">verified_user</span></h1>
-      {deletedMessage && <p className="success">{deletedMessage}</p>}
+      {deletedMsg && <p className="success">{deletedMsg}</p>}
       <h2>Recent Reports</h2>
       <p style={{fontStyle: "italic"}}>(Coming soon...)</p>
       <h2>User Statistics</h2>
