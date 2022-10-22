@@ -45,7 +45,7 @@ async function joinRoute(req, res) {
     const blacklist = process.env.BLACKLIST.split(',');
     const allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890";
     const cleanUsername = username.trim().toLowerCase();
-    const splitUsername = cleanUsername.split();
+    const splitUsername = cleanUsername.split('');
     const cleanEmail = email.trim().toLowerCase();
     var contains = blacklist.some(element => { // Check for blacklisted elements
       if (cleanUsername.includes(element.toLowerCase()) || cleanEmail.includes(element.toLowerCase())) {
