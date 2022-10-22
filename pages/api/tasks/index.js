@@ -178,35 +178,49 @@ async function tasksRoute(req, res) {
       ],
     };
     var updateDoc = {};
-    if (body.name) {updateDoc.name = body.name.trim().slice(0, 55)} // If you're really going to try to pass the limit via API...
-    if (body.description) {updateDoc.description = body.description.trim().slice(0, 500)}
-    if (body.dueDate !== undefined) {
-      if (body.dueDate) {
-        updateDoc.dueDate = moment(body.dueDate).unix();
-      } else {
-        updateDoc.dueDate = 0;
+    if (collection !== true) {
+      if (body.name) {updateDoc.name = body.name.trim().slice(0, 55)} // If you're really going to try to pass the limit via API...
+      if (body.description) {updateDoc.description = body.description.trim().slice(0, 500)}
+      if (body.dueDate !== undefined) {
+        if (body.dueDate) {
+          updateDoc.dueDate = moment(body.dueDate).unix();
+        } else {
+          updateDoc.dueDate = 0;
+        }
       }
-    }
-    if (body.priority !== undefined) {updateDoc.priority = body.priority}
-    if (body.completion) {
-      updateDoc.completion = {};
-      updateDoc.completion.completed = body.completion.completed;
-      updateDoc.completion.completedBy = body.completion.completedBy;
-    }
-    updateDoc = {
-      $set: updateDoc,
-    }
-    try {
-      if (collection !== true) {
+      if (body.priority !== undefined) {updateDoc.priority = body.priority}
+      if (body.completion) {
+        updateDoc.completion = {};
+        updateDoc.completion.completed = body.completion.completed;
+        updateDoc.completion.completedBy = body.completion.completedBy;
+      }
+      updateDoc = {
+        $set: updateDoc,
+      }
+      try {
         const updatedTask = await db.collection("tasks").updateOne(query, updateDoc);
         res.json(updatedTask);
-      } else {
-        res.status(418).json({ message: "Under construction" });
+      } catch (error) {
+        res.status(500).json(error);
         return;
       }
-    } catch (error) {
-      res.status(500).json(error);
-      return;
+    } else {
+      if (body.name) {updateDoc.name = body.name.trim().slice(0, 55)} // If you're really going to try to pass the limit via API...
+      if (body.description) {updateDoc.description = body.description.trim().slice(0, 500)}
+      if (body.shared !== undefined) {
+        updateDoc.sharing = {};
+        updateDoc.sharing.shared = body.shared;
+      }
+      updateDoc = {
+        $set: updateDoc,
+      }
+      try {
+        const updatedCollection = await db.collection("collections").updateOne(query, updateDoc);
+        res.json(updatedCollection);
+      } catch (error) {
+        res.status(500).json(error);
+        return;
+      }
     }
   } else {
     res.status(405).json({ message: "Method not allowed" });
