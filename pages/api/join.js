@@ -52,6 +52,9 @@ async function joinRoute(req, res) {
         return true;
       }
     });
+    if (!cleanUsername) {
+      contains = true;
+    }
     for (var i=0; i<splitUsername.length; i++) { // Check for disallowed username characters
       if (!allowedChars.includes(splitUsername[i])) {
         contains = true;
