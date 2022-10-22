@@ -72,39 +72,69 @@ async function tasksRoute(req, res) {
       return;
     }
     res.json(data);
-  } else if (req.method === 'POST') { // Create a new task
-    const { name, description, dueDate, markPriority } = await req.body;
-    if (!name || !description) {
-      res.status(422).json({ message: "Invalid data" });
-      return;
-    } else if (name.trim().length > 55 || description.trim().length > 500) {
-      res.status(422).json({ message: "Length of title and description must not exceed 55 and 500 characters respectively." });
-      return;
-    }
-    // Otherwise...
-    try {
-      const newTask = {
-        name: name.trim(),
-        description: description.trim(),
-        hidden: false,
-        owner: ObjectId(user.id),
-        created: Math.floor(Date.now()/1000),
-        completion: {
-          completed: 0,
-          completedBy: "",
-        },
-        priority: markPriority,
-      };
-      if (dueDate) {
-        newTask.dueDate = moment(dueDate).unix();
-      } else {
-        newTask.dueDate = 0;
+  } else if (req.method === 'POST') { // Create a new task or collection
+    const { collections } = req.query;
+    if (collections) {
+      const { name, description, shared } = await req.body;
+      if (!name || !description) {
+        res.status(422).json({ message: "Invalid data" });
+        return;
+      } else if (name.trim().length > 55 || description.trim().length > 500) {
+        res.status(422).json({ message: "Length of title and description must not exceed 55 and 500 characters respectively." });
+        return;
       }
-      const createdTask = await db.collection('tasks').insertOne(newTask);
-      res.json(createdTask);
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-      return;
+      try {
+        const newCollection = {
+          name: name.trim(),
+          description: description.trim(),
+          sharing: {
+            shared: shared,
+            sharedWith: [],
+          },
+          hidden: false,
+          owner: ObjectId(user.id),
+          created: Math.floor(Date.now()/1000),
+          tasks: [],
+        };
+        const createdCollection = await db.collection('collections').insertOne(newCollection);
+        res.json(createdCollection);
+      } catch (error) {
+        res.status(500).json({ message: error.message });
+        return;
+      }
+    } else {
+      const { name, description, dueDate, markPriority } = await req.body;
+      if (!name || !description) {
+        res.status(422).json({ message: "Invalid data" });
+        return;
+      } else if (name.trim().length > 55 || description.trim().length > 500) {
+        res.status(422).json({ message: "Length of title and description must not exceed 55 and 500 characters respectively." });
+        return;
+      }
+      try {
+        const newTask = {
+          name: name.trim(),
+          description: description.trim(),
+          hidden: false,
+          owner: ObjectId(user.id),
+          created: Math.floor(Date.now()/1000),
+          completion: {
+            completed: 0,
+            completedBy: "",
+          },
+          priority: markPriority,
+        };
+        if (dueDate) {
+          newTask.dueDate = moment(dueDate).unix();
+        } else {
+          newTask.dueDate = 0;
+        }
+        const createdTask = await db.collection('tasks').insertOne(newTask);
+        res.json(createdTask);
+      } catch (error) {
+        res.status(500).json({ message: error.message });
+        return;
+      }
     }
   } else if (req.method === 'DELETE') { // Deletes a task or collection
     const { id, collection } = req.query;
