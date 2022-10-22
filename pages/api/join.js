@@ -43,16 +43,22 @@ async function joinRoute(req, res) {
     }
     
     const blacklist = process.env.BLACKLIST.split(',');
-    const contains = blacklist.some(element => {
-      if (username.toLowerCase().includes(element.toLowerCase()) || email.toLowerCase().includes(element.toLowerCase())) {
+    const allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890";
+    const cleanUsername = username.trim().toLowerCase();
+    const splitUsername = cleanUsername.split();
+    const cleanEmail = email.trim().toLowerCase();
+    var contains = blacklist.some(element => { // Check for blacklisted elements
+      if (cleanUsername.includes(element.toLowerCase()) || cleanEmail.includes(element.toLowerCase())) {
         return true;
       }
     });
-    if (contains && blacklist) {
+    for (var i=0; i<splitUsername.length; i++) { // Check for disallowed username characters
+      if (!allowedChars.includes(splitUsername[i])) {
+        contains = true;
+      }
+    }
+    if (contains && blacklist) { // Figure out a way to do this when no blacklist is provided
       res.status(403).json({ message: "The username or email you provided is not allowed, please choose something else." });
-      return;
-    } else if (username.includes("@") || username.includes(" ") || username.includes("`") || username.includes("&") || username.includes("\"")) {
-      res.status(403).json({ message: "Your username contains forbidden characters (@, space, \`, &, \"), please remove them." });
       return;
     }
       
@@ -70,12 +76,12 @@ async function joinRoute(req, res) {
     
     //Otherwise...
     try {
-      db.collection('users').dropIndex( { "email": 1 } );
-      db.collection('users').createIndex( { "email": 1 }, { unique: false } );
+      //db.collection('users').dropIndex( { "email": 1 } );
+      //db.collection('users').createIndex( { "email": 1 }, { unique: false } );
       const newUser = {
-        username: username.toLowerCase(),
+        username: cleanUsername,
         password: await hash(password, 10),
-        email: email.toLowerCase(),
+        email: cleanEmail,
         profilePicture: "",
         history: {
           joined: Math.floor(Date.now()/1000),
