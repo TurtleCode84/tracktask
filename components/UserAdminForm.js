@@ -72,7 +72,7 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
           if (confirm.trim().toLowerCase() === "yes") {
             try {
               await fetchJson(`/api/admin/users/${lookup._id}`, { method: "DELETE" });
-              router.push("/admin/users?deleted=true");
+              router.push("/admin?deleted=true");
             } catch (error) {
               document.getElementById("deleteUserMessage").innerHTML = error.data.message;
             }
