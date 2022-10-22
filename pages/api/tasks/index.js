@@ -207,12 +207,15 @@ async function tasksRoute(req, res) {
     } else {
       if (body.name) {updateDoc.name = body.name.trim().slice(0, 55)} // If you're really going to try to pass the limit via API...
       if (body.description) {updateDoc.description = body.description.trim().slice(0, 500)}
-      if (body.shared !== undefined) {
-        updateDoc.sharing = {};
-        updateDoc.sharing.shared = body.shared;
-      }
-      updateDoc = {
-        $set: updateDoc,
+      if (body.shared !== undefined) { // Find a better way to do this
+        updateDoc = {
+          $set: updateDoc,
+          'sharing.shared' = body.shared,
+        }
+      } else {
+        updateDoc = {
+          $set: updateDoc,
+        }
       }
       try {
         const updatedCollection = await db.collection("collections").updateOne(query, updateDoc);
