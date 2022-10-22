@@ -209,8 +209,10 @@ async function tasksRoute(req, res) {
       if (body.description) {updateDoc.description = body.description.trim().slice(0, 500)}
       if (body.shared !== undefined) { // Find a better way to do this
         updateDoc = {
-          $set: updateDoc,
-          'sharing.shared' = body.shared,
+          $set: {
+            updateDoc,
+            'sharing.shared' = body.shared,
+          },
         }
       } else {
         updateDoc = {
