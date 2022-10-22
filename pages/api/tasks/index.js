@@ -73,8 +73,8 @@ async function tasksRoute(req, res) {
     }
     res.json(data);
   } else if (req.method === 'POST') { // Create a new task or collection
-    const { collections } = req.query;
-    if (collections) {
+    const { collection } = req.query;
+    if (collection) {
       const { name, description, shared } = await req.body;
       if (!name || !description) {
         res.status(422).json({ message: "Invalid data" });
