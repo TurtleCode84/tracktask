@@ -147,7 +147,7 @@ async function tasksRoute(req, res) {
       _id: ObjectId(id),
       $or: [
         { owner: ObjectId(user.id) },
-        { 'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: ObjectId(user.id)}} },
+        { 'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: ObjectId(user.id), role: "editor"}} }, //change so only owner can delete
       ],
     };
     try {
@@ -174,7 +174,7 @@ async function tasksRoute(req, res) {
       hidden: false,
       $or: [
         { owner: ObjectId(user.id) },
-        { 'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: ObjectId(user.id)}} },
+        { 'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: ObjectId(user.id), role: "editor"}} },
       ],
     };
     var updateDoc = {};
