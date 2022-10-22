@@ -27,6 +27,7 @@ export default function CollectionsCreate() {
         Create a new collection:
       </h1>
       <CollectionCreateForm
+        verified={user.permissions.verified}
         errorMessage={errorMsg}
         onSubmit={async function handleSubmit(event) {
           event.preventDefault();
