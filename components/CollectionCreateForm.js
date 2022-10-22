@@ -11,7 +11,7 @@ export default function CollectionCreateForm({ verified, errorMessage, onSubmit 
       </label><br/>
       {verified ? <>
       <label>
-        <span><span style={{ color: "lightslategray" }} className="material-symbols-outlined icon-list">group</span> Shared</span>
+        <span>Shared <span style={{ color: "lightslategray" }} className="material-symbols-outlined icon-list">group</span></span>
         <input type="checkbox" name="shared" />
       </label></>
       : null}
