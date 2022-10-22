@@ -40,7 +40,7 @@ export default function CollectionsCreate() {
           if (event.currentTarget.shared) {body.shared = event.currentTarget.shared.checked} else {body.shared = false}
 
           try {
-            const getUrl = await fetchJson("/api/tasks?collections=true", {
+            const getUrl = await fetchJson("/api/tasks?collection=true", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(body),
