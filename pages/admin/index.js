@@ -5,12 +5,19 @@ import useUser from "lib/useUser";
 import useAdminUsers from "lib/useAdminUsers";
 import moment from "moment";
 import Link from "next/link";
+import { useRouter } from 'next/router'
 
 export default function Admin() {
   const { user, mutateUser } = useUser({
     redirectTo: "/dashboard",
     adminOnly: true,
   });
+  const router = useRouter();
+  const { deleted } = router.query;
+  var deletedMsg;
+  if (deleted === "true") {
+    deletedMsg = "User successfully deleted!"
+  }
   const { users: recentlyActive } = useAdminUsers(user, "login", 5);
   const activeUsersList = recentlyActive?.map((activeUser) =>
     <li key={activeUser._id} style={{ margin: "0.5em" }}>
@@ -30,8 +37,9 @@ export default function Admin() {
     );
   }
   return (
-    <Layout>
+    <><Layout>
       <h1>TrackTask Admin Panel <span style={{ color: "slategray" }} className="material-symbols-outlined">verified_user</span></h1>
+      {deletedMsg && <p className="success">{deletedMsg}</p>}
       <h2>Recent Reports</h2>
       <p style={{fontStyle: "italic"}}>(Coming soon...)</p>
       <h2>User Statistics</h2>
@@ -60,5 +68,11 @@ export default function Admin() {
         )}
       </details>
     </Layout>
+    <style jsx>{`
+      .success {
+        color: darkgreen;
+        margin: 1rem 0 0;
+      }
+    `}</style></>
   );
 }
