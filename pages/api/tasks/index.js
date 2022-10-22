@@ -162,7 +162,7 @@ async function tasksRoute(req, res) {
       res.status(500).json(error);
       return;
     }
-  } else if (req.method === 'PATCH') { // Updates a task (collections coming soon)
+  } else if (req.method === 'PATCH') { // Updates a task or collection
     const body = await req.body;
     const { id, collection } = req.query;
     if (!ObjectId.isValid(id)) {
