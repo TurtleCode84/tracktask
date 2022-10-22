@@ -210,7 +210,7 @@ async function tasksRoute(req, res) {
       if (body.shared !== undefined) { // Find a better way to do this
         updateDoc = {
           $set: {
-            updateDoc,
+            ...updateDoc,
             'sharing.shared' = body.shared,
           },
         }
