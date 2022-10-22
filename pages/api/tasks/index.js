@@ -74,7 +74,7 @@ async function tasksRoute(req, res) {
     res.json(data);
   } else if (req.method === 'POST') { // Create a new task or collection
     const { collection } = req.query;
-    if (collection) {
+    if (collection === "true") {
       const { name, description, shared } = await req.body;
       if (!name || !description) {
         res.status(422).json({ message: "Invalid data" });
@@ -151,7 +151,7 @@ async function tasksRoute(req, res) {
       ],
     };
     try {
-      if (collection !== true) {
+      if (collection !== "true") {
         const deletedItem = await db.collection("tasks").deleteOne(query);
         res.json(deletedItem);
       } else {
@@ -178,7 +178,7 @@ async function tasksRoute(req, res) {
       ],
     };
     var updateDoc = {};
-    if (collection !== true) {
+    if (collection !== "true") {
       if (body.name) {updateDoc.name = body.name.trim().slice(0, 55)} // If you're really going to try to pass the limit via API...
       if (body.description) {updateDoc.description = body.description.trim().slice(0, 500)}
       if (body.dueDate !== undefined) {
