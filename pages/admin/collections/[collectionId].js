@@ -45,7 +45,7 @@ export default function Collection() {
         <p>Description: {collection.description}</p>
         <p title={moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Created: {collection.created > 0 ? <>{moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a")}{' '}({moment.unix(collection.created).fromNow()})</> : 'never'}</p>
         <p>Owner: <User user={user} id={collection.owner}/></p>
-        {collection.sharing.shared ? <p>Shared with: <ul>{sharedWithList}</ul></p> : null}
+        {collection.sharing.shared && <p>Shared with: <ul>{sharedWithList}</ul></p>}
         <p>Number of tasks: {collection.tasks.length}</p>
         <p>Tasks in collection:</p>
         {taskList === undefined || error ?
