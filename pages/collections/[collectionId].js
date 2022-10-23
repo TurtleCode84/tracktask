@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
 import Task from "components/Task";
+import User from "components/User";
 import CollectionEditForm from "components/CollectionEditForm";
 import useUser from "lib/useUser";
 import useTasks from "lib/useTasks";
@@ -27,6 +28,9 @@ export default function Collection() {
   const taskList = collection?.tasks.map((task) =>
     <Task task={task} key={task._id}/>
   );
+  const sharedWithList = collection?.sharing.sharedWith.map((item) =>
+    <li key={item.id}><User user={user} id={item.id}/></li>
+  );
   
   if (!user || !user.isLoggedIn || user.permissions.banned) {
     return (
@@ -42,6 +46,8 @@ export default function Collection() {
         <><h3>General information</h3>
         <p>Description: {collection.description}</p>
         <p title={moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Created: {collection.created > 0 ? <>{moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a")}{' '}({moment.unix(collection.created).fromNow()})</> : 'never'}</p>
+        {user.id !== collection.owner && <p>Owner: <User user={user} id={collection.owner}/></p>}
+        {collection.sharing.shared && <>{sharedWithList}</>}
         <p>Number of tasks: {collection.tasks.length}</p>
         <p>Tasks in collection:</p>
         {taskList === undefined || error ?
