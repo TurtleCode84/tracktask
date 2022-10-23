@@ -5,10 +5,12 @@ import Task from "components/Task";
 //import CollectionAdminForm from "components/CollectionEditForm";
 import useUser from "lib/useUser";
 import useAdminCollections from "lib/useAdminCollections";
+import useTool from "lib/useTool";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from 'next/router';
 import moment from "moment";
 import Link from "next/link";
+import Image from "next/link";
 
 export default function Collection() {
   const { user } = useUser({
@@ -23,6 +25,12 @@ export default function Collection() {
   const collection = collections?.[0];
   const taskList = collection?.tasks.map((task) =>
     <Task task={task} key={task._id}/>
+  );
+
+  const { info: owner, error: toolError } = useTool(user, "userInfo", collection?.owner);
+
+  const sharedWithList = collection?.sharing.sharedWith.map((item) =>
+    <li>{item.id}</li>
   );
   
   if (!user || !user.isLoggedIn || !user.permissions.admin) {
@@ -39,8 +47,8 @@ export default function Collection() {
         <><h3>General information</h3>
         <p>Description: {collection.description}</p>
         <p title={moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Created: {collection.created > 0 ? <>{moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a")}{' '}({moment.unix(collection.created).fromNow()})</> : 'never'}</p>
-        <p>Owner: {collection.owner}</p>
-        {collection.sharing.shared ? <p>Shared with: {/*sharedWithList*/}</p> : null}
+        <p>Owner: <span style={{ borderRadius: "100%", overflow: "hidden", marginRight: ".3em", verticalAlign: "middle" }}><Image src={owner?.profilePicture ? owner.profilePicture : "/default-pfp.jpg" } width={32} height={32} alt=""/></span>{owner?.username}</p>
+        {collection.sharing.shared ? <p>Shared with: <ul>{sharedWithList}</ul></p> : null}
         <p>Number of tasks: {collection.tasks.length}</p>
         <p>Tasks in collection:</p>
         {taskList === undefined || error ?
