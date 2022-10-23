@@ -61,7 +61,7 @@ async function tasksRoute(req, res) {
         res.status(200).json([]);
       }
       for (var i=0; i<data.length; i++) {
-        data[i].tasks = await db.collection("tasks").find({ _id: {$in: data[i].tasks} }, taskoptions).toArray();
+        data[i].tasks = await db.collection("tasks").find({ _id: {$in: data[i].tasks}, hidden: false }, taskoptions).toArray();
       }
     }
     if (data.length === 0 && collections !== "true") {
