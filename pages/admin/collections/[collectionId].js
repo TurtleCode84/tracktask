@@ -15,16 +15,16 @@ export default function Collection() {
     adminOnly: true,
     redirectTo: "/login",
   });
-  const { collections, error } = useAdminCollections(user, false);
+  const { collectionId } = router.query;
+  const { collections, error } = useAdminCollections(user, collectionId);
   
   const [errorMsg, setErrorMsg] = useState("");
   const router = useRouter();
-  const { collectionId } = router.query;
-  const collection = collections?.filter(item => item._id === collectionId)?.[0];
+  const collection = collections?.[0];
   var clientError;
-  if (collections && !collection) {
+  /*if (collections && !collection) {
     clientError = "No collection found";
-  }
+  }*/
   const taskList = collection?.tasks.map((task) =>
     <Task task={task} key={task._id}/>
   );
