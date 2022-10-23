@@ -30,7 +30,7 @@ async function adminCollectionRoute(req, res) {
     };
     try {
       var getCollections = await db.collection("collections").find(query).toArray();
-      if (!getCollections) {
+      if (!getCollections || getCollections.length === 0) {
         res.status(404).json({ message: "No collection found" });
         return;
       }
