@@ -1,5 +1,5 @@
 import useTool from "lib/useTool";
-import Image from "next/Image";
+import Image from "next/image";
 
 export default function User({ user, id }) {
   const { info, error } = useTool(user, "userInfo", id);
