@@ -26,13 +26,13 @@ async function adminCollectionRoute(req, res) {
       query._id = ObjectId(id[0]);
     }
     try {
-      var getCollection = await db.collection("collections").find(query).toArray()[0];
-      getCollection.tasks = await db.collection("tasks").find({ _id: {$in: getTasks.tasks} }).toArray();
+      var getCollection = await db.collection("collections").find(query).toArray();
+      getCollection[0].tasks = await db.collection("tasks").find({ _id: {$in: getTasks.tasks} }).toArray();
       if (!getCollection) {
         res.status(404).json({ message: "No collection found" });
         return;
       }
-      res.json(getCollection);
+      res.json(getCollection[0]);
     } catch (error) {
       res.status(200).json([]);
     }
