@@ -25,14 +25,19 @@ async function adminCollectionRoute(req, res) {
     if (id) {
       query._id = ObjectId(id[0]);
     }
+    const taskoptions = {
+      sort: { 'completion.completed': 1, priority: -1, dueDate: 1 },
+    };
     try {
-      var getCollection = await db.collection("collections").find(query).toArray();
-      getCollection[0].tasks = await db.collection("tasks").find({ _id: {$in: getTasks.tasks} }).toArray();
-      if (!getCollection) {
+      var getCollections = await db.collection("collections").find(query).toArray();
+      if (!getCollections) {
         res.status(404).json({ message: "No collection found" });
         return;
       }
-      res.json(getCollection[0]);
+      for (var i=0; i<getCollections.length; i++) {
+        getCollections[i].tasks = await db.collection("tasks").find({ _id: {$in: getCollections[i].tasks} }, taskoptions).toArray();
+      }
+      res.json(getCollections);
     } catch (error) {
       res.status(200).json([]);
     }
