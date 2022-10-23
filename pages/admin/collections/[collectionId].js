@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
 import Task from "components/Task";
+import User from "components/User";
 //import CollectionAdminForm from "components/CollectionEditForm";
 import useUser from "lib/useUser";
 import useAdminCollections from "lib/useAdminCollections";
-import useTool from "lib/useTool";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from 'next/router';
 import moment from "moment";
@@ -27,10 +27,8 @@ export default function Collection() {
     <Task task={task} key={task._id}/>
   );
 
-  const { info: owner, error: toolError } = useTool(user, "userInfo", collection?.owner);
-
   const sharedWithList = collection?.sharing.sharedWith.map((item) =>
-    <li>{item.id}</li>
+    <li key={item.id}><User user={user} id={item.id}/></li>
   );
   
   if (!user || !user.isLoggedIn || !user.permissions.admin) {
@@ -47,7 +45,7 @@ export default function Collection() {
         <><h3>General information</h3>
         <p>Description: {collection.description}</p>
         <p title={moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Created: {collection.created > 0 ? <>{moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a")}{' '}({moment.unix(collection.created).fromNow()})</> : 'never'}</p>
-        <p>Owner: <span style={{ borderRadius: "100%", overflow: "hidden", marginRight: ".3em", verticalAlign: "middle" }}><Image src={owner?.profilePicture ? owner.profilePicture : "/default-pfp.jpg" } width={32} height={32} alt=""/></span>{owner?.username}</p>
+        <p>Owner: <User user={user} id={collection.owner}/></p>
         {collection.sharing.shared ? <p>Shared with: <ul>{sharedWithList}</ul></p> : null}
         <p>Number of tasks: {collection.tasks.length}</p>
         <p>Tasks in collection:</p>
