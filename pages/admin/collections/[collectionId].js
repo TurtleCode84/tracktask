@@ -43,6 +43,8 @@ export default function Collection() {
         <><h3>General information</h3>
         <p>Description: {collection.description}</p>
         <p title={moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Created: {collection.created > 0 ? <>{moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a")}{' '}({moment.unix(collection.created).fromNow()})</> : 'never'}</p>
+        <p>Hidden: {collection.hidden ? <span style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">check</span> : <span style={{ color: "red" }} className="material-symbols-outlined icon-list">close</span>}</p>
+        <p>Status: {collection.sharing.shared ? <span title="Shared" style={{ color: "lightslategray" }} className="material-symbols-outlined">group</span> : <span title="Private" style={{ color: "lightslategray" }} className="material-symbols-outlined">lock</span>}</p>
         <p>Number of tasks: {collection.tasks.length}</p>
         <p>Tasks in collection:</p>
         {taskList === undefined || error ?
@@ -62,7 +64,7 @@ export default function Collection() {
             collection={collection}
             onSubmit={async function handleSubmit(event) {
               event.preventDefault();
-              document.getElementById("editCollectionBtn").disabled = true;
+              document.getElementById("adminCollectionBtn").disabled = true;
               
               const body = {};
               if (event.currentTarget.name.value !== event.currentTarget.name.defaultValue) {body.name = event.currentTarget.name.value};
@@ -70,7 +72,7 @@ export default function Collection() {
               if (event.currentTarget.shared && event.currentTarget.shared.checked !== event.currentTarget.shared.defaultChecked) {body.shared = event.currentTarget.shared.checked}
 
               try {
-                await fetchJson(`/api/tasks?collection=true&id=${collection._id}`, {
+                await fetchJson(`/api/admin/collections/${collection._id}`, {
                   method: "PATCH",
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify(body),
@@ -82,7 +84,7 @@ export default function Collection() {
                 } else {
                   console.error("An unexpected error happened:", error);
                 }
-                document.getElementById("editCollectionBtn").disabled = false;
+                document.getElementById("adminCollectionBtn").disabled = false;
               }
             }}
         />
@@ -90,6 +92,10 @@ export default function Collection() {
       :
         <>{error || clientError ? <p>{clientError ? clientError : error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading collection...</p>}</>
       }
+      <br/><details>
+        <summary>View raw JSON</summary>
+        {error ? <pre>{JSON.stringify(error, null, 2)}</pre> : <pre>{JSON.stringify(collection, null, 2)}</pre>}
+      </details>
     </Layout>
   );
 }
