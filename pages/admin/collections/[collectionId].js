@@ -15,11 +15,11 @@ export default function Collection() {
     adminOnly: true,
     redirectTo: "/login",
   });
+  const router = useRouter();
   const { collectionId } = router.query;
   const { collections, error } = useAdminCollections(user, collectionId);
   
   const [errorMsg, setErrorMsg] = useState("");
-  const router = useRouter();
   const collection = collections?.[0];
   var clientError;
   /*if (collections && !collection) {
