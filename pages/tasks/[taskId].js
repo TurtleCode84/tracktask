@@ -43,11 +43,12 @@ export default function Task() {
       <Link href="/dashboard">Back to dashboard</Link><br/>
       {task ?
         <><h3>General information</h3>
+        {user.id !== task.owner && <p>Owner: <User user={user} id={task.owner}/></p>}
         <p>Description:</p>{' '}<textarea value={task.description} rows="4" cols="70" disabled /><br/>
         <p title={moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Due date: {task.dueDate > 0 ? <>{moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}{' '}({moment.unix(task.dueDate).fromNow()})</> : 'never'}</p>
         {task.completion.completed > 0 ? <>
         <p>Completed on: {moment.unix(task.completion.completed).format("dddd, MMMM Do YYYY, h:mm:ss a")}{' '}({moment.unix(task.completion.completed).fromNow()})</p>
-        {user.permissions.verified ? <p>Completed by: <User user={user} id={task.completion.completedBy}/></p> : null}
+        {user.permissions.verified && <p>Completed by: <User user={user} id={task.completion.completedBy}/></p>}
         </>
         :
         <><a href={`/api/tasks?id=${task._id}`}
