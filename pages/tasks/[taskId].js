@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
 import TaskEditForm from "components/TaskEditForm";
+import User from "components/User";
 import useUser from "lib/useUser";
 import useTasks from "lib/useTasks";
-import useTool from "lib/useTool";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from 'next/router';
 import moment from "moment";
@@ -30,9 +30,7 @@ export default function Task() {
   if (tasks && !task) {
     clientError = "Task not found!";
   }
-  
-  const { info: completer, error: toolError } = useTool(user, "userInfo", task?.completion.completedBy);
-  
+    
   if (!user || !user.isLoggedIn || user.permissions.banned) {
     return (
       <Loading/>
@@ -45,11 +43,12 @@ export default function Task() {
       <Link href="/dashboard">Back to dashboard</Link><br/>
       {task ?
         <><h3>General information</h3>
+        {user.id !== task.owner && <p>Owner: <User user={user} id={task.owner}/></p>}
         <p>Description:</p>{' '}<textarea value={task.description} rows="4" cols="70" disabled /><br/>
-        <p title={moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Due date: {task.dueDate > 0 ? <>{moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}{' '}({moment.unix(task.dueDate).fromNow()})</> : 'never'}</p>
+        <p title={task.dueDate > 0 ? moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a") : 'Never'}>Due date: {task.dueDate > 0 ? <>{moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}{' '}({moment.unix(task.dueDate).fromNow()})</> : 'never'}</p>
         {task.completion.completed > 0 ? <>
         <p>Completed on: {moment.unix(task.completion.completed).format("dddd, MMMM Do YYYY, h:mm:ss a")}{' '}({moment.unix(task.completion.completed).fromNow()})</p>
-        {user.permissions.verified ? <p>Completed by: <span style={{ borderRadius: "100%", overflow: "hidden", marginRight: ".3em", verticalAlign: "middle" }}><Image src={completer?.profilePicture ? completer.profilePicture : "/default-pfp.jpg" } width={32} height={32} alt=""/></span>{completer?.username}</p> : null}
+        {user.permissions.verified && <p>Completed by: <User user={user} id={task.completion.completedBy}/></p>}
         </>
         :
         <><a href={`/api/tasks?id=${task._id}`}
