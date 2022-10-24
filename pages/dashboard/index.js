@@ -3,7 +3,7 @@ import moment from "moment";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
 import Task from "components/Task";
-//import Collection from "components/Collection";
+import Collection from "components/Collection";
 import Link from "next/link";
 import useUser from "lib/useUser";
 import useTasks from "lib/useTasks";
@@ -29,9 +29,7 @@ export default function Dashboard() {
   );
   const { tasks: collections, error: collectionsError } = useTasks(user, true, false);
   const collectionList = collections?.map((collection) =>
-    <li key={collection._id} className="list-hover" style={{ margin: "0.5em", background: "#f8f8f8", padding: "5px", borderWidth: "2px", borderStyle: "solid", borderColor: "darkgray", borderRadius: "10px", width: "auto" }} onClick={() => router.push(`/collections/${collection._id}`)}>
-      {collection.sharing.shared ? <span title="Shared" style={{ color: "lightslategray" }} className="material-symbols-outlined icon-list">group</span> : <span title="Private" style={{ color: "lightslategray" }} className="material-symbols-outlined icon-list">lock</span>}{' '}<b>{collection.name}</b> - {collection.description.slice(0,30).trim()}... (created {collection.created !== 0 ? moment.unix(collection.created).fromNow() : 'never'})
-    </li>
+    <Collection collection={collection} key={collection._id}/>
   );
   
   if (!user || !user.isLoggedIn || user.permissions.banned) {
