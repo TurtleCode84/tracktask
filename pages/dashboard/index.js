@@ -79,16 +79,13 @@ export default function Dashboard() {
       }
       <Link href="/tasks">View all tasks</Link>
       
-      <h2>Your collections:</h2>
-      {collectionList === undefined || collectionsError ?
-      <>
-      {collectionsError ? <p style={{ fontStyle: "italic" }}>{collectionsError.data? collectionsError.data.message : collectionsError.message}</p> : <p style={{ fontStyle: "italic" }}>Loading collections...</p>}
-      </>
-      :
-      <><ul style={{ display: "table" }}>
+      {!collectionsError &&
+      <><h2>Your collections:</h2>
+      <ul style={{ display: "table" }}>
         {collectionList}
       </ul></>
       }
+      <Link href="/collections">View all collections</Link>
     </Layout>    
   );
 }
