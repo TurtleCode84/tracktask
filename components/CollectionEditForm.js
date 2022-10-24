@@ -14,11 +14,15 @@ export default function CollectionEditForm({ errorMessage, onSubmit, collection 
         <textarea name="description" rows="4" cols="30" defaultValue={collection.description} maxlength="500" />
       </label><hr/>
       <label>
+        <span>Add task (by ID)</span>
+        <input type="text" name="addTask" defaultValue="" maxlength="24" />
+      </label>
+      <label>
         <span>Shared <span style={{ color: "lightslategray" }} className="material-symbols-outlined icon-list">group</span></span>
         <input type="checkbox" name="shared" defaultChecked={collection.sharing.shared} />
       </label><hr/>
 
-      <button type="submit" id="editCollectionBtn">Edit collection data</button>
+      <button type="submit" id="editCollectionBtn">Save collection data</button>
 
       {errorMessage && <p className="error">{errorMessage}</p>}<hr/>
        
