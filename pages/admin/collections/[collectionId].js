@@ -27,7 +27,7 @@ export default function Collection() {
   );
 
   const sharedWithList = collection?.sharing.sharedWith.map((item) =>
-    <li key={item.id}><Link href=`/admin/users/${item.id}`><User user={user} id={item.id}/></Link></li>
+    <li key={item.id}><Link href={`/admin/users/${item.id}`}><User user={user} id={item.id}/></Link></li>
   );
   
   if (!user || !user.isLoggedIn || !user.permissions.admin) {
@@ -44,7 +44,7 @@ export default function Collection() {
         <><h3>General information</h3>
         <p>Description: {collection.description}</p>
         <p title={collection.created > 0 ? moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a") : 'Never'}>Created: {collection.created > 0 ? <>{moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a")}{' '}({moment.unix(collection.created).fromNow()})</> : 'never'}</p>
-        <p>Owner: <Link href=`/admin/users/${item.id}`><User user={user} id={collection.owner}/></Link></p>
+        <p>Owner: <Link href={`/admin/users/${item.id}`}><User user={user} id={collection.owner}/></Link></p>
         {collection.sharing.shared && <p>Shared with: <ul>{sharedWithList}</ul></p>}
         <p>Number of tasks: {collection.tasks.length}</p>
         <p>Tasks in collection:</p>
