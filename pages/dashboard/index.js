@@ -51,7 +51,7 @@ export default function Dashboard() {
         }
       </h1>
 
-      {(upcomingTaskList === undefined && !upcomingTasksError) || (overdueTaskList === undefined && !overdueTasksError) || (notdueTaskList === undefined && !notdueTasksError) ? <p style={{ fontStyle: "italic" }}>Loading tasks...</p> : null}
+      {(upcomingTaskList === undefined && !upcomingTasksError) || (overdueTaskList === undefined && !overdueTasksError) || (notdueTaskList === undefined && !notdueTasksError) && <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
       {upcomingTasksError && overdueTasksError && notdueTasksError &&
       <><h2>Your tasks:</h2>
       <p style={{ fontStyle: "italic" }}>You have no relevant tasks!</p></>
@@ -78,6 +78,12 @@ export default function Dashboard() {
       </ul></>
       }
       <Link href="/tasks">View all tasks</Link>
+      
+      {collectionList === undefined && !collectionsError && <p style={{ fontStyle: "italic" }}>Loading collections...</p>}
+      {collectionsError &&
+      <><h2>Your collections:</h2>
+      <p style={{ fontStyle: "italic" }}>You have no collections!</p></>
+      }
       
       {!collectionsError &&
       <><h2>Your collections:</h2>
