@@ -234,10 +234,24 @@ async function tasksRoute(req, res) {
       try {
         const updatedCollection = await db.collection("collections").updateOne(query, updateDoc);
         if (addCollectionsId.length > 0) {
-          const addedTasks = await db.collection("collections").updateOne(query, {$push: {tasks: {$each: [addCollectionsId] }}});
+          const addCollectionsQuery = {
+            _id: {
+              $in: addCollectionsId,
+            },
+            hidden: false,
+            owner: ObjectId(user.id),
+          };
+          const addedTasks = await db.collection("collections").updateMany(addCollectionsQuery, {$push: {tasks: ObjectId(id)}}); // Need to check if task is already in list!
         }
         if (removeCollectionsId.length > 0) {
-          const removedTasks = await db.collection("collections").updateOne(query, {$pull: {tasks: {$each: [removeCollectionsId] }}});
+          const removeCollectionsQuery = {
+            _id: {
+              $in: removeCollectionsId,
+            },
+            hidden: false,
+            owner: ObjectId(user.id),
+          };
+          const removedTasks = await db.collection("collections").updateMany(removeCollectionsQuery, {$pull: {tasks: ObjectId(id)}}); // See above
         }
         res.json(updatedCollection);
       } catch (error) {
