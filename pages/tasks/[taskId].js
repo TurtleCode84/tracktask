@@ -98,9 +98,7 @@ export default function Task() {
               const body = {};
               if (addedCollectionsValues.length > 0) {body.addCollections = addedCollectionsValues};
               if (removedCollectionsValues.length > 0) {body.removeCollections = removedCollectionsValues};
-              
-              console.log(body.addCollections.length);
-              
+                            
               try {
                 await fetchJson(`/api/tasks?collection=true&id=${task._id}`, {
                   method: "PATCH",
