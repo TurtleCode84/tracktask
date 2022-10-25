@@ -221,6 +221,12 @@ async function tasksRoute(req, res) {
       }
       try {
         const updatedCollection = await db.collection("collections").updateOne(query, updateDoc);
+        if (body.addCollections) {
+          const addedTask = await db.collection("collections").updateOne(query, {$push: {tasks: {$each: body.addCollections}}});
+        }
+        if (body.removeCollections) {
+          const removedTask = await db.collection("collections").updateOne(query, {$pull: {tasks: {$each: body.removeCollections}}});
+        }
         res.json(updatedCollection);
       } catch (error) {
         res.status(500).json(error);
