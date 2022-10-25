@@ -122,8 +122,8 @@ async function adminUserRoute(req, res) {
     }
     const lastEditDoc = {
       $set: {
-        'lastEdit.timestamp': Math.floor(Date.now()/1000),
-        'lastEdit.by': ObjectId(user.id),
+        'history.lastEdit.timestamp': Math.floor(Date.now()/1000),
+        'history.lastEdit.by': ObjectId(user.id),
       },
     };
     const lastEditUpdate = await db.collection('users').updateOne(query, lastEditDoc); // See above
