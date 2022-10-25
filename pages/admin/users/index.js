@@ -16,8 +16,8 @@ export default function UsersAdmin() {
   const router = useRouter();
   const { c } = router.query;
   var count;
-  if (typeof c === "number") {
-    count = c;
+  if (parseInt(c)) {
+    count = parseInt(c);
   } else {
     count = 25;
   }
