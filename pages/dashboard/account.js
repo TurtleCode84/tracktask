@@ -35,6 +35,7 @@ export default function Settings() {
       <p title={moment.unix(user.history.joined).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Joined: {user.history.joined > 0 ? moment.unix(user.history.joined).fromNow() : 'never'}</p>
       <p>Total tasks: unknown</p>
       <p>Total collections: unknown</p>
+      <p>Total collections: unknown</p>
       <hr/>
       <details>
         <summary>Edit account details</summary>
@@ -77,6 +78,7 @@ export default function Settings() {
            }}
         />
       </details>
+      <p style={{ fontStyle: "italic" }} title={moment.unix(user.lastEdit.timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Last edited {user.lastEdit.timestamp ? moment.unix(user.lastEdit.timestamp).fromNow() : 'never'}{user.lastEdit.by !== user.id && ' by an administrator'}</p>
     </Layout>    
   );
 }
