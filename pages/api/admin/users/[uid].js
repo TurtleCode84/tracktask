@@ -120,6 +120,13 @@ async function adminUserRoute(req, res) {
       };
       const updatedBanReason = await db.collection('users').updateOne(query, banReasonUpdateDoc); // See above
     }
+    const lastEditDoc = {
+      $set: {
+        'lastEdit.timestamp': Math.floor(Date.now()/1000),
+        'lastEdit.by': ObjectId(user.id),
+      },
+    };
+    const lastEditUpdate = await db.collection('users').updateOne(query, lastEditDoc); // See above
     res.json(updated);
   } else if (req.method === 'DELETE') {
     if (user.id === uid) {
