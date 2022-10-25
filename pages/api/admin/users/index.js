@@ -20,7 +20,7 @@ async function adminUsersRoute(req, res) {
     const db = client.db("data");
     if (sort === "joined") {
       try {
-        const getUsers = await db.collection("users").find().project({ _id: 1, username: 1, 'history.joined': 1, permissions: 1 }).limit(parseInt(count)).sort({ 'history.joined': -1 }).toArray();
+        const getUsers = await db.collection("users").find().project({ _id: 1, username: 1, 'history.joined': 1, 'history.lastLogin': 1, permissions: 1 }).limit(parseInt(count)).sort({ 'history.joined': -1 }).toArray();
         if (getUsers) {
           res.json(getUsers);
         } else {
@@ -31,7 +31,7 @@ async function adminUsersRoute(req, res) {
       }
     } else if (sort === "login") {
       try {
-        const getUsers = await db.collection("users").find({ 'permissions.banned': false }).project({ _id: 1, username: 1, 'history.lastLogin': 1, permissions: 1 }).limit(parseInt(count)).sort({ 'history.lastLogin': -1 }).toArray();
+        const getUsers = await db.collection("users").find({ 'permissions.banned': false }).project({ _id: 1, username: 1, 'history.joined': 1, 'history.lastLogin': 1, permissions: 1 }).limit(parseInt(count)).sort({ 'history.lastLogin': -1 }).toArray();
         if (getUsers) {
           res.json(getUsers);
         } else {
