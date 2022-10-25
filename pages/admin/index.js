@@ -54,9 +54,10 @@ export default function Admin() {
         {newUsersList ? newUsersList : 'Loading new users...'}
         {newUsersList && newUsersList === null && <>No new users found</>}
       </ul>
-      <p>All admin pages:</p>
+      <Link href="/admin/users">View all users</Link>
+      <p>Useful admin pages:</p>
       <ul>
-        <li><Link href="/admin/users">User Admin</Link></li>
+        <li><Link href="/admin/users/search">Find a user</Link></li>
         <li>Task Admin <span style={{fontStyle: "italic"}}>(Coming soon...)</span></li>
         <li>Reports <span style={{fontStyle: "italic"}}>(Coming soon...)</span></li>
       </ul>
