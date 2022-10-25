@@ -90,14 +90,21 @@ export default function Task() {
               event.preventDefault();
               document.getElementById("addRemoveCollectionBtn").disabled = true;
               
-              const addCollections = event.currentTarget.addCollections.selectedOptions;
-              const addCollectionsValues = addCollections.map((value) => value);
-              const removeCollections = event.currentTarget.removeCollections.selectedOptions;
-              const removeCollectionsValues = removeCollections.map((value) => value);
+              console.log("Starting mapping");
+              
+              const addedCollections = event.currentTarget.addCollections.selectedOptions;
+              console.log(addedCollections);
+              const addedCollectionsValues = addedCollections.map((value) => value);
+              console.log(addedCollectionsValues);
+              const removedCollections = event.currentTarget.removeCollections.selectedOptions;
+              const removedCollectionsValues = removedCollections.map((value) => value);
+              console.log("ok");
               
               const body = {};
-              if (addCollectionsValues.length > 0) {body.addCollections = addCollectionsValues};
-              if (removeCollectionsValues.length > 0) {body.removeCollections = removeCollectionsValues};
+              if (addedCollectionsValues.length > 0) {body.addCollections = addedCollectionsValues};
+              if (removedCollectionsValues.length > 0) {body.removeCollections = removedCollectionsValues};
+              
+              console.log(body);
 
               try {
                 await fetchJson(`/api/tasks?collection=true&id=${task._id}`, {
