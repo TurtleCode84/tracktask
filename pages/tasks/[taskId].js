@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
 import TaskEditForm from "components/TaskEditForm";
+import AddRemoveCollectionForm from "components/AddRemoveCollectionForm";
 import User from "components/User";
 import useUser from "lib/useUser";
 import useTasks from "lib/useTasks";
@@ -79,6 +80,43 @@ export default function Task() {
         }}
         ><button id="markCompleteBtn">Mark completed <span style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">task_alt</span></button></a></>}
         <hr/>
+        <details>
+          <summary>Add/remove from collection</summary>
+          <br/><AddRemoveCollectionForm
+            errorMessage={errorMsg}
+            taskId={task._id}
+            collections={collections}
+            onSubmit={async function handleSubmit(event) {
+              event.preventDefault();
+              document.getElementById("addRemoveCollectionBtn").disabled = true;
+              
+              const addCollections = event.currentTarget.addCollections.selectedOptions;
+              const addCollectionsValues = addCollections.map((value) => value);
+              const removeCollections = event.currentTarget.removeCollections.selectedOptions;
+              const removeCollectionsValues = removeCollections.map((value) => value);
+              
+              const body = {};
+              if (addCollectionsValues.length > 0) {body.addCollections = addCollectionsValues};
+              if (removeCollectionsValues.length > 0) {body.removeCollections = removeCollectionsValues};
+
+              try {
+                await fetchJson(`/api/tasks?collection=true&id=${task._id}`, {
+                  method: "PATCH",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify(body),
+                })
+                router.reload();
+              } catch (error) {
+                if (error instanceof FetchError) {
+                  setErrorMsg(error.data.message);
+                } else {
+                  console.error("An unexpected error happened:", error);
+                }
+                document.getElementById("addRemoveCollectionBtn").disabled = false;
+              }
+            }}
+          />
+        </details><br/>
         <details>
           <summary>Edit task</summary>
           <br/><TaskEditForm
