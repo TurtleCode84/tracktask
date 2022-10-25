@@ -25,7 +25,7 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
       </label>
       <p style={{ fontStyle: "italic" }}>Preferences coming soon...</p><hr/>
 
-      <button type="submit" id="editUserBtn">Edit account details</button>
+      <button type="submit" id="editUserBtn">Save account details</button>
 
       {errorMessage && <p className="error">{errorMessage}</p>}<hr/>
        

@@ -34,7 +34,7 @@ export default function TaskEditForm({ errorMessage, onSubmit, task }) {
         <input type="checkbox" name="complete" defaultChecked={task.completion.completed ? true : false} />
       </label><hr/>
 
-      <button type="submit" id="editTaskBtn">Edit task data</button>
+      <button type="submit" id="editTaskBtn">Save task data</button>
 
       {errorMessage && <p className="error">{errorMessage}</p>}<hr/>
        

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
 import TaskEditForm from "components/TaskEditForm";
+import AddRemoveCollectionForm from "components/AddRemoveCollectionForm";
 import User from "components/User";
 import useUser from "lib/useUser";
 import useTasks from "lib/useTasks";
@@ -22,8 +23,12 @@ export default function Task() {
   const router = useRouter();
   const { taskId } = router.query;
   var task = tasks?.filter(item => item._id === taskId)?.[0];
+  var canEdit = true;
   if (!task) {
+    canEdit = false;
     const collection = collections?.filter(item => item.tasks.some((element) => element._id === taskId))?.[0];
+    canEdit = collection?.sharing.sharedWith.includes({id: user.id, role: "editor"}); // WIP
+    //console.log(canEdit);
     task = collection?.tasks.filter(item => item._id === taskId)?.[0];
   }
   var clientError;
@@ -79,7 +84,44 @@ export default function Task() {
         }}
         ><button id="markCompleteBtn">Mark completed <span style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">task_alt</span></button></a></>}
         <hr/>
-        <details>
+        {user.id === task.owner && <><details>
+          <summary>Add/remove from collection</summary>
+          <br/><AddRemoveCollectionForm
+            errorMessage={errorMsg}
+            taskId={task._id}
+            collections={collections}
+            onSubmit={async function handleSubmit(event) {
+              event.preventDefault();
+              document.getElementById("addRemoveCollectionBtn").disabled = true;
+                            
+              const addedCollections = event.currentTarget.addCollections.selectedOptions;
+              const addedCollectionsValues = Array.from(addedCollections)?.map((item) => item.value);
+              const removedCollections = event.currentTarget.removeCollections.selectedOptions;
+              const removedCollectionsValues = Array.from(removedCollections)?.map((item) => item.value);
+              
+              const body = {};
+              if (addedCollectionsValues.length > 0) {body.addCollections = addedCollectionsValues};
+              if (removedCollectionsValues.length > 0) {body.removeCollections = removedCollectionsValues};
+                            
+              try {
+                await fetchJson(`/api/tasks?collection=true&id=${task._id}`, {
+                  method: "PATCH",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify(body),
+                })
+                router.reload();
+              } catch (error) {
+                if (error instanceof FetchError) {
+                  setErrorMsg(error.data.message);
+                } else {
+                  console.error("An unexpected error happened:", error);
+                }
+                document.getElementById("addRemoveCollectionBtn").disabled = false;
+              }
+            }}
+          />
+        </details><br/></>}
+        {canEdit && <><details>
           <summary>Edit task</summary>
           <br/><TaskEditForm
             errorMessage={errorMsg}
@@ -129,7 +171,7 @@ export default function Task() {
               }
             }}
         />
-        </details></>
+        </details></>}</>
       :
         <>{error || clientError ? <p>{clientError ? clientError : error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading task...</p>}</>
       }

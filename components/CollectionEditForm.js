@@ -18,7 +18,7 @@ export default function CollectionEditForm({ errorMessage, onSubmit, collection 
         <input type="checkbox" name="shared" defaultChecked={collection.sharing.shared} />
       </label><hr/>
 
-      <button type="submit" id="editCollectionBtn">Edit collection data</button>
+      <button type="submit" id="editCollectionBtn">Save collection data</button>
 
       {errorMessage && <p className="error">{errorMessage}</p>}<hr/>
        
