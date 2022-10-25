@@ -78,7 +78,7 @@ export default function Settings() {
            }}
         />
       </details>
-      <p style={{ fontStyle: "italic" }} title={moment.unix(user.lastEdit.timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Last edited {user.lastEdit.timestamp ? moment.unix(user.lastEdit.timestamp).fromNow() : 'never'}{user.lastEdit.by !== user.id && ' by an administrator'}</p>
+      <p style={{ fontStyle: "italic" }} title={moment.unix(user?.lastEdit.timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Last edited {user?.lastEdit.timestamp ? moment.unix(user?.lastEdit.timestamp).fromNow() : 'never'}{user?.lastEdit.by !== user?.id && ' by an administrator'}</p>
     </Layout>    
   );
 }
