@@ -35,7 +35,6 @@ export default function Settings() {
       <p title={moment.unix(user.history.joined).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Joined: {user.history.joined > 0 ? moment.unix(user.history.joined).fromNow() : 'never'}</p>
       <p>Total tasks: unknown</p>
       <p>Total collections: unknown</p>
-      <p>Total collections: unknown</p>
       <hr/>
       <details>
         <summary>Edit account details</summary>
