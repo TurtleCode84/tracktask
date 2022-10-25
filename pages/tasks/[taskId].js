@@ -89,16 +89,11 @@ export default function Task() {
             onSubmit={async function handleSubmit(event) {
               event.preventDefault();
               document.getElementById("addRemoveCollectionBtn").disabled = true;
-              
-              console.log("Starting mapping");
-              
+                            
               const addedCollections = event.currentTarget.addCollections.selectedOptions;
-              console.log(addedCollections);
-              const addedCollectionsValues = addedCollections.map((value) => value);
-              console.log(addedCollectionsValues);
+              const addedCollectionsValues = addedCollections?.map((value) => value);
               const removedCollections = event.currentTarget.removeCollections.selectedOptions;
-              const removedCollectionsValues = removedCollections.map((value) => value);
-              console.log("ok");
+              const removedCollectionsValues = removedCollections?.map((value) => value);
               
               const body = {};
               if (addedCollectionsValues.length > 0) {body.addCollections = addedCollectionsValues};
