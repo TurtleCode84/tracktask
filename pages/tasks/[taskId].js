@@ -23,8 +23,11 @@ export default function Task() {
   const router = useRouter();
   const { taskId } = router.query;
   var task = tasks?.filter(item => item._id === taskId)?.[0];
-  const collection = collections?.filter(item => item.tasks.some((element) => element._id === taskId))?.[0];
+  var canEdit = true;
   if (!task) {
+    canEdit = false;
+    const collection = collections?.filter(item => item.tasks.some((element) => element._id === taskId))?.[0];
+    canEdit = collection?.sharing.sharedWith.includes({id: user.id, role: "editor"});
     task = collection?.tasks.filter(item => item._id === taskId)?.[0];
   }
   var clientError;
@@ -117,7 +120,7 @@ export default function Task() {
             }}
           />
         </details><br/></>}
-        {user.id === task.owner || collection?.sharing.sharedWith.includes({id: user.id, role: "editor"}) && <><details>
+        {canEdit && <><details>
           <summary>Edit task</summary>
           <br/><TaskEditForm
             errorMessage={errorMsg}
