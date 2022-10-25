@@ -1,8 +1,6 @@
 import fetchJson, { FetchError } from "lib/fetchJson";
-import { useRouter } from "next/router";
 
 export default function addRemoveCollectionForm({ errorMessage, onSubmit, collections, taskId }) {
-  const router = useRouter();
   const addCollections = collections?.filter(collection => !collection.tasks.includes(taskId)).map((collection) =>
     <option key={collection._id} value={collection._id}>{collection.name}</option>
   );
