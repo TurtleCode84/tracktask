@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
 import UserAdminForm from "components/UserAdminForm";
+import User from "components/User";
 import useUser from "lib/useUser";
 import useAdminUser from "lib/useAdminUser";
 import fetchJson, { FetchError } from "lib/fetchJson";
@@ -68,6 +69,7 @@ export default function UserAdmin() {
         <ul>{ipList?.length > 0 ? ipList : 'No IPs found'}</ul>
       </details>
       <p title={moment.unix(lookup.history.lastLogin).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Last login: {lookup.history.lastLogin > 0 ? moment.unix(lookup.history.lastLogin).fromNow() : 'never'}</p>
+      <p>Last modified: {lookup.history.lastEdit.timestamp > 0 ? <>{lookup.history.lastEdit.timestamp} by <User user={user} id={lookup.history.lastEdit.by}/></> : 'never'}</p>
       <p>Admin notes:</p>{' '}<textarea value={lookup.history.notes ? lookup.history.notes : 'None found!'} rows="3" cols="70" disabled /><br/>
       <br/><details>
         <summary>Warnings</summary>
