@@ -234,10 +234,10 @@ async function tasksRoute(req, res) {
       try {
         const updatedCollection = await db.collection("collections").updateOne(query, updateDoc);
         if (addCollectionsId.length > 0) {
-          const addedTasks = await db.collection("collections").updateOne(query, {$push: {tasks: {$each: addCollectionsId }}});
+          const addedTasks = await db.collection("collections").updateOne(query, {$push: {tasks: {$each: [addCollectionsId] }}});
         }
         if (removeCollectionsId.length > 0) {
-          const removedTasks = await db.collection("collections").updateOne(query, {$pull: {tasks: {$each: removeCollectionsId }}});
+          const removedTasks = await db.collection("collections").updateOne(query, {$pull: {tasks: {$each: [removeCollectionsId] }}});
         }
         res.json(updatedCollection);
       } catch (error) {
