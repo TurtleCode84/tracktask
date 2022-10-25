@@ -59,6 +59,13 @@ async function userRoute(req, res) {
           $set: {'permissions.warned': false},
         };
         const updatedWarn = await db.collection('users').updateOne(query, warnUpdateDoc);
+        const lastEditDoc = {
+          $set: {
+            'lastEdit.timestamp': Math.floor(Date.now()/1000),
+            'lastEdit.by': ObjectId(user.id),
+          },
+        };
+        const lastEditUpdate = await db.collection('users').updateOne(query, lastEditDoc);
         res.json(updatedWarn);
       } catch (error) {
         res.status(500).json({ "message": error.data.message });
@@ -94,6 +101,13 @@ async function userRoute(req, res) {
         $set: updateUser,
       };
       const updated = await db.collection('users').updateOne(query, updateDoc);
+      const lastEditDoc = {
+        $set: {
+          'lastEdit.timestamp': Math.floor(Date.now()/1000),
+          'lastEdit.by': ObjectId(user.id),
+        },
+      };
+      const lastEditUpdate = await db.collection('users').updateOne(query, lastEditDoc);
       res.json(updated);
     }
   } else if (req.method === 'DELETE') {
