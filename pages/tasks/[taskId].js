@@ -23,8 +23,8 @@ export default function Task() {
   const router = useRouter();
   const { taskId } = router.query;
   var task = tasks?.filter(item => item._id === taskId)?.[0];
+  const collection = collections?.filter(item => item.tasks.some((element) => element._id === taskId))?.[0];
   if (!task) {
-    const collection = collections?.filter(item => item.tasks.some((element) => element._id === taskId))?.[0];
     task = collection?.tasks.filter(item => item._id === taskId)?.[0];
   }
   var clientError;
@@ -117,7 +117,7 @@ export default function Task() {
             }}
           />
         </details><br/></>}
-        <details>
+        {user.id === task.owner || collection.sharing.sharedWith.includes({id: user.id, role: "editor"}) && <><details>
           <summary>Edit task</summary>
           <br/><TaskEditForm
             errorMessage={errorMsg}
@@ -167,7 +167,7 @@ export default function Task() {
               }
             }}
         />
-        </details></>
+        </details></>}</>
       :
         <>{error || clientError ? <p>{clientError ? clientError : error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading task...</p>}</>
       }
