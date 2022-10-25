@@ -29,7 +29,7 @@ async function userRoute(req, res) {
         username: userInfo.username,
         email: userInfo.email,
         profilePicture: userInfo.profilePicture,
-        history: { joined: userInfo.history.joined, banReason: userInfo.history.banReason, warnings: userInfo.history.warnings },
+        history: { joined: userInfo.history.joined, banReason: userInfo.history.banReason, warnings: userInfo.history.warnings, lastEdit: userInfo.history.lastEdit },
         permissions: userInfo.permissions,
       };
       req.session.user = user;
