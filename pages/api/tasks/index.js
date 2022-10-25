@@ -219,14 +219,26 @@ async function tasksRoute(req, res) {
           $set: updateDoc,
         }
       }
+      var addCollectionsId = [];
+      if (body.addCollections) {
+        for (var i=0; i<body.addCollections.length; i++) {
+          addCollectionsId[i] = ObjectId(body.addCollections[i]);
+        }
+      }
+      var removeCollectionsId = [];
+      if (body.removeCollections) {
+        for (var i=0; i<body.removeCollections.length; i++) {
+          removeCollectionsId[i] = ObjectId(body.removeCollections[i]);
+        }
+      }
       try {
         const updatedCollection = await db.collection("collections").updateOne(query, updateDoc);
-        /*if (body.addCollections) {
-          const addedTask = await db.collection("collections").updateOne(query, {$push: {tasks: {$each: body.addCollections}}});
+        if (addCollectionsId.length > 0) {
+          const addedTasks = await db.collection("collections").updateOne(query, {$push: {tasks: {$each: addCollectionsId }}});
         }
-        if (body.removeCollections) {
-          const removedTask = await db.collection("collections").updateOne(query, {$pull: {tasks: {$each: body.removeCollections}}});
-        }*/
+        if (removeCollectionsId.length > 0) {
+          const removedTasks = await db.collection("collections").updateOne(query, {$pull: {tasks: {$each: removeCollectionsId }}});
+        }
         res.json(updatedCollection);
       } catch (error) {
         res.status(500).json(error);
