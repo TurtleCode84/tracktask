@@ -1,5 +1,3 @@
-import fetchJson, { FetchError } from "lib/fetchJson";
-
 export default function addRemoveCollectionForm({ errorMessage, onSubmit, collections, taskId }) {
   const addCollections = collections?.filter(collection => !collection.tasks.includes(taskId)).map((collection) =>
     <option key={collection._id} value={collection._id}>{collection.name}</option>
