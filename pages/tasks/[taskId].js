@@ -91,9 +91,9 @@ export default function Task() {
               document.getElementById("addRemoveCollectionBtn").disabled = true;
                             
               const addedCollections = event.currentTarget.addCollections.selectedOptions;
-              const addedCollectionsValues = addedCollections?.map((value) => value);
+              const addedCollectionsValues = Array.from(addedCollections).map((value) => value);
               const removedCollections = event.currentTarget.removeCollections.selectedOptions;
-              const removedCollectionsValues = removedCollections?.map((value) => value);
+              const removedCollectionsValues = Array.from(removedCollections).map((value) => value);
               
               const body = {};
               if (addedCollectionsValues.length > 0) {body.addCollections = addedCollectionsValues};
