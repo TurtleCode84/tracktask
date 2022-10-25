@@ -105,12 +105,7 @@ export default function Task() {
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify(body),
                 })
-                console.log(JSON.stringify(body));
-                console.log(addedCollectionsValues);
-                console.log(removedCollectionsValues);
-                console.log(addedCollectionsValues[0]);
-                console.log(removedCollectionsValues[0]);
-                //router.reload();
+                router.reload();
               } catch (error) {
                 if (error instanceof FetchError) {
                   setErrorMsg(error.data.message);
