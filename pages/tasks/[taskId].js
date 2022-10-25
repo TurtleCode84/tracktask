@@ -80,7 +80,7 @@ export default function Task() {
         }}
         ><button id="markCompleteBtn">Mark completed <span style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">task_alt</span></button></a></>}
         <hr/>
-        <details>
+        {user.id === task.owner && <><details>
           <summary>Add/remove from collection</summary>
           <br/><AddRemoveCollectionForm
             errorMessage={errorMsg}
@@ -116,7 +116,7 @@ export default function Task() {
               }
             }}
           />
-        </details><br/>
+        </details><br/></>}
         <details>
           <summary>Edit task</summary>
           <br/><TaskEditForm
