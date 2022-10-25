@@ -117,7 +117,7 @@ export default function Task() {
             }}
           />
         </details><br/></>}
-        {user.id === task.owner || collection.sharing.sharedWith.includes({id: user.id, role: "editor"}) && <><details>
+        {user.id === task.owner || collection?.sharing.sharedWith.includes({id: user.id, role: "editor"}) && <><details>
           <summary>Edit task</summary>
           <br/><TaskEditForm
             errorMessage={errorMsg}
