@@ -39,7 +39,8 @@ export default function Collection() {
   return (
     <Layout>
       <h2>{collection?.hidden ? <span title="Hidden" style={{ color: "red" }} className="material-symbols-outlined">disabled_visible</span> : null}{collection?.sharing.shared ? <span title="Shared" style={{ color: "lightslategray" }} className="material-symbols-outlined">group</span> : <span title="Private" style={{ color: "lightslategray" }} className="material-symbols-outlined">lock</span>}{' '}{collection ? <>{collection.name}:</> : 'Loading...'}</h2>
-      <Link href="/dashboard">Back to dashboard</Link><br/>
+      <Link href="/admin/collections">Back to collections</Link><br/>
+      <Link href="/admin/dashboard">Back to admin dashboard</Link><br/>
       {collection ?
         <><h3>General information</h3>
         <p>Description: {collection.description}</p>
