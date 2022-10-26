@@ -5,7 +5,7 @@ import Loading from "components/Loading";
 import Collection from "components/Collection";
 import Link from "next/link";
 import useUser from "lib/useUser";
-import useAdminUsers from "lib/useAdminUsers";
+import useAdminCollections from "lib/useAdminCollections";
 
 export default function CollectionsAdmin() {
   const { user } = useUser({
