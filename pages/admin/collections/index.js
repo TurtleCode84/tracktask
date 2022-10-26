@@ -14,7 +14,7 @@ export default function CollectionsAdmin() {
   });
   const { collections, error: collectionsError } = useAdminCollections(user, false);
   const collectionList = collections?.map((collection) =>
-    <Collection collection={collection} key={collection._id}/>
+    <Collection collection={collection} key={collection._id} admin={true}/>
   );
   
   if (!user || !user.isLoggedIn || !user.permissions.admin) {
