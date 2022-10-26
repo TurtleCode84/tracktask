@@ -43,7 +43,7 @@ export default function Collection() {
       <Link href="/admin">Back to admin dashboard</Link><br/>
       {collection ?
         <><h3>General information</h3>
-        <p>Description: {collection.description}</p>
+        <p>Description:</p>{' '}<textarea value={collection.description} rows="4" cols="70" disabled /><br/>
         <p title={collection.created > 0 ? moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a") : 'Never'}>Created: {collection.created > 0 ? <>{moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a")}{' '}({moment.unix(collection.created).fromNow()})</> : 'never'}</p>
         <p>Owner: <User user={user} id={collection.owner} link={true}/></p>
         {collection.sharing.shared && <p>Shared with: <ul>{sharedWithList}</ul></p>}
