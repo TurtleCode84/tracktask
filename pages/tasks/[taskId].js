@@ -10,7 +10,7 @@ import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from 'next/router';
 import moment from "moment";
 import Link from "next/link";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 export default function Task() {
   const { user } = useUser({

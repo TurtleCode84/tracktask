@@ -1,7 +1,7 @@
 import Link from "next/link";
 import useUser from "lib/useUser";
 import { useRouter } from "next/router";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import fetchJson from "lib/fetchJson";
 
 export default function Header() {
