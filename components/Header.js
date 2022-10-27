@@ -14,22 +14,22 @@ export default function Header() {
         <ul>
           {user?.isLoggedIn === false && (<>
           <li>
-            <Link href="/">
+            <Link href="/" legacyBehavior>
               <a>Home</a>
             </Link>
           </li>
           <li>
-            <Link href="/about">
+            <Link href="/about" legacyBehavior>
               <a>About</a>
             </Link>
           </li>
           <li>
-            <Link href="/login">
+            <Link href="/login" legacyBehavior>
               <a>Login</a>
             </Link>
           </li>
           <li>
-            <Link href="/join">
+            <Link href="/join" legacyBehavior>
               <a>Join</a>
             </Link>
           </li>
@@ -37,12 +37,12 @@ export default function Header() {
           {user?.isLoggedIn === true && (
             <>
               <li>
-                <Link href="/dashboard">
+                <Link href="/dashboard" legacyBehavior>
                   <a>Dashboard</a>
                 </Link>
               </li>
               <li>
-                <Link href="/dashboard/account">
+                <Link href="/dashboard/account" legacyBehavior>
                   <a>
                     <span
                       style={{
@@ -64,18 +64,18 @@ export default function Header() {
                 </Link>
               </li>
               <li>
-                <Link href="/tasks/new">
+                <Link href="/tasks/new" legacyBehavior>
                   <a><span style={{ color: "white", margin: "0 5px 0 0" }} className="material-symbols-outlined icon-list">add_task</span>New task</a>
                 </Link>
               </li>
               <li>
-                <Link href="/collections/new">
+                <Link href="/collections/new" legacyBehavior>
                   <a><span style={{ color: "white", margin: "0 5px 0 0" }} className="material-symbols-outlined icon-list">playlist_add_check</span>New collection</a>
                 </Link>
               </li>
               {user?.permissions.admin === true && (
                 <li>
-                  <Link href="/admin">
+                  <Link href="/admin" legacyBehavior>
                     <a>Admin</a>
                   </Link>
                 </li>
