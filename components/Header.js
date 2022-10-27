@@ -14,70 +14,52 @@ export default function Header() {
         <ul>
           {user?.isLoggedIn === false && (<>
           <li>
-            <Link href="/">
-              <a>Home</a>
-            </Link>
+            <Link href="/">Home</Link>
           </li>
           <li>
-            <Link href="/about">
-              <a>About</a>
-            </Link>
+            <Link href="/about">About</Link>
           </li>
           <li>
-            <Link href="/login">
-              <a>Login</a>
-            </Link>
+            <Link href="/login">Login</Link>
           </li>
           <li>
-            <Link href="/join">
-              <a>Join</a>
-            </Link>
+            <Link href="/join">Join</Link>
           </li>
           </>)}
           {user?.isLoggedIn === true && (
             <>
               <li>
-                <Link href="/dashboard">
-                  <a>Dashboard</a>
-                </Link>
+                <Link href="/dashboard">Dashboard</Link>
               </li>
               <li>
                 <Link href="/dashboard/account">
-                  <a>
-                    <span
-                      style={{
-                        marginRight: ".3em",
-                        verticalAlign: "middle",
-                        borderRadius: "100%",
-                        overflow: "hidden",
-                      }}
-                    >
-                    <Image
-                      src={user.profilePicture ? user.profilePicture : "/default-pfp.jpg" }
-                      width={32}
-                      height={32}
-                      alt=""
-                    />
-                    </span>
-                    Account
-                  </a>
+                  <span
+                    style={{
+                      marginRight: ".3em",
+                      verticalAlign: "middle",
+                      borderRadius: "100%",
+                      overflow: "hidden",
+                    }}
+                  >
+                  <Image
+                    src={user.profilePicture ? user.profilePicture : "/default-pfp.jpg" }
+                    width={32}
+                    height={32}
+                    alt=""
+                  />
+                  </span>
+                  Account
                 </Link>
               </li>
               <li>
-                <Link href="/tasks/new">
-                  <a><span style={{ color: "white", margin: "0 5px 0 0" }} className="material-symbols-outlined icon-list">add_task</span>New task</a>
-                </Link>
+                <Link href="/tasks/new"><span style={{ color: "white", margin: "0 5px 0 0" }} className="material-symbols-outlined icon-list">add_task</span>New task</Link>
               </li>
               <li>
-                <Link href="/collections/new">
-                  <a><span style={{ color: "white", margin: "0 5px 0 0" }} className="material-symbols-outlined icon-list">playlist_add_check</span>New collection</a>
-                </Link>
+                <Link href="/collections/new"><span style={{ color: "white", margin: "0 5px 0 0" }} className="material-symbols-outlined icon-list">playlist_add_check</span>New collection</Link>
               </li>
               {user?.permissions.admin === true && (
                 <li>
-                  <Link href="/admin">
-                    <a>Admin</a>
-                  </Link>
+                  <Link href="/admin">Admin</Link>
                 </li>
               )}
               <li>
