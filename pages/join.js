@@ -62,7 +62,7 @@ export default function Join() {
           }}
         />
         <p>Already have an account?{' '}
-        <Link href="/login">
+        <Link href="/login" legacyBehavior>
           <a>Login!</a>
         </Link>
         </p>

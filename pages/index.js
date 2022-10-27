@@ -38,7 +38,7 @@ export default function Home() {
         <li>And even more!</li>
       </ul>
 
-      <h3 style={{ paddingBottom: "15px" }}><Link href="/join">Sign up</Link> or <Link href="/login">login</Link> to get started!</h3>
+      <h3 style={{ paddingBottom: "15px" }}><Link href="/join" legacyBehavior>Sign up</Link> or <Link href="/login" legacyBehavior>login</Link> to get started!</h3>
 
       <style jsx>{`
         li {

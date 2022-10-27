@@ -8,7 +8,7 @@ export default function Terms() {
       <h1>Terms of Use:</h1>
       <h3>By using TrackTask, you agree to these terms:</h3>
       <ul>
-        <li>All users must review and consent to the <Link href="/privacy">Privacy Policy</Link>.</li>
+        <li>All users must review and consent to the <Link href="/privacy" legacyBehavior>Privacy Policy</Link>.</li>
         <li>&quot;The site&quot; is defined as TrackTask in all of its domains & services.</li>
         <li>You must be at least 13 years of age to use a TrackTask account, if you are under 13 years of age you may use TrackTask with confirmed parent consent. Please contact <a href="mailto:tracktask@tracktask.eu.org">tracktask@tracktask.eu.org</a> for more information.</li>
         <li>The following activities are prohibited:</li>

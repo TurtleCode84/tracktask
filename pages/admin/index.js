@@ -37,44 +37,42 @@ export default function Admin() {
       <Loading/>
     );
   }
-  return (
-    <><Layout>
-      <h1>TrackTask Admin Panel <span style={{ color: "slategray" }} className="material-symbols-outlined">verified_user</span></h1>
-      {deletedMsg && <p className="success">{deletedMsg}</p>}
-      <h2>Recent Reports</h2>
-      <p style={{fontStyle: "italic"}}>(Coming soon...)</p>
-      <h2>User Statistics</h2>
-      <h3>Recently active:</h3>
-      <ul>
-        {activeUsersList ? activeUsersList : 'Loading active users...'}
-        {activeUsersList && activeUsersList === null && <>No active users found</>}
-      </ul>
-      <h3>Recently joined:</h3>
-      <ul>
-        {newUsersList ? newUsersList : 'Loading new users...'}
-        {newUsersList && newUsersList === null && <>No new users found</>}
-      </ul>
-      <Link href="/admin/users">View all users</Link>
-      <p>Useful admin pages:</p>
-      <ul>
-        <li><Link href="/admin/users/search">Find a user</Link></li>
-        <li><Link href="/admin/collections">View shared collections</Link></li>
-        <li>Reports <span style={{fontStyle: "italic"}}>(Coming soon...)</span></li>
-      </ul>
-      <details>
-        <summary>View my raw session info</summary>
-        {user && (
-          <>
-            <pre>{JSON.stringify(user, null, 2)}</pre>
-          </>
-        )}
-      </details>
-    </Layout>
-    <style jsx>{`
-      .success {
-        color: darkgreen;
-        margin: 1rem 0 0;
-      }
-    `}</style></>
-  );
+  return <><Layout>
+    <h1>TrackTask Admin Panel <span style={{ color: "slategray" }} className="material-symbols-outlined">verified_user</span></h1>
+    {deletedMsg && <p className="success">{deletedMsg}</p>}
+    <h2>Recent Reports</h2>
+    <p style={{fontStyle: "italic"}}>(Coming soon...)</p>
+    <h2>User Statistics</h2>
+    <h3>Recently active:</h3>
+    <ul>
+      {activeUsersList ? activeUsersList : 'Loading active users...'}
+      {activeUsersList && activeUsersList === null && <>No active users found</>}
+    </ul>
+    <h3>Recently joined:</h3>
+    <ul>
+      {newUsersList ? newUsersList : 'Loading new users...'}
+      {newUsersList && newUsersList === null && <>No new users found</>}
+    </ul>
+    <Link href="/admin/users" legacyBehavior>View all users</Link>
+    <p>Useful admin pages:</p>
+    <ul>
+      <li><Link href="/admin/users/search" legacyBehavior>Find a user</Link></li>
+      <li><Link href="/admin/collections" legacyBehavior>View shared collections</Link></li>
+      <li>Reports <span style={{fontStyle: "italic"}}>(Coming soon...)</span></li>
+    </ul>
+    <details>
+      <summary>View my raw session info</summary>
+      {user && (
+        <>
+          <pre>{JSON.stringify(user, null, 2)}</pre>
+        </>
+      )}
+    </details>
+  </Layout>
+  <style jsx>{`
+    .success {
+      color: darkgreen;
+      margin: 1rem 0 0;
+    }
+  `}</style></>;
 }
