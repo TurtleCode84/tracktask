@@ -118,14 +118,14 @@ export default function Header() {
           margin-left: auto;
         }
 
-        a {
+        Link {
           color: #fff;
           text-decoration: none;
           display: flex;
           align-items: center;
         }
 
-        a img {
+        Link img {
           margin-right: 1em;
         }
 
