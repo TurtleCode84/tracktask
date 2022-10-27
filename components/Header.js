@@ -14,52 +14,70 @@ export default function Header() {
         <ul>
           {user?.isLoggedIn === false && (<>
           <li>
-            <Link href="/">Home</Link>
+            <Link href="/" legacyBehavior>
+              <a>Home</a>
+            </Link>
           </li>
           <li>
-            <Link href="/about">About</Link>
+            <Link href="/about" legacyBehavior>
+              <a>About</a>
+            </Link>
           </li>
           <li>
-            <Link href="/login">Login</Link>
+            <Link href="/login" legacyBehavior>
+              <a>Login</a>
+            </Link>
           </li>
           <li>
-            <Link href="/join">Join</Link>
+            <Link href="/join" legacyBehavior>
+              <a>Join</a>
+            </Link>
           </li>
           </>)}
           {user?.isLoggedIn === true && (
             <>
               <li>
-                <Link href="/dashboard">Dashboard</Link>
-              </li>
-              <li>
-                <Link href="/dashboard/account">
-                  <span
-                    style={{
-                      marginRight: ".3em",
-                      verticalAlign: "middle",
-                      borderRadius: "100%",
-                      overflow: "hidden",
-                    }}
-                  >
-                  <Image
-                    src={user.profilePicture ? user.profilePicture : "/default-pfp.jpg" }
-                    width={32}
-                    height={32}
-                    alt=""
-                  />
-                  </span>
-                  Account
+                <Link href="/dashboard" legacyBehavior>
+                  <a>Dashboard</a>
                 </Link>
               </li>
               <li>
-                <Link href="/tasks/new"><span style={{ color: "white", margin: "0 5px 0 0" }} className="material-symbols-outlined icon-list">add_task</span>New task</Link>
+                <Link href="/dashboard/account" legacyBehavior>
+                  <a>
+                    <span
+                      style={{
+                        marginRight: ".3em",
+                        verticalAlign: "middle",
+                        borderRadius: "100%",
+                        overflow: "hidden",
+                      }}
+                    >
+                    <Image
+                      src={user.profilePicture ? user.profilePicture : "/default-pfp.jpg" }
+                      width={32}
+                      height={32}
+                      alt=""
+                    />
+                    </span>
+                    Account
+                  </a>
+                </Link>
               </li>
               <li>
-                <Link href="/collections/new"><span style={{ color: "white", margin: "0 5px 0 0" }} className="material-symbols-outlined icon-list">playlist_add_check</span>New collection</Link>
+                <Link href="/tasks/new" legacyBehavior>
+                  <a><span style={{ color: "white", margin: "0 5px 0 0" }} className="material-symbols-outlined icon-list">add_task</span>New task</a>
+                </Link>
+              </li>
+              <li>
+                <Link href="/collections/new" legacyBehavior>
+                  <a><span style={{ color: "white", margin: "0 5px 0 0" }} className="material-symbols-outlined icon-list">playlist_add_check</span>New collection</a>
+                </Link>
               </li>
               {user?.permissions.admin === true && (
                 <li>
-                  <Link href="/admin">Admin</Link>
+                  <Link href="/admin" legacyBehavior>
+                    <a>Admin</a>
+                  </Link>
                 </li>
               )}
               <li>
@@ -118,14 +136,14 @@ export default function Header() {
           margin-left: auto;
         }
 
-        Link {
+        a {
           color: #fff;
           text-decoration: none;
           display: flex;
           align-items: center;
         }
 
-        Link img {
+        a img {
           margin-right: 1em;
         }
 
