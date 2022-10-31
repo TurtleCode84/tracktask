@@ -38,14 +38,14 @@ export default function CollectionShare() {
       <Layout>
         <h1>Whoops!</h1>
         <p>Currently, only verified users can share collections. This page will have a button to request verification soon, but at the moment you will have to wait.<br/>Sorry for the inconvenience!</p>
-        <br/><Link href=`/collections/${collection?._id}`>Back to collection</Link>
+        <br/><Link href={`/collections/${collection?._id}`}>Back to collection</Link>
       </Layout>
     );
   }
   return (
     <Layout>
       <h1>Share {collection ? <>&quot;{collection.name}&quot;</> : 'a collection'}:</h1>
-      <Link href=`/collections/${collection?._id}`>Back to collection</Link><br/>
+      <Link href={`/collections/${collection?._id}`}>Back to collection</Link><br/>
       <Link href="/dashboard">Back to dashboard</Link><br/>
       {collection ?
       <>
