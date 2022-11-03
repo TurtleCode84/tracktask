@@ -59,6 +59,7 @@ export default function Collection() {
           {taskList}
         </ul></>
         } 
+        {user.permissions.verified && user.id === collection.owner && <><hr/><Link href={`/collections/${collection._id}/share`}>Share this collection</Link></>}
         <hr/>
         <details>
           <summary>Edit collection</summary>
@@ -91,8 +92,7 @@ export default function Collection() {
               }
             }}
         />
-        </details>
-        {user.permissions.verified && user.id === collection.owner && <><br/><Link href={`/collections/${collection._id}/share`}>Share this collection</Link></>}</>
+        </details></>
       :
         <>{error || clientError ? <p>{clientError ? clientError : error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading collection...</p>}</>
       }
