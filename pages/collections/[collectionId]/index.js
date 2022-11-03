@@ -25,10 +25,10 @@ export default function Collection() {
   if (collections && !collection) {
     clientError = "No collection found";
   }
-  const taskList = collection?.tasks?.map((task) =>
+  const taskList = collection?.tasks.map((task) =>
     <Task task={task} key={task._id}/>
   );
-  const sharedWithList = collection?.sharing?.sharedWith?.map((item) =>
+  const sharedWithList = collection?.sharing?.sharedWith.map((item) =>
     <li key={item.id}><User user={user} id={item.id}/></li>
   );
   
