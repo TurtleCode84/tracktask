@@ -265,6 +265,9 @@ async function tasksRoute(req, res) {
         return;
       }
     }
+  } else if (req.method === 'PUT') { // Shares a collection
+    res.status(418).json({ message: "Under construction" });
+    return;
   } else {
     res.status(405).json({ message: "Method not allowed" });
     return;

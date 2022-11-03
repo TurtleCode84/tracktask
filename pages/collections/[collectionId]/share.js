@@ -50,7 +50,7 @@ export default function CollectionShare() {
       {collection ?
       <>
       <p>Coming soon!</p>
-      {/*<CollectionShareForm
+      <CollectionShareForm
         errorMessage={errorMsg}
         onSubmit={async function handleSubmit(event) {
           event.preventDefault();
@@ -62,8 +62,8 @@ export default function CollectionShare() {
           };
 
           try {
-            const getUrl = await fetchJson("/api/tasks?collection=true", {
-              method: "PATCH",
+            const getUrl = await fetchJson("/api/tasks", {
+              method: "PUT",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(body),
             })
@@ -77,7 +77,7 @@ export default function CollectionShare() {
             document.getElementById("shareCollectionBtn").disabled = false;
           }
         }}
-      />*/}
+      />
       </>
       :
         <>{error || clientError ? <p>{clientError ? clientError : error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading collection...</p>}</>
