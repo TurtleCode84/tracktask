@@ -272,7 +272,7 @@ async function tasksRoute(req, res) {
     if (!ObjectId.isValid(id)) {
       res.status(422).json({ message: "Invalid collection ID" });
       return;
-    } else if (!username || !role || !roles.contains(role)) {
+    } else if (!username || !role || !roles.includes(role)) {
       res.status(422).json({ message: "Invalid data" });
       return;
     }
