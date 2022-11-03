@@ -276,7 +276,7 @@ async function tasksRoute(req, res) {
       res.status(422).json({ message: "Invalid data" });
       return;
     }
-    const validateUser = await db.collection("users").findOne({username: username, 'permissions.banned': false}, { projection: { _id: 1 } });
+    const validateUser = await db.collection("users").findOne({username: username.trim().toLowerCase(), 'permissions.banned': false}, { projection: { _id: 1 } });
     if (!validateUser) {
       res.status(404).json({ message: "Username not found!" });
       return;
@@ -286,6 +286,11 @@ async function tasksRoute(req, res) {
       hidden: false,
       owner: ObjectId(user.id),
     };
+    const validateCollection = await db.collection('collections').findOne({...query, 'sharing.sharedWith': {$elemMatch: {id: ObjectId(validateUser._id)}} });
+    if (validateCollection) {
+      res.status(400).json({ message: "Collection is already shared with this user!" });
+      return;
+    }
     const pendingRole = "pending-" + role;
     const updateDoc = {
       $push: {
