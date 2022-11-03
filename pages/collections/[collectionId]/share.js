@@ -40,7 +40,7 @@ export default function CollectionShare() {
   return (
     <Layout>
       <h1>Share {collection ? <>&quot;{collection.name}&quot;</> : 'a collection'}:</h1>
-      <p style={{textDecoration: "underline"}}>Back to <Link href={`/collections/${collection?._id}`}>collection</Link> or <Link href="/dashboard">dashboard</Link></p>
+      <p>Back to <Link href={`/collections/${collection?._id}`}>collection</Link> or <Link href="/dashboard">dashboard</Link></p>
       {collection ?
       <>
       <CollectionShareForm
