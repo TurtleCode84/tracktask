@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import moment from "moment";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
-//import CollectionShareForm from "components/CollectionShareForm";
+import CollectionShareForm from "components/CollectionShareForm";
 import User from "components/User";
 import useUser from "lib/useUser";
 import useTasks from "lib/useTasks";
@@ -50,33 +50,31 @@ export default function CollectionShare() {
       {collection ?
       <>
       <p>Coming soon!</p>
-      {/*<CollectionCreateForm
-        verified={user.permissions.verified}
+      {/*<CollectionShareForm
         errorMessage={errorMsg}
         onSubmit={async function handleSubmit(event) {
           event.preventDefault();
-          document.getElementById("createCollectionBtn").disabled = true;
+          document.getElementById("shareCollectionBtn").disabled = true;
 
           const body = {
-            name: event.currentTarget.name.value,
-            description: event.currentTarget.description.value,
+            username: event.currentTarget.username.value,
+            role: event.currentTarget.role.value,
           };
-          if (event.currentTarget.shared) {body.shared = event.currentTarget.shared.checked} else {body.shared = false}
 
           try {
             const getUrl = await fetchJson("/api/tasks?collection=true", {
-              method: "POST",
+              method: "PATCH",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(body),
             })
-            router.push(`/collections/${getUrl.insertedId}`);
+            router.push(`/collections/${collection._id}?shared=true`);
           } catch (error) {
             if (error instanceof FetchError) {
               setErrorMsg(error.data.message);
             } else {
               console.error("An unexpected error happened:", error);
             }
-            document.getElementById("createCollectionBtn").disabled = false;
+            document.getElementById("shareCollectionBtn").disabled = false;
           }
         }}
       />*/}
