@@ -62,7 +62,7 @@ async function tasksRoute(req, res) {
       }
       for (var i=0; i<data.length; i++) {
         if (data[i].sharing.sharedWith.some((element) => element.id == user.id && element.role.split('-')[0] === "pending")) {
-          delete data[i].tasks;;
+          delete data[i].tasks;
           delete data[i].sharing;
           data[i].pending = true;
         } else {
