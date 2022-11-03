@@ -35,6 +35,9 @@ export default function CollectionShare() {
   }
   if (!user.permissions.verified) {
     router.push(`/collections/${collectionId}`);
+    return (
+      <Loading/>
+    );
   }
   return (
     <Layout>
