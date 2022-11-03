@@ -20,7 +20,7 @@ async function tasksRoute(req, res) {
       hidden: false,
       $or: [
         { owner: ObjectId(user.id) },
-        { 'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: ObjectId(user.id), role: {$in: ["viewer", "collaborator", "editor"]}}} },
+        { 'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: ObjectId(user.id)}} },
       ],
     };
     const taskoptions = {
@@ -61,7 +61,13 @@ async function tasksRoute(req, res) {
         res.status(200).json([]);
       }
       for (var i=0; i<data.length; i++) {
-        data[i].tasks = await db.collection("tasks").find({ _id: {$in: data[i].tasks}, hidden: false }, taskoptions).toArray();
+        if (data[i].sharing.sharedWith.some((element) => element.id === user.id && element.role.split('-')[0] === "pending")) {
+          data[i].tasks === null;
+          data[i].sharing === null;
+          data[i].pending === true;
+        } else {
+          data[i].tasks = await db.collection("tasks").find({ _id: {$in: data[i].tasks}, hidden: false }, taskoptions).toArray();
+        }
       }
     }
     if (data.length === 0 && collections !== "true") {
