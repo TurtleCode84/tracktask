@@ -34,14 +34,7 @@ export default function CollectionShare() {
     );
   }
   if (!user.permissions.verified) {
-    router.push(`/collections/${collection?._id}`);
-    /*return (
-      <Layout>
-        <h1>Whoops!</h1>
-        <p>Currently, only verified users can share collections. This page will have a button to request verification soon, but at the moment you will have to wait.<br/>Sorry for the inconvenience!</p>
-        <br/><Link href={`/collections/${collection?._id}`}>Back to collection</Link>
-      </Layout>
-    );*/
+    router.push(`/collections/${collectionId}`);
   }
   return (
     <Layout>
