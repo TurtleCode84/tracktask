@@ -43,7 +43,6 @@ export default function CollectionShare() {
       <p style={{textDecoration: "underline"}}>Back to <Link href={`/collections/${collection?._id}`}>collection</Link> or <Link href="/dashboard">dashboard</Link></p>
       {collection ?
       <>
-      <p>Coming soon!</p>
       <CollectionShareForm
         errorMessage={errorMsg}
         onSubmit={async function handleSubmit(event) {
