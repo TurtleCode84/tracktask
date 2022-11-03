@@ -10,9 +10,9 @@ export default function CollectionShareForm({ errorMessage, onSubmit }) {
       <label>
         <span>Role</span>
         <select name="role" required>
-            <option value="viewer"></option>
-            <option value="collaborator"></option>
-            <option value="editor"></option>
+            <option value="viewer">Viewer (can view the collection)</option>
+            <option value="collaborator">Collaborator (can complete tasks ඞ)</option>
+            <option value="editor">Editor (can add to & edit the collection)</option>
         </select>
       </label><hr/>
 
