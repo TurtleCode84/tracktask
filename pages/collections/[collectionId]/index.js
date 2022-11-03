@@ -92,7 +92,7 @@ export default function Collection() {
             }}
         />
         </details>
-        {user.permissions.verified && <Link href={`/collections/${collection._id}/share`}>Share this collection</Link>}</>
+        {user.permissions.verified && user.id === collection.owner && <><br/><Link href={`/collections/${collection._id}/share`}>Share this collection</Link></>}</>
       :
         <>{error || clientError ? <p>{clientError ? clientError : error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading collection...</p>}</>
       }
