@@ -20,7 +20,7 @@ async function tasksRoute(req, res) {
       hidden: false,
       $or: [
         { owner: ObjectId(user.id) },
-        { 'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: ObjectId(user.id)}} },
+        { 'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: ObjectId(user.id), role: {$in: ["viewer", "collaborator", "editor"]}}} },
       ],
     };
     const taskoptions = {
