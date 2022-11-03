@@ -34,7 +34,8 @@ export default function CollectionShare() {
     );
   }
   if (!user.permissions.verified) {
-    return router.push(`/collections/${collectionId}`);
+    router.push(`/collections/${collectionId}`);
+    return;
   }
   return (
     <Layout>
