@@ -62,8 +62,8 @@ async function tasksRoute(req, res) {
       }
       for (var i=0; i<data.length; i++) {
         if (data[i].sharing.sharedWith.some((element) => element.id == user.id && element.role.split('-')[0] === "pending")) {
-          data[i].tasks = null;
-          data[i].sharing = null;
+          delete data[i].tasks;;
+          delete data[i].sharing;
           data[i].pending = true;
         } else {
           data[i].tasks = await db.collection("tasks").find({ _id: {$in: data[i].tasks}, hidden: false }, taskoptions).toArray();
