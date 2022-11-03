@@ -55,7 +55,7 @@ export default function CollectionShare() {
           };
 
           try {
-            const getUrl = await fetchJson("/api/tasks", {
+            const getUrl = await fetchJson(`/api/tasks?id=${collection._id}`, {
               method: "PUT",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(body),

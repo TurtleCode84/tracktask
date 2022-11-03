@@ -266,8 +266,39 @@ async function tasksRoute(req, res) {
       }
     }
   } else if (req.method === 'PUT') { // Shares a collection
-    res.status(418).json({ message: "Under construction" });
-    return;
+    const { username, role } = await req.body;
+    const { id } = req.query;
+    const roles = ["viewer", "collaborator", "editor"];
+    if (!ObjectId.isValid(id)) {
+      res.status(422).json({ message: "Invalid collection ID" });
+      return;
+    } else if (!username || !role || !roles.contains(role)) {
+      res.status(422).json({ message: "Invalid data" });
+      return;
+    }
+    const validateUser = await db.collection("users").findOne({username: username, 'permissions.banned': false}, { projection: { _id: 1 } });
+    if (!validateUser) {
+      res.status(404).json({ message: "Username not found!" });
+      return;
+    }
+    const query = {
+      _id: ObjectId(id),
+      hidden: false,
+      owner: ObjectId(user.id),
+    };
+    const pendingRole = "pending-" + role;
+    const updateDoc = {
+      $push: {
+        'sharing.sharedWith': {id: validateUser._id, role: pendingRole },
+      },
+    }
+    try {
+      const sharedTask = await db.collection('collections').updateOne(query, updateDoc);
+      res.json(sharedTask);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+      return;
+    }
   } else {
     res.status(405).json({ message: "Method not allowed" });
     return;
