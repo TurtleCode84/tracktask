@@ -61,7 +61,7 @@ async function tasksRoute(req, res) {
         res.status(200).json([]);
       }
       for (var i=0; i<data.length; i++) {
-        if (data[i].sharing.sharedWith.some((element) => element.id === user.id && element.role.split('-')?.[0] === "pending")) {
+        if (data[i].sharing.sharedWith.some((element) => element.id === user.id && element.role.split('-')[0] === "pending")) {
           data[i].tasks === null;
           data[i].sharing === null;
           data[i].pending === true;
