@@ -68,6 +68,7 @@ export default function Collection() {
         <details>
           <summary>Edit collection</summary>
           <br/><CollectionEditForm
+            verified={user.permissions.verified}
             errorMessage={errorMsg}
             collection={collection}
             onSubmit={async function handleSubmit(event) {

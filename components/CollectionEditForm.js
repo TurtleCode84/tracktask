@@ -1,7 +1,7 @@
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
 
-export default function CollectionEditForm({ errorMessage, onSubmit, collection }) {
+export default function CollectionEditForm({ verified, errorMessage, onSubmit, collection }) {
   const router = useRouter();
   return (
     <form id="collectionEditForm" autocomplete="off" onSubmit={onSubmit}>
@@ -13,10 +13,12 @@ export default function CollectionEditForm({ errorMessage, onSubmit, collection 
         <span>Description</span>
         <textarea name="description" rows="4" cols="30" defaultValue={collection.description} maxlength="500" />
       </label><hr/>
+      {verified && <>
       <label>
         <span>Shared <span style={{ color: "lightslategray" }} className="material-symbols-outlined icon-list">group</span></span>
         <input type="checkbox" name="shared" defaultChecked={collection.sharing.shared} />
       </label><hr/>
+      </>}
 
       <button type="submit" id="editCollectionBtn">Save collection data</button>
 
