@@ -60,7 +60,7 @@ export default function Collection() {
         </>
         :
         <><ul style={{ display: "table" }}>
-          {taskList}
+          {taskList.length > 0 ? taskList : <li>No tasks found!</li>}
         </ul></>
         } 
         {user.permissions.verified && user.id === collection.owner && <><hr/><Link href={`/collections/${collection._id}/share`}>Share this collection</Link></>}
