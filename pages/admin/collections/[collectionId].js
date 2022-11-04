@@ -27,7 +27,7 @@ export default function Collection() {
   );
 
   const sharedWithList = collection?.sharing.sharedWith.map((item) =>
-    <li key={item.id}><User user={user} id={item.id} link={true}/></li>
+    <li key={item.id} style={{ paddingBottom: "5px" }}><User user={user} id={item.id} link={true}/> ({item.role.split('-')[0]})</li>
   );
   
   if (!user || !user.isLoggedIn || !user.permissions.admin) {
