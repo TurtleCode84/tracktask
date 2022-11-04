@@ -35,7 +35,7 @@ async function reportsRoute(req, res) {
       };
       const createdReport = await db.collection('reports').insertOne(newReport);
       const query = {
-        _id: ObjectId(reported),
+        _id: ObjectId(reported._id),
         hidden: false,
         'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: ObjectId(user.id)}},
       };
