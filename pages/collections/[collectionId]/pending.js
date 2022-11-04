@@ -35,7 +35,7 @@ export default function CollectionPreview() {
   }
   return (
     <Layout>
-      <h1><span style={{ color: "#006dbe" }} className="material-symbols-outlined">share_reviews</span> Share request for {collection ? <>&apos;{collection.name}&apos;</> : 'a collection'}:</h1>
+      <h1><span style={{ color: "#006dbe" }} className="material-symbols-outlined">share_reviews</span> Share request for {collection ? <>&quot;{collection.name}&quot;</> : 'a collection'}:</h1>
       <Link href="/dashboard">Back to dashboard</Link><br/>
       {collection ?
       <><h3>Preview information:</h3>
