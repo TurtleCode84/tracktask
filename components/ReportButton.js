@@ -25,7 +25,7 @@ export default function ReportButton({ type, reported }) {
         }
         }
         }}
-    ><button><span style={{ color: "red" }} className="material-symbols-outlined icon-list">report</span> Report</button></a>
+    ><button><span style={{ color: "red" }} className="material-symbols-outlined icon-list">report</span> Report abuse</button></a>
     <p className="error" id="reportShareMessage" style={{ color: "brown", margin: "1rem 0 0" }}></p>
     </>);
 }

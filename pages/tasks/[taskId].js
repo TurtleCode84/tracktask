@@ -171,7 +171,8 @@ export default function Task() {
               }
             }}
         />
-        </details></>}</>
+        </details></>}
+        <ReportButton user={user} type="task" reported={task}/></>
       :
         <>{error || clientError ? <p>{clientError ? clientError : error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading task...</p>}</>
       }
