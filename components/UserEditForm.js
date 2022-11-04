@@ -22,6 +22,16 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
       <label>
         <span>Profile picture</span>
         <input type="url" name="profilePicture" defaultValue={user.profilePicture} />
+        <details style={{ fontSize: "80%", color: "gray" }}>
+        <summary>Allowed image hosts</summary>
+          <ul>
+            <li>tracktask.eu.org</li>
+            <li>avatars.githubusercontent.com</li>
+            <li>u.cubeupload.com</li>
+            <li>i.bb.com</li>
+            <li>api.wasteof.money</li>
+          </ul>
+        </details>
       </label>
       <p style={{ fontStyle: "italic" }}>Preferences coming soon...</p><hr/>
 
