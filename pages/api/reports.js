@@ -29,8 +29,8 @@ async function reportsRoute(req, res) {
         reporter: ObjectId(user.id),
         type: type,
         reason: reason.trim(),
-        reported: ObjectId(reported),
-        reviewed: false,
+        reported: reported,
+        reviewed: 0,
         timestamp: Math.floor(Date.now()/1000),
       };
       const createdReport = await db.collection('reports').insertOne(newReport);
