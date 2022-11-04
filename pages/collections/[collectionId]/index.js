@@ -3,6 +3,7 @@ import Layout from "components/Layout";
 import Loading from "components/Loading";
 import Task from "components/Task";
 import User from "components/User";
+import ReportButton from "components/ReportButton";
 import CollectionEditForm from "components/CollectionEditForm";
 import useUser from "lib/useUser";
 import useTasks from "lib/useTasks";

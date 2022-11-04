@@ -4,6 +4,7 @@ import Loading from "components/Loading";
 import TaskEditForm from "components/TaskEditForm";
 import AddRemoveCollectionForm from "components/AddRemoveCollectionForm";
 import User from "components/User";
+import ReportButton from "components/ReportButton";
 import useUser from "lib/useUser";
 import useTasks from "lib/useTasks";
 import fetchJson, { FetchError } from "lib/fetchJson";
