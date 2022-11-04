@@ -1,3 +1,4 @@
+import fetchJson from "lib/fetchJson";
 import { useRouter } from "next/router";
 
 export default function ReportButton({ type, reported, reason }) {
