@@ -35,14 +35,14 @@ export default function CollectionPreview() {
   }
   return (
     <Layout>
-      <h1><span style={{ color: "#006dbe" }} className="material-symbols-outlined">share_reviews</span> Share request from {collection ? <User user={user} id={collection.owner}/> : 'another user'}:</h1>
-      <p>Back to <Link href={`/collections/${collection?._id}`}>collection</Link> or <Link href="/dashboard">dashboard</Link></p>
+      <h1><span style={{ color: "#006dbe" }} className="material-symbols-outlined">share_reviews</span> Share request for {collection ? <>&apos;{collection.name}&apos;</> : 'a collection'}:</h1>
+      <Link href="/dashboard">Back to dashboard</Link><br/>
       {collection ?
       <><h3>Preview information:</h3>
-      <p>Name: {collection.name}</p>
+      <p>Shared by: <User user={user} id={collection.owner}/></p>
       <p>Description:</p>{' '}<textarea value={collection.description} rows="4" cols="70" disabled /><br/>
       <p title={collection.created > 0 ? moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a") : 'Never'}>Created: {collection.created > 0 ? <>{moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a")}{' '}({moment.unix(collection.created).fromNow()})</> : 'never'}</p>
-      <p style={{ fontStyle: "italic" }}>Eventually you will be able to accept, reject, or report this request.</p>
+      <p style={{ fontStyle: "italic" }}>Eventually, you will be able to accept, reject, or report this request.</p>
       </>
       :
         <>{error || clientError ? <p>{clientError ? clientError : error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading collection...</p>}</>
