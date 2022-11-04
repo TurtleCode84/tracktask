@@ -31,7 +31,7 @@ export default function ReportsAdmin() {
       {reportsError ? <p style={{ fontStyle: "italic" }}>{reportsError.data ? reportsError.data.message : reportsError.message}</p> : <p style={{ fontStyle: "italic" }}>Loading reports...</p>}
       </>
       :
-      <><ul style={{ display: "table", listStyle: "none" }}>
+      <><ul style={{ display: "table" }}>
         {reportList}
       </ul></>
       }
