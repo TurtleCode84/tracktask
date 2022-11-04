@@ -26,7 +26,7 @@ export default function Task() {
   var canEdit = true;
   if (!task) {
     canEdit = false;
-    const collection = collections?.filter(item => item.tasks?.some((element) => element._id === taskId))?.[0];
+    const collection = collections?.filter(item => item?.tasks?.some((element) => element._id === taskId))?.[0];
     canEdit = collection?.sharing.sharedWith.includes({id: user.id, role: "editor"}); // WIP
     //console.log(canEdit);
     task = collection?.tasks.filter(item => item._id === taskId)?.[0];
