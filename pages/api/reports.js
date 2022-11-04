@@ -34,19 +34,21 @@ async function reportsRoute(req, res) {
         timestamp: Math.floor(Date.now()/1000),
       };
       const createdReport = await db.collection('reports').insertOne(newReport);
-      const query = {
-        _id: ObjectId(reported._id),
-        hidden: false,
-        'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: ObjectId(user.id)}},
-      };
-      const updateDoc = {
-        $pull: {
-          'sharing.sharedWith': {
-            id: ObjectId(user.id),
-          },
-        }
-      };
-      const updatedCollection = await db.collection('collections').updateOne(query, updateDoc);
+      if (type === "share") {
+        const query = {
+          _id: ObjectId(reported._id),
+          hidden: false,
+          'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: ObjectId(user.id)}},
+        };
+        const updateDoc = {
+          $pull: {
+            'sharing.sharedWith': {
+              id: ObjectId(user.id),
+            },
+          }
+        };
+        const updatedCollection = await db.collection('collections').updateOne(query, updateDoc);
+      }
       res.json(createdReport);
     } catch (error) {
       res.status(500).json({ message: error.message });
