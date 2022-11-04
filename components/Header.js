@@ -54,6 +54,7 @@ export default function Header() {
                         borderRadius: "100%",
                         overflow: "hidden",
                       }}
+                      quality={85}
                       alt=""
                     />
                     Account
