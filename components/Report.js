@@ -1,6 +1,7 @@
 import moment from "moment";
 import Link from "next/link";
 import User from "components/User";
+import { useRouter } from "next/router";
 
 export default function Report({ report, key }) {
   const router = useRouter();
