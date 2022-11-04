@@ -14,7 +14,7 @@ export default function ReportsAdmin() {
   });
   const { reports, error: reportsError } = useAdminReports(user);
   const reportList = reports?.map((report) =>
-    <Report report={report} key={report._id}/>
+    <Report user={user} report={report} key={report._id}/>
   );
   
   if (!user || !user.isLoggedIn || !user.permissions.admin) {
