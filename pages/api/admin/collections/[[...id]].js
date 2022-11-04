@@ -28,8 +28,11 @@ async function adminCollectionRoute(req, res) {
     const taskoptions = {
       sort: { 'completion.completed': 1, priority: -1, dueDate: 1 },
     };
+    const collectionoptions = {
+      sort: { created: -1 },
+    };
     try {
-      var getCollections = await db.collection("collections").find(query).toArray();
+      var getCollections = await db.collection("collections").find(query, collectionoptions).toArray();
       if (!getCollections || getCollections.length === 0) {
         res.status(404).json({ message: "No collection found" });
         return;

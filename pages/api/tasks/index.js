@@ -61,7 +61,13 @@ async function tasksRoute(req, res) {
         res.status(200).json([]);
       }
       for (var i=0; i<data.length; i++) {
-        data[i].tasks = await db.collection("tasks").find({ _id: {$in: data[i].tasks}, hidden: false }, taskoptions).toArray();
+        if (data[i].sharing.sharedWith.some((element) => element.id == user.id && element.role.split('-')[0] === "pending")) {
+          delete data[i].tasks;
+          delete data[i].sharing;
+          data[i].pending = true;
+        } else {
+          data[i].tasks = await db.collection("tasks").find({ _id: {$in: data[i].tasks}, hidden: false }, taskoptions).toArray();
+        }
       }
     }
     if (data.length === 0 && collections !== "true") {
@@ -264,6 +270,45 @@ async function tasksRoute(req, res) {
         res.status(500).json(error);
         return;
       }
+    }
+  } else if (req.method === 'PUT') { // Shares a collection
+    const { username, role } = await req.body;
+    const { id } = req.query;
+    const roles = ["viewer", "collaborator", "editor"];
+    if (!ObjectId.isValid(id)) {
+      res.status(422).json({ message: "Invalid collection ID" });
+      return;
+    } else if (!username || !role || !roles.includes(role)) {
+      res.status(422).json({ message: "Invalid data" });
+      return;
+    }
+    const validateUser = await db.collection("users").findOne({username: username.trim().toLowerCase(), 'permissions.banned': false}, { projection: { _id: 1 } });
+    if (!validateUser) {
+      res.status(404).json({ message: "Username not found!" });
+      return;
+    }
+    const query = {
+      _id: ObjectId(id),
+      hidden: false,
+      owner: ObjectId(user.id),
+    };
+    const validateCollection = await db.collection('collections').findOne({...query, 'sharing.sharedWith': {$elemMatch: {id: ObjectId(validateUser._id)}} });
+    if (validateCollection) {
+      res.status(400).json({ message: "Collection is already shared with this user!" });
+      return;
+    }
+    const pendingRole = "pending-" + role;
+    const updateDoc = {
+      $push: {
+        'sharing.sharedWith': {id: validateUser._id, role: pendingRole },
+      },
+    }
+    try {
+      const sharedTask = await db.collection('collections').updateOne(query, updateDoc);
+      res.json(sharedTask);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+      return;
     }
   } else {
     res.status(405).json({ message: "Method not allowed" });

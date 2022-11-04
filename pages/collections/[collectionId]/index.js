@@ -25,10 +25,10 @@ export default function Collection() {
   if (collections && !collection) {
     clientError = "No collection found";
   }
-  const taskList = collection?.tasks.map((task) =>
+  const taskList = collection?.tasks?.map((task) =>
     <Task task={task} key={task._id}/>
   );
-  const sharedWithList = collection?.sharing.sharedWith.map((item) =>
+  const sharedWithList = collection?.sharing?.sharedWith?.map((item) =>
     <li key={item.id}><User user={user} id={item.id}/></li>
   );
   
@@ -36,6 +36,10 @@ export default function Collection() {
     return (
       <Loading/>
     );
+  }
+  if (collection?.pending) {
+    router.push(`/collections/${collectionId}/pending`);
+    return;
   }
   
   return (
@@ -47,7 +51,7 @@ export default function Collection() {
         <p>Description:</p>{' '}<textarea value={collection.description} rows="4" cols="70" disabled /><br/>
         <p title={collection.created > 0 ? moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a") : 'Never'}>Created: {collection.created > 0 ? <>{moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a")}{' '}({moment.unix(collection.created).fromNow()})</> : 'never'}</p>
         {user.id !== collection.owner && <p>Owner: <User user={user} id={collection.owner}/></p>}
-        {collection.sharing.shared && <p>Shared with: <ul>{sharedWithList}</ul></p>}
+        {collection.sharing.shared && <p>Shared with: <ul>{sharedWithList.length > 0 ? sharedWithList : <li>Nobody!</li>}</ul></p>}
         <p>Number of tasks: {collection.tasks.length}</p>
         <p>Tasks in collection:</p>
         {taskList === undefined || error ?
@@ -56,13 +60,15 @@ export default function Collection() {
         </>
         :
         <><ul style={{ display: "table" }}>
-          {taskList}
+          {taskList.length > 0 ? taskList : <li>No tasks found!</li>}
         </ul></>
         } 
+        {user.permissions.verified && user.id === collection.owner && <><hr/><Link href={`/collections/${collection._id}/share`}>Share this collection</Link></>}
         <hr/>
         <details>
           <summary>Edit collection</summary>
           <br/><CollectionEditForm
+            verified={user.permissions.verified}
             errorMessage={errorMsg}
             collection={collection}
             onSubmit={async function handleSubmit(event) {

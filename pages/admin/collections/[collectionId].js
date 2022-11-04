@@ -46,7 +46,7 @@ export default function Collection() {
         <p>Description:</p>{' '}<textarea value={collection.description} rows="4" cols="70" disabled /><br/>
         <p title={collection.created > 0 ? moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a") : 'Never'}>Created: {collection.created > 0 ? <>{moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a")}{' '}({moment.unix(collection.created).fromNow()})</> : 'never'}</p>
         <p>Owner: <User user={user} id={collection.owner} link={true}/></p>
-        {collection.sharing.shared && <p>Shared with: <ul>{sharedWithList}</ul></p>}
+        {collection.sharing.shared && <p>Shared with: <ul>{sharedWithList.length > 0 ? sharedWithList : <li>Nobody!</li>}</ul></p>}
         <p>Number of tasks: {collection.tasks.length}</p>
         <p>Tasks in collection:</p>
         {taskList === undefined || error ?
@@ -55,7 +55,7 @@ export default function Collection() {
         </>
         :
         <><ul style={{ display: "table" }}>
-          {taskList}
+          {taskList.length > 0 ? taskList : <li>No tasks found!</li>}
         </ul></>
         } 
         <hr/>

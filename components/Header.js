@@ -1,7 +1,7 @@
 import Link from "next/link";
 import useUser from "lib/useUser";
 import { useRouter } from "next/router";
-import Image from "next/legacy/image";
+import Image from "next/image";
 import fetchJson from "lib/fetchJson";
 
 export default function Header() {
@@ -44,21 +44,19 @@ export default function Header() {
               <li>
                 <Link href="/dashboard/account" legacyBehavior>
                   <a>
-                    <span
+                    <Image
+                      src={user.profilePicture ? user.profilePicture : "/default-pfp.jpg" }
+                      width={32}
+                      height={32}
                       style={{
                         marginRight: ".3em",
                         verticalAlign: "middle",
                         borderRadius: "100%",
                         overflow: "hidden",
                       }}
-                    >
-                    <Image
-                      src={user.profilePicture ? user.profilePicture : "/default-pfp.jpg" }
-                      width={32}
-                      height={32}
+                      quality={85}
                       alt=""
                     />
-                    </span>
                     Account
                   </a>
                 </Link>
