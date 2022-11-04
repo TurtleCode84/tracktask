@@ -1,7 +1,7 @@
 import fetchJson from "lib/fetchJson";
 import { useRouter } from "next/router";
 
-export default function ReportButton({ type, reported, reason }) {
+export default function ReportButton({ type, id }) {
     const router = useRouter();
     return (<>
     <a href={"/api/reports"}
@@ -15,7 +15,7 @@ export default function ReportButton({ type, reported, reason }) {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     type: type,
-                    reported: reported,
+                    reported: id,
                     reason: reason.trim(),
                 }),
             });
