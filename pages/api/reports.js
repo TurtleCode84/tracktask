@@ -16,7 +16,7 @@ async function reportsRoute(req, res) {
   const client = await clientPromise;
   const db = client.db("data");
   if (req.method === 'GET' && user.permissions.admin) {
-    const reports = await db.collection('reports').find().toArray();
+    const reports = await db.collection('reports').sort({ timestamp: -1 }).find().toArray();
     res.json(reports);
   } else if (req.method === 'POST') {
     const { type, reported, reason } = await req.body;
