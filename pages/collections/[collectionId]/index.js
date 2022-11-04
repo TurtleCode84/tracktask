@@ -99,7 +99,7 @@ export default function Collection() {
             }}
         />
         </details>
-        <ReportButton user={user} type="collection" reported={collection}/></>
+        <br/><ReportButton user={user} type="collection" reported={collection}/></>
       :
         <>{error || clientError ? <p>{clientError ? clientError : error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading collection...</p>}</>
       }
