@@ -16,7 +16,7 @@ async function reportsRoute(req, res) {
   const client = await clientPromise;
   const db = client.db("data");
   if (req.method === 'GET' && user.permissions.admin) {
-    const reports = await db.collection('reports').find().sort({ timestamp: -1 }).toArray();
+    const reports = await db.collection('reports').find().sort({ reviewed: 1, timestamp: -1 }).toArray();
     res.json(reports);
   } else if (req.method === 'POST') {
     const { type, reported, reason } = await req.body;
@@ -54,6 +54,12 @@ async function reportsRoute(req, res) {
       res.status(500).json({ message: error.message });
       return;
     }
+  } else if (req.method === 'PATCH' && user.permissions.admin) {
+    res.status(418).json({ message: "Under construction" });
+    return;
+  } else if (req.method === 'DELETE' && user.permissions.admin) {
+    res.status(418).json({ message: "Under construction" });
+    return;
   } else {
     res.status(405).json({ message: "Method not allowed" });
     return;
