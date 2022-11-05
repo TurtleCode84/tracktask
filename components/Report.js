@@ -33,7 +33,7 @@ export default function Report({ user, report, key }) {
             document.getElementById("reportErrorMessage").innerHTML = error.data.message;
         }
         }}
-    ><button><span style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">fact_check</span> Reviewed</button></a>
+    ><button><span style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">fact_check</span> Review</button></a>
     <a href={"/api/reports"}
         onClick={async (e) => {
         e.preventDefault();
