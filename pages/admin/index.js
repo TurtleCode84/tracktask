@@ -2,8 +2,10 @@ import React from "react";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
 import User from "components/User";
+import Report from "components/Report";
 import useUser from "lib/useUser";
 import useAdminUsers from "lib/useAdminUsers";
+import useAdminReports from "lib/useAdminReports";
 import moment from "moment";
 import Link from "next/link";
 import { useRouter } from 'next/router'
@@ -19,6 +21,10 @@ export default function Admin() {
   if (deleted === "true") {
     deletedMsg = "User successfully deleted!"
   }
+  const { reports, error: reportsError } = useAdminReports(user, false);
+  const reportList = reports?.slice(0,3).map((report) =>
+    <span style={{ float: "left" }}><Report user={user} report={report} key={report._id}/></span>
+  );
   const { users: recentlyActive } = useAdminUsers(user, "login", 5);
   const activeUsersList = recentlyActive?.map((activeUser) =>
     <li key={activeUser._id} style={{ margin: "0.5em" }}>
@@ -42,7 +48,9 @@ export default function Admin() {
       <h1>TrackTask Admin Panel <span style={{ color: "slategray" }} className="material-symbols-outlined">verified_user</span></h1>
       {deletedMsg && <p className="success">{deletedMsg}</p>}
       <h2>Recent Reports</h2>
-      <p style={{fontStyle: "italic"}}>(Coming soon...)</p>
+      <ul style={{ display: "table" }}>
+        {reportList.length > 0 ? reportList : <li>No reports found!</li>}
+      </ul>
       <h2>User Statistics</h2>
       <h3>Recently active:</h3>
       <ul>
@@ -59,7 +67,7 @@ export default function Admin() {
       <ul>
         <li><Link href="/admin/users/search">Find a user</Link></li>
         <li><Link href="/admin/collections">View shared collections</Link></li>
-        <li>Reports <span style={{fontStyle: "italic"}}>(Coming soon...)</span></li>
+        <li><Link href="/admin/reports">Moderate reports</Link></li>
       </ul>
       <details>
         <summary>View my raw session info</summary>
