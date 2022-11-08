@@ -31,7 +31,7 @@ export default function Report({ user, report, key }) {
                     id: report._id,
                 }),
             });
-            //router.reload();
+            router.reload();
         } catch (error) {
             document.getElementById(`reportErrorMessage-${report._id}`).innerHTML = error.data.message;
         }
@@ -45,7 +45,7 @@ export default function Report({ user, report, key }) {
         if (confirm !== "yes") {return false;}
         try {
             await fetchJson(`/api/reports?id=${report._id}`, { method: "DELETE" });
-            //router.reload();
+            router.reload();
         } catch (error) {
             document.getElementById(`reportErrorMessage-${report._id}`).innerHTML = error.data.message;
         }
