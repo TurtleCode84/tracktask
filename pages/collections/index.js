@@ -14,7 +14,7 @@ export default function Collections() {
   
   const { tasks: allCollections, error: allCollectionsError } = useTasks(user, true, false);
   const collectionList = allCollections?.map((collection) =>
-    <Collection collection={collection} key={collection._id}/>
+    <Collection user={user} collection={collection} key={collection._id}/>
   );
   
   if (!user || !user.isLoggedIn || user.permissions.banned) {

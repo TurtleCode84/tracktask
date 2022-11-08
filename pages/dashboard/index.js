@@ -29,7 +29,7 @@ export default function Dashboard() {
   );
   const { tasks: collections, error: collectionsError } = useTasks(user, true, false);
   const collectionList = collections?.map((collection) =>
-    <Collection collection={collection} key={collection._id}/>
+    <Collection user={user} collection={collection} key={collection._id}/>
   );
   
   if (!user || !user.isLoggedIn || user.permissions.banned) {
