@@ -35,7 +35,7 @@ export default function ReportsAdmin() {
       </>
       :
       <><ul style={{ display: "table" }}>
-        {reportList}
+        {reportList.length > 0 ? reportList : <li>No reports found!</li>}
       </ul></>
       }
     </Layout>    
