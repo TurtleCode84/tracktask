@@ -24,7 +24,11 @@ export default function ReportButton({ type, reported, flag }) {
                     reason: reason.trim(),
                 }),
             });
-            router.push("/dashboard?reported=true");
+            if (flag) {
+                router.push("/admin/reports");
+            } else {
+                router.push("/dashboard?reported=true");
+            }
         } catch (error) {
             document.getElementById("reportMessage").innerHTML = error.data.message;
         }
