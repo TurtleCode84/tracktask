@@ -49,7 +49,7 @@ export default function Admin() {
       {deletedMsg && <p className="success">{deletedMsg}</p>}
       <h2>Recent Reports</h2>
       <ul style={{ display: "table" }}>
-        {reportList.length > 0 ? reportList : <li>No reports found!</li>}
+        {reportList?.length > 0 ? reportList : <li>No reports found!</li>}
       </ul>
       <h2>User Statistics</h2>
       <h3>Recently active:</h3>
