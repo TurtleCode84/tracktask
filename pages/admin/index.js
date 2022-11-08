@@ -23,7 +23,7 @@ export default function Admin() {
   }
   const { reports, error: reportsError } = useAdminReports(user, false);
   const reportList = reports?.slice(0,3).map((report) =>
-    <span key={report._id} style={{ float: "left" }}><Report user={user} report={report} key={report._id}/></span>
+    <span key={report._id} style={{ float: "left" }}><Report user={user} report={report} /></span>
   );
   const { users: recentlyActive } = useAdminUsers(user, "login", 5);
   const activeUsersList = recentlyActive?.map((activeUser) =>
