@@ -35,7 +35,7 @@ export default function UserSearch() {
             document.getElementById("findUserBtn").disabled = true;
 
             const body = {
-              usernameuid: event.currentTarget.usernameuid.value,
+              keyword: event.currentTarget.keyword.value,
               query: event.currentTarget.query.value,
             };
 

@@ -3,6 +3,7 @@ import Layout from "components/Layout";
 import Loading from "components/Loading";
 import Task from "components/Task";
 import User from "components/User";
+import ReportButton from "components/ReportButton";
 import CollectionEditForm from "components/CollectionEditForm";
 import useUser from "lib/useUser";
 import useTasks from "lib/useTasks";
@@ -29,7 +30,7 @@ export default function Collection() {
     <Task task={task} key={task._id}/>
   );
   const sharedWithList = collection?.sharing?.sharedWith?.map((item) =>
-    <li key={item.id}><User user={user} id={item.id}/></li>
+    <li key={item.id} style={{ paddingBottom: "5px" }}><User user={user} id={item.id}/> <span style={{ fontSize: "80%", fontStyle: "italic", color: "darkgray" }}>({item.role.split('-')[0]})</span></li>
   );
   
   if (!user || !user.isLoggedIn || user.permissions.banned) {
@@ -97,7 +98,8 @@ export default function Collection() {
               }
             }}
         />
-        </details></>
+        </details>
+        {collection.owner !== user.id && <><br/><ReportButton user={user} type="collection" reported={collection}/></>}</>
       :
         <>{error || clientError ? <p>{clientError ? clientError : error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading collection...</p>}</>
       }

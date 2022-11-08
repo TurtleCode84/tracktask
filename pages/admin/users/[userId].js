@@ -3,6 +3,7 @@ import Layout from "components/Layout";
 import Loading from "components/Loading";
 import UserAdminForm from "components/UserAdminForm";
 import User from "components/User";
+import ReportButton from "components/ReportButton";
 import useUser from "lib/useUser";
 import useAdminUser from "lib/useAdminUser";
 import fetchJson, { FetchError } from "lib/fetchJson";
@@ -52,7 +53,7 @@ export default function UserAdmin() {
       <h2>
         Viewing information for {lookup ? lookup.username : userId}{' '}{lookup?.permissions.verified ? <span title="Verified" style={{ color: "#006dbe" }} className="material-symbols-outlined">verified</span> : null}{lookup?.permissions.admin ? <span title="Admin" style={{ color: "slategray" }} className="material-symbols-outlined">verified_user</span> : null}{lookup?.permissions.banned ? <span title="Banned" style={{ color: "red" }} className="material-symbols-outlined">block</span> : null}:
       </h2>
-      <Link href="/admin/users">Back to user search</Link><br/>
+      <Link href="/admin/users/search">Back to user search</Link><br/>
       <Link href="/admin">Back to admin dashboard</Link><br/>
       {lookup ?
       <><p>{lookup.permissions.banned && <b>This user is banned.</b>}{' '}{lookup.permissions.banned && lookup.history.banReason && <i>Reason: {lookup.history.banReason}</i> }</p>
@@ -138,6 +139,7 @@ export default function UserAdmin() {
         <summary>View raw JSON</summary>
         {error ? <pre>{JSON.stringify(error, null, 2)}</pre> : <pre>{JSON.stringify(lookup, null, 2)}</pre>}
       </details>
+      <br/><ReportButton user={user} type="user" reported={lookup} flag={true}/>
     </Layout>
   );
 }

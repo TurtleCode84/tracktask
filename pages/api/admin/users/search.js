@@ -7,7 +7,7 @@ export default withIronSessionApiRoute(adminUserSearchRoute, sessionOptions);
 
 async function adminUserSearchRoute(req, res) {
   if (req.method === 'POST') {
-    const { usernameuid, query } = await req.body;
+    const { keyword, query } = await req.body;
     const user = req.session.user;
     
     if (!user || !user.isLoggedIn || !user.permissions.admin ) {
@@ -19,14 +19,23 @@ async function adminUserSearchRoute(req, res) {
     const db = client.db("data");
     var dbQuery;
     if (query === "username") {
-      dbQuery = { username: usernameuid.trim().toLowerCase() };
-    } else if (query === "uid") { // simple validation
-      if (!ObjectId.isValid(usernameuid)) {
+      dbQuery = { username: keyword.trim().toLowerCase() };
+    } else if (query === "uid") { // No DB query needed
+      if (!ObjectId.isValid(keyword)) {
         res.status(422).json({ message: "Invalid user ID" });
         return;
       }
-      const searchUser = { _id: usernameuid.trim().toLowerCase() };
+      const searchUser = { _id: keyword.trim().toLowerCase() };
       res.json(searchUser);
+    } else if (query === "email") {
+      dbQuery = { email: keyword.trim().toLowerCase() };
+    } else if (query === "ip") {
+      dbQuery = {
+        $or: [
+          { 'history.joinedIp': keyword.trim().toLowerCase() },
+          { 'history.loginIpList': keyword.trim().toLowerCase() },
+        ],
+      };
     } else {
       res.status(422).json({ message: "Invalid search query" });
       return;

@@ -3,6 +3,7 @@ import Layout from "components/Layout";
 import Loading from "components/Loading";
 import Task from "components/Task";
 import User from "components/User";
+import ReportButton from "components/ReportButton";
 //import CollectionAdminForm from "components/CollectionEditForm";
 import useUser from "lib/useUser";
 import useAdminCollections from "lib/useAdminCollections";
@@ -27,7 +28,7 @@ export default function Collection() {
   );
 
   const sharedWithList = collection?.sharing.sharedWith.map((item) =>
-    <li key={item.id}><User user={user} id={item.id} link={true}/></li>
+    <li key={item.id} style={{ paddingBottom: "5px" }}><User user={user} id={item.id} link={true}/> <span style={{ fontSize: "80%", fontStyle: "italic", color: "darkgray" }}>({item.role.split('-')[0]})</span></li>
   );
   
   if (!user || !user.isLoggedIn || !user.permissions.admin) {
@@ -98,6 +99,7 @@ export default function Collection() {
         <summary>View raw JSON</summary>
         {error ? <pre>{JSON.stringify(error, null, 2)}</pre> : <pre>{JSON.stringify(collection, null, 2)}</pre>}
       </details>
+      <br/><ReportButton user={user} type="collection" reported={collection} flag={true}/>
     </Layout>
   );
 }

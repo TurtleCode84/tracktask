@@ -3,6 +3,7 @@ import moment from "moment";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
 import User from "components/User";
+import ReportButton from "components/ReportButton";
 import useUser from "lib/useUser";
 import useTasks from "lib/useTasks";
 import fetchJson, { FetchError } from "lib/fetchJson";
@@ -43,6 +44,7 @@ export default function CollectionPreview() {
       <p>Description:</p>{' '}<textarea value={collection.description} rows="4" cols="70" disabled /><br/>
       <p title={collection.created > 0 ? moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a") : 'Never'}>Created: {collection.created > 0 ? <>{moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a")}{' '}({moment.unix(collection.created).fromNow()})</> : 'never'}</p>
       <p style={{ fontStyle: "italic" }}>Eventually, you will be able to accept, reject, or report this request.</p>
+      <ReportButton user={user} type="share" reported={collection}/>
       </>
       :
         <>{error || clientError ? <p>{clientError ? clientError : error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading collection...</p>}</>
