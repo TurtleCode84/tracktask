@@ -15,7 +15,7 @@ export default function ReportsAdmin() {
   });
   const router = useRouter();
   const { reviewed } = router.query;
-  const { reports, error: reportsError } = useAdminReports(user, true);
+  const { reports, error: reportsError } = useAdminReports(user, reviewed);
   const reportList = reports?.map((report) =>
     <Report user={user} report={report} key={report._id}/>
   );
