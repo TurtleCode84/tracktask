@@ -173,7 +173,7 @@ export default function Task() {
             }}
         />
         </details></>}
-        <br/><ReportButton user={user} type="task" reported={task}/></>
+        {task.owner !== user.id && <><br/><ReportButton user={user} type="task" reported={task}/></>}</>
       :
         <>{error || clientError ? <p>{clientError ? clientError : error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading task...</p>}</>
       }
