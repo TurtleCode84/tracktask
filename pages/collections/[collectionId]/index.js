@@ -26,6 +26,10 @@ export default function Collection() {
   if (collections && !collection) {
     clientError = "No collection found";
   }
+  var sharedColor = "lightslategray";
+  if (collection.owner !== user.id) {
+    sharedColor = "#006dbe";
+  }
   const taskList = collection?.tasks?.map((task) =>
     <Task task={task} key={task._id}/>
   );
@@ -45,7 +49,7 @@ export default function Collection() {
   
   return (
     <Layout>
-      <h2>{collection?.sharing.shared ? <span title="Shared" style={{ color: "lightslategray" }} className="material-symbols-outlined">group</span> : <span title="Private" style={{ color: "lightslategray" }} className="material-symbols-outlined">lock</span>}{' '}{collection ? <>{collection.name}:</> : 'Loading...'}</h2>
+      <h2>{collection?.sharing.shared ? <span title="Shared" style={{ color: sharedColor }} className="material-symbols-outlined">group</span> : <span title="Private" style={{ color: "lightslategray" }} className="material-symbols-outlined">lock</span>}{' '}{collection ? <>{collection.name}:</> : 'Loading...'}</h2>
       <Link href="/dashboard">Back to dashboard</Link><br/>
       {collection ?
         <><h3>General information</h3>
