@@ -14,6 +14,10 @@ export default function Report({ user, report, key }) {
     path = "users";
   } else if (report.type === "task") {
     path = "tasks";
+  } else if (report.type === "verify") {
+    delete report.type;
+    report.type = "verification request";
+    path = "users";
   }
   return (
     <li key={key} style={{ margin: "0.5em", background: "#f8f8f8", padding: "5px", borderWidth: "2px", borderStyle: "solid", borderColor: "darkgray", borderRadius: "10px", width: "auto" }}>
