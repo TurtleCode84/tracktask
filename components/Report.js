@@ -20,7 +20,7 @@ export default function Report({ user, report, key }) {
       <p style={{ fontWeight: "bold" }}>{report.reviewed > 0 && <><span title="Reviewed" style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">task_alt</span>{' '}</>}{moment.unix(report.timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")}</p><p>Type: {report.type}</p><p>Reported {report.type}: <Link href={`/admin/${path}/${report.reported._id}`}>{report.reported.name}</Link></p><p>Reason: {report.reason}</p><p>Reported by: <User user={user} id={report.reporter} link={true}/></p>{report.reviewed > 0 && <p>Reviewed on: {moment.unix(report.reviewed).format("dddd, MMMM Do YYYY, h:mm:ss a")}</p>}<details><summary>View snapshot</summary><pre>{JSON.stringify(report.reported, null, 2)}</pre></details>
       {/* Fix later */}
       {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-      <br/>{report.reviewed > 0 && <a style={{ paddingRight: "5px" }} href="/api/reports"
+      <br/>{report.reviewed === 0 && <a style={{ paddingRight: "5px" }} href="/api/reports"
         onClick={async (e) => {
         e.preventDefault();
         try {
