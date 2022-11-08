@@ -69,6 +69,7 @@ async function tasksRoute(req, res) {
           data[i].tasks = await db.collection("tasks").find({ _id: {$in: data[i].tasks}, hidden: false }, taskoptions).toArray();
         }
       }
+      data = data.sort((a, b) => a.pending ? -1 : 1); // Push share requests to the top
     }
     if (data.length === 0 && collections !== "true") {
       res.status(404).json({ message: "No tasks found!" });
