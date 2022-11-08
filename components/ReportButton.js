@@ -1,13 +1,19 @@
 import fetchJson from "lib/fetchJson";
 import { useRouter } from "next/router";
 
-export default function ReportButton({ type, reported }) {
+export default function ReportButton({ type, reported, flag }) {
     const router = useRouter();
     return (<>
     <a href={"/api/reports"}
         onClick={async (e) => {
         e.preventDefault();
-        const reason = prompt("Reason for reporting:");
+        var prompt;
+        if (flag) {
+            prompt = "Reason for flagging:";
+        } else {
+            prompt = "Reason for reporting:";
+        }
+        const reason = prompt(prompt);
         if (reason.trim() !== "") {
         try {
             await fetchJson("/api/reports", {
@@ -21,11 +27,11 @@ export default function ReportButton({ type, reported }) {
             });
             router.push("/dashboard?reported=true");
         } catch (error) {
-            document.getElementById("reportShareMessage").innerHTML = error.data.message;
+            document.getElementById("reportMessage").innerHTML = error.data.message;
         }
         }
         }}
-    ><button><span style={{ color: "red" }} className="material-symbols-outlined icon-list">report</span> Report abuse</button></a>
-    <p className="error" id="reportShareMessage" style={{ color: "brown", margin: "1rem 0 0" }}></p>
+    ><button>{flag ? <><span style={{ color: "red" }} className="material-symbols-outlined icon-list">flag</span> Flag for review</> : <><span style={{ color: "red" }} className="material-symbols-outlined icon-list">report</span> Report abuse</>}</button></a>
+    <p className="error" id="reportMessage" style={{ color: "brown", margin: "1rem 0 0" }}></p>
     </>);
 }

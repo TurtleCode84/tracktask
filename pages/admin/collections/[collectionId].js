@@ -3,6 +3,7 @@ import Layout from "components/Layout";
 import Loading from "components/Loading";
 import Task from "components/Task";
 import User from "components/User";
+import ReportButton from "components/ReportButton";
 //import CollectionAdminForm from "components/CollectionEditForm";
 import useUser from "lib/useUser";
 import useAdminCollections from "lib/useAdminCollections";
@@ -98,6 +99,7 @@ export default function Collection() {
         <summary>View raw JSON</summary>
         {error ? <pre>{JSON.stringify(error, null, 2)}</pre> : <pre>{JSON.stringify(collection, null, 2)}</pre>}
       </details>
+      <br/><ReportButton user={user} type="collection" reported={collection} flag={true}/>
     </Layout>
   );
 }

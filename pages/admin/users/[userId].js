@@ -3,6 +3,7 @@ import Layout from "components/Layout";
 import Loading from "components/Loading";
 import UserAdminForm from "components/UserAdminForm";
 import User from "components/User";
+import ReportButton from "components/ReportButton";
 import useUser from "lib/useUser";
 import useAdminUser from "lib/useAdminUser";
 import fetchJson, { FetchError } from "lib/fetchJson";
@@ -138,6 +139,7 @@ export default function UserAdmin() {
         <summary>View raw JSON</summary>
         {error ? <pre>{JSON.stringify(error, null, 2)}</pre> : <pre>{JSON.stringify(lookup, null, 2)}</pre>}
       </details>
+      <br/><ReportButton user={user} type="user" reported={lookup} flag={true}/>
     </Layout>
   );
 }

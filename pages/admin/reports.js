@@ -29,7 +29,7 @@ export default function ReportsAdmin() {
     <Layout>
       <h1>Reports:</h1>
       <Link href="/admin">Back to admin dashboard</Link><br/>
-      <br/><Link href={`/admin/reports${!reviewed ? "?reviewed=true" : ""}`}><button>Show/hide reviewed reports</button></Link><br/>
+      <br/><Link href={`/admin/reports${!reviewed ? "?reviewed=true" : ""}`}><button>{reviewed ? 'Hide' : 'Show'} reviewed reports</button></Link><br/>
       {reportList === undefined || reportsError ?
       <>
       {reportsError ? <p style={{ fontStyle: "italic" }}>{reportsError.data ? reportsError.data.message : reportsError.message}</p> : <p style={{ fontStyle: "italic" }}>Loading reports...</p>}
