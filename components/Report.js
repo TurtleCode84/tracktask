@@ -31,7 +31,7 @@ export default function Report({ user, report, key }) {
             });
             router.reload();
         } catch (error) {
-            document.getElementById("reportErrorMessage").innerHTML = error.data.message;
+            document.getElementById(`reportErrorMessage-${report._id}`).innerHTML = error.data.message;
         }
         }}
     ><button><span style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">fact_check</span> Review</button></a>
@@ -42,11 +42,11 @@ export default function Report({ user, report, key }) {
             await fetchJson(`/api/reports?id=${report._id}`, { method: "DELETE" });
             router.reload();
         } catch (error) {
-            document.getElementById("reportErrorMessage").innerHTML = error.data.message;
+            document.getElementById(`reportErrorMessage-${report._id}`).innerHTML = error.data.message;
         }
         }}
     ><button><span style={{ color: "darkred" }} className="material-symbols-outlined icon-list">delete_forever</span> Delete</button></a>
-    <p className="error" id="reportErrorMessage" style={{ color: "brown", margin: "1rem 0 0" }}></p>
+    <p className="error" id={`reportErrorMessage-${report._id}`} style={{ color: "brown", margin: "1rem 0 0" }}></p>
     </li>
   );
 }
