@@ -29,6 +29,17 @@ export default function ReportsAdmin() {
     <Layout>
       <h1>Reports:</h1>
       <Link href="/admin">Back to admin dashboard</Link><br/>
+      <a href="/admin/reports"
+        onClick={(e) => {
+          e.preventDefault();
+          if (reviewed) {
+            router.push("/admin/reports");
+          } else {
+            router.push("/admin/reports?reviewed=true");
+          }
+        }
+        }
+    ><button>Show/hide reviewed reports</button></a><br/>
       {reportList === undefined || reportsError ?
       <>
       {reportsError ? <p style={{ fontStyle: "italic" }}>{reportsError.data ? reportsError.data.message : reportsError.message}</p> : <p style={{ fontStyle: "italic" }}>Loading reports...</p>}
