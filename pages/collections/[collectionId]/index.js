@@ -27,7 +27,7 @@ export default function Collection() {
     clientError = "No collection found";
   }
   var sharedColor = "lightslategray";
-  if (collection?.owner !== user.id) {
+  if (collection?.owner !== user?.id) {
     sharedColor = "#006dbe";
   }
   const taskList = collection?.tasks?.map((task) =>
