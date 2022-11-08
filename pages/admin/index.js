@@ -22,7 +22,7 @@ export default function Admin() {
     deletedMsg = "User successfully deleted!"
   }
   const { reports, error: reportsError } = useAdminReports(user, false);
-  const reportList = reports?.slice(0,3).map((report) =>
+  const reportList = reports?.slice(0,4).map((report) =>
     <span key={report._id} style={{ float: "left", paddingRight: "12px" }}><Report user={user} report={report}/></span>
   );
   const { users: recentlyActive } = useAdminUsers(user, "login", 5);
