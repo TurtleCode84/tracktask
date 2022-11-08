@@ -2,6 +2,7 @@ import moment from "moment";
 import Link from "next/link";
 import User from "components/User";
 import { useRouter } from "next/router";
+import fetchJson from "lib/fetchJson";
 
 export default function Report({ user, report, key }) {
   const router = useRouter();
