@@ -38,6 +38,8 @@ export default function Report({ user, report, key }) {
     <a href={"/api/reports"}
         onClick={async (e) => {
         e.preventDefault();
+        const confirm = prompt("Are you sure? Deleting a report is permanent! (This feature will be removed if abused.) Type \"yes\" to confirm.");
+        if (confirm !== "yes") {return false;}
         try {
             await fetchJson(`/api/reports?id=${report._id}`, { method: "DELETE" });
             router.reload();

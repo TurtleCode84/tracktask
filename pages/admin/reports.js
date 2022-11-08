@@ -6,13 +6,16 @@ import Report from "components/Report";
 import Link from "next/link";
 import useUser from "lib/useUser";
 import useAdminReports from "lib/useAdminReports";
+import { useRouter } from 'next/router';
 
 export default function ReportsAdmin() {
   const { user } = useUser({
     redirectTo: "/login",
     adminOnly: true,
   });
-  const { reports, error: reportsError } = useAdminReports(user);
+  const router = useRouter();
+  const { reviewed } = router.query;
+  const { reports, error: reportsError } = useAdminReports(user, true);
   const reportList = reports?.map((report) =>
     <Report user={user} report={report} key={report._id}/>
   );
