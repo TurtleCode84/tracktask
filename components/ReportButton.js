@@ -7,13 +7,12 @@ export default function ReportButton({ type, reported, flag }) {
     <a href={"/api/reports"}
         onClick={async (e) => {
         e.preventDefault();
-        var prompt;
+        var reason = "";
         if (flag) {
-            prompt = "Reason for flagging:";
+            reason = prompt("Reason for flagging:");
         } else {
-            prompt = "Reason for reporting:";
+            reason = prompt("Reason for reporting:");
         }
-        const reason = prompt(prompt);
         if (reason.trim() !== "") {
         try {
             await fetchJson("/api/reports", {
