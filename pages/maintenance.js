@@ -11,7 +11,7 @@ export default function Maintenance() {
     return (
         <Layout>
             <h1 style={{fontSize: 50, paddingTop: "5px", lineHeight: "0px"}}>
-                <span style="color: #006dbe" class="material-symbols-outlined">engineering</span> Maintenance In Progress
+                <span style={{color: "#006dbe"}} className="material-symbols-outlined">engineering</span> Maintenance In Progress
             </h1>
             <h3 style={{fontSize: 20, lineHeight: "0px"}}>We&apos;re working on improving your user experience, TrackTask will be back online as soon as possible.</h3>
             <p style={{lineHeight: "45px"}}>Thank you for your patience & cooperation!</p>
