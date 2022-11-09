@@ -4,8 +4,8 @@ import Link from "next/link";
 
 export default function Layout({ children }) {
   var advisoryColor = "#006dbe";
-  if (process.env.NEXT_PUBLIC_ADVISORY.split(',')[0] !== "default") {
-    advisoryColor = process.env.NEXT_PUBLIC_ADVISORY.split(',')[0];
+  if (process.env.NEXT_PUBLIC_ADVISORY?.split(',')[0] !== "default") {
+    advisoryColor = process.env.NEXT_PUBLIC_ADVISORY?.split(',')[0];
   }
   return (
     <>
