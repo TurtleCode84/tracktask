@@ -15,6 +15,7 @@
 | `BLACKLIST`              | A list of words, separated by commas, that can't be used as emails or usernames. Can be blank.                 |
 | `IPBAN`                  | _Deprecating_, a list of IPs, separated by commas, that can't be used to sign up or login. Can be blank.       |
 | `SUPERADMIN`             | The ID of the main admin user, grants this user additional privileges and immunity. Can be blank.              |
+| `ADVISORY`               | A optional message to show as a banner on all pages, useful for maintenance advisories. Syntax: `color,message`. Can be blank or removed.
 
 4. Click "Deploy" and verify that everything builds correctly. You should now be able to visit your deployed frontend.
 5. In the GitHub repository, locate `/pages/_app.js` and find the `GoogleReCaptchaProvider` element. The parameter `reCaptchaKey` should have a site key already there, but you'll need to replace it with your own **v3** site key, corresponding to the reCAPTCHA secret key you put in the Environmental Variable `RECAPTCHA_SECRET`. If you don't have one, you can create it [here](https://google.com/recaptcha/admin).
