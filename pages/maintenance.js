@@ -4,8 +4,8 @@ import Loading from "components/Loading";
 
 export default function Maintenance() {
     if (process.env.NEXT_PUBLIC_MAINTENANCE !== "true") {
-        return(
-            <Loading/>
+        return (
+            <Loading />
         );
     }
     return (
