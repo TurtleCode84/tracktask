@@ -3,9 +3,10 @@ import Header from "components/Header";
 import Link from "next/link";
 
 export default function Layout({ children }) {
+  var advisory = process.env.NEXT_PUBLIC_ADVISORY;
   var advisoryColor = "#006dbe";
-  if (process.env.NEXT_PUBLIC_ADVISORY.split(',')[0] !== "default") {
-    advisoryColor = process.env.NEXT_PUBLIC_ADVISORY.split(',')[0];
+  if (advisory?.split(',')[0] !== "default") {
+    advisoryColor = advisory?.split(',')[0];
   }
   return (
     <>
@@ -82,7 +83,7 @@ export default function Layout({ children }) {
         }
       `}</style>
       {process.env.NEXT_PUBLIC_VERCEL_ENV !== "production" && <nav style={{backgroundColor: "orange", textAlign: "center", height:40 + "px", fontWeight: 600, marginTop: -20 + "px", paddingBottom: 5 + "px", minHeight: "min-content"}}><p style={{paddingTop: 13 + "px"}}>You are viewing a TrackTask Development release, some features may not work properly or may break your account.</p></nav>}
-      {process.env.NEXT_PUBLIC_ADVISORY && <nav style={{backgroundColor: advisoryColor, textAlign: "center", height:40 + "px", fontWeight: 600, marginTop: -20 + "px", paddingBottom: 5 + "px", minHeight: "min-content"}}><p style={{paddingTop: 13 + "px"}}>{process.env.NEXT_PUBLIC_ADVISORY.split(',')[1]}</p></nav>}
+      {advisory && <nav style={{backgroundColor: advisoryColor, textAlign: "center", height:40 + "px", fontWeight: 600, marginTop: -20 + "px", paddingBottom: 5 + "px", minHeight: "min-content"}}><p style={{paddingTop: 13 + "px"}}>{advisory.split(',')[1]}</p></nav>}
       <Header />
 
       <main>
