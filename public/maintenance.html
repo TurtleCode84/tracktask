@@ -1,0 +1,156 @@
+<head>
+    <title>TrackTask - Shareable Task Management</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+  
+      body {
+        margin: 0;
+        color: #333;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, Noto Sans, sans-serif, "Apple Color Emoji",
+          "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+      }
+  
+      .container {
+        margin: 1.5rem auto;
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+  
+      @media only screen and (max-width: 600px) {
+        body {
+          display: flex;
+          overflow: auto;
+        }
+  
+        .container {
+          max-width: 100%;
+        }
+      }
+  
+      @media only screen and (min-width: 600px) {
+        .container {
+          max-width: 65rem;
+        }
+      }
+  
+      .list-hover {
+        transition: filter 0.3s;
+      }
+  
+      .list-hover:hover {
+        filter: brightness(0.9);
+        cursor: pointer;
+      }
+  
+      a.footer {
+        color: gray;
+      }
+  
+      a.footer:visited {
+        color: gray;
+      }
+  
+      .material-symbols-outlined {
+        display: inline-block;
+        vertical-align: -5px;
+        font-size: inherit;
+        font-variation-settings:
+          'FILL'1,
+          'wght'550,
+          'GRAD'0,
+          'opsz'48
+      }
+  
+      .icon-list {
+        font-size: 18px;
+        vertical-align: -3px !important;
+      }
+  
+      ul {
+        display: flex;
+        list-style: none;
+        margin-left: 0;
+        padding-left: 0;
+        overflow: auto;
+        white-space: nowrap;
+      }
+  
+      li {
+        margin-right: 2.5rem;
+        display: flex;
+      }
+  
+      @media only screen and (max-width: 600px) {
+        ul {
+          padding-left: 2rem;
+        }
+  
+        li {
+          margin-right: 2rem;
+        }
+      }
+  
+      li:first-child {
+        margin-left: auto;
+      }
+  
+      a {
+        color: #fff;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+      }
+  
+      a img {
+        margin-right: 1em;
+      }
+  
+      header {
+        padding: 0.2rem;
+        color: #fff;
+        background-color: #333;
+      }
+  
+    </style>
+  </head>
+  
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li>
+            <a href="/">Home</a>
+          </li>
+          <li>
+            <a href="/about">About</a>
+          </li>
+          <li>
+            <a href="/login">Login</a>
+          </li>
+          <li>
+            <a href="/join">Join</a>
+          </li>
+          <li>
+            <img src="/tracktaskmini.png" width="32" height="32" alt="" />
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+    <div class="container">
+    <h1 style="font-size: 50; padding-top: 5px; line-height: 0px">
+        <span style="color: #006dbe" class="material-symbols-outlined">engineering</span> Maintenance In Progress
+    </h1>
+    <h3 style="font-size: 20; line-height: 0px">We're working on improving your user experience, TrackTask will be back online as soon as possible.</h3>
+    <p style="line-height: 45px">Thank you for your patience & cooperation!</p>
+    </div>
+    </main>
+    <span style="font-size: 90%; text-align: center; color: gray; display: table; margin: 4rem auto; padding: 0 0.5rem 20px 0.5rem">Copyright &#169; 2022 TrackTask STM, All Rights Reserved - <a href="/privacy" class="footer" style="display: inline">Privacy</a> - <a href="/terms" class="footer" style="display: inline">Terms of Use</a></span>
+  </body>
+  
