@@ -1,6 +1,5 @@
 import React from "react";
 import Layout from "components/Layout";
-import Loading from "components/Loading";
 import Image from "next/legacy/image";
 
 export default function About() {
