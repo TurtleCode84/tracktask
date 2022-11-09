@@ -2,13 +2,12 @@ import React from "react";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
 import Image from "next/legacy/image";
-import { useRouter } from "next/router";
 
 export default function Maintenance() {
-    const router = useRouter();
     if (process.env.NEXT_PUBLIC_MAINTENANCE !== "true") {
-        router.push('/');
-        return;
+        return(
+            <Loading/>
+        );
     }
     return (
         <Layout>
