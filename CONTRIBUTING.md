@@ -7,14 +7,15 @@
 2. We'll use Vercel to deploy our Next.js application, so go ahead and import the repository from Github to a new Vercel project, selecting the framework preset as "Next.js" if it isn't already.
 3. Leave all of the build & output settings as they are. However, there are a few Environmental Variables **required** for the site to function:
 
-| Name                     | Value                                                                                                   |
-|--------------------------|---------------------------------------------------------------------------------------------------------|
-| `MONGODB_URI`            | The complete MongoDB connection URI for your database, should begin with `mongodb+srv://`               |
-| `RECAPTCHA_SECRET`       | The secret key for a v3 Google reCAPTCHA                                                                |
-| `SECRET_COOKIE_PASSWORD` | A randomly generated string _at least_ 32 characters long                                               |
-| `BLACKLIST`              | A list of words, separated by commas, that can't be used as emails or usernames. Can be blank.          |
-| `IPBAN`                  | _Deprecating_, a list of IPs, separated by commas, that can't be used to sign up or login. Can be blank.|
-| `SUPERADMIN`             | The ID of the main admin user, grants this user additional privileges and immunity. Can be blank.       |
+| Name                     | Value                                                                                                          |
+|--------------------------|----------------------------------------------------------------------------------------------------------------|
+| `MONGODB_URI`            | The complete MongoDB connection URI for your database, should begin with `mongodb+srv://`                      |
+| `RECAPTCHA_SECRET`       | The secret key for a v3 Google reCAPTCHA                                                                       |
+| `SECRET_COOKIE_PASSWORD` | A randomly generated string _at least_ 32 characters long                                                      |
+| `BLACKLIST`              | A list of words, separated by commas, that can't be used as emails or usernames. Can be blank.                 |
+| `IPBAN`                  | _Deprecating_, a list of IPs, separated by commas, that can't be used to sign up or login. Can be blank.       |
+| `SUPERADMIN`             | The ID of the main admin user, grants this user additional privileges and immunity. Can be blank.              |
+| `MAINTENANCE`            | Setting this to `true` will allow users to visit `/maintenance`, used with a Cloudflare redirect. Can be blank.|
 
 4. Click "Deploy" and verify that everything builds correctly. You should now be able to visit your deployed frontend.
 5. In the GitHub repository, locate `/pages/_app.js` and find the `GoogleReCaptchaProvider` element. The parameter `reCaptchaKey` should have a site key already there, but you'll need to replace it with your own **v3** site key, corresponding to the reCAPTCHA secret key you put in the Environmental Variable `RECAPTCHA_SECRET`. If you don't have one, you can create it [here](https://google.com/recaptcha/admin).
