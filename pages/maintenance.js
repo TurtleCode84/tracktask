@@ -3,18 +3,18 @@ import Layout from "components/Layout";
 import Loading from "components/Loading";
 
 export default function Maintenance() {
-    if (process.env.NEXT_PUBLIC_MAINTENANCE !== "true") {
+    if (process.env.MAINTENANCE !== "true") {
         return (
             <Loading />
         );
     }
     return (
         <Layout>
-            <h1 style="font-size: 50; padding-top: 5px; line-height: 0px">
+            <h1 style={{fontSize: 50, paddingTop: "5px", lineHeight: "0px"}}>
                 <span style="color: #006dbe" class="material-symbols-outlined">engineering</span> Maintenance In Progress
             </h1>
-            <h3 style="font-size: 20; line-height: 0px">We&apos;re working on improving your user experience, TrackTask will be back online as soon as possible.</h3>
-            <p style="line-height: 45px">Thank you for your patience & cooperation!</p>
+            <h3 style={{fontSize: 20, lineHeight: "0px"}}>We&apos;re working on improving your user experience, TrackTask will be back online as soon as possible.</h3>
+            <p style={{lineHeight: "45px"}}>Thank you for your patience & cooperation!</p>
         </Layout>
     );
 }
