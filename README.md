@@ -28,8 +28,8 @@ Glad you asked! Here's a running features list:
 - [x] IP banning and blacklisted usernames/emails (through Vercel dashboard)
 - [x] Individual task UI (`/tasks/{id}`)
 - [x] About/FAQ
-- [ ] Collections
-- [ ] Reporting for admin attention (tasks, users, collections)
+- [x] Collections
+- [x] Reporting for admin attention (tasks, users, collections)
 <br>... and more to come!
 
 ## How can I help?
