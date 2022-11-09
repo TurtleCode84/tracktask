@@ -3,7 +3,7 @@ import Layout from "components/Layout";
 import Loading from "components/Loading";
 
 export default function Maintenance() {
-    if (process.env.NEXT_PUBLIC_MAINTENANCE !== "true") {
+    if (process.env.NEXT_PUBLIC_MAINTENANCE) {
         return (
             <Loading />
         );
