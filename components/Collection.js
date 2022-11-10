@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 export default function Collection({ user, collection, key, admin }) {
   const router = useRouter();
   var sharedColor = "lightslategray";
-  if (collection.owner !== user.id) {
+  if (collection.owner !== user.id && !admin) {
     sharedColor = "#006dbe";
   }
   return (
