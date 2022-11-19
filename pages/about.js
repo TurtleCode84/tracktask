@@ -16,7 +16,7 @@ export default function About() {
         <li><a href="https://github.com/vvo" target="_blank" rel="noreferrer">vvo&apos;s</a>{' '}<a href="https://github.com/vvo/iron-session" target="_blank" rel="noreferrer">iron-session</a> (for the site&apos;s structure & session framework)</li>
         <li><a href="https://vercel.com" target="_blank" rel="noreferrer">Vercel</a> for build and deployment</li>
         <li><a href="https://nextjs.org" target="_blank" rel="noreferrer">Next.js</a> for an easy-to-use API & static rendering framework</li>
-        <li>All contributors to the TrackTask <a href="https://github.com/TurtleCode84/tracktask" target="_blank" rel="noreferrer">Github repository</a>!</li>
+        <li>All contributors to the TrackTask codebase!</li>
       </ul>
       <p>And of course, we can&apos;t have credits without mentioning the amazing people who have helped build and run TrackTask...</p>
       <ul>
@@ -28,6 +28,8 @@ export default function About() {
         <li><a href="https://github.com/TurtleCode84" target="_blank" rel="noreferrer">@turtlecode84</a>, lead developer</li>
         <li>Anyone else who gave suggestions or feedback!</li>
       </ul>
+      <h2>Found a bug or have feedback?</h2>
+      <p>Head over to our <a href="https://github.com/TurtleCode84/tracktask" target="_blank" rel="noreferrer">Github repository</a>, we&apos;d love to hear how we can make TrackTask better!</p>
 
       <style jsx>{`
         li {
