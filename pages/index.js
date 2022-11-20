@@ -21,7 +21,7 @@ export default function Home() {
         <span style={{ marginRight: "-1.3rem", verticalAlign: "middle" }}>
           <Image src="/tracktask.png" width="304.7" height="110" quality="95" alt="TrackTask" priority /> {/* Ratio 2.77:1 */}
         </span>
-        - Shareable Task Management
+        - Shareable Task Management test
       </h1>
 
       <h1>
