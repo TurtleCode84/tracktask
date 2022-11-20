@@ -90,7 +90,7 @@ async function tasksRoute(req, res) {
       } else if (name.trim().length > 55 || description.trim().length > 500) {
         res.status(422).json({ message: "Length of title and description must not exceed 55 and 500 characters respectively." });
         return;
-      } else if (limit <= 100) { // testing with <=
+      } else if (limit >= 100) {
         res.status(403).json({ message: "Woah there, we didn't expect you to create so many collections! Try deleting a few before making a new one." });
         return;
       }
@@ -122,8 +122,8 @@ async function tasksRoute(req, res) {
       } else if (name.trim().length > 55 || description.trim().length > 500) {
         res.status(422).json({ message: "Length of title and description must not exceed 55 and 500 characters respectively." });
         return;
-      } else if (limit <= 10000) { // testing with <=
-        res.status(403).json({ message: "Woah there, we didn't expect you to create so many tasks! Try deleting a few before making a new one." });
+      } else if (limit >= 10000) {
+        res.status(403).json({ message: "Woah there, we didn't expect you to create so many tasks! If you have tasks completed over a year ago, we'll remove them within the week to clear space for new tasks, otherwise you should delete a few before creating any more." });
         return;
       }
       try {
