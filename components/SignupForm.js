@@ -3,7 +3,7 @@ export default function SignupForm({ errorMessage, onSubmit }) {
     <form onSubmit={onSubmit}>
       <label>
         <span>Username</span>
-        <input type="text" name="username" required />
+        <input type="text" name="username" minlength="3" maxlength="20" required />
       </label>
       <label>
         <span>Email (optional)</span>
