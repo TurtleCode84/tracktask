@@ -32,13 +32,16 @@ async function joinRoute(req, res) {
     }
     const bannedIps = process.env.IPBAN.split(',');
     if (bannedIps.includes(ip)) {
-      res.status(403).json({ message: "Your IP address has been banned from creating accounts due to repeated abuse of the platform. If you believe this may have been a mistake, please contact a TrackTask administrator." });
+      res.status(403).json({ message: "Your IP address has been banned from creating accounts due to repeated abuse of the platform. If you believe this may have been a mistake or would like to appeal, please contact us at appeals@tracktask.eu.org." });
       return;
     }
     
     //Validate
     if (!username || !password) {
       res.status(422).json({ message: "Invalid data" });
+      return;
+    } else if (username.length < 3 || username.length > 20) {
+      res.status(422).json({ message: "Username length must be within 3 to 20 characters." });
       return;
     }
     
