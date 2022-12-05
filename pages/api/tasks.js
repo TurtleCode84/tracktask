@@ -290,6 +290,9 @@ async function tasksRoute(req, res) {
     } else if (!username || !role || !roles.includes(role)) {
       res.status(422).json({ message: "Invalid data" });
       return;
+    } else if (user.username === username) {
+      res.status(403).json({ message: "Collection is already shared with this user!" });
+      return;
     }
     const validateUser = await db.collection("users").findOne({username: username.trim().toLowerCase(), 'permissions.banned': false}, { projection: { _id: 1 } });
     if (!validateUser) {
@@ -303,7 +306,7 @@ async function tasksRoute(req, res) {
     };
     const validateCollection = await db.collection('collections').findOne({...query, 'sharing.sharedWith': {$elemMatch: {id: ObjectId(validateUser._id)}} });
     if (validateCollection) {
-      res.status(400).json({ message: "Collection is already shared with this user!" });
+      res.status(403).json({ message: "Collection is already shared with this user!" });
       return;
     }
     const pendingRole = "pending-" + role;
