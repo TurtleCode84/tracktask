@@ -61,6 +61,12 @@ export default function Layout({ children }) {
           border-color: darkgray;
           border-radius: 10px;
           width: auto;
+          transition: filter 0.3s;
+        }
+        
+        button:hover {
+          transition: filter 0.3s;
+          cursor: pointer;
         }
 
         .list-hover {
@@ -68,7 +74,7 @@ export default function Layout({ children }) {
         }
 
         .list-hover:hover {
-          filter: brightness(0.9);
+          transition: filter 0.3s;
           cursor: pointer;
         }
         
