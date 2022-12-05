@@ -54,11 +54,11 @@ export default function Layout({ children }) {
 
         button {
           background: #f8f8f8;
-          color: #222;
-          font-weight: 575;
-          font-size: 14px;
+          color: #333;
+          font-weight: 500;
+          font-size: 18px;
           padding: 5px;
-          border-width: 2px;
+          border-width: 1.5px;
           border-style: solid;
           border-color: darkgray;
           border-radius: 5px;
