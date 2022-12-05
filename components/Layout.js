@@ -56,9 +56,8 @@ export default function Layout({ children }) {
           background: #f8f8f8;
           color: #333;
           font-weight: 550;
-          font-size: 16px;
           padding: 5px;
-          border-width: 2px;
+          border-width: 0.5rem;
           border-style: solid;
           border-color: darkgray;
           border-radius: 5px;
