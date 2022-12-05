@@ -55,17 +55,19 @@ export default function Layout({ children }) {
         button {
           margin: 0.5em;
           background: #f8f8f8;
-          padding: 5px;
+          color: #222;
+          font-weight: bold;
+          font-size: 14px;
           border-width: 2px;
           border-style: solid;
           border-color: darkgray;
-          border-radius: 10px;
+          border-radius: 5px;
           width: auto;
           transition: filter 0.3s;
         }
         
         button:hover {
-          transition: filter 0.3s;
+          filter: brightness(0.9);
           cursor: pointer;
         }
 
@@ -74,7 +76,7 @@ export default function Layout({ children }) {
         }
 
         .list-hover:hover {
-          transition: filter 0.3s;
+          filter: brightness(0.9);
           cursor: pointer;
         }
         
