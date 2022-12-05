@@ -53,11 +53,11 @@ export default function Layout({ children }) {
         }
 
         button {
-          margin: 0.5em;
           background: #f8f8f8;
           color: #222;
-          font-weight: bold;
-          font-size: 14px;
+          font-weight: 550;
+          font-size: 14px
+          padding: 5px;
           border-width: 2px;
           border-style: solid;
           border-color: darkgray;
