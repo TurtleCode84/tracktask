@@ -52,9 +52,21 @@ export default function Layout({ children }) {
           }
         }
 
+        button {
+          margin: 0.5em;
+          background: #f8f8f8;
+          padding: 5px;
+          border-width: 2px;
+          border-style: solid;
+          border-color: darkgray;
+          border-radius: 10px;
+          width: auto;
+        }
+
         .list-hover {
           transition: filter 0.3s;
         }
+
         .list-hover:hover {
           filter: brightness(0.9);
           cursor: pointer;
@@ -63,6 +75,7 @@ export default function Layout({ children }) {
         a.footer {
           color: gray;
         }
+
         a.footer:visited {
           color: gray;
         }
@@ -77,6 +90,7 @@ export default function Layout({ children }) {
             'GRAD' 0,
             'opsz' 48
         }
+
         .icon-list {
           font-size: 18px;
           vertical-align: -3px !important;
