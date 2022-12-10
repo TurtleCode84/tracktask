@@ -69,6 +69,16 @@ export default function Layout({ children }) {
           filter: brightness(0.9);
           cursor: pointer;
         }
+        
+        button:active {
+          background: #ffffff;
+        }
+        
+        button:disabled {
+          filter: brightness(0.95) !important;
+          cursor: wait !important;
+          color: #757575;
+        }
 
         .list-hover {
           transition: filter 0.3s;
