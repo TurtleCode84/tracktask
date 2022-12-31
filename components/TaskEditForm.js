@@ -41,8 +41,7 @@ export default function TaskEditForm({ errorMessage, onSubmit, task }) {
       <a href={`/api/tasks?id=${task._id}`}
         onClick={async (e) => {
           e.preventDefault();
-          const confirm = prompt("Are you sure? Deleting a task is irreversable! Type \"yes\" to confirm.");
-          if (confirm.trim().toLowerCase() === "yes") {
+          if (confirm("Are you sure? Deleting a task is irreversable!")) {
             try {
               await fetchJson(`/api/tasks?id=${task._id}`, { method: "DELETE" });
               router.push("/dashboard?deleted=true");
