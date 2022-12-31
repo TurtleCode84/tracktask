@@ -27,8 +27,7 @@ export default function CollectionEditForm({ verified, errorMessage, onSubmit, c
       <a href={`/api/tasks?collection=true&id=${collection._id}`}
         onClick={async (e) => {
           e.preventDefault();
-          const confirm = prompt("Are you sure? Deleting a collection is irreversable! Type \"yes\" to confirm.");
-          if (confirm.trim().toLowerCase() === "yes") {
+          if (confirm("Are you sure? Deleting a collection is irreversable!")) {
             try {
               await fetchJson(`/api/tasks?collection=true&id=${collection._id}`, { method: "DELETE" });
               router.push("/dashboard?deleted=true");
