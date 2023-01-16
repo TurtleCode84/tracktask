@@ -80,6 +80,17 @@ export default function Layout({ children }) {
           color: #757575;
         }
 
+        textarea {
+          resize: none;
+          font-family: inherit;
+          font-size: 15px;
+          letter-spacing: 0.1px;
+        }
+
+        input {
+          font-family: inherit;
+        }
+
         .list-hover {
           transition: filter 0.3s;
         }
