@@ -84,6 +84,7 @@ export default function Layout({ children }) {
           resize: none;
           font-family: inherit;
           font-size: 15px;
+          letter-spacing: 0.1px;
         }
 
         input {
