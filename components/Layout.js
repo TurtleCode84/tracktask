@@ -80,6 +80,11 @@ export default function Layout({ children }) {
           color: #757575;
         }
 
+        textarea {
+          resize: none;
+          font-family: inherit;
+        }
+
         .list-hover {
           transition: filter 0.3s;
         }
