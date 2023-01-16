@@ -83,6 +83,7 @@ export default function Layout({ children }) {
         textarea {
           resize: none;
           font-family: inherit;
+          font-size: 15px;
         }
 
         input {
