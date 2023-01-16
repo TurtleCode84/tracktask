@@ -75,9 +75,6 @@ export default function TaskEditForm({ errorMessage, onSubmit, task }) {
           width: 15px !important;
           margin-bottom: 10px;
         }
-        textarea {
-          resize: none;
-        }
         .error {
           color: brown;
           margin: 1rem 0 0;
