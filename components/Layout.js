@@ -85,6 +85,10 @@ export default function Layout({ children }) {
           font-family: inherit;
         }
 
+        input {
+          font-family: inherit;
+        }
+
         .list-hover {
           transition: filter 0.3s;
         }
