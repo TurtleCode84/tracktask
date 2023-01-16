@@ -80,6 +80,17 @@ export default function Layout({ children }) {
           color: #757575;
         }
 
+        textarea {
+          resize: none;
+          font-family: inherit;
+          font-size: 15px;
+          letter-spacing: 0.1px;
+        }
+
+        input {
+          font-family: inherit;
+        }
+
         .list-hover {
           transition: filter 0.3s;
         }
@@ -121,7 +132,7 @@ export default function Layout({ children }) {
         <div className="container">{children}</div>
       </main>
 
-      <span style={{ fontSize: "90%", textAlign: "center", color: "gray", display: "table", margin: "4rem" + " auto", padding: "0 0.5rem 20px 0.5rem" }}>Copyright &#169; 2022 TrackTask STM, All Rights Reserved - <Link href="/privacy"><a className="footer">Privacy</a></Link> - <Link href="/terms"><a className="footer">Terms of Use</a></Link></span>
+      <span style={{ fontSize: "90%", textAlign: "center", color: "gray", display: "table", margin: "4rem" + " auto", padding: "0 0.5rem 20px 0.5rem" }}>Copyright &#169; 2022-2023 TrackTask STM, All Rights Reserved - <Link href="/privacy"><a className="footer">Privacy</a></Link> - <Link href="/terms"><a className="footer">Terms of Use</a></Link></span>
     </>
   );
 }
