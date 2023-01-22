@@ -36,7 +36,10 @@ export default function Collection() {
   const sharedWithList = collection?.sharing?.sharedWith?.map((item) =>
     <li key={item.id} style={{ paddingBottom: "5px" }}><User user={user} id={item.id}/> <span style={{ fontSize: "80%", fontStyle: "italic", color: "darkgray" }}>({item.role.split('-')[0]})</span></li>
   );
-  const currentUserRole = collection?.sharing?.sharedWith?.filter(item => item.id === user.id)?.[0]?.role.split('-')[0];
+  var currentUserRole = collection?.sharing?.sharedWith?.filter(item => item.id === user.id)?.[0]?.role.split('-')[0];
+  if (currentUserRole !== "editor" && user.id === collection.owner) {
+    currentUserRole = "editor";
+  }
   
   if (!user || !user.isLoggedIn || user.permissions.banned) {
     return (
