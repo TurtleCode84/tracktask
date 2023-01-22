@@ -28,6 +28,7 @@ export default function Task() {
   var canComplete = true;
   if (!task) {
     canEdit = false;
+    canComplete = false;
     const collection = collections?.filter(item => item.tasks?.some((element) => element._id === taskId))?.[0];
     canEdit = collection?.sharing.sharedWith.includes({id: user.id, role: "editor"}); // WIP
     canComplete = collection?.sharing.sharedWith.includes({id: user.id, role: "collaborator"}); // WIP
