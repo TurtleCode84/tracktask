@@ -37,7 +37,7 @@ export default function Collection() {
     <li key={item.id} style={{ paddingBottom: "5px" }}><User user={user} id={item.id}/> <span style={{ fontSize: "80%", fontStyle: "italic", color: "darkgray" }}>({item.role.split('-')[0]})</span></li>
   );
   var currentUserRole = collection?.sharing?.sharedWith?.filter(item => item.id === user?.id)?.[0]?.role.split('-')[0];
-  if (currentUserRole !== "editor" && user?.id === collection.owner) {
+  if (currentUserRole !== "editor" && user?.id === collection?.owner) {
     currentUserRole = "editor";
   }
   
