@@ -25,11 +25,15 @@ export default function Task() {
   const { taskId } = router.query;
   var task = tasks?.filter(item => item._id === taskId)?.[0];
   var canEdit = true;
+  var canComplete = true;
   if (!task) {
     canEdit = false;
     const collection = collections?.filter(item => item.tasks?.some((element) => element._id === taskId))?.[0];
     canEdit = collection?.sharing.sharedWith.includes({id: user.id, role: "editor"}); // WIP
-    //console.log(canEdit);
+    canComplete = collection?.sharing.sharedWith.includes({id: user.id, role: "collaborator"}); // WIP
+    if (!canComplete) {
+      canComplete = canEdit
+    }
     task = collection?.tasks.filter(item => item._id === taskId)?.[0];
   }
   var clientError;
@@ -57,7 +61,7 @@ export default function Task() {
         {user.permissions.verified && <p>Completed by: <User user={user} id={task.completion.completedBy}/></p>}
         </>
         :
-        <><a href={`/api/tasks?id=${task._id}`}
+        <>{canComplete && <><a href={`/api/tasks?id=${task._id}`}
         onClick={async (e) => {
           e.preventDefault();
           document.getElementById("markCompleteBtn").disabled = true;
@@ -84,7 +88,7 @@ export default function Task() {
             document.getElementById("markCompleteBtn").disabled = false;
           }
         }}
-        ><button id="markCompleteBtn">Mark completed <span style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">task_alt</span></button></a></>}
+        ><button id="markCompleteBtn">Mark completed <span style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">task_alt</span></button></a></>}</>}
         <hr/>
         {canEdit && <><details>
           <summary>Edit task</summary>
