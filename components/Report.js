@@ -43,17 +43,17 @@ export default function Report({ user, report, key }) {
     ><button><span style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">fact_check</span> Review</button></a>}
     {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
     <a href="/api/reports"
-        onClick={async (e) => {
+      onClick={async (e) => {
         e.preventDefault();
-        const confirm = prompt("Are you sure? Deleting a report is permanent! (This feature will be removed if abused.) Type \"yes\" to confirm.");
-        if (confirm !== "yes") {return false;}
-        try {
-            await fetchJson(`/api/reports?id=${report._id}`, { method: "DELETE" });
-            router.reload();
-        } catch (error) {
-            document.getElementById(`reportErrorMessage-${report._id}`).innerHTML = error.data.message;
+        if (confirm("Are you sure? Deleting a report is permanent!")) {
+          try {
+              await fetchJson(`/api/reports?id=${report._id}`, { method: "DELETE" });
+              router.reload();
+          } catch (error) {
+              document.getElementById(`reportErrorMessage-${report._id}`).innerHTML = error.data.message;
+          }
         }
-        }}
+      }}
     ><button><span style={{ color: "darkred" }} className="material-symbols-outlined icon-list">delete_forever</span> Delete</button></a>
     <p className="error" id={`reportErrorMessage-${report._id}`} style={{ color: "brown", margin: "1rem 0 0" }}></p>
     </li>
