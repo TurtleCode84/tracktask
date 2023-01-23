@@ -9,7 +9,7 @@ export default function LoadingDots() {
       #loading {
         display: flex;
         margin: 50px auto;
-        width: 8em;
+        width: 4.5em;
       }
 
       @keyframes move {
