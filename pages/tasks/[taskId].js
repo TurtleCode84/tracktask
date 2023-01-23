@@ -30,12 +30,14 @@ export default function Task() {
     canEdit = false;
     canComplete = false;
     const collection = collections?.filter(item => item.tasks?.some((element) => element._id === taskId))?.[0];
-    canEdit = await collection?.sharing.sharedWith.includes({id: user.id, role: "editor"}); // WIP
-    canComplete = await collection?.sharing.sharedWith.includes({id: user.id, role: "collaborator"}); // WIP
+    console.log(JSON.stringify(collection));
+    canEdit = collection?.sharing.sharedWith.includes({id: user.id, role: "editor"}); // WIP
+    canComplete = collection?.sharing.sharedWith.includes({id: user.id, role: "collaborator"}); // WIP
     if (!canComplete) {
       canComplete = canEdit
     }
     task = collection?.tasks.filter(item => item._id === taskId)?.[0];
+    console.log(JSON.stringify(task));
   }
   var clientError;
   if (tasks && !task) {
