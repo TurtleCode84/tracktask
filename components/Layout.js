@@ -141,7 +141,7 @@ export default function Layout({ children }) {
             color: #fff;
           }
           input[type="checkbox"], hr {
-            background-color: #111;
+            background-color: #111 !important;
           }
           nav {
             color: black !important;
