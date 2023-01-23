@@ -136,12 +136,12 @@ export default function Layout({ children }) {
             background-color: #111 !important;
             border-color: #333 !important;
           }
-          input, button, textarea, hr {
+          input, button, textarea {
             background-color: #111 !important;
             color: #fff !important;
           }
-          input[type="checkbox"] {
-            background-color: #111 !important;
+          hr {
+            visibility: hidden;
           }
           nav {
             color: black !important;
