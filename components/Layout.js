@@ -87,8 +87,20 @@ export default function Layout({ children }) {
           letter-spacing: 0.1px;
         }
 
-        input {
+        input, select {
           font-family: inherit;
+        }
+
+        summary {
+          user-select: none;
+        }
+
+        summary:hover {
+          cursor: pointer;
+        }
+
+        form > hr {
+          visibility: hidden;
         }
 
         .list-hover {
@@ -98,6 +110,10 @@ export default function Layout({ children }) {
         .list-hover:hover {
           filter: brightness(0.9);
           cursor: pointer;
+        }
+
+        a, a:visited {
+          color: midnightblue;
         }
         
         a.footer {
@@ -122,6 +138,30 @@ export default function Layout({ children }) {
         .icon-list {
           font-size: 18px;
           vertical-align: -3px !important;
+        }
+
+        @media (prefers-color-scheme: dark) {
+          body {
+            color: #fff;
+            background-color: #121212;
+          }
+          header {
+            background-color: #1b2129 !important;
+          }
+          .list-hover, .report-li {
+            background-color: #111 !important;
+            border-color: #333 !important;
+          }
+          input, button, textarea, select {
+            background-color: #111 !important;
+            color: #fff !important;
+          }
+          nav {
+            color: black !important;
+          }
+          a, a:visited {
+            color: dodgerblue;
+          }
         }
       `}</style>
       {process.env.NEXT_PUBLIC_VERCEL_ENV !== "production" && <nav style={{backgroundColor: "orange", textAlign: "center", height:40 + "px", fontWeight: 600, marginTop: -20 + "px", paddingBottom: 5 + "px", minHeight: "min-content"}}><p style={{paddingTop: 13 + "px"}}>You are viewing a TrackTask Development release, some features may not work properly or may break your account.</p></nav>}
