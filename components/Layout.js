@@ -132,15 +132,11 @@ export default function Layout({ children }) {
           header {
             background-color: #222 !important;
           }
-          list-hover {
+          li {
             background-color: #111;
             border-color: #333;
           }
-          input {
-            background-color: #111;
-            color: #fff;
-          }
-          button {
+          input, button, textarea {
             background-color: #111;
             color: #fff;
           }
