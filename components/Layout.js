@@ -29,13 +29,6 @@ export default function Layout({ children }) {
             "Helvetica Neue", Arial, Noto Sans, sans-serif, "Apple Color Emoji",
             "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
         }
-
-        @media (prefers-color-scheme: dark) {
-          body {
-            color: #fff;
-            background-color: #121212;
-          }
-        }
         
         .container {
           margin: 1.5rem auto;
@@ -129,6 +122,28 @@ export default function Layout({ children }) {
         .icon-list {
           font-size: 18px;
           vertical-align: -3px !important;
+        }
+
+        @media (prefers-color-scheme: dark) {
+          body {
+            color: #fff;
+            background-color: #121212;
+          }
+          header {
+            background-color: #222 !important;
+          }
+          list-hover {
+            background-color: #111;
+            border-color: #333;
+          }
+          input {
+            background-color: #111;
+            color: #fff;
+          }
+          button {
+            background-color: #111;
+            color: #fff;
+          }
         }
       `}</style>
       {process.env.NEXT_PUBLIC_VERCEL_ENV !== "production" && <nav style={{backgroundColor: "orange", textAlign: "center", height:40 + "px", fontWeight: 600, marginTop: -20 + "px", paddingBottom: 5 + "px", minHeight: "min-content"}}><p style={{paddingTop: 13 + "px"}}>You are viewing a TrackTask Development release, some features may not work properly or may break your account.</p></nav>}
