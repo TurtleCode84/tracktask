@@ -36,6 +36,10 @@ export default function Collection() {
   const sharedWithList = collection?.sharing?.sharedWith?.map((item) =>
     <li key={item.id} style={{ paddingBottom: "5px" }}><User user={user} id={item.id}/> <span style={{ fontSize: "80%", fontStyle: "italic", color: "darkgray" }}>({item.role.split('-')[0]})</span></li>
   );
+  var currentUserRole = collection?.sharing?.sharedWith?.filter(item => item.id === user?.id)?.[0]?.role.split('-')[0];
+  if (currentUserRole !== "editor" && user?.id === collection?.owner) {
+    currentUserRole = "editor";
+  }
   
   if (!user || !user.isLoggedIn || user.permissions.banned) {
     return (
@@ -70,7 +74,7 @@ export default function Collection() {
         } 
         {user.permissions.verified && user.id === collection.owner && <><hr/><Link href={`/collections/${collection._id}/share`}>Share this collection</Link></>}
         <hr/>
-        <details>
+        {currentUserRole === "editor" && <><details>
           <summary>Edit collection</summary>
           <br/><CollectionEditForm
             verified={user.permissions.verified}
@@ -102,7 +106,7 @@ export default function Collection() {
               }
             }}
         />
-        </details>
+        </details></>}
         {collection.owner !== user.id && <><br/><ReportButton user={user} type="collection" reported={collection}/></>}</>
       :
         <>{error || clientError ? <p>{clientError ? clientError : error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading collection...</p>}</>
