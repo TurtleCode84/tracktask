@@ -103,6 +103,10 @@ export default function Layout({ children }) {
           filter: brightness(0.9);
           cursor: pointer;
         }
+
+        a, a:visited {
+          color: navy;
+        }
         
         a.footer {
           color: gray;
