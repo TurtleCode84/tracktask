@@ -91,7 +91,7 @@ export default function Layout({ children }) {
           font-family: inherit;
         }
 
-        hr {
+        form > hr {
           visibility: hidden;
         }
 
