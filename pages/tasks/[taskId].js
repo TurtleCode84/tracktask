@@ -144,8 +144,8 @@ export default function Task() {
               }
             }}
         />
-        </details><br/></>}
-        {user.id === task.owner && <><details>
+        </details></>}
+        {user.id === task.owner && <><br/><details>
           <summary>Add/remove from collection</summary>
           <br/><AddRemoveCollectionForm
             errorMessage={errorMsg}
