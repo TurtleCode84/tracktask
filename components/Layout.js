@@ -29,6 +29,13 @@ export default function Layout({ children }) {
             "Helvetica Neue", Arial, Noto Sans, sans-serif, "Apple Color Emoji",
             "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
         }
+
+        @media (prefers-color-scheme: dark) {
+          body {
+            color: #fff;
+            background-color: #121212;
+          }
+        }
         
         .container {
           margin: 1.5rem auto;
