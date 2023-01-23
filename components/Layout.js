@@ -105,7 +105,7 @@ export default function Layout({ children }) {
         }
 
         a, a:visited {
-          color: navy;
+          color: midnightblue;
         }
         
         a.footer {
