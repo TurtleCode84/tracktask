@@ -144,7 +144,7 @@ export default function Layout({ children }) {
             background-color: #111 !important;
             border-color: #333 !important;
           }
-          input, button, textarea {
+          input, button, textarea, select {
             background-color: #111 !important;
             color: #fff !important;
           }
