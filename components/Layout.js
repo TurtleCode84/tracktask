@@ -87,7 +87,7 @@ export default function Layout({ children }) {
           letter-spacing: 0.1px;
         }
 
-        input {
+        input, select {
           font-family: inherit;
         }
 
