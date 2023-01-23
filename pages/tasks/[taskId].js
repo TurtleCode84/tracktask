@@ -26,23 +26,16 @@ export default function Task() {
   var task = tasks?.filter(item => item._id === taskId)?.[0];
   var canEdit = true;
   var canComplete = true;
-  if (!await task) {
-    console.log("Not owner!");
+  if (!task) {
     canEdit = false;
     canComplete = false;
-    console.log("So they cannot edit or complete.");
     const collection = collections?.filter(item => item.tasks?.some((element) => element._id === taskId))?.[0];
-    console.log(await collection);
-    canEdit = collection?.sharing.sharedWith.includes({id: user.id, role: "editor"}); // WIP
-    console.log(await canEdit);
-    canComplete = collection?.sharing.sharedWith.includes({id: user.id, role: "collaborator"}); // WIP
-    console.log(await canComplete);
-    if (!await canComplete) {
+    canEdit = await collection?.sharing.sharedWith.includes({id: user.id, role: "editor"}); // WIP
+    canComplete = await collection?.sharing.sharedWith.includes({id: user.id, role: "collaborator"}); // WIP
+    if (!canComplete) {
       canComplete = canEdit
     }
-    console.log(await canComplete);
     task = collection?.tasks.filter(item => item._id === taskId)?.[0];
-    console.log(await task);
   }
   var clientError;
   if (tasks && !task) {
