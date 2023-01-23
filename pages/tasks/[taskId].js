@@ -32,9 +32,9 @@ export default function Task() {
     const collection = collections?.find(item => item.tasks?.some((element) => element._id === taskId));
     console.log(JSON.stringify(collection));
     console.log(user?.id);
-    canEdit = collection?.sharing.sharedWith.some((element) => element === {id: user?.id, role: "editor"}); // WIP
+    canEdit = collection?.sharing?.sharedWith?.some((element) => element === {id: user?.id, role: "editor"}); // WIP
     console.log(canEdit);
-    canComplete = collection?.sharing.sharedWith.some((element) => element === {id: user?.id, role: "collaborator"}); // WIP
+    canComplete = collection?.sharing?.sharedWith?.some((element) => element === {id: user?.id, role: "collaborator"}); // WIP
     console.log(canComplete);
     if (!canComplete) {
       canComplete = canEdit
