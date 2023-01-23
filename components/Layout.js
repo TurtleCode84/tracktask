@@ -91,6 +91,10 @@ export default function Layout({ children }) {
           font-family: inherit;
         }
 
+        summary:hover {
+          cursor: pointer;
+        }
+
         form > hr {
           visibility: hidden;
         }
