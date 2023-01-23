@@ -136,7 +136,7 @@ export default function Layout({ children }) {
           header {
             background-color: #222 !important;
           }
-          .list-hover {
+          .list-hover, .report-li {
             background-color: #111 !important;
             border-color: #333 !important;
           }
