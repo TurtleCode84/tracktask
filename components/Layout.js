@@ -91,6 +91,10 @@ export default function Layout({ children }) {
           font-family: inherit;
         }
 
+        summary {
+          user-select: none;
+        }
+
         summary:hover {
           cursor: pointer;
         }
