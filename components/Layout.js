@@ -91,6 +91,10 @@ export default function Layout({ children }) {
           font-family: inherit;
         }
 
+        hr {
+          visibility: hidden;
+        }
+
         .list-hover {
           transition: filter 0.3s;
         }
@@ -139,9 +143,6 @@ export default function Layout({ children }) {
           input, button, textarea {
             background-color: #111 !important;
             color: #fff !important;
-          }
-          hr {
-            visibility: hidden;
           }
           nav {
             color: black !important;
