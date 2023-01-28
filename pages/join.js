@@ -45,8 +45,8 @@ export default function Join() {
             };
 
             try {
-              await fetchJson("/api/join", {
-                method: "POST",
+              await fetchJson("/api/auth", {
+                method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body),
               })
