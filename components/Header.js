@@ -81,11 +81,11 @@ export default function Header() {
               <li>
                 {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
                 <a
-                  href="/api/logout"
+                  href="/api/auth"
                   onClick={async (e) => {
                     e.preventDefault();
                     mutateUser(
-                      await fetchJson("/api/logout", { method: "POST" }),
+                      await fetchJson("/api/auth", { method: "DELETE" }),
                       false,
                     );
                     router.push("/login");
