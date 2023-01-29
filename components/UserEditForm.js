@@ -42,14 +42,16 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
       <a href={`/api/user`}
         onClick={async (e) => {
           e.preventDefault();
-          const confirm = prompt("Are you sure? Deleting your account is irreversable and will remove all of your tasks and collections! Type \"yes\" to confirm.");
-          if (confirm.trim().toLowerCase() === "yes") {
+          const confirm = prompt("Are you sure? Deleting your account is irreversable and will also delete all of your tasks and collections! Type \"delete my account\" to confirm.");
+          if (confirm.trim().toLowerCase() === "delete my account") {
             try {
               await fetchJson(`/api/user`, { method: "DELETE" });
               router.push("/");
             } catch (error) {
               document.getElementById("deleteUserMessage").innerHTML = error.data.message;
             }
+          } else if (confirm) {
+            alert("You didn't type \"delete my account\", so we'll assume you didn't want to. Great choice!");
           }
         }}
       ><button><span style={{ color: "orange" }} className="material-symbols-outlined icon-list">warning</span> Delete my account <span style={{ color: "orange" }} className="material-symbols-outlined icon-list">warning</span></button></a>

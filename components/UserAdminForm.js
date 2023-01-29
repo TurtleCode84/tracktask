@@ -68,14 +68,16 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
       <a href={`/api/admin/users/${lookup._id}`}
         onClick={async (e) => {
           e.preventDefault();
-          const confirm = prompt("Are you sure? Deleting a user is irreversable, and will delete all of their tasks and collections as well! Type \"yes\" to confirm, not case sensitive.");
-          if (confirm.trim().toLowerCase() === "yes") {
+          const confirm = prompt("Are you sure? Deleting a user is irreversable, and will delete all of their tasks and collections as well! Type \"delete this account\" to confirm.");
+          if (confirm.trim().toLowerCase() === "delete this account") {
             try {
               await fetchJson(`/api/admin/users/${lookup._id}`, { method: "DELETE" });
               router.push("/admin?deleted=true");
             } catch (error) {
               document.getElementById("deleteUserMessage").innerHTML = error.data.message;
             }
+          } else if (confirm) {
+            alert("You didn't type \"delete this account\", so we'll assume you didn't want to. Only delete a user if it's completely necessary!");
           }
         }}
       ><button><span style={{ color: "orange" }} className="material-symbols-outlined icon-list">warning</span> Delete user <span style={{ color: "orange" }} className="material-symbols-outlined icon-list">warning</span></button></a>
