@@ -113,7 +113,7 @@ async function userRoute(req, res) {
   } else if (req.method === 'DELETE') {
     const user = req.session.user;
     if (user.permissions.admin) {
-      res.status(403).json({ message: "For security reasons, admins cannot delete their own accounts. Please contact a developer for account deletion." });
+      res.status(403).json({ message: "For security reasons, admins cannot delete their own accounts. Please contact a developer for data deletion." });
       return;
     }
     const client = await clientPromise;
