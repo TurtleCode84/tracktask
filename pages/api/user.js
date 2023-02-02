@@ -1,6 +1,6 @@
 import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "lib/session";
-import { ObjectId } from 'mongodb'
+import new { ObjectId } from 'mongodb'
 import clientPromise from "lib/mongodb";
 import { compare, hash } from 'bcryptjs';
 
