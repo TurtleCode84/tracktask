@@ -17,9 +17,9 @@ async function toolsRoute(req, res) {
   const { tool, param } = req.query;
   if (req.method === 'GET') {
     if (tool) {
-      const newObjectId = new ObjectId();
       if (tool === "userInfo") {
-        if (!newObjectId.isValid(param)) {
+        const newObjectIdIsValid = new ObjectId.isValid(param);
+        if (!newObjectIdIsValid) {
           res.status(422).json({ message: "Invalid user ID" });
           return;
         }
@@ -32,7 +32,7 @@ async function toolsRoute(req, res) {
           return;
         }
       } else if (tool === "userStats" && user.permissions.admin) {
-        if (!newObjectId.isValid(param)) {
+        if (!newObjectIdIsValid) {
           res.status(422).json({ message: "Invalid user ID!" });
           return;
         }
