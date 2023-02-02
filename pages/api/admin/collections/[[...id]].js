@@ -12,8 +12,7 @@ async function adminCollectionRoute(req, res) {
     return;
   }
   const { id } = req.query
-  const newObjectIdIsValid = new ObjectId.isValid(id[0]);
-  if (id && !newObjectIdIsValid) {
+  if (id && !ObjectId.isValid(id[0])) {
     res.status(422).json({ message: "Invalid collection ID" });
     return;
   }

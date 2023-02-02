@@ -13,8 +13,7 @@ async function adminUserRoute(req, res) {
     return;
   }
   const { uid } = req.query;
-  const newObjectIdIsValid = new ObjectId.isValid(uid);
-  if (!newObjectIdIsValid) {
+  if (!ObjectId.isValid(uid)) {
     res.status(422).json({ message: "Invalid user ID" });
     return;
   }

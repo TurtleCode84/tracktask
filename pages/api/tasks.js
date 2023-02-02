@@ -153,8 +153,7 @@ async function tasksRoute(req, res) {
     }
   } else if (req.method === 'DELETE') { // Deletes a task or collection
     const { id, collection } = req.query;
-    const newObjectIdIsValid = new ObjectId.isValid(id);
-    if (!newObjectIdIsValid) {
+    if (!ObjectId.isValid(id)) {
       res.status(422).json({ message: "Invalid object ID" });
       return;
     }
@@ -181,8 +180,7 @@ async function tasksRoute(req, res) {
   } else if (req.method === 'PATCH') { // Updates a task or collection
     const body = await req.body;
     const { id, collection } = req.query;
-    const newObjectIdIsValid = new ObjectId.isValid(id);
-    if (!newObjectIdIsValid) {
+    if (!ObjectId.isValid(id)) {
       res.status(422).json({ message: "Invalid object ID" });
       return;
     }
@@ -286,8 +284,7 @@ async function tasksRoute(req, res) {
     const { username, role } = await req.body;
     const { id } = req.query;
     const roles = ["viewer", "collaborator", "editor"];
-    const newObjectIdIsValid = new ObjectId.isValid(id);
-    if (!newObjectIdIsValid) {
+    if (!ObjectId.isValid(id)) {
       res.status(422).json({ message: "Invalid collection ID" });
       return;
     } else if (!username || !role || !roles.includes(role)) {

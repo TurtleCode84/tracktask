@@ -21,8 +21,7 @@ async function adminUserSearchRoute(req, res) {
     if (query === "username") {
       dbQuery = { username: keyword.trim().toLowerCase() };
     } else if (query === "uid") { // No DB query needed
-      const newObjectIdIsValid = new ObjectId.isValid(keyword);
-      if (!newObjectIdIsValid) {
+      if (!ObjectId.isValid(keyword)) {
         res.status(422).json({ message: "Invalid user ID" });
         return;
       }
