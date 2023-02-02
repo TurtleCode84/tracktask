@@ -12,7 +12,7 @@ async function tasksRoute(req, res) {
     res.status(401).json({ message: "Loading tasks..." });
     return;
   }
-  const newObjectId = new ObjectId;
+  const newObjectId = new ObjectId();
   const client = await clientPromise;
   const db = client.db("data");
   if (req.method === 'GET') { // Get all unhidden tasks or collections for the logged in user
