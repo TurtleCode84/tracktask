@@ -12,7 +12,8 @@ async function adminCollectionRoute(req, res) {
     return;
   }
   const { id } = req.query
-  if (id && !ObjectId.isValid(id[0])) {
+  const newObjectId = new ObjectId;
+  if (id && !newObjectId.isValid(id[0])) {
     res.status(422).json({ message: "Invalid collection ID" });
     return;
   }
@@ -23,7 +24,7 @@ async function adminCollectionRoute(req, res) {
       'sharing.shared': true,
     };
     if (id) {
-      query._id = ObjectId(id[0]);
+      query._id = new ObjectId(id[0]);
     }
     const taskoptions = {
       sort: { 'completion.completed': 1, priority: -1, dueDate: 1 },
@@ -54,9 +55,9 @@ async function adminCollectionRoute(req, res) {
     const db = client.db("data");
     var deletedItem;
     if (collection !== "true") {
-      deletedItem = await db.collection("tasks").deleteOne({ _id: ObjectId(id[0]) });
+      deletedItem = await db.collection("tasks").deleteOne({ _id: new ObjectId(id[0]) });
     } else {
-      deletedItem = await db.collection("collections").deleteOne({ _id: ObjectId(id[0]) });
+      deletedItem = await db.collection("collections").deleteOne({ _id: new ObjectId(id[0]) });
     }
     res.json(deletedItem);*/
   } else {

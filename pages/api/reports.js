@@ -33,7 +33,7 @@ async function reportsRoute(req, res) {
     }
     try {
       const newReport = {
-        reporter: ObjectId(user.id),
+        reporter: new ObjectId(user.id),
         type: type,
         reason: reason.trim(),
         reported: reported,
@@ -43,14 +43,14 @@ async function reportsRoute(req, res) {
       const createdReport = await db.collection('reports').insertOne(newReport);
       if (type === "share") {
         const query = {
-          _id: ObjectId(reported._id),
+          _id: new ObjectId(reported._id),
           hidden: false,
-          'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: ObjectId(user.id)}},
+          'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user.id)}},
         };
         const updateDoc = {
           $pull: {
             'sharing.sharedWith': {
-              id: ObjectId(user.id),
+              id: new ObjectId(user.id),
             },
           }
         };
@@ -63,7 +63,7 @@ async function reportsRoute(req, res) {
     }
   } else if (req.method === 'PATCH' && user.permissions.admin) {
     const { id } = await req.body;
-    const query = {_id: ObjectId(id)};
+    const query = {_id: new ObjectId(id)};
     const updateDoc = {
       $set: {
         reviewed: Math.floor(Date.now()/1000),
@@ -73,7 +73,7 @@ async function reportsRoute(req, res) {
     res.json(updatedReport);
   } else if (req.method === 'DELETE' && user.permissions.admin) {
     const { id } = await req.query;
-    const query = {_id: ObjectId(id)};
+    const query = {_id: new ObjectId(id)};
     const deletedReport = await db.collection('reports').deleteOne(query);
     res.json(deletedReport);
   } else {

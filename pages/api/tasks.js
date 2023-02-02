@@ -12,6 +12,7 @@ async function tasksRoute(req, res) {
     res.status(401).json({ message: "Loading tasks..." });
     return;
   }
+  const newObjectId = new ObjectId;
   const client = await clientPromise;
   const db = client.db("data");
   if (req.method === 'GET') { // Get all unhidden tasks or collections for the logged in user
@@ -19,8 +20,8 @@ async function tasksRoute(req, res) {
     const query = {
       hidden: false,
       $or: [
-        { owner: ObjectId(user.id) },
-        { 'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: ObjectId(user.id)}} },
+        { owner: new ObjectId(user.id) },
+        { 'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user.id)}} },
       ],
     };
     const taskoptions = {
@@ -83,7 +84,7 @@ async function tasksRoute(req, res) {
     const { collection } = req.query;
     if (collection === "true") {
       const { name, description, shared } = await req.body;
-      const limit = await db.collection('collections').countDocuments({ owner: ObjectId(user.id) });
+      const limit = await db.collection('collections').countDocuments({ owner: new ObjectId(user.id) });
       if (!name || !description) {
         res.status(422).json({ message: "Invalid data" });
         return;
@@ -103,7 +104,7 @@ async function tasksRoute(req, res) {
             sharedWith: [],
           },
           hidden: false,
-          owner: ObjectId(user.id),
+          owner: new ObjectId(user.id),
           created: Math.floor(Date.now()/1000),
           tasks: [],
         };
@@ -115,7 +116,7 @@ async function tasksRoute(req, res) {
       }
     } else {
       const { name, description, dueDate, markPriority } = await req.body;
-      const limit = await db.collection('tasks').countDocuments({ owner: ObjectId(user.id) });
+      const limit = await db.collection('tasks').countDocuments({ owner: new ObjectId(user.id) });
       if (!name || !description) {
         res.status(422).json({ message: "Invalid data" });
         return;
@@ -131,7 +132,7 @@ async function tasksRoute(req, res) {
           name: name.trim(),
           description: description.trim(),
           hidden: false,
-          owner: ObjectId(user.id),
+          owner: new ObjectId(user.id),
           created: Math.floor(Date.now()/1000),
           completion: {
             completed: 0,
@@ -153,16 +154,16 @@ async function tasksRoute(req, res) {
     }
   } else if (req.method === 'DELETE') { // Deletes a task or collection
     const { id, collection } = req.query;
-    if (!ObjectId.isValid(id)) {
+    if (!newObjectId.isValid(id)) {
       res.status(422).json({ message: "Invalid object ID" });
       return;
     }
     const query = {
       hidden: false,
-      _id: ObjectId(id),
+      _id: new ObjectId(id),
       $or: [
-        { owner: ObjectId(user.id) },
-        { 'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: ObjectId(user.id), role: "editor"}} }, //change so only owner can delete
+        { owner: new ObjectId(user.id) },
+        { 'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user.id), role: "editor"}} }, //change so only owner can delete
       ],
     };
     try {
@@ -180,16 +181,16 @@ async function tasksRoute(req, res) {
   } else if (req.method === 'PATCH') { // Updates a task or collection
     const body = await req.body;
     const { id, collection } = req.query;
-    if (!ObjectId.isValid(id)) {
+    if (!newObjectId.isValid(id)) {
       res.status(422).json({ message: "Invalid object ID" });
       return;
     }
     const query = {
-      _id: ObjectId(id),
+      _id: new ObjectId(id),
       hidden: false,
       $or: [
-        { owner: ObjectId(user.id) },
-        { 'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: ObjectId(user.id), role: "editor"}} },
+        { owner: new ObjectId(user.id) },
+        { 'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user.id), role: "editor"}} },
       ],
     };
     var updateDoc = {};
@@ -237,13 +238,13 @@ async function tasksRoute(req, res) {
       var addCollectionsId = [];
       if (body.addCollections) {
         for (var i=0; i<body.addCollections.length; i++) {
-          addCollectionsId[i] = ObjectId(body.addCollections[i]);
+          addCollectionsId[i] = new ObjectId(body.addCollections[i]);
         }
       }
       var removeCollectionsId = [];
       if (body.removeCollections) {
         for (var i=0; i<body.removeCollections.length; i++) {
-          removeCollectionsId[i] = ObjectId(body.removeCollections[i]);
+          removeCollectionsId[i] = new ObjectId(body.removeCollections[i]);
         }
       }
       try {
@@ -254,12 +255,12 @@ async function tasksRoute(req, res) {
               $in: addCollectionsId,
             },
             tasks: {
-              $nin: [ObjectId(id)],
+              $nin: [new ObjectId(id)],
             },
             hidden: false,
-            owner: ObjectId(user.id),
+            owner: new ObjectId(user.id),
           };
-          const addedTasks = await db.collection("collections").updateMany(addCollectionsQuery, {$push: {tasks: ObjectId(id)}});
+          const addedTasks = await db.collection("collections").updateMany(addCollectionsQuery, {$push: {tasks: new ObjectId(id)}});
         }
         if (removeCollectionsId.length > 0) {
           const removeCollectionsQuery = {
@@ -267,12 +268,12 @@ async function tasksRoute(req, res) {
               $in: removeCollectionsId,
             },
             tasks: {
-              $in: [ObjectId(id)],
+              $in: [new ObjectId(id)],
             },
             hidden: false,
-            owner: ObjectId(user.id),
+            owner: new ObjectId(user.id),
           };
-          const removedTasks = await db.collection("collections").updateMany(removeCollectionsQuery, {$pull: {tasks: ObjectId(id)}});
+          const removedTasks = await db.collection("collections").updateMany(removeCollectionsQuery, {$pull: {tasks: new ObjectId(id)}});
         }
         res.json(updatedCollection);
       } catch (error) {
@@ -284,7 +285,7 @@ async function tasksRoute(req, res) {
     const { username, role } = await req.body;
     const { id } = req.query;
     const roles = ["viewer", "collaborator", "editor"];
-    if (!ObjectId.isValid(id)) {
+    if (!newObjectId.isValid(id)) {
       res.status(422).json({ message: "Invalid collection ID" });
       return;
     } else if (!username || !role || !roles.includes(role)) {
@@ -300,11 +301,11 @@ async function tasksRoute(req, res) {
       return;
     }
     const query = {
-      _id: ObjectId(id),
+      _id: new ObjectId(id),
       hidden: false,
-      owner: ObjectId(user.id),
+      owner: new ObjectId(user.id),
     };
-    const validateCollection = await db.collection('collections').findOne({...query, 'sharing.sharedWith': {$elemMatch: {id: ObjectId(validateUser._id)}} });
+    const validateCollection = await db.collection('collections').findOne({...query, 'sharing.sharedWith': {$elemMatch: {id: new ObjectId(validateUser._id)}} });
     if (validateCollection) {
       res.status(403).json({ message: "Collection is already shared with this user!" });
       return;

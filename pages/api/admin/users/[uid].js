@@ -13,14 +13,15 @@ async function adminUserRoute(req, res) {
     return;
   }
   const { uid } = req.query;
-  if (!ObjectId.isValid(uid)) {
+  const newObjectId = new ObjectId;
+  if (!newObjectId.isValid(uid)) {
     res.status(422).json({ message: "Invalid user ID" });
     return;
   }
   if (req.method === 'GET') {
     const client = await clientPromise;
     const db = client.db("data");
-    const query = { _id: ObjectId(uid) };
+    const query = { _id: new ObjectId(uid) };
   
     try {
       const getUser = await db.collection("users").findOne(query);
@@ -53,7 +54,7 @@ async function adminUserRoute(req, res) {
     if (body.email !== undefined) {updateUser.email = body.email.trim().toLowerCase()}
     if (body.password) {updateUser.password = await hash(body.password, 10)}
     if (body.profilePicture !== undefined) {updateUser.profilePicture = body.profilePicture}
-    const query = { _id: ObjectId(uid) }
+    const query = { _id: new ObjectId(uid) }
     const updateDoc = {
       $set: updateUser,
     };
@@ -123,7 +124,7 @@ async function adminUserRoute(req, res) {
     const lastEditDoc = {
       $set: {
         'history.lastEdit.timestamp': Math.floor(Date.now()/1000),
-        'history.lastEdit.by': ObjectId(user.id),
+        'history.lastEdit.by': new ObjectId(user.id),
       },
     };
     const lastEditUpdate = await db.collection('users').updateOne(query, lastEditDoc); // See above
@@ -138,9 +139,9 @@ async function adminUserRoute(req, res) {
     }
     const client = await clientPromise;
     const db = client.db("data");
-    const deletedUser = await db.collection("users").deleteOne({ _id: ObjectId(uid) });
-    const deletedTasks = await db.collection("tasks").deleteMany({ owner: ObjectId(uid) }); // See above
-    const deletedCollections = await db.collection("collections").deleteMany({ owner: ObjectId(uid) }); // See above
+    const deletedUser = await db.collection("users").deleteOne({ _id: new ObjectId(uid) });
+    const deletedTasks = await db.collection("tasks").deleteMany({ owner: new ObjectId(uid) }); // See above
+    const deletedCollections = await db.collection("collections").deleteMany({ owner: new ObjectId(uid) }); // See above
     res.json(deletedUser);
   } else {
     res.status(405).json({ message: "Method not allowed" });
