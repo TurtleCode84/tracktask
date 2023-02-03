@@ -11,7 +11,7 @@ async function userRoute(req, res) {
     if (req.session.user) {
       const client = await clientPromise;
       const db = client.db("data");
-      const query = { _id: ObjectId(req.session.user.id) };
+      const query = { _id: new ObjectId(req.session.user.id) };
       const userInfo = await db.collection("users").findOne(query);
       if (!userInfo) {
         await req.session.destroy();
@@ -52,7 +52,7 @@ async function userRoute(req, res) {
     }
     const client = await clientPromise;
     const db = client.db("data");
-    const query = { _id: ObjectId(user.id) };
+    const query = { _id: new ObjectId(user.id) };
     if (body.acknowledgedWarning) {
       try {
         const warnUpdateDoc = {
@@ -62,7 +62,7 @@ async function userRoute(req, res) {
         const lastEditDoc = {
           $set: {
             'lastEdit.timestamp': Math.floor(Date.now()/1000),
-            'lastEdit.by': ObjectId(user.id),
+            'lastEdit.by': new ObjectId(user.id),
           },
         };
         const lastEditUpdate = await db.collection('users').updateOne(query, lastEditDoc);
@@ -72,7 +72,7 @@ async function userRoute(req, res) {
       }
     } else {
       var updateUser = {};
-      const query = { _id: ObjectId(user.id) }
+      const query = { _id: new ObjectId(user.id) }
       if (body.username && user.permissions.verified) {
         const taken = await db.collection('users').countDocuments({ username: body.username.trim().toLowerCase() });
         if (taken > 0) {
@@ -104,7 +104,7 @@ async function userRoute(req, res) {
       const lastEditDoc = {
         $set: {
           'history.lastEdit.timestamp': Math.floor(Date.now()/1000),
-          'history.lastEdit.by': ObjectId(user.id),
+          'history.lastEdit.by': new ObjectId(user.id),
         },
       };
       const lastEditUpdate = await db.collection('users').updateOne(query, lastEditDoc);
@@ -118,9 +118,9 @@ async function userRoute(req, res) {
     }
     const client = await clientPromise;
     const db = client.db("data");
-    const deletedTasks = await db.collection("tasks").deleteMany({ owner: ObjectId(user.id) });
-    const deletedCollections = await db.collection("collections").deleteMany({ owner: ObjectId(user.id) });
-    const deletedUser = await db.collection("users").deleteOne({ _id: ObjectId(user.id) });
+    const deletedTasks = await db.collection("tasks").deleteMany({ owner: new ObjectId(user.id) });
+    const deletedCollections = await db.collection("collections").deleteMany({ owner: new ObjectId(user.id) });
+    const deletedUser = await db.collection("users").deleteOne({ _id: new ObjectId(user.id) });
     res.json(deletedUser);
   } else {
     res.status(405).json({ message: "Method not allowed" });
