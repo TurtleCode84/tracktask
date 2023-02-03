@@ -17,9 +17,9 @@ export default function Admin() {
   });
   const router = useRouter();
   const { deleted } = router.query;
-  var deletedMsg;
+  var dynamicMsg;
   if (deleted === "true") {
-    deletedMsg = "User successfully deleted!"
+    dynamicMsg = "User successfully deleted!"
   }
   const { reports, error: reportsError } = useAdminReports(user, false);
   const reportList = reports?.slice(0,4).map((report) =>
@@ -44,9 +44,9 @@ export default function Admin() {
     );
   }
   return (
-    <><Layout>
+    <Layout>
       <h1>TrackTask Admin Panel <span style={{ color: "slategray" }} className="material-symbols-outlined">verified_user</span></h1>
-      {deletedMsg && <p className="success">{deletedMsg}</p>}
+      {dynamicMsg && <p className="success">{dynamicMsg}</p>}
       <h2>Recent Reports</h2>
       <ul style={{ display: "table" }}>
         {reportList?.length > 0 ? reportList : <li>No reports found!</li>}
@@ -78,11 +78,5 @@ export default function Admin() {
         )}
       </details>
     </Layout>
-    <style jsx>{`
-      .success {
-        color: darkgreen;
-        margin: 1rem 0 0;
-      }
-    `}</style></>
   );
 }

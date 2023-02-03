@@ -140,6 +140,16 @@ export default function Layout({ children }) {
           vertical-align: -3px !important;
         }
 
+        .success {
+          color: darkgreen;
+          margin: 1rem 0 0;
+        }
+
+        .error {
+          color: brown;
+          margin: 1rem 0 0;
+        }
+
         @media (prefers-color-scheme: dark) {
           body {
             color: #fff;

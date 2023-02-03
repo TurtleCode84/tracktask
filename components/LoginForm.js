@@ -30,14 +30,6 @@ export default function LoginForm({ errorMessage, onSubmit, joinMessage }) {
           border: 1px solid #ccc;
           border-radius: 4px;
         }
-        .error {
-          color: brown;
-          margin: 1rem 0 0;
-        }
-        .success {
-          color: darkgreen;
-          margin: 1rem 0 0;
-        }
       `}</style>
     </form>
   );

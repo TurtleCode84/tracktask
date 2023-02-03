@@ -16,6 +16,13 @@ export default function Dashboard() {
   
   const { tasks: upcomingTasks, error: upcomingTasksError } = useTasks(user, false, "upcoming");
   const router = useRouter();
+  const { reported, deleted } = router.query;
+  var dynamicMsg;
+  if (reported === "true") {
+    dynamicMsg = "Your report had been sent, an administrator will review it soon."
+  } else if (deleted === "true") {
+    dynamicMsg = "Task successfully deleted!"
+  }
   const upcomingTaskList = upcomingTasks?.map((task) =>
     <Task task={task} key={task._id}/>
   );
@@ -50,6 +57,8 @@ export default function Dashboard() {
         </>
         }
       </h1>
+
+      {dynamicMsg && <p className="success">{dynamicMsg}</p>}
 
       {(upcomingTaskList === undefined && !upcomingTasksError) || (overdueTaskList === undefined && !overdueTasksError) || (notdueTaskList === undefined && !notdueTasksError) && <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
       {upcomingTasksError && overdueTasksError && notdueTasksError &&
