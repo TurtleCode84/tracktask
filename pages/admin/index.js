@@ -46,7 +46,7 @@ export default function Admin() {
   return (
     <Layout>
       <h1>TrackTask Admin Panel <span style={{ color: "slategray" }} className="material-symbols-outlined">verified_user</span></h1>
-      {dynamicMsg && <><p className="success">{dynamicMsg}</p>{' '}<Link href="/dashboard">Ok</Link></>}
+      {dynamicMsg && <p className="success">{dynamicMsg}{' '}<Link href="/dashboard">Ok</Link></p>}
       <h2>Recent Reports</h2>
       <ul style={{ display: "table" }}>
         {reportList?.length > 0 ? reportList : <li>No reports found!</li>}

@@ -58,7 +58,7 @@ export default function Dashboard() {
         }
       </h1>
 
-      {dynamicMsg && <><p className="success">{dynamicMsg}</p>{' '}<Link href="/dashboard">Ok</Link></>}
+      {dynamicMsg && <p className="success">{dynamicMsg}{' '}<Link href="/dashboard">Ok</Link></p>}
 
       {(upcomingTaskList === undefined && !upcomingTasksError) || (overdueTaskList === undefined && !overdueTasksError) || (notdueTaskList === undefined && !notdueTasksError) && <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
       {upcomingTasksError && overdueTasksError && notdueTasksError &&
