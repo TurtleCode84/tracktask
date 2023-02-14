@@ -1,6 +1,6 @@
 {
   "name": "tracktask",
-  "version": "1.2.20",
+  "version": "1.2.21",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -21,7 +21,7 @@
     "react-google-recaptcha-v3": "^1.10.0"
   },
   "devDependencies": {
-    "eslint": "8.33.0",
+    "eslint": "8.34.0",
     "eslint-config-next": "13.1.6"
   }
 }
