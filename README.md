@@ -16,7 +16,6 @@ Additionally, tasks can be (potentially must be) grouped in collections, which c
 ## Where is it?
 TrackTask lives at the following domains:
 <br>https://tracktask.eu.org (production, `main`)
-<br>https://dev.tracktask.eu.org (development, `dev`)
 
 ## What's been made so far?
 Glad you asked! Here's a running features list:
