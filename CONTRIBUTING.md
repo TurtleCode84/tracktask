@@ -3,7 +3,7 @@
 Thank you for your interest in making TrackTask a better website! Please review the guidelines below, and then go ahead and [fork the repository](https://github.com/TurtleCode84/tracktask/fork) to get started with contributing. By contributing to this GitHub repository, you agree to all Contributor and Collaborator Guidelines, as applicable.
 
 ## Contributor Guidelines:
-1. **Don't** commit to the `main` branch, even as a PR! The `dev` branch is the active development branch, `main` is only for significant releases and security updates. All other PRs to `main` will be closed as invalid.
+1. **Don't** commit directly to the `main` branch, Only commit as a PR.
 2. Leave a description of what you changed when you make a commit or pull request. This helps everyone understand your modifications and speeds up the review of your PR.
 3. Collaborate! Ask for help if you need it, opinions are readily available!
 4. Please be civil and constructive when reporting issues or communicating with others in this repository.
@@ -14,10 +14,10 @@ Thank you for your interest in making TrackTask a better website! Please review 
 2. Submit a new [pull request](https://github.com/TurtleCode84/tracktask/pulls) with your contributions.
 3. Wait for review by a member of our development team.
 4. Address feedback and discuss potential revisions.
-5. Your PR can be merged with `dev` upon approval!
+5. Your PR can be merged with `main` upon approval!
 
 ## Setting up a local instance for development
-1. Create a fork of this repository. Make sure to uncheck "copy the main branch only" if you want to develop using the `dev` branch instead.
+1. Create a fork of this repository.
 2. We'll use Vercel to deploy our Next.js application, so go ahead and import the repository from Github to a new Vercel project, selecting the framework preset as "Next.js" if it isn't already.
 3. Leave all of the build & output settings as they are. However, there are a few Environmental Variables **required** for the site to function:
 
