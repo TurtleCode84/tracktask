@@ -3,7 +3,7 @@
 Thank you for your interest in making TrackTask a better website! Please review the guidelines below, and then go ahead and [fork the repository](https://github.com/TurtleCode84/tracktask/fork) to get started with contributing. By contributing to this GitHub repository, you agree to all Contributor and Collaborator Guidelines, as applicable.
 
 ## Contributor Guidelines:
-1. **Don't** commit directly to the `main` branch, Only commit as a PR.
+1. **Don't** commit directly to the `main` branch, only commit as a PR.
 2. Leave a description of what you changed when you make a commit or pull request. This helps everyone understand your modifications and speeds up the review of your PR.
 3. Collaborate! Ask for help if you need it, opinions are readily available!
 4. Please be civil and constructive when reporting issues or communicating with others in this repository.
