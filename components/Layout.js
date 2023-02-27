@@ -173,7 +173,7 @@ export default function Layout({ children }) {
             color: dodgerblue;
           }
           .material-symbols-outlined {
-            filter: brightness(1.5);
+            filter: brightness(1.25);
           }
         }
       `}</style>
