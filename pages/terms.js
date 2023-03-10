@@ -18,7 +18,7 @@ export default function Terms() {
           <li>Bypassing any security measure or account protection put in place by the site&apos;s developers to provide a secure user experience.</li>
           <li>Exploiting security vulnerabilities. Please report these immediately to <a href="mailto:security@tracktask.eu.org">security@tracktask.eu.org</a></li>
           <li>Shared accounts (accounts used by multiple individuals). <i>Note: Alt accounts, while not specifically prohibited, are discouraged and may be banned without warning.</i></li>
-          <li>Causing undue strain or stress on the site or its counterparts. IP addresses of suspected &quot;request spammers&quot; will be blocked without warning.</li>
+          <li>Causing undue strain or stress on the site or its counterparts. IP addresses of suspected spammers will be blocked without warning.</li>
           <li>Using the site to upload, transmit, or otherwise distribute illegal, pornographic, hateful, or questionable content. This is decided at the discretion of the site administrators.</li>
           <li>Bullying, harassing, or threatening any user in any way.</li>
           <li>Any other activity or circumstance deemed harmful to the site or its users by a site administrator.</li>
