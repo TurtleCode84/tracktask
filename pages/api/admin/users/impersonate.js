@@ -29,10 +29,10 @@ async function impersonateRoute(req, res) {
     const db = client.db("data");
     
     //Check existing user
-    const query = { _id: id.trim().toLowerCase() };
+    const query = { _id: ObjectId(id) };
     const userExists = await db.collection("users").countDocuments(query);
     if (userExists < 1) {
-      res.status(404).json({ message: `User does not exist: ${id.trim().toLowerCase()}` }); // user does not exist
+      res.status(404).json({ message: "User does not exist" }); // user does not exist
       return;
     }
     //Get basic user info
