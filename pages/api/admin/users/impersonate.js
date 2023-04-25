@@ -46,7 +46,7 @@ async function impersonateRoute(req, res) {
         },
       };
       const lastEditUpdate = await db.collection('users').updateOne(query, lastEditUpdateDoc);
-      const newUser = { isLoggedIn: true, isImpersonating: true, id: userInfo._id, username: userInfo.username, profilePicture: userInfo.profilePicture, permissions: userInfo.permissions, history: { "banReason": userInfo.history.banReason } };
+      const newUser = { isLoggedIn: true, id: userInfo._id, username: userInfo.username, profilePicture: userInfo.profilePicture, permissions: userInfo.permissions, history: { "banReason": userInfo.history.banReason } };
       req.session.user = newUser;
       await req.session.save();
       res.json(newUser);
