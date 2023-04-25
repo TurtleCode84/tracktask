@@ -33,8 +33,8 @@ export default function Settings() {
       <p>Profile picture: <Image src={user.profilePicture ? user.profilePicture : "/default-pfp.jpg" } width={32} height={32} style={{ verticalAlign: "middle", borderRadius: "100%", overflow: "hidden" }} alt=""/> ({user.profilePicture ? <a href={user.profilePicture} target="_blank" rel="noreferrer">link</a> : 'default'})</p>
       <h3>History</h3>
       <p title={moment.unix(user.history.joined).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Joined: {user.history.joined > 0 ? moment.unix(user.history.joined).fromNow() : 'never'}</p>
-      <p>Total tasks: unknown</p>
-      <p>Total collections: unknown</p>
+      <p>Total tasks: {user.stats.tasks}</p>
+      <p>Total collections: {user.stats.collections}</p>
       <hr/>
       <details>
         <summary>Edit account details</summary>
