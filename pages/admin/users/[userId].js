@@ -141,7 +141,7 @@ export default function UserAdmin() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ id: lookup._id }),
               });
-              router.push("/dashboard");
+              router.reload();
             } catch (error) {
               setErrorMsg(error.data.message);
             }
