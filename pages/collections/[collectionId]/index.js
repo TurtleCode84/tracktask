@@ -58,7 +58,7 @@ export default function Collection() {
       {collection ?
         <><h3>General information</h3>
         <p>Description:</p>{' '}<textarea value={collection.description} rows="4" cols="70" disabled /><br/>
-        <p title={collection.created > 0 ? moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a") : 'Never'}>Created: {collection.created > 0 ? <>{moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a")}{' '}({moment.unix(collection.created).fromNow()})</> : 'never'}</p>
+        <p title={collection.created > 0 ? moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a") : 'Never'}>Created: {collection.created > 0 ? <>{moment.unix(collection.created).fromNow()}</> : 'never'}</p>
         {user.id !== collection.owner && <p>Owner: <User user={user} id={collection.owner}/></p>}
         {collection.sharing.shared && <p>Shared with: <ul>{sharedWithList.length > 0 ? sharedWithList : <li>Nobody!</li>}</ul></p>}
         <p>Number of tasks: {collection.tasks.length}</p>

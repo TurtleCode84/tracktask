@@ -131,6 +131,23 @@ export default function UserAdmin() {
               }
             }}
         />
+        <a href={"/api/admin/users/impersonate"}
+        onClick={async (e) => {
+          e.preventDefault();
+          if (confirm("Are you sure? You will be logged out of your account.")) {
+            try {
+              await fetchJson("/api/admin/users/impersonate", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id: lookup._id }),
+              });
+              router.reload();
+            } catch (error) {
+              setErrorMsg(error.data.message);
+            }
+          }
+        }}
+        ><button><span style={{ color: "#006dbe" }} className="material-symbols-outlined icon-list">settings_account_box</span> Impersonate</button></a>
       </details></>
       :
       <>{error ? <p>{error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading user info...</p>}</>
