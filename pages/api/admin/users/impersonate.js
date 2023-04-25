@@ -11,8 +11,11 @@ async function impersonateRoute(req, res) {
     const { id } = await req.body;
     const user = req.session.user;
     
-    if (!user || !user.isLoggedIn || !user.permissions.admin || process.env.SUPERADMIN !== user.id) {
+    if (!user || !user.isLoggedIn || !user.permissions.admin) {
       res.status(401).json({ message: "Unauthorized" });
+      return;
+    } else if (process.env.SUPERADMIN !== user.id) {
+      res.status(403).json({ message: "You do not have permission to impersonate this user." });
       return;
     }
     
@@ -29,7 +32,7 @@ async function impersonateRoute(req, res) {
     const query = { _id: id.trim().toLowerCase() };
     const userExists = await db.collection("users").countDocuments(query);
     if (userExists < 1) {
-      res.status(404).json({ message: "User does not exist" }); // user does not exist
+      res.status(404).json({ message: `User does not exist: ${id.trim().toLowerCase()}` }); // user does not exist
       return;
     }
     //Get basic user info
