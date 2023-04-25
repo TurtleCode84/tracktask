@@ -25,7 +25,15 @@ async function adminUserRoute(req, res) {
     try {
       const getUser = await db.collection("users").findOne(query);
       if (getUser) {
-        res.json(getUser);
+        const countTasks = await db.collection("tasks").countDocuments({ owner: new ObjectId(getUser._id) });
+        const countCollections = await db.collection("collections").countDocuments({ owner: new ObjectId(getUser._id) });
+        res.json({
+          ...getUser,
+          stats: {
+            tasks: countTasks,
+            collections: countCollections,
+          },
+        });
       } else {
         res.status(404).json({ message: "User does not exist" });
       }
