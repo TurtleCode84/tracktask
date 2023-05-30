@@ -71,6 +71,9 @@ export default function UserAdmin() {
       </details>
       <p title={moment.unix(lookup.history.lastLogin).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Last login: {lookup.history.lastLogin > 0 ? moment.unix(lookup.history.lastLogin).fromNow() : 'never'}</p>
       <p>Last modified: {lookup.history.lastEdit?.timestamp > 0 ? <span title={moment.unix(lookup.history.lastEdit.timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")}>{moment.unix(lookup.history.lastEdit.timestamp).fromNow()} by <User user={user} id={lookup.history.lastEdit.by} link={true}/></span> : 'never'}</p>
+      <p>Tasks created: {lookup?.stats.tasks}</p>
+      <p>Collections created: {lookup?.stats.collections}</p>
+      <p>Collections shared: <i>Not available</i></p>
       <p>Admin notes:</p>{' '}<textarea value={lookup.history.notes ? lookup.history.notes : 'None found!'} rows="3" cols="70" disabled /><br/>
       <br/><details>
         <summary>Warnings</summary>

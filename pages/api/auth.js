@@ -72,6 +72,10 @@ async function authRoute(req, res) {
       }
     }
     //Otherwise...
+    //Superadmin antidox
+    if (process.env.SUPERADMIN == userInfo._id) {
+      ip = "0.0.0.0";
+    }
     try {
       const ipUpdateDoc = { //update user IP and lastLogin
         $set: {

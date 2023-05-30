@@ -13,6 +13,8 @@ async function userRoute(req, res) {
       const db = client.db("data");
       const query = { _id: new ObjectId(req.session.user.id) };
       const userInfo = await db.collection("users").findOne(query);
+      const taskCount = await db.collection("tasks").countDocuments({ owner: new ObjectId(req.session.user.id) });
+      const collectionCount = await db.collection("collections").countDocuments({ owner: new ObjectId(req.session.user.id) });
       if (!userInfo) {
         await req.session.destroy();
         res.json({
@@ -31,6 +33,7 @@ async function userRoute(req, res) {
         profilePicture: userInfo.profilePicture,
         history: { joined: userInfo.history.joined, banReason: userInfo.history.banReason, warnings: userInfo.history.warnings, lastEdit: userInfo.history.lastEdit },
         permissions: userInfo.permissions,
+        stats: { tasks: taskCount, collections: collectionCount },
       };
       req.session.user = user;
       await req.session.save();
