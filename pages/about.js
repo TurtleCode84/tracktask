@@ -29,7 +29,7 @@ export default function About() {
         <li>Anyone else who gave suggestions or feedback!</li>
       </ul>
       <h2>Found a bug or have feedback?</h2>
-      <p>Head over to our <a href="https://github.com/TurtleCode84/tracktask" target="_blank" rel="noreferrer">Github repository</a>, we&apos;d love to hear how we can make TrackTask better!</p>
+      <p>Head over to our <a href="https://github.com/TurtleCode84/tracktask" target="_blank" rel="noreferrer">GitHub repository</a>, we&apos;d love to hear how we can make TrackTask better!</p>
 
       <style jsx>{`
         li {
