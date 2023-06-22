@@ -32,7 +32,7 @@ Glad you asked! Here's a running features list:
 ## Who are the developers?
 These are the current official developers of the project:
 - Lead developer: [@TurtleCode84](https://github.com/TurtleCode84)
-- Logo creator: [@sergiodoesmemes](https://wasteof.money/users/sergiodoesmemes)
+- Logo creator: [@daily_meme](https://wasteof.money/users/daily_meme)
 - Developers:
   - [@reid](https://wasteof.money/users/reid) (testing)
   - [@radi8](https://wasteof.money/users/radi8) (testing/development, site admin)
