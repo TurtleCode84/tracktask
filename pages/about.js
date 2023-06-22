@@ -20,7 +20,7 @@ export default function About() {
       </ul>
       <p>And of course, we can&apos;t have credits without mentioning the amazing people who have helped build and run TrackTask...</p>
       <ul>
-        <li><a href="https://wasteof.money/users/sergiodoesmemes" target="_blank" rel="noreferrer">@sergiodoesmemes</a>, logo designer</li>
+        <li><a href="https://wasteof.money/users/daily_meme" target="_blank" rel="noreferrer">@daily_meme</a>, logo designer</li>
         <li><a href="https://wasteof.money/users/radi8" target="_blank" rel="noreferrer">@radi8</a>, tester & developer</li>
         <li><a href="https://github.com/Quantum-Codes" target="_blank" rel="noreferrer">@ankit_anmol</a>, tester & developer</li>
         <li><a href="https://github.com/micahlt" target="_blank" rel="noreferrer">@micahlt</a>, UI/styling</li>
