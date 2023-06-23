@@ -35,9 +35,9 @@ These are the current official developers of the project:
 - Logo creator: [@daily_meme](https://wasteof.money/users/daily_meme)
 - Developers:
   - [@reid](https://wasteof.money/users/reid) (testing)
-  - [@radi8](https://wasteof.money/users/radi8) (testing/development, site admin)
+  - [@radi8](https://github.com/radeeyate) (testing/development, site admin)
   - [@ankit_anmol](https://github.com/Quantum-Codes) (testing/development)
-  - [@micahlt](https://github.com/micahlt) (UI/styling)
+  - [@micahlt](https://github.com/micahlt) (consultant)
 
 ## Things to consider:
 - This project is still in development, some things may be incomplete or not work as expected. We're working on adding the rest of the main structure, but most of us have other commitments such as school, so we can't always devote our attention to this project.
@@ -49,6 +49,7 @@ Please see our [CONTRIBUTING.md](/CONTRIBUTING.md) for contributing guidelines a
 <br><hr>
 
 ### Contact:
-Email: `tracktask@tracktask.eu.org` (response within 24-48 hours)
-<br>Github: [Discussions](https://github.com/TurtleCode84/tracktask/discussions) (response within 2 days)
+Email: `tracktask@tracktask.eu.org`
+<br>Github: [Discussions](https://github.com/TurtleCode84/tracktask/discussions)
 <br>Security: [SECURITY.md](/SECURITY.md)
+<br><br>(response within 7 days for non-urgent communications)
