@@ -1,4 +1,4 @@
-export default function TaskCreateForm({ errorMessage, onSubmit }) {
+export default function TaskCreateForm({ collections, errorMessage, onSubmit }) {
   return (
     <form id="taskCreateForm" autocomplete="off" onSubmit={onSubmit}>
       <label>
@@ -12,6 +12,12 @@ export default function TaskCreateForm({ errorMessage, onSubmit }) {
       <label>
         <span>Due Date (optional)</span>
         <input type="datetime-local" name="dueDate" min="1970-01-01T00:00" />
+      </label>
+      <label>
+        <span>Collections (optional)</span>
+        <select multiple name="collections">
+          {collections}
+        </select>
       </label>
       <label>
         <span>Mark as priority</span>
@@ -31,7 +37,7 @@ export default function TaskCreateForm({ errorMessage, onSubmit }) {
         label > span {
           font-weight: 600;
         }
-        input {
+        input, select {
           padding: 8px;
           margin: 0.3rem 0 1rem;
           border: 1px solid #ccc;
