@@ -30,6 +30,7 @@ export default function TasksCreate() {
       </h1>
       <TaskCreateForm
         errorMessage={errorMsg}
+        collections={collections}
         onSubmit={async function handleSubmit(event) {
           event.preventDefault();
           document.getElementById("createTaskBtn").disabled = true;
