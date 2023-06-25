@@ -81,7 +81,7 @@ async function tasksRoute(req, res) {
     res.json(data);
   } else if (req.method === 'POST') { // Create a new task or collection
     const { collection } = req.query;
-    if (collection === "true") {
+    if (collection === "true") { // Collection
       const { name, description, shared } = await req.body;
       if (!name || !description) {
         res.status(422).json({ message: "Invalid data" });
@@ -112,8 +112,8 @@ async function tasksRoute(req, res) {
         res.status(500).json({ message: error.message });
         return;
       }
-    } else {
-      const { name, description, dueDate, markPriority } = await req.body;
+    } else { // Task
+      const { name, description, dueDate, collections, markPriority } = await req.body;
       if (!name || !description) {
         res.status(422).json({ message: "Invalid data" });
         return;
@@ -143,6 +143,23 @@ async function tasksRoute(req, res) {
           newTask.dueDate = 0;
         }
         const createdTask = await db.collection('tasks').insertOne(newTask);
+        var addCollectionsId = [];
+        if (collections.length > 0) {
+          for (var i=0; i<collections.length; i++) {
+            addCollectionsId[i] = new ObjectId(collections[i]);
+          }
+          const addCollectionsQuery = {
+            _id: {
+              $in: addCollectionsId,
+            },
+            tasks: {
+              $nin: [new ObjectId(createdTask._id)], // Safety validation in case of weird timing
+            },
+            hidden: false,
+            owner: new ObjectId(user.id),
+          };
+          const addedTask = await db.collection("collections").updateMany(addCollectionsQuery, {$push: {tasks: new ObjectId(createdTask._id)}});
+        }
         res.json(createdTask);
       } catch (error) {
         res.status(500).json({ message: error.message });
