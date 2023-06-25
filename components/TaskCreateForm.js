@@ -1,4 +1,7 @@
 export default function TaskCreateForm({ collections, errorMessage, onSubmit }) {
+  const listCollections = collections?.filter(!collection.pending).map((collection) =>
+    <option key={collection._id} value={collection._id}>{collection.name}</option>
+  );
   return (
     <form id="taskCreateForm" autocomplete="off" onSubmit={onSubmit}>
       <label>
@@ -16,7 +19,7 @@ export default function TaskCreateForm({ collections, errorMessage, onSubmit }) 
       <label>
         <span>Collections (optional)</span>
         <select multiple name="collections">
-          {collections}
+          {listCollections}
         </select>
       </label>
       <label>
