@@ -54,7 +54,7 @@ async function tasksRoute(req, res) {
               //data[i].collections.push(allCollections[j].name);
               data[i].collections.push("x");
             }
-            data[i].collections.push("y");
+            data[i].collections.push(allCollections[j].tasks);
           }
         }
       } catch (error) {
