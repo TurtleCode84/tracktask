@@ -52,7 +52,7 @@ async function tasksRoute(req, res) {
           var taskInCollection = [];
           for (var j=0; j<allCollections.length; j++) {
             const allFilteredCollections = allCollections[j].tasks.filter(task => String(task) === String(data[i]._id));
-            if (allFilteredCollections) {
+            if (allFilteredCollections.length > 0) {
               taskInCollection.push(allFilteredCollections); // Returns defined if in collection
             }
           }
