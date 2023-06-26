@@ -46,6 +46,10 @@ async function tasksRoute(req, res) {
         if (filter === "upcoming" || filter === "overdue" || filter === "notdue") {
           data = data.filter(task => task.completion.completed === 0);
         }
+        const allCollections = await db.collection("collections").find(query).toArray();
+        for (var i=0; i<data.length; i++) {
+          data[i].collections = allCollections.filter(allCollection => allCollection.tasks?.some((element) => element._id === data[i]._id))
+        }
       } catch (error) {
         res.status(200).json([]);
         return;
@@ -83,7 +87,7 @@ async function tasksRoute(req, res) {
       res.status(404).json({ message: "No collections found!" });
       return;
     }
-    res.json(data);
+    res.json(data); // Return the tasks
   } else if (req.method === 'POST') { // Create a new task or collection
     const { collection } = req.query;
     if (collection === "true") { // Collection
