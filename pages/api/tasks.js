@@ -53,10 +53,10 @@ async function tasksRoute(req, res) {
           for (var j=0; j<allCollections.length; j++) {
             const allFilteredCollections = allCollections[j].tasks.filter(task => String(task) === String(data[i]._id));
             if (allFilteredCollections.length > 0) {
-              taskInCollection.push(allFilteredCollections); // Returns defined if in collection
+              taskInCollection.push(allCollections[j].name); // Returns defined if in collection
             }
           }
-          data[i].collections = taskInCollection[0];
+          data[i].collections = taskInCollection;
         }
       } catch (error) {
         //res.status(200).json([]);
