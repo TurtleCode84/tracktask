@@ -1,5 +1,5 @@
 export default function TaskCreateForm({ collections, errorMessage, onSubmit }) {
-  const listCollections = collections?.filter(!collection.pending).map((collection) =>
+  const listCollections = collections?.filter(collection => !collection.pending).map((collection) =>
     <option key={collection._id} value={collection._id}>{collection.name}</option>
   );
   return (
