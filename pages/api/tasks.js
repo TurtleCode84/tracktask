@@ -54,7 +54,8 @@ async function tasksRoute(req, res) {
               //data[i].collections.push(allCollections[j].name);
               data[i].collections.push("x");
             }
-            data[i].collections.push(allCollections[j].tasks.filter(task => task == data[i]._id));
+            data[i].collections.push(data[i]._id);
+            //data[i].collections.push(allCollections[j].tasks.filter(task => task == data[i]._id));
           }
         }
       } catch (error) {
