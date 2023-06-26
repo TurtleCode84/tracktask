@@ -56,7 +56,7 @@ async function tasksRoute(req, res) {
               taskInCollection.push(allFilteredCollections); // Returns defined if in collection
             }
           }
-          data[i].collections = taskInCollection;
+          data[i].collections = taskInCollection[0];
         }
       } catch (error) {
         //res.status(200).json([]);
