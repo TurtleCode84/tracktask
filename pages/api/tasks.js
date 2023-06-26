@@ -153,17 +153,14 @@ async function tasksRoute(req, res) {
               $in: addCollectionsId,
             },
             tasks: {
-              $nin: [new ObjectId(createdTask._id)], // Safety validation in case of weird timing
+              $nin: [new ObjectId(createdTask.insertedId)], // Safety validation in case of weird timing
             },
             hidden: false,
             owner: new ObjectId(user.id),
           };
-          const addedCollections = await db.collection('collections').updateMany(addCollectionsQuery, {$push: {tasks: new ObjectId(createdTask._id)}});
-          res.status(418).json({ message: createdTask?._id});
-          return;
-        } else {
-          res.json(createdTask);
+          const addedCollections = await db.collection('collections').updateMany(addCollectionsQuery, {$push: {tasks: new ObjectId(createdTask.insertedId)}});
         }
+        res.json(createdTask);
       } catch (error) {
         res.status(500).json({ message: error.message });
         return;
