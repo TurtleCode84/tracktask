@@ -51,7 +51,8 @@ async function tasksRoute(req, res) {
           data[i].collections = [];
           for (var j=0; j<allCollections.length; j++) {
             if (allCollections[j].tasks.includes(data[i]._id)) {
-              data[i].collections.append(allCollections[j].name);
+              //data[i].collections.append(allCollections[j].name);
+              data[i].collections.append("x");
             }
           }
         }
