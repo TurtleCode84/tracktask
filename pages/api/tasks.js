@@ -144,8 +144,6 @@ async function tasksRoute(req, res) {
         }
         const createdTask = await db.collection('tasks').insertOne(newTask);
         if (addCollections) {
-          res.status(418).json({ message: "Testing success" });
-          return;
           var addCollectionsId = [];
           for (var i=0; i<addCollections.length; i++) {
             addCollectionsId[i] = new ObjectId(addCollections[i]);
@@ -161,6 +159,8 @@ async function tasksRoute(req, res) {
             owner: new ObjectId(user.id),
           };
           const addedCollections = await db.collection('collections').updateMany(addCollectionsQuery, {$push: {tasks: new ObjectId(createdTask._id)}});
+          res.status(418).json({ message: addedCollections.modifiedCount });
+          return;
         }
         res.json(createdTask);
       } catch (error) {
