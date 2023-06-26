@@ -48,7 +48,7 @@ async function tasksRoute(req, res) {
         }
         const allCollections = await db.collection("collections").find(query).toArray();
         for (var i=0; i<data.length; i++) {
-          data[i].collections = allCollections.filter(allCollection => allCollection.tasks.some((element) => element === data[i]._id))
+          data[i].collections = allCollections.filter(allCollection => allCollection.tasks.some((element) => element == data[i]._id))
         }
       } catch (error) {
         res.status(200).json([]);
