@@ -5,7 +5,7 @@ import stringToColor from "lib/stringToColor";
 export default function Task({ task, key }) {
   const router = useRouter();
   const collectionTags = task.collections?.map((item, index) =>
-    <span key={index} className="list-hover" style={{backgroundColor: stringToColor(item), paddingTop: "0.5px", paddingLeft: "4px", paddingBottom: "0.5px", paddingRight: "4px", borderColor: "darkgray", borderStyle: "solid", borderWidth: "2px", borderRadius: "5px", color: "black", marginTop: "5px", marginLeft: "20px", marginRight: "-15px", display: "inline-block" }}>{item}</span>
+    <span key={index} className="list-hover" style={{backgroundColor: stringToColor(item), paddingTop: "0.5px", paddingLeft: "4px", paddingBottom: "0.5px", paddingRight: "4px", borderColor: "darkgray", borderStyle: "solid", borderWidth: "2px", borderRadius: "5px", color: "#777", marginTop: "5px", marginLeft: "20px", marginRight: "-15px", display: "inline-block" }}>{item}</span>
   );
   return (
     <li key={key} title={task.dueDate !== 0 ? moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a") : 'No due date'} className="list-hover" style={{ margin: "0.5em", background: "#f8f8f8", padding: "8px", borderWidth: "2px", borderStyle: "solid", borderColor: "darkgray", borderRadius: "10px", width: "auto" }} onClick={() => router.push(`/tasks/${task._id}`)}>
