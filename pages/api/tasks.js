@@ -66,7 +66,7 @@ async function tasksRoute(req, res) {
           delete data[i].sharing;
           data[i].pending = true;
         } else {
-          data[i].sharing.role = data[i].sharing.sharedWith.filter(element => element.id == user.id)[0].role;
+          data[i].sharing.role = data[i].sharing.sharedWith.filter(element => element.id == user.id)[0]?.role;
           data[i].tasks = await db.collection("tasks").find({ _id: {$in: data[i].tasks}, hidden: false }, taskoptions).toArray();
         }
       }
