@@ -48,15 +48,12 @@ async function tasksRoute(req, res) {
         }
         const allCollections = await db.collection("collections").find(query).toArray();
         for (var i=0; i<data.length; i++) {
-          data[i].collections = [];
+          var taskInCollection;
           for (var j=0; j<allCollections.length; j++) {
-            if (allCollections[j].tasks.includes(data[i]._id)) {
-              //data[i].collections.push(allCollections[j].name);
-              data[i].collections.push("x");
-            }
-            //data[i].collections.push(allCollections[j].tasks.includes(new ObjectId(data[i]._id)));
-            data[i].collections.push(allCollections[j].tasks.filter(task => String(task) === String(data[i]._id)));
+            taskInCollection = allCollections[j].tasks.find(task => String(task) === String(data[i]._id)); // Returns defined if in collection
+            if (taskInCollection) {taskInCollection = allCollections[j].name;}
           }
+          data[i].collections = taskInCollection;
         }
       } catch (error) {
         res.status(200).json([]);
