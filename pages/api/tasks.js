@@ -144,6 +144,8 @@ async function tasksRoute(req, res) {
         }
         const createdTask = await db.collection('tasks').insertOne(newTask);
         if (addCollections) {
+          res.status(418).json({ message: "Testing success" });
+          return;
           var addCollectionsId = [];
           for (var i=0; i<addCollections.length; i++) {
             addCollectionsId[i] = new ObjectId(addCollections[i]);
