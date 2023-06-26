@@ -1,5 +1,5 @@
 export default function TaskCreateForm({ collections, errorMessage, onSubmit }) {
-  const listCollections = collections?.filter(collection => !collection.pending && collection.sharing?.role === "owner").map((collection) =>
+  const listCollections = collections?.filter(collection => collection.sharing?.role === "owner").map((collection) =>
     <option key={collection._id} value={collection._id}>{collection.name}</option>
   );
   return (
