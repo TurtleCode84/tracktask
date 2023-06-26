@@ -161,8 +161,9 @@ async function tasksRoute(req, res) {
           const addedCollections = await db.collection('collections').updateMany(addCollectionsQuery, {$push: {tasks: new ObjectId(createdTask._id)}});
           res.status(418).json({ message: createdTask._id + addedCollections.acknowledged });
           return;
+        } else {
+          res.json(createdTask);
         }
-        res.json(createdTask);
       } catch (error) {
         res.status(500).json({ message: error.message });
         return;
