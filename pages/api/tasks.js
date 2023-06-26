@@ -51,16 +51,14 @@ async function tasksRoute(req, res) {
           data[i].collections = [];
           for (var j=0; j<allCollections.length; j++) {
             if (allCollections[j].tasks.includes(data[i]._id)) {
-              //data[i].collections.append(allCollections[j].name);
-              data[i].collections.append("x");
+              data[i].collections.push(allCollections[j].name);
+              //data[i].collections.push("x");
             }
-            data[i].collections.append("y");
+            //data[i].collections.push("y");
           }
         }
       } catch (error) {
-        /*res.status(200).json([]);
-        return;*/
-        res.status(500).json({ message: error.message });
+        res.status(200).json([]);
         return;
       }
     } else {
