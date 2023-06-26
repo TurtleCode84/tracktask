@@ -58,7 +58,9 @@ async function tasksRoute(req, res) {
           }
         }
       } catch (error) {
-        res.status(200).json([]);
+        /*res.status(200).json([]);
+        return;*/
+        res.status(500).json({ message: error.message });
         return;
       }
     } else {
