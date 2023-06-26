@@ -59,9 +59,7 @@ async function tasksRoute(req, res) {
           data[i].collections = taskInCollection;
         }
       } catch (error) {
-        //res.status(200).json([]);
-        //return;
-        res.status(500).json({ message: error.message });
+        res.status(200).json([]);
         return;
       }
     } else {
