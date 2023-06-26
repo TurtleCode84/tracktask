@@ -50,9 +50,10 @@ export default function TasksCreate() {
             name: event.currentTarget.name.value,
             description: event.currentTarget.description.value,
             dueDate: utcDueDate,
-            collections: addedCollectionsValues,
             markPriority: event.currentTarget.markPriority.checked,
           };
+
+          if (addedCollectionsValues.length > 0) {body.addCollections = addedCollectionsValues};
 
           try {
             const getUrl = await fetchJson("/api/tasks", {

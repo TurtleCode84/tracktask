@@ -113,7 +113,7 @@ async function tasksRoute(req, res) {
         return;
       }
     } else { // Task
-      const { name, description, dueDate, collections, markPriority } = await req.body;
+      const { name, description, dueDate, addCollections, markPriority } = await req.body;
       if (!name || !description) {
         res.status(422).json({ message: "Invalid data" });
         return;
@@ -143,10 +143,10 @@ async function tasksRoute(req, res) {
           newTask.dueDate = 0;
         }
         const createdTask = await db.collection('tasks').insertOne(newTask);
-        var addCollectionsId = [];
-        if (collections.length > 0) {
-          for (var i=0; i<collections.length; i++) {
-            addCollectionsId[i] = new ObjectId(collections[i]);
+        if (addCollections) {
+          var addCollectionsId = [];
+          for (var i=0; i<addCollections.length; i++) {
+            addCollectionsId[i] = new ObjectId(addCollections[i]);
           }
           const addCollectionsQuery = {
             _id: {
@@ -158,7 +158,7 @@ async function tasksRoute(req, res) {
             hidden: false,
             owner: new ObjectId(user.id),
           };
-          const addedTask = await db.collection("collections").updateMany(addCollectionsQuery, {$push: {tasks: new ObjectId(createdTask._id)}});
+          const addedCollections = await db.collection('collections').updateMany(addCollectionsQuery, {$push: {tasks: new ObjectId(createdTask._id)}});
         }
         res.json(createdTask);
       } catch (error) {
