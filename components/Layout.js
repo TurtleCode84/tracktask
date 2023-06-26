@@ -174,7 +174,7 @@ export default function Layout({ children }) {
           }
           .list-inset {
             border-color: #333 !important;
-            filter: grayscale(0.6) brightness(2);
+            filter: grayscale(0.4) brightness(1.5);
           }
           input, button, textarea, select {
             background-color: #111 !important;
