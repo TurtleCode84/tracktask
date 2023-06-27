@@ -26,7 +26,107 @@ async function dataRoute(req, res) {
 
   if (dataPath[0] === "tasks") {
 
-    if (req.method === 'GET') {
+    if (req.method === 'GET') { // Returns an array with a task or list of tasks
+
+      const ownTasksQuery = {
+        hidden: false,
+        owner: new ObjectId(user.id),
+      };
+      const tasksOptions = {
+        sort: { 'completion.completed': 1, priority: -1, dueDate: 1 },
+        projection: { name: 1, description: 1, dueDate: 1, created: 1, owner: 1, completion: 1, priority: 1 },
+      };
+      const inCollectionsQuery = {
+        hidden: false,
+        $or: [
+          { owner: new ObjectId(user.id) },
+          { 'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user.id)}} },
+        ],
+      };
+
+      var data;
+
+      if (dataPath[1] && !ObjectId.isValid(dataPath[1])) {
+
+        res.status(422).json({ message: "Invalid task ID" });
+        return;
+
+      } else {
+
+        if (dataPath[1]) {
+          ownTasksQuery._id = new ObjectId(dataPath[1]);
+        } else {
+          if (filter === "recent") {
+            ownTasksQuery.created = {$gte: (Math.floor(Date.now()/1000) - 172800)}; // 2 days ago
+          } else if (filter === "upcoming") {
+            ownTasksQuery.dueDate = {$gt: Math.floor(Date.now()/1000)};
+          } else if (filter === "overdue") {
+            ownTasksQuery.dueDate = {$lte: Math.floor(Date.now()/1000)};
+          } else if (filter === "notdue") {
+            ownTasksQuery.dueDate = 0;
+          }
+        }
+
+        try {
+
+          data = await db.collection("tasks").find(ownTasksQuery, tasksOptions).toArray();
+
+          // Get and append shared tasks from collections as well
+          const allCollections = await db.collection("collections").find(inCollectionsQuery).toArray();
+          var sharedTasks = allCollections.tasks.filter(task => data.some(item => String(task) !== String(item._id)));
+          if (dataPath[1]) {
+            sharedTasks.filter(sharedTask => String(sharedTask) === String(dataPath[1]));
+          }
+          const sharedTasksQuery = {
+            ...ownTasksQuery,
+            _id: {
+              $in: sharedTasks,
+            },
+          }
+          delete sharedTasksQuery.owner;
+          data = data.concat(await db.collection("tasks").find(sharedTasksQuery, tasksOptions).toArray());
+          // data should now contain all owned and shared tasks
+          
+          // At this point we can tell if the task exists
+          if (data.length < 1) {
+            res.status(404).json({ message: "Task not found" });
+            return;
+          }
+
+          if (!dataPath[1]) {
+            if (filter === "upcoming" || filter === "overdue") {
+              data = data.filter(task => task.dueDate !== 0);
+            }
+            if (filter === "upcoming" || filter === "overdue" || filter === "notdue") {
+              data = data.filter(task => task.completion.completed === 0);
+            }
+            if (filter) {
+              delete ownTasksQuery.created; // Might find a better way to do this
+              delete ownTasksQuery.dueDate;
+            }
+          }
+
+          data.collections = [];
+          for (var i=0; i<data.length; i++) {
+            var taskInCollection = [];
+            for (var j=0; j<allCollections.length; j++) {
+              const allFilteredCollections = allCollections[j].tasks.filter(task => String(task) === String(data[i]._id));
+              if (allFilteredCollections.length > 0) {
+                taskInCollection.push(allCollections[j].name); // Returns defined if in collection
+              }
+            }
+            data[i].collections = taskInCollection;
+          }
+
+        } catch (error) {
+          res.status(500).json({ message: error.message });
+          return;
+        }
+
+      }
+
+      // Return data
+      res.json(data);
 
     } else if (req.method === 'POST') {
 
