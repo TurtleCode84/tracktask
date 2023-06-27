@@ -70,6 +70,27 @@ async function dataRoute(req, res) {
 
     } else if (req.method === 'DELETE') {
 
+      // Make sure there is a valid collection ID to delete
+      if (!ObjectId.isValid(dataPath[1])) {
+        res.status(422).json({ message: "Invalid collection ID" });
+        return;
+      }
+
+      const query = {
+        hidden: false, // Cannot be hidden
+        _id: new ObjectId(id), // Matches the specified collection ID
+        owner: new ObjectId(user.id), // Can only be deleted by the owner of the collection
+      };
+
+      // Attempt to delete the collection and return acknowledgement
+      try {
+        const deletedCollection = await db.collection("collections").deleteOne(query);
+        res.json(deletedCollection);
+      } catch (error) {
+        res.status(500).json(error);
+        return;
+      }
+
     } else if (req.method === 'PATCH') {
 
     } else if (req.method === 'PUT') {
