@@ -172,6 +172,10 @@ export default function Layout({ children }) {
             background-color: #111 !important;
             border-color: #333 !important;
           }
+          .list-inset {
+            border-color: #333 !important;
+            filter: grayscale(0.4) brightness(1.5);
+          }
           input, button, textarea, select {
             background-color: #111 !important;
             color: #fff !important;

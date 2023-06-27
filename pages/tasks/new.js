@@ -4,6 +4,7 @@ import Layout from "components/Layout";
 import Loading from "components/Loading";
 import TaskCreateForm from "components/TaskCreateForm";
 import useUser from "lib/useUser";
+import useTasks from "lib/useTasks";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -12,6 +13,7 @@ export default function TasksCreate() {
   const { user } = useUser({
     redirectTo: "/login",
   });
+  const { tasks: collections, error: collectionsError } = useTasks(user, true, false); //unused error
   
   const [errorMsg, setErrorMsg] = useState("");
   const router = useRouter();
@@ -28,6 +30,7 @@ export default function TasksCreate() {
       </h1>
       <TaskCreateForm
         errorMessage={errorMsg}
+        collections={collections}
         onSubmit={async function handleSubmit(event) {
           event.preventDefault();
           document.getElementById("createTaskBtn").disabled = true;
@@ -40,12 +43,17 @@ export default function TasksCreate() {
             utcDueDate = "";
           }
 
+          const addedCollections = event.currentTarget.collections.selectedOptions;
+          const addedCollectionsValues = Array.from(addedCollections)?.map((item) => item.value);
+
           const body = {
             name: event.currentTarget.name.value,
             description: event.currentTarget.description.value,
             dueDate: utcDueDate,
             markPriority: event.currentTarget.markPriority.checked,
           };
+
+          if (addedCollectionsValues.length > 0) {body.addCollections = addedCollectionsValues};
 
           try {
             const getUrl = await fetchJson("/api/tasks", {

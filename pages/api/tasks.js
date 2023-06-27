@@ -46,6 +46,22 @@ async function tasksRoute(req, res) {
         if (filter === "upcoming" || filter === "overdue" || filter === "notdue") {
           data = data.filter(task => task.completion.completed === 0);
         }
+        if (filter) {
+          delete query.created; // Might find a better way to do this
+          delete query.dueDate;
+        }
+        const allCollections = await db.collection("collections").find(query).toArray();
+        data.collections = [];
+        for (var i=0; i<data.length; i++) {
+          var taskInCollection = [];
+          for (var j=0; j<allCollections.length; j++) {
+            const allFilteredCollections = allCollections[j].tasks.filter(task => String(task) === String(data[i]._id));
+            if (allFilteredCollections.length > 0) {
+              taskInCollection.push(allCollections[j].name); // Returns defined if in collection
+            }
+          }
+          data[i].collections = taskInCollection;
+        }
       } catch (error) {
         res.status(200).json([]);
         return;
@@ -66,7 +82,12 @@ async function tasksRoute(req, res) {
           delete data[i].sharing;
           data[i].pending = true;
         } else {
-          data[i].tasks = await db.collection("tasks").find({ _id: {$in: data[i].tasks}, hidden: false }, taskoptions).toArray();
+          if (data[i].owner == user.id) {
+            data[i].sharing.role = "owner";
+          } else {
+            data[i].sharing.role = data[i].sharing.sharedWith.filter(element => element.id == user.id)[0]?.role;
+          }
+            data[i].tasks = await db.collection("tasks").find({ _id: {$in: data[i].tasks}, hidden: false }, taskoptions).toArray();
         }
       }
       data = data.sort((a, b) => a.pending ? -1 : 1); // Push share requests to the top
@@ -78,10 +99,10 @@ async function tasksRoute(req, res) {
       res.status(404).json({ message: "No collections found!" });
       return;
     }
-    res.json(data);
+    res.json(data); // Return the tasks
   } else if (req.method === 'POST') { // Create a new task or collection
     const { collection } = req.query;
-    if (collection === "true") {
+    if (collection === "true") { // Collection
       const { name, description, shared } = await req.body;
       if (!name || !description) {
         res.status(422).json({ message: "Invalid data" });
@@ -112,8 +133,8 @@ async function tasksRoute(req, res) {
         res.status(500).json({ message: error.message });
         return;
       }
-    } else {
-      const { name, description, dueDate, markPriority } = await req.body;
+    } else { // Task
+      const { name, description, dueDate, addCollections, markPriority } = await req.body;
       if (!name || !description) {
         res.status(422).json({ message: "Invalid data" });
         return;
@@ -143,6 +164,23 @@ async function tasksRoute(req, res) {
           newTask.dueDate = 0;
         }
         const createdTask = await db.collection('tasks').insertOne(newTask);
+        if (addCollections) {
+          var addCollectionsId = [];
+          for (var i=0; i<addCollections.length; i++) {
+            addCollectionsId[i] = new ObjectId(addCollections[i]);
+          }
+          const addCollectionsQuery = {
+            _id: {
+              $in: addCollectionsId,
+            },
+            tasks: {
+              $nin: [new ObjectId(createdTask.insertedId)], // Safety validation in case of weird timing
+            },
+            hidden: false,
+            owner: new ObjectId(user.id),
+          };
+          const addedCollections = await db.collection('collections').updateMany(addCollectionsQuery, {$push: {tasks: new ObjectId(createdTask.insertedId)}});
+        }
         res.json(createdTask);
       } catch (error) {
         res.status(500).json({ message: error.message });
