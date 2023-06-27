@@ -4,18 +4,94 @@ import { ObjectId } from 'mongodb'
 import clientPromise from "lib/mongodb";
 import moment from "moment";
 
-export default withIronSessionApiRoute(tasksRoute, sessionOptions);
+export default withIronSessionApiRoute(dataRoute, sessionOptions);
 
-async function tasksRoute(req, res) {
+async function dataRoute(req, res) {
   const user = req.session.user;
-  if (!user || !user.isLoggedIn || user.permissions.banned ) {
-    res.status(401).json({ message: "Loading tasks..." });
+  const { dataPath, filter } = req.query;
+
+  if (dataPath.length > 2 || dataPath[0] !== "tasks" || dataPath[0] !== "collections") {
+    res.status(404).json({ message: "Endpoint not found" });
+    return;
+  } else if (!user || !user.isLoggedIn || user.permissions.banned) {
+    res.status(401).json({ message: "Authentication required" });
     return;
   }
+
+  // At this point we know that the first parameter is either tasks or collections, and the user is authorized
+  // So now we might as well initialize the DB connector
+
   const client = await clientPromise;
   const db = client.db("data");
+
+  if (dataPath[0] === "tasks") {
+
+    if (req.method === 'GET') {
+
+    } else if (req.method === 'POST') {
+
+    } else if (req.method === 'DELETE') {
+
+      // Make sure there is a valid task ID to delete
+      if (!ObjectId.isValid(dataPath[1])) {
+        res.status(422).json({ message: "Invalid task ID" });
+        return;
+      }
+
+      const query = {
+        hidden: false, // Cannot be hidden
+        _id: new ObjectId(dataPath[1]), // Matches the specified task ID
+        owner: new ObjectId(user.id), // Can only be deleted by the owner of the task
+      };
+
+      // Attempt to delete the task and return acknowledgement
+      try {
+        const deletedTask = await db.collection("tasks").deleteOne(query);
+        res.json(deletedTask);
+      } catch (error) {
+        res.status(500).json(error);
+        return;
+      }
+
+    } else if (req.method === 'PATCH') {
+
+    } else if (req.method === 'PUT') {
+
+    } else {
+      res.status(405).json({ message: "Method not allowed" });
+      return;
+    }
+    
+  } else if (dataPath[0] === "collections") {
+
+    if (req.method === 'GET') {
+
+    } else if (req.method === 'POST') {
+
+    } else if (req.method === 'DELETE') {
+
+    } else if (req.method === 'PATCH') {
+
+    } else if (req.method === 'PUT') {
+      
+    } else {
+      res.status(405).json({ message: "Method not allowed" });
+      return;
+    }
+
+  } else {
+    res.status(404).json({ message: "Endpoint not found" }); // Redundant
+    return;
+  }
+
+
+
+
+
+
+
+
   if (req.method === 'GET') { // Get all unhidden tasks or collections for the logged in user
-    const { collections, filter } = req.query;
     const query = {
       hidden: false,
       $or: [
