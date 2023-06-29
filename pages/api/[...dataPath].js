@@ -130,6 +130,9 @@ async function dataRoute(req, res) {
 
     } else if (req.method === 'POST') {
 
+      res.status(503).json({ message: "Under construction" });
+      return;
+
     } else if (req.method === 'DELETE') {
 
       // Make sure there is a valid task ID to delete
@@ -155,7 +158,13 @@ async function dataRoute(req, res) {
 
     } else if (req.method === 'PATCH') {
 
+      res.status(503).json({ message: "Under construction" });
+      return;
+
     } else if (req.method === 'PUT') {
+
+      res.status(503).json({ message: "Under construction" });
+      return;
 
     } else {
       res.status(405).json({ message: "Method not allowed" });
@@ -166,7 +175,13 @@ async function dataRoute(req, res) {
 
     if (req.method === 'GET') {
 
+      res.status(503).json({ message: "Under construction" });
+      return;
+
     } else if (req.method === 'POST') {
+
+      res.status(503).json({ message: "Under construction" });
+      return;
 
     } else if (req.method === 'DELETE') {
 
@@ -193,7 +208,13 @@ async function dataRoute(req, res) {
 
     } else if (req.method === 'PATCH') {
 
+      res.status(503).json({ message: "Under construction" });
+      return;
+
     } else if (req.method === 'PUT') {
+
+      res.status(503).json({ message: "Under construction" });
+      return;
       
     } else {
       res.status(405).json({ message: "Method not allowed" });
@@ -209,10 +230,7 @@ async function dataRoute(req, res) {
 
 
 
-
-
-
-  if (req.method === 'GET') { // Get all unhidden tasks or collections for the logged in user
+  /*if (req.method === 'GET') { // Get all unhidden tasks or collections for the logged in user
     const query = {
       hidden: false,
       $or: [
@@ -558,5 +576,5 @@ async function dataRoute(req, res) {
   } else {
     res.status(405).json({ message: "Method not allowed" });
     return;
-  }
+  }*/
 }
