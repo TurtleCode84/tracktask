@@ -74,7 +74,8 @@ async function dataRoute(req, res) {
 
           // Get and append shared tasks from collections as well
           const allCollections = await db.collection("collections").find(inCollectionsQuery).toArray();
-          var sharedTasks = allCollections.tasks.filter(task => data.some(item => String(task) !== String(item._id)));
+          var sharedTasks = [];
+          allCollections.forEach(allCollection => sharedTasks.concat(allCollection.tasks.filter(task => data.some(item => String(task) !== String(item._id)))));
           if (dataPath[1]) {
             sharedTasks.filter(sharedTask => String(sharedTask) === String(dataPath[1]));
           }
