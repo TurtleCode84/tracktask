@@ -74,12 +74,6 @@ async function dataRoute(req, res) {
           var taskIds = [];
           data.forEach(item => taskIds.push(String(item._id)));
 
-          // Debug info
-          var debugData = {
-            tag: "debug",
-            unshared: taskIds.length,
-          }
-
           // Get and append shared tasks from collections as well
           const allCollections = await db.collection("collections").find(inCollectionsQuery).toArray();
           var sharedTasks = [];
@@ -102,11 +96,6 @@ async function dataRoute(req, res) {
             res.status(404).json({ message: "Task not found" });
             return;
           }
-
-          // Just some more debug info
-          debugData.shared = sharedTasks;
-          debugData.collections = allCollections.length;
-          debugData.total = data.length;
 
           if (!dataPath[1]) {
             if (filter === "upcoming" || filter === "overdue") {
@@ -133,15 +122,15 @@ async function dataRoute(req, res) {
             data[i].collections = taskInCollection;
           }
 
-          // Push debug info
-          data.push(debugData);
-
         } catch (error) {
           res.status(500).json({ message: error.message });
           return;
         }
 
       }
+
+      // Remove array if single task
+      if (data.length === 1) {data = data[0]}
 
       // Return data
       res.json(data);
