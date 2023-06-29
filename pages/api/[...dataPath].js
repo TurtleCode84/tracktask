@@ -73,7 +73,7 @@ async function dataRoute(req, res) {
           data = await db.collection("tasks").find(ownTasksQuery, tasksOptions).toArray();
 
           // Debug info
-          data.debug = {
+          var debugData = {
             unshared: data.length,
           }
 
@@ -101,9 +101,10 @@ async function dataRoute(req, res) {
           }
 
           // Just some more debug info
-          data.debug.shared = sharedTasks;
-          data.debug.allCollections.length;
-          data.debug.total = data.length;
+          debugData.shared = sharedTasks;
+          debugData.allCollections.length;
+          debugData.total = data.length;
+          data.debug = debugData;
 
           if (!dataPath[1]) {
             if (filter === "upcoming" || filter === "overdue") {
