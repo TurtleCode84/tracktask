@@ -85,9 +85,8 @@ async function dataRoute(req, res) {
           var sharedTasks = [];
           allCollections.forEach(allCollection => sharedTasks.push(...allCollection.tasks.filter(task => !taskIds.includes(String(task)))));
           if (dataPath[1]) {
-            sharedTasks.filter(sharedTask => String(sharedTask) === String(dataPath[1]));
+            sharedTasks = sharedTasks.filter(sharedTask => String(sharedTask) === String(dataPath[1]));
           }
-          debugData.filterWorking = sharedTasks.filter(sharedTask => String(sharedTask) === String(dataPath[1])).length;
           const sharedTasksQuery = {
             ...ownTasksQuery,
             _id: {
