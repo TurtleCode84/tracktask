@@ -74,6 +74,7 @@ async function dataRoute(req, res) {
 
           // Debug info
           var debugData = {
+            tag: "debug",
             unshared: data.length,
           }
 
@@ -104,7 +105,6 @@ async function dataRoute(req, res) {
           debugData.shared = sharedTasks;
           debugData.allCollections.length;
           debugData.total = data.length;
-          data.debug = debugData;
 
           if (!dataPath[1]) {
             if (filter === "upcoming" || filter === "overdue") {
@@ -130,6 +130,9 @@ async function dataRoute(req, res) {
             }
             data[i].collections = taskInCollection;
           }
+
+          // Push debug info
+          data.push(debugData);
 
         } catch (error) {
           res.status(500).json({ message: error.message });
