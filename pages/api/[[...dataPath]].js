@@ -11,7 +11,10 @@ async function dataRoute(req, res) {
   const { dataPath, filter } = req.query;
   const allowedPaths = ["tasks", "collections"];
 
-  if (dataPath.length > 2 || !allowedPaths.includes(dataPath[0])) {
+  if (!dataPath) {
+    res.status(200).json({ message: "TrackTask API", status: "online", maintenance: false });
+    return;
+  } else if (dataPath.length > 2 || !allowedPaths.includes(dataPath[0])) {
     res.status(404).json({ message: "Endpoint not found" });
     return;
   } else if (!user || !user.isLoggedIn || user.permissions.banned) {
