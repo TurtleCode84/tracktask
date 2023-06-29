@@ -103,7 +103,7 @@ async function dataRoute(req, res) {
 
           // Just some more debug info
           debugData.shared = sharedTasks;
-          debugData.allCollections.length;
+          debugData.collections = allCollections.length;
           debugData.total = data.length;
 
           if (!dataPath[1]) {
