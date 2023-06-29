@@ -87,7 +87,7 @@ async function dataRoute(req, res) {
           if (dataPath[1]) {
             sharedTasks.filter(sharedTask => String(sharedTask) === String(dataPath[1]));
           }
-          debugData.isDataPath = dataPath[1];
+          debugData.filterWorking = sharedTasks.filter(sharedTask => String(sharedTask) === String(dataPath[1])).length;
           const sharedTasksQuery = {
             ...ownTasksQuery,
             _id: {
