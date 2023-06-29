@@ -72,6 +72,11 @@ async function dataRoute(req, res) {
 
           data = await db.collection("tasks").find(ownTasksQuery, tasksOptions).toArray();
 
+          // Debug info
+          data.debug = {
+            unshared: data.length,
+          }
+
           // Get and append shared tasks from collections as well
           const allCollections = await db.collection("collections").find(inCollectionsQuery).toArray();
           var sharedTasks = [];
@@ -94,6 +99,11 @@ async function dataRoute(req, res) {
             res.status(404).json({ message: "Task not found" });
             return;
           }
+
+          // Just some more debug info
+          data.debug.shared = sharedTasks;
+          data.debug.allCollections.length;
+          data.debug.total = data.length;
 
           if (!dataPath[1]) {
             if (filter === "upcoming" || filter === "overdue") {
