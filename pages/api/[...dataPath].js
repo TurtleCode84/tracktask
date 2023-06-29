@@ -11,7 +11,7 @@ async function dataRoute(req, res) {
   const { dataPath, filter } = req.query;
 
   if (dataPath.length > 2 || dataPath[0] !== "tasks" || dataPath[0] !== "collections") {
-    res.status(404).json({ message: "Endpoint not found", debugData: dataPath, validate: dataPath[0] === "tasks", gate: 1 });
+    res.status(404).json({ message: "Endpoint not found", debugData: {path: dataPath, one: dataPath.length > 2, two: dataPath[0] !== "tasks", three: dataPath[0] !== "collections"}, gate: 1 });
     return;
   } else if (!user || !user.isLoggedIn || user.permissions.banned) {
     res.status(401).json({ message: "Authentication required" });
@@ -222,7 +222,7 @@ async function dataRoute(req, res) {
     }
 
   } else {
-    res.status(404).json({ message: "Endpoint not found", debugData: dataPath, validate: dataPath[0] === "tasks", gate: 2 }); // Redundant
+    res.status(404).json({ message: "Endpoint not found", debugData: dataPath, gate: 2 }); // Redundant
     return;
   }
 
