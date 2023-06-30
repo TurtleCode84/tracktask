@@ -4,7 +4,7 @@ import stringToColor from "lib/stringToColor";
 
 export default function Task({ task, key }) {
   const router = useRouter();
-  const collectionTags = task.collections?.map((item, index) =>
+  const collectionTags = task.collections.map((item, index) =>
     <span key={index} className="list-inset" style={{backgroundColor: stringToColor(item.name), paddingTop: "0.5px", paddingLeft: "4px", paddingBottom: "0.5px", paddingRight: "4px", borderColor: "darkgray", borderStyle: "solid", borderWidth: "2px", borderRadius: "7px", color: "#111", marginTop: "5px", marginLeft: "20px", marginRight: "-15px", display: "inline-block" }}>{item.name}</span>
   );
   return (
