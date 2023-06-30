@@ -123,7 +123,7 @@ async function dataRoute(req, res) {
               if (allFilteredCollections.length > 0) {
 
                 var collectionRole;
-                if (new ObjectId(allCollections[j].owner) === new ObjectId(user.id)) {
+                if (allCollections[j].owner == user.id) {
                   collectionRole = "owner";
                 } else {
                   collectionRole = allCollections[j].sharing.sharedWith.find(element => element.id == user.id)?.role;
