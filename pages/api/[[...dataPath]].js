@@ -76,7 +76,6 @@ async function dataRoute(req, res) {
           data = await db.collection("tasks").find(ownTasksQuery, tasksOptions).toArray();
           var taskIds = [];
           data.forEach(item => taskIds.push(String(item._id)));
-          data.forEach(item => item.role = "owner");
 
           // Get and append shared tasks from collections as well
           const allCollections = await db.collection("collections").find(inCollectionsQuery).toArray();
@@ -123,14 +122,16 @@ async function dataRoute(req, res) {
               const allFilteredCollections = allCollections[j].tasks.filter(task => String(task) === String(data[i]._id));
               if (allFilteredCollections.length > 0) {
 
-                const shareDoc = allCollections[j].sharing.sharedWith.find(element => element.id == user.id);
-                if (!shareDoc) {
-                  res.status(500).json({ message: "They do not match" });
-                  return;
+                var collectionRole;
+                if (allCollections[j].owner === user.id) {
+                  collectionRole = "owner"
+                } else {
+                  collectionRole = allCollections[j].sharing.sharedWith.find(element => element.id == user.id).role;
                 }
+                
                 const collectionInfo = {
                   name: allCollections[j].name,
-                  role: shareDoc.role,
+                  role: collectionRole,
                 };
                 
                 taskInCollection.push(collectionInfo); // Returns defined if in collection
