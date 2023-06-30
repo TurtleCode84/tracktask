@@ -16,16 +16,15 @@ export default function Collection() {
   const { user } = useUser({
     redirectTo: "/login",
   });
-  //const { tasks: collections, error } = useTasks(user, true, false);
-  
-  const [errorMsg, setErrorMsg] = useState("");
   const router = useRouter();
   const { collectionId } = router.query;
-  const collection = collections?.filter(item => item._id === collectionId)?.[0];
+  const { data: collection, error } = useData(user, "collections", collectionId, false);
+  
+  const [errorMsg, setErrorMsg] = useState("");
   var clientError;
-  if (collections && !collection) {
+  /*if (collections && !collection) {
     clientError = "No collection found";
-  }
+  }*/
   var sharedColor = "lightslategray";
   if (collection?.owner !== user?.id) {
     sharedColor = "#006dbe";

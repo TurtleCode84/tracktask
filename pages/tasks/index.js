@@ -12,7 +12,7 @@ export default function Tasks() {
     redirectTo: "/login",
   });
   
-  //const { tasks: allTasks, error: allTasksError } = useTasks(user, false, "all");
+  const { data: allTasks, error: allTasksError } = useData(user, "tasks", false, "all");
   const taskList = allTasks?.map((task) =>
     <Task task={task} key={task._id}/>
   );

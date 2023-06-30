@@ -12,7 +12,7 @@ export default function Collections() {
     redirectTo: "/login",
   });
   
-  //const { tasks: allCollections, error: allCollectionsError } = useTasks(user, true, false);
+  const { data: allCollections, error: allCollectionsError } = useData(user, "collections", false, false);
   const collectionList = allCollections?.map((collection) =>
     <Collection user={user} collection={collection} key={collection._id}/>
   );

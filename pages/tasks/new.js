@@ -13,7 +13,7 @@ export default function TasksCreate() {
   const { user } = useUser({
     redirectTo: "/login",
   });
-  //const { tasks: collections, error: collectionsError } = useTasks(user, true, false); //unused error
+  const { data: collections, error: collectionsError } = useData(user, "collections", false, false); //unused error
   
   const [errorMsg, setErrorMsg] = useState("");
   const router = useRouter();
