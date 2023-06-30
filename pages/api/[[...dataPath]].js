@@ -124,11 +124,15 @@ async function dataRoute(req, res) {
 
                 var collectionRole;
                 if (allCollections[j].owner === user.id) {
-                  collectionRole = "owner"
+                  collectionRole = "owner";
                 } else {
                   collectionRole = allCollections[j].sharing.sharedWith.find(element => element.id == user.id).role;
+                  if (!collectionRole) {
+                    res.status(500).json({ message: "Huh?!", debug: {role: collectionRole, collectionSharedWith: allCollections[j].sharing.sharedWith} });
+                    return;
+                  }
                 }
-                
+
                 const collectionInfo = {
                   name: allCollections[j].name,
                   role: collectionRole,
