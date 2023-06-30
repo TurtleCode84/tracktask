@@ -119,7 +119,7 @@ async function dataRoute(req, res) {
           for (var i=0; i<data.length; i++) {
             var taskInCollection = [];
             for (var j=0; j<allCollections.length; j++) {
-              const allFilteredCollections = allCollections[j].tasks.filter(task => new ObjectId(task) === new ObjectId(data[i]._id)); // String or ObjectId?
+              const allFilteredCollections = allCollections[j].tasks.filter(task => String(task) === String(data[i]._id));
               if (allFilteredCollections.length > 0) {
 
                 /*var collectionRole;
