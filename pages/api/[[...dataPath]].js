@@ -119,18 +119,14 @@ async function dataRoute(req, res) {
           for (var i=0; i<data.length; i++) {
             var taskInCollection = [];
             for (var j=0; j<allCollections.length; j++) {
-              const allFilteredCollections = allCollections[j].tasks.filter(task => String(task) === String(data[i]._id));
+              const allFilteredCollections = allCollections[j].tasks.filter(task => new ObjectId(task) === new ObjectId(data[i]._id)); // String or ObjectId?
               if (allFilteredCollections.length > 0) {
 
                 var collectionRole;
-                if (allCollections[j].owner === user.id) {
+                if (new ObjectId(allCollections[j].owner) === new ObjectId(user.id)) {
                   collectionRole = "owner";
                 } else {
-                  collectionRole = allCollections[j].sharing.sharedWith.find(element => element.id == user.id)?.role;
-                  if (!collectionRole) {
-                    res.status(500).json({ message: "Huh?!", debug: {role: collectionRole, collectionSharedWith: allCollections[j], ownerTest: allCollections[j].owner === user.id} });
-                    return;
-                  }
+                  collectionRole = allCollections[j].sharing.sharedWith.find(element => new ObjectId(element.id) === new ObjectId(user.id))?.role;
                 }
 
                 const collectionInfo = {
