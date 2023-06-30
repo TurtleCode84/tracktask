@@ -126,7 +126,11 @@ async function dataRoute(req, res) {
                 if (new ObjectId(allCollections[j].owner) === new ObjectId(user.id)) {
                   collectionRole = "owner";
                 } else {
-                  collectionRole = allCollections[j].sharing.sharedWith.find(element => new ObjectId(element.id) === new ObjectId(user.id))?.role;
+                  collectionRole = allCollections[j].sharing.sharedWith.find(element => new ObjectId(element.id) === new ObjectId(user.id)).role;
+                  if (!collectionsRole) {
+                    res.status(500).json({ debug: allCollections[j], ownerTest: new ObjectId(user.id) === new ObjectId(allCollections[j].owner) });
+                    return;
+                  }
                 }
 
                 const collectionInfo = {
