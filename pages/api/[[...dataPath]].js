@@ -44,7 +44,7 @@ async function dataRoute(req, res) {
         hidden: false,
         $or: [
           { owner: new ObjectId(user.id) },
-          { 'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user.id)}} },
+          { 'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user.id)}} }, // Need to add regex to exclude pending collections
         ],
       };
 
@@ -76,11 +76,14 @@ async function dataRoute(req, res) {
           data = await db.collection("tasks").find(ownTasksQuery, tasksOptions).toArray();
           var taskIds = [];
           data.forEach(item => taskIds.push(String(item._id)));
+          data.forEach(item => item.role = "owner");
 
           // Get and append shared tasks from collections as well
           const allCollections = await db.collection("collections").find(inCollectionsQuery).toArray();
           var sharedTasks = [];
-          allCollections.forEach(allCollection => sharedTasks.push(...allCollection.tasks.filter(task => !taskIds.includes(String(task)))));
+          allCollections.forEach(allCollection => {
+            sharedTasks.push(...allCollection.tasks.filter(task => !taskIds.includes(String(task))));
+          });
           if (dataPath[1]) {
             sharedTasks = sharedTasks.filter(sharedTask => String(sharedTask) === String(dataPath[1]));
           }
@@ -119,7 +122,13 @@ async function dataRoute(req, res) {
             for (var j=0; j<allCollections.length; j++) {
               const allFilteredCollections = allCollections[j].tasks.filter(task => String(task) === String(data[i]._id));
               if (allFilteredCollections.length > 0) {
-                taskInCollection.push(allCollections[j].name); // Returns defined if in collection
+
+                const collectionInfo = {
+                  name: allCollections[j].name,
+                  role: allCollections[j].sharing.sharedWith.find(element => element.id == user.id).role,
+                };
+                
+                taskInCollection.push(collectionInfo); // Returns defined if in collection
               }
             }
             data[i].collections = taskInCollection;

@@ -6,7 +6,7 @@ import AddRemoveCollectionForm from "components/AddRemoveCollectionForm";
 import User from "components/User";
 import ReportButton from "components/ReportButton";
 import useUser from "lib/useUser";
-import useTasks from "lib/useTasks";
+import useData from "lib/useData";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from 'next/router';
 import moment from "moment";
@@ -17,14 +17,12 @@ export default function Task() {
   const { user } = useUser({
     redirectTo: "/login",
   });
-  const { tasks, error } = useTasks(user, false, "all");
-  const { tasks: collections, error: collectionsError } = useTasks(user, true, false); //unused error
-  
-  const [errorMsg, setErrorMsg] = useState("");
   const router = useRouter();
   const { taskId } = router.query;
-  var task = tasks?.filter(item => item._id === taskId)?.[0];
-  var canEdit = true;
+  const { data: task, error: taskError } = useData(user, "tasks", taskId, false);
+  
+  const [errorMsg, setErrorMsg] = useState("");
+  /*var canEdit = true;
   var canComplete = true;
   if (!task) {
     canEdit = false;
@@ -36,11 +34,11 @@ export default function Task() {
       canComplete = canEdit
     }
     task = collection?.tasks.filter(item => item._id === taskId)?.[0];
-  }
+  }*/
   var clientError;
-  if (tasks && !task) {
+  /*if (tasks && !task) {
     clientError = "Task not found!";
-  }
+  }*/
     
   if (!user || !user.isLoggedIn || user.permissions.banned) {
     return (
@@ -62,7 +60,7 @@ export default function Task() {
         {user.permissions.verified && <p>Completed by: <User user={user} id={task.completion.completedBy}/></p>}
         </>
         :
-        <>{canComplete && <><a href={`/api/tasks?id=${task._id}`}
+        <>{canComplete && <><a href={`/api/tasks/${task._id}`}
         onClick={async (e) => {
           e.preventDefault();
           document.getElementById("markCompleteBtn").disabled = true;
@@ -74,7 +72,7 @@ export default function Task() {
             priority: false,
           };
           try {
-            await fetchJson(`/api/tasks?id=${task._id}`, {
+            await fetchJson(`/api/tasks/${task._id}`, {
               method: "PATCH",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(body),
@@ -125,7 +123,7 @@ export default function Task() {
               }
 
               try {
-                await fetchJson(`/api/tasks?id=${task._id}`, {
+                await fetchJson(`/api/tasks/${task._id}`, {
                   method: "PATCH",
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify(body),
@@ -162,7 +160,7 @@ export default function Task() {
               if (removedCollectionsValues.length > 0) {body.removeCollections = removedCollectionsValues};
                             
               try {
-                await fetchJson(`/api/tasks?collection=true&id=${task._id}`, {
+                await fetchJson(`/api/collections/${task._id}`, {
                   method: "PATCH",
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify(body),
