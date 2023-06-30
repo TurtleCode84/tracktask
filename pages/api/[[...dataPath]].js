@@ -138,7 +138,7 @@ async function dataRoute(req, res) {
                   role: collectionRole,
                 };
                 
-                taskInCollection.push(allCollections[j].name); // Returns defined if in collection
+                taskInCollection.push(collectionInfo); // Returns defined if in collection
               }
             }
             data[i].collections = taskInCollection;
