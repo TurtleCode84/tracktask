@@ -4,7 +4,7 @@ import Layout from "components/Layout";
 import Loading from "components/Loading";
 import TaskCreateForm from "components/TaskCreateForm";
 import useUser from "lib/useUser";
-import useTasks from "lib/useTasks";
+import useData from "lib/useData";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -13,7 +13,7 @@ export default function TasksCreate() {
   const { user } = useUser({
     redirectTo: "/login",
   });
-  const { tasks: collections, error: collectionsError } = useTasks(user, true, false); //unused error
+  //const { tasks: collections, error: collectionsError } = useTasks(user, true, false); //unused error
   
   const [errorMsg, setErrorMsg] = useState("");
   const router = useRouter();

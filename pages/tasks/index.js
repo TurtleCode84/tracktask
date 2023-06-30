@@ -5,14 +5,14 @@ import Loading from "components/Loading";
 import Task from "components/Task";
 import Link from "next/link";
 import useUser from "lib/useUser";
-import useTasks from "lib/useTasks";
+import useData from "lib/useData";
 
 export default function Tasks() {
   const { user } = useUser({
     redirectTo: "/login",
   });
   
-  const { tasks: allTasks, error: allTasksError } = useTasks(user, false, "all");
+  //const { tasks: allTasks, error: allTasksError } = useTasks(user, false, "all");
   const taskList = allTasks?.map((task) =>
     <Task task={task} key={task._id}/>
   );

@@ -6,7 +6,7 @@ import Task from "components/Task";
 import Collection from "components/Collection";
 import Link from "next/link";
 import useUser from "lib/useUser";
-import useTasks from "lib/useTasks";
+import useData from "lib/useData";
 import { useRouter } from "next/router";
 
 export default function Dashboard() {
@@ -14,7 +14,7 @@ export default function Dashboard() {
     redirectTo: "/login",
   });
   
-  const { tasks: upcomingTasks, error: upcomingTasksError } = useTasks(user, false, "upcoming");
+  const { data: upcomingTasks, error: upcomingTasksError } = useData(user, "tasks", false, "upcoming");
   const router = useRouter();
   const { reported, deleted } = router.query;
   var dynamicMsg;
@@ -26,15 +26,15 @@ export default function Dashboard() {
   const upcomingTaskList = upcomingTasks?.map((task) =>
     <Task task={task} key={task._id}/>
   );
-  const { tasks: overdueTasks, error: overdueTasksError } = useTasks(user, false, "overdue");
+  const { data: overdueTasks, error: overdueTasksError } = useData(user, "tasks", false, "overdue");
   const overdueTaskList = overdueTasks?.map((task) =>
     <Task task={task} key={task._id}/>
   );
-  const { tasks: notdueTasks, error: notdueTasksError } = useTasks(user, false, "notdue");
+  const { data: notdueTasks, error: notdueTasksError } = useData(user, "tasks", false, "notdue");
   const notdueTaskList = notdueTasks?.map((task) =>
     <Task task={task} key={task._id}/>
   );
-  const { tasks: collections, error: collectionsError } = useTasks(user, true, false);
+  const { data: collections, error: collectionsError } = useData(user, "collections", false, false);
   const collectionList = collections?.map((collection) =>
     <Collection user={user} collection={collection} key={collection._id}/>
   );

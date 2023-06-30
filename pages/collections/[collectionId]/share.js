@@ -5,7 +5,7 @@ import Loading from "components/Loading";
 import CollectionShareForm from "components/CollectionShareForm";
 import User from "components/User";
 import useUser from "lib/useUser";
-import useTasks from "lib/useTasks";
+import useData from "lib/useData";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -14,7 +14,7 @@ export default function CollectionShare() {
   const { user } = useUser({
     redirectTo: "/login",
   });
-  const { tasks: collections, error } = useTasks(user, true, false);
+  //const { tasks: collections, error } = useTasks(user, true, false);
   
   const [errorMsg, setErrorMsg] = useState("");
   const router = useRouter();
