@@ -122,13 +122,13 @@ async function dataRoute(req, res) {
               const allFilteredCollections = allCollections[j].tasks.filter(task => String(task) === String(data[i]._id));
               if (allFilteredCollections.length > 0) {
 
-                /*var collectionRole;
+                var collectionRole;
                 if (new ObjectId(allCollections[j].owner) === new ObjectId(user.id)) {
                   collectionRole = "owner";
                 } else {
-                  collectionRole = allCollections[j].sharing.sharedWith.find(element => new ObjectId(element.id) === new ObjectId(user.id)).role;
+                  collectionRole = allCollections[j].sharing.sharedWith.find(element => element.id == user.id).role;
                   if (!collectionsRole) {
-                    res.status(500).json({ debug: allCollections[j], ownerTest: new ObjectId(user.id) === new ObjectId(allCollections[j].owner) });
+                    res.status(500).json({ debug: allCollections[j], ownerTest: user.id == allCollections[j].owner });
                     return;
                   }
                 }
@@ -136,7 +136,7 @@ async function dataRoute(req, res) {
                 const collectionInfo = {
                   name: allCollections[j].name,
                   role: collectionRole,
-                };*/
+                };
                 
                 taskInCollection.push(allCollections[j].name); // Returns defined if in collection
               }
