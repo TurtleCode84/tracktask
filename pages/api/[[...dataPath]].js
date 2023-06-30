@@ -122,7 +122,7 @@ async function dataRoute(req, res) {
               const allFilteredCollections = allCollections[j].tasks.filter(task => new ObjectId(task) === new ObjectId(data[i]._id)); // String or ObjectId?
               if (allFilteredCollections.length > 0) {
 
-                var collectionRole;
+                /*var collectionRole;
                 if (new ObjectId(allCollections[j].owner) === new ObjectId(user.id)) {
                   collectionRole = "owner";
                 } else {
@@ -136,9 +136,9 @@ async function dataRoute(req, res) {
                 const collectionInfo = {
                   name: allCollections[j].name,
                   role: collectionRole,
-                };
+                };*/
                 
-                taskInCollection.push(collectionInfo); // Returns defined if in collection
+                taskInCollection.push(allCollections[j].name); // Returns defined if in collection
               }
             }
             data[i].collections = taskInCollection;
