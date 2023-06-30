@@ -123,9 +123,14 @@ async function dataRoute(req, res) {
               const allFilteredCollections = allCollections[j].tasks.filter(task => String(task) === String(data[i]._id));
               if (allFilteredCollections.length > 0) {
 
+                const shareDoc = allCollections[j].sharing.sharedWith.find(element => element.id == user.id);
+                if (!shareDoc) {
+                  res.status(500).json({ message: "They do not match" });
+                  return;
+                }
                 const collectionInfo = {
                   name: allCollections[j].name,
-                  role: allCollections[j].sharing.sharedWith.find(element => element.id == user.id).role,
+                  role: shareDoc.role,
                 };
                 
                 taskInCollection.push(collectionInfo); // Returns defined if in collection
