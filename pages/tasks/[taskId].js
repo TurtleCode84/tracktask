@@ -22,9 +22,10 @@ export default function Task() {
   const { data: task, error: taskError } = useData(user, "tasks", taskId, false);
   
   const [errorMsg, setErrorMsg] = useState("");
-  /*var canEdit = true;
+  // Temporary
+  var canEdit = true;
   var canComplete = true;
-  if (!task) {
+  /*if (!task) {
     canEdit = false;
     canComplete = false;
     const collection = collections?.find(item => item.tasks?.some((element) => element._id === taskId));
