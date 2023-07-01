@@ -32,6 +32,11 @@ export default function Layout({ children }) {
           box-sizing: border-box;
         }
 
+        @font-face {
+          font-family: "Space Grotesk";
+          src: url("/fonts/SpaceGrotesk.ttf") format("tff");
+        }        
+
         body {
           margin: 0;
           color: #333;
