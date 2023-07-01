@@ -30,17 +30,14 @@ export default function Layout({ children }) {
         *::before,
         *::after {
           box-sizing: border-box;
-        }
-
-        @font-face {
-          font-family: "Space Grotesk";
-          src: url("/fonts/SpaceGrotesk.ttf") format("tff");
-        }        
+        }     
 
         body {
           margin: 0;
           color: #333;
-          font-family: "Space Grotesk";
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, Noto Sans, sans-serif, "Apple Color Emoji",
+          "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
         }
         
         .container {
