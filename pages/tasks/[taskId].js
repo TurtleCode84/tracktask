@@ -141,7 +141,7 @@ export default function Task() {
             }}
         />
         </details></>}
-        {user.id === task.owner && <><br/><details>
+        {/*user.id === task.owner && <><br/><details>
           <summary>Add/remove from collection</summary>
           <br/><AddRemoveCollectionForm
             errorMessage={errorMsg}
@@ -177,7 +177,7 @@ export default function Task() {
               }
             }}
           />
-        </details></>}
+        </details></>*/}
         {task.owner !== user.id && <><br/><ReportButton user={user} type="task" reported={task}/></>}</>
       :
         <>{taskError || clientError ? <p>{clientError ? clientError : taskError.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading task...</p>}</>
