@@ -60,27 +60,27 @@ export default function Dashboard() {
 
       {dynamicMsg && <p className="success">{dynamicMsg}{' '}<Link href="/dashboard">Ok</Link></p>}
 
-      {(upcomingTaskList === undefined && !upcomingTasksError) || (overdueTaskList === undefined && !overdueTasksError) || (notdueTaskList === undefined && !notdueTasksError) && <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
-      {upcomingTasksError && overdueTasksError && notdueTasksError &&
+      {upcomingTaskList === undefined || overdueTaskList === undefined || notdueTaskList === undefined && <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
+      {upcomingTaskList.length === 0 && overdueTaskList.length === 0 && notdueTaskList === 0 &&
       <><h2>Your tasks:</h2>
       <p style={{ fontStyle: "italic" }}>You have no relevant tasks!</p></>
       }
 
-      {!upcomingTasksError &&
+      {upcomingTaskList.length > 0 &&
       <><h2>Upcoming tasks:</h2>
       <ul style={{ display: "table" }}>
         {upcomingTaskList}
       </ul></>
       }
       
-      {!overdueTasksError &&
+      {overdueTaskList.length > 0 &&
       <><h2>Past due date:</h2>
       <ul style={{ display: "table" }}>
         {overdueTaskList}
       </ul></>
       }
       
-      {!notdueTasksError &&
+      {notdueTaskList > 0 &&
       <><h2>Not due:</h2>
       <ul style={{ display: "table" }}>
         {notdueTaskList}
@@ -89,8 +89,8 @@ export default function Dashboard() {
       <Link href="/tasks">View all tasks</Link>
       
       <h2>Your collections:</h2>
-      {collectionList === undefined && !collectionsError && <p style={{ fontStyle: "italic" }}>Loading collections...</p>}
-      {collectionsError ?
+      {collectionList === undefined && <p style={{ fontStyle: "italic" }}>Loading collections...</p>}
+      {collectionList.length === 0 ?
       <p style={{ fontStyle: "italic" }}>You have no collections!</p>
       :
       <ul style={{ display: "table" }}>
