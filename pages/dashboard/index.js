@@ -61,6 +61,7 @@ export default function Dashboard() {
       {dynamicMsg && <p className="success">{dynamicMsg}{' '}<Link href="/dashboard">Ok</Link></p>}
 
       {upcomingTaskList === undefined || overdueTaskList === undefined || notdueTaskList === undefined && <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
+      {(upcomingTasksError || overdueTasksError || notdueTasksError) && <p style={{ fontStyle: "italic" }}>An error occurred while loading your tasks.</p>}
       {(upcomingTaskList && upcomingTaskList.length === 0) && (overdueTaskList && overdueTaskList.length === 0) && (notdueTaskList && notdueTaskList.length === 0) &&
       <><h2>Your tasks:</h2>
       <p style={{ fontStyle: "italic" }}>You have no relevant tasks!</p></>
@@ -89,7 +90,8 @@ export default function Dashboard() {
       <Link href="/tasks">View all tasks</Link>
       
       <h2>Your collections:</h2>
-      {collectionList === undefined && <p style={{ fontStyle: "italic" }}>Loading collections...</p>}
+      {collectionList === undefined && !collectionsError && <p style={{ fontStyle: "italic" }}>Loading collections...</p>}
+      {collectionsError && <p style={{ fontStyle: "italic" }}>An error occurred while loading your collections.</p>}
       {collectionList && collectionList.length === 0 ?
       <p style={{ fontStyle: "italic" }}>You have no collections!</p>
       :
