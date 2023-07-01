@@ -151,7 +151,7 @@ async function dataRoute(req, res) {
       }
 
       // Remove array if single task
-      if (data.length === 1) {data = data[0]}
+      if (data.length === 1 && dataPath[1]) {data = data[0]}
 
       // Return data
       res.json(data);
