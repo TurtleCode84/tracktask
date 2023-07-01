@@ -179,7 +179,7 @@ export default function Task() {
         </details></>}
         {task.owner !== user.id && <><br/><ReportButton user={user} type="task" reported={task}/></>}</>
       :
-        <>{error || clientError ? <p>{clientError ? clientError : error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading task...</p>}</>
+        <>{taskError || clientError ? <p>{clientError ? clientError : taskError.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading task...</p>}</>
       }
     </Layout>
   );
