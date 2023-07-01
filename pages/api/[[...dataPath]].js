@@ -37,7 +37,7 @@ async function dataRoute(req, res) {
         owner: new ObjectId(user.id),
       };
       const tasksOptions = {
-        sort: { 'completion.completed': 1, priority: -1, dueDate: 1 },
+        sort: { 'completion.completed': 1, priority: -1, dueDate: 1 }, // This will not work for shared tasks
         projection: { name: 1, description: 1, dueDate: 1, created: 1, owner: 1, completion: 1, priority: 1 },
       };
       const inCollectionsQuery = {
@@ -150,7 +150,7 @@ async function dataRoute(req, res) {
 
       }
 
-      // Remove array if single task
+      // Remove array if single task (need to add sorting to this)
       if (data.length === 1 && dataPath[1]) {data = data[0]}
 
       // Return data
