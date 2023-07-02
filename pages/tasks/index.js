@@ -26,9 +26,10 @@ export default function Tasks() {
     <Layout>
       <h1>All tasks:</h1>
       <Link href="/dashboard">Back to dashboard</Link><br/>
+      {taskList && taskList.length === 0 ? <p style={{ fontStyle: "italic" }}>No tasks found!</p> : null}
       {taskList === undefined || allTasksError ?
       <>
-      {allTasksError ? <p style={{ fontStyle: "italic" }}>{allTasksError.data ? allTasksError.data.message : allTasksError.message}</p> : <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
+      {allTasksError ? <p style={{ fontStyle: "italic" }}>{allTasksError.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
       </>
       :
       <><ul style={{ display: "table" }}>
