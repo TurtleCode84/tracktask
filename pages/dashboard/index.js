@@ -20,8 +20,10 @@ export default function Dashboard() {
   var dynamicMsg;
   if (reported === "true") {
     dynamicMsg = "Your report had been sent, an administrator will review it soon."
-  } else if (deleted === "true") {
+  } else if (deleted === "t") {
     dynamicMsg = "Task successfully deleted!"
+  } else if (deleted === "c") {
+    dynamicMsg = "Collection successfully deleted!"
   }
   const upcomingTaskList = upcomingTasks?.map((task) =>
     <Task task={task} key={task._id}/>
