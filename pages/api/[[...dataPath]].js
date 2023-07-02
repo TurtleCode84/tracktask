@@ -37,7 +37,6 @@ async function dataRoute(req, res) {
         owner: new ObjectId(user.id),
       };
       const tasksOptions = {
-        //sort: { 'completion.completed': 1, priority: -1, dueDate: 1 }, // This will not work for shared tasks
         projection: { name: 1, description: 1, dueDate: 1, created: 1, owner: 1, completion: 1, priority: 1 },
       };
       const inCollectionsQuery = {
@@ -209,8 +208,59 @@ async function dataRoute(req, res) {
 
     if (req.method === 'GET') {
 
-      res.status(503).json({ message: "Under construction" });
-      return;
+      const collectionsQuery = {
+        hidden: false,
+        $or: [
+          { owner: new ObjectId(user.id) },
+          { 'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user.id)}} },
+        ],
+      };
+      const collectionsOptions = {
+        sort: { created: -1 },
+        projection: { name: 1, description: 1, created: 1, owner: 1, sharing: 1, tasks: 1 },
+      };
+
+      var data;
+
+      if (dataPath[1] && !ObjectId.isValid(dataPath[1])) {
+
+        res.status(422).json({ message: "Invalid collection ID" });
+        return;
+
+      } else {
+
+        if (dataPath[1]) {
+          collectionsQuery._id = new ObjectId(dataPath[1]);
+        }
+
+        try {
+          data = await db.collection("collections").find(collectionsQuery, collectionsOptions).toArray();
+        } catch (error) {
+          res.status(500).json({ message: error.message });
+        }
+        for (var i=0; i<data.length; i++) {
+          if (data[i].sharing.sharedWith.some((element) => element.id == user.id && element.role.split('-')[0] === "pending")) {
+            delete data[i].tasks;
+            delete data[i].sharing;
+            data[i].pending = true;
+          } else {
+            if (data[i].owner == user.id) {
+              data[i].sharing.role = "owner";
+            } else {
+              data[i].sharing.role = data[i].sharing.sharedWith.filter(element => element.id == user.id)[0]?.role;
+            }
+              data[i].tasks = await db.collection("tasks").find({ _id: {$in: data[i].tasks}, hidden: false }, taskoptions).toArray();
+          }
+        }
+        data.sort((a, b) => a.pending ? -1 : 1); // Push share requests to the top
+
+      }
+
+      // Remove array if single task
+      if (data.length === 1 && dataPath[1]) {data = data[0]}
+
+      // Return data
+      res.json(data);
 
     } else if (req.method === 'POST') {
 
@@ -232,6 +282,7 @@ async function dataRoute(req, res) {
       };
 
       // Attempt to delete the collection and return acknowledgement
+      // In the future, I could try to delete the task ID from any collections it is in
       try {
         const deletedCollection = await db.collection("collections").deleteOne(query);
         res.json(deletedCollection);
