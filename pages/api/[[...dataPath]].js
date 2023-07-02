@@ -246,7 +246,7 @@ async function dataRoute(req, res) {
 
     } else if (req.method === 'PUT') {
 
-      res.status(503).json({ message: "Under construction" });
+      res.status(405).json({ message: "Method not allowed" });
       return;
 
     } else {
@@ -409,31 +409,7 @@ async function dataRoute(req, res) {
   } else if (req.method === 'POST') { // Create a new task or collection
     
   } else if (req.method === 'DELETE') { // Deletes a task or collection
-    const { id, collection } = req.query;
-    if (!ObjectId.isValid(id)) {
-      res.status(422).json({ message: "Invalid object ID" });
-      return;
-    }
-    const query = {
-      hidden: false,
-      _id: new ObjectId(id),
-      $or: [
-        { owner: new ObjectId(user.id) },
-        { 'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user.id), role: "editor"}} }, //change so only owner can delete
-      ],
-    };
-    try {
-      if (collection !== "true") {
-        const deletedItem = await db.collection("tasks").deleteOne(query);
-        res.json(deletedItem);
-      } else {
-        const deletedItem = await db.collection("collections").deleteOne(query);
-        res.json(deletedItem);
-      }
-    } catch (error) {
-      res.status(500).json(error);
-      return;
-    }
+    
   } else if (req.method === 'PATCH') { // Updates a task or collection
     const body = await req.body;
     const { id, collection } = req.query;
