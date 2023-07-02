@@ -219,6 +219,10 @@ async function dataRoute(req, res) {
         sort: { created: -1 },
         projection: { name: 1, description: 1, created: 1, owner: 1, sharing: 1, tasks: 1 },
       };
+      const sortedTasksOptions = {
+        sort: { 'completion.completed': 1, priority: -1, dueDate: 1 },
+        projection: { name: 1, description: 1, dueDate: 1, created: 1, owner: 1, completion: 1, priority: 1 },
+      };
 
       var data;
 
@@ -249,7 +253,7 @@ async function dataRoute(req, res) {
             } else {
               data[i].sharing.role = data[i].sharing.sharedWith.filter(element => element.id == user.id)[0]?.role;
             }
-              data[i].tasks = await db.collection("tasks").find({ _id: {$in: data[i].tasks}, hidden: false }, taskoptions).toArray();
+              data[i].tasks = await db.collection("tasks").find({ _id: {$in: data[i].tasks}, hidden: false }, sortedTasksOptions).toArray();
           }
         }
         data.sort((a, b) => a.pending ? -1 : 1); // Push share requests to the top
