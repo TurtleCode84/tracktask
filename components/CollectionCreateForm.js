@@ -8,13 +8,8 @@ export default function CollectionCreateForm({ verified, errorMessage, onSubmit 
       <label>
         <span>Description</span>
         <textarea name="description" rows="4" cols="30" maxlength="500" required />
-      </label><br/>
-      {verified ? <>
-      <label>
-        <span>Shared <span style={{ color: "lightslategray" }} className="material-symbols-outlined icon-list">group</span></span>
-        <input type="checkbox" name="shared" />
-      </label></>
-      : null}
+      </label>
+      {verified && <p style={{ fontStyle: "italic" }}>You will be able to share this collection after you create it.</p>}
 
       <button type="submit" id="createCollectionBtn">Create collection</button>
 

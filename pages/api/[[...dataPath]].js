@@ -275,8 +275,36 @@ async function dataRoute(req, res) {
 
     } else if (req.method === 'POST') {
 
-      res.status(503).json({ message: "Under construction" });
-      return;
+      const { name, description } = await req.body;
+      if (!name || !description) {
+        res.status(422).json({ message: "Invalid data" });
+        return;
+      } else if (name.trim().length > 55 || description.trim().length > 500) {
+        res.status(422).json({ message: "Length of title and description must not exceed 55 and 500 characters respectively." });
+        return;
+      } else if (user.stats.collections >= 100) {
+        res.status(403).json({ message: "Woah there, we didn't expect you to create so many collections! Try deleting a few before making a new one." });
+        return;
+      }
+      try {
+        const newCollection = {
+          name: name.trim(),
+          description: description.trim(),
+          sharing: {
+            shared: false,
+            sharedWith: [],
+          },
+          hidden: false,
+          owner: new ObjectId(user.id),
+          created: Math.floor(Date.now()/1000),
+          tasks: [],
+        };
+        const createdCollection = await db.collection("collections").insertOne(newCollection);
+        res.json(createdCollection);
+      } catch (error) {
+        res.status(500).json({ message: error.message });
+        return;
+      }
 
     } else if (req.method === 'DELETE') {
 
