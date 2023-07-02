@@ -30,7 +30,7 @@ async function dataRoute(req, res) {
 
   if (dataPath[0] === "tasks") {
 
-    if (req.method === 'GET') { // Returns an array with a task or list of tasks
+    if (req.method === 'GET') { // Returns a task or array of tasks
 
       const ownTasksQuery = {
         hidden: false,
@@ -161,12 +161,62 @@ async function dataRoute(req, res) {
       // Return data
       res.json(data);
 
-    } else if (req.method === 'POST') {
+    } else if (req.method === 'POST') { // Creates a new task
 
-      res.status(503).json({ message: "Under construction" });
-      return;
+      const { name, description, dueDate, addCollections, markPriority } = await req.body;
+      if (!name || !description) {
+        res.status(422).json({ message: "Invalid data" });
+        return;
+      } else if (name.trim().length > 55 || description.trim().length > 500) {
+        res.status(422).json({ message: "Length of title and description must not exceed 55 and 500 characters respectively." });
+        return;
+      } else if (user.stats.tasks >= 10000) {
+        res.status(403).json({ message: "Woah there, we didn't expect you to create so many tasks! If you have tasks completed over a year ago, we'll remove them within the week to clear space for new tasks, otherwise you should delete a few before creating any more." });
+        return;
+      }
+      try {
+        const newTask = {
+          name: name.trim(),
+          description: description.trim(),
+          hidden: false,
+          owner: new ObjectId(user.id),
+          created: Math.floor(Date.now()/1000),
+          completion: {
+            completed: 0,
+            completedBy: "",
+          },
+          priority: markPriority,
+        };
+        if (dueDate) {
+          newTask.dueDate = moment(dueDate).unix();
+        } else {
+          newTask.dueDate = 0;
+        }
+        const createdTask = await db.collection("tasks").insertOne(newTask);
+        if (addCollections) {
+          var addCollectionsId = [];
+          for (var i=0; i<addCollections.length; i++) {
+            addCollectionsId[i] = new ObjectId(addCollections[i]);
+          }
+          const addCollectionsQuery = {
+            _id: {
+              $in: addCollectionsId,
+            },
+            tasks: {
+              $nin: [new ObjectId(createdTask.insertedId)], // Safety validation in case of edit conflict
+            },
+            hidden: false,
+            owner: new ObjectId(user.id),
+          };
+          const addedCollections = await db.collection("collections").updateMany(addCollectionsQuery, {$push: {tasks: new ObjectId(createdTask.insertedId)}});
+        }
+        res.json(createdTask);
+      } catch (error) {
+        res.status(500).json({ message: error.message });
+        return;
+      }
 
-    } else if (req.method === 'DELETE') {
+    } else if (req.method === 'DELETE') { // Deletes a task
 
       // Make sure there is a valid task ID to delete
       if (!ObjectId.isValid(dataPath[1])) {
@@ -206,7 +256,7 @@ async function dataRoute(req, res) {
     
   } else if (dataPath[0] === "collections") {
 
-    if (req.method === 'GET') {
+    if (req.method === 'GET') { // Returns a collection or array of collections
 
       const collectionsQuery = {
         hidden: false,
@@ -273,7 +323,7 @@ async function dataRoute(req, res) {
       // Return data
       res.json(data);
 
-    } else if (req.method === 'POST') {
+    } else if (req.method === 'POST') { // Creates a new collection
 
       const { name, description } = await req.body;
       if (!name || !description) {
@@ -306,7 +356,7 @@ async function dataRoute(req, res) {
         return;
       }
 
-    } else if (req.method === 'DELETE') {
+    } else if (req.method === 'DELETE') { // Deletes a collection
 
       // Make sure there is a valid collection ID to delete
       if (!ObjectId.isValid(dataPath[1])) {
