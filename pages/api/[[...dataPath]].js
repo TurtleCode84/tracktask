@@ -96,7 +96,7 @@ async function dataRoute(req, res) {
           // data should now contain all owned and shared tasks
           
           // At this point we can tell if the task exists
-          if (data.length < 1) {
+          if (dataPath[1] && data.length < 1) {
             res.status(404).json({ message: "Task not found" });
             return;
           }
@@ -242,6 +242,13 @@ async function dataRoute(req, res) {
         } catch (error) {
           res.status(500).json({ message: error.message });
         }
+
+        // At this point we can tell if the collection exists
+        if (dataPath[1] && data.length < 1) {
+          res.status(404).json({ message: "Collection not found" });
+          return;
+        }
+        
         for (var i=0; i<data.length; i++) {
           if (data[i].sharing.sharedWith.some((element) => element.id == user.id && element.role.split('-')[0] === "pending")) {
             delete data[i].tasks;
