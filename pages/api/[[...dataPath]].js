@@ -154,9 +154,9 @@ async function dataRoute(req, res) {
       if (data.length === 1 && dataPath[1]) {
         data = data[0];
       } else {
+        data.sort((a, b) => a.dueDate ? -1 : 1);
         data.sort((a, b) => a.completion.completed ? -1 : 1);
         data.sort((a, b) => a.priority ? 1 : -1);
-        data.sort((a, b) => a.dueDate ? -1 : 1);
       }
 
       // Return data
