@@ -30,11 +30,37 @@ export default function Layout({ children }) {
         *::before,
         *::after {
           box-sizing: border-box;
-        }     
+        }
+
+        /* Dark mode by default */
+        :root {
+          --text-color: #fff;
+          --border-color: #333;
+          --background-color: #121212;
+          --header-color: #1b2129;
+          --element-background: #111;
+          --button-active-background: #333;
+          --link-color: dodgerblue;
+          --nav-text-color: black;
+          --icon-brightness: 1.3;
+        }
+      
+        [data-theme="light"] {
+          --text-color: #333;
+          --border-color: darkgray;
+          --background-color: #fff;
+          --header-color: #333;
+          --element-background: #f8f8f8;
+          --button-active-background: #fff;
+          --link-color: midnightblue;
+          --nav-text-color: #333;
+          --icon-brightness: 1;
+        }      
 
         body {
           margin: 0;
-          color: #333;
+          color: var(--text-color);
+          background-color: var(--background-color);
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
           "Helvetica Neue", Arial, Noto Sans, sans-serif, "Apple Color Emoji",
           "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -63,13 +89,13 @@ export default function Layout({ children }) {
         }
 
         button {
-          background: #f8f8f8;
-          color: #333;
+          background: var(--element-background);
+          color: var(--text-color);
           font-weight: 550;
           padding: 5px;
           border-width: 1px;
           border-style: solid;
-          border-color: darkgray;
+          border-color: var(--border-color);
           border-radius: 5px;
           width: auto;
           transition: filter 0.3s;
@@ -81,7 +107,7 @@ export default function Layout({ children }) {
         }
         
         button:active {
-          background: #ffffff;
+          background: var(--button-active-background);
         }
         
         button:disabled {
@@ -91,6 +117,8 @@ export default function Layout({ children }) {
         }
 
         textarea {
+          background-color: var(--element-background);
+          color: var(--text-color);
           resize: none;
           font-family: inherit;
           font-size: 15px;
@@ -98,6 +126,8 @@ export default function Layout({ children }) {
         }
 
         input, select {
+          background-color: var(--element-background);
+          color: var(--text-color);
           font-family: inherit;
         }
 
@@ -123,7 +153,7 @@ export default function Layout({ children }) {
         }
 
         a, a:visited {
-          color: midnightblue;
+          color: var(--link-color);
         }
         
         a.footer {
@@ -133,9 +163,14 @@ export default function Layout({ children }) {
         a.footer:visited {
           color: gray;
         }
+
+        nav {
+          color: var(--nav-text-color);
+        }
         
         .material-symbols-outlined {
           display: inline-block;
+          filter: brightness(var(--icon-brightness));
           vertical-align: -5px;
           font-size: inherit;
           font-variation-settings:
@@ -158,37 +193,6 @@ export default function Layout({ children }) {
         .error {
           color: brown;
           margin: 1rem 0 0;
-        }
-
-        @media (prefers-color-scheme: dark) {
-          body {
-            color: #fff;
-            background-color: #121212;
-          }
-          header {
-            background-color: #1b2129 !important;
-          }
-          .list-hover, .report-li {
-            background-color: #111 !important;
-            border-color: #333 !important;
-          }
-          .list-inset {
-            border-color: #333 !important;
-            filter: grayscale(0.4) brightness(1.5);
-          }
-          input, button, textarea, select {
-            background-color: #111 !important;
-            color: #fff !important;
-          }
-          nav {
-            color: black !important;
-          }
-          a, a:visited {
-            color: dodgerblue;
-          }
-          .material-symbols-outlined {
-            filter: brightness(1.3);
-          }
         }
       `}</style>
       {process.env.NEXT_PUBLIC_VERCEL_ENV !== "production" && <nav style={{backgroundColor: "orange", textAlign: "center", fontWeight: 600, marginTop: -20 + "px", height: "fit-content", paddingBottom: 0, marginBottom: -16 + "px"}}><p style={{paddingTop: 13 + "px", paddingBottom: 8 + "px"}}>You are viewing a TrackTask Development release, some features may not work properly or may break your account.</p></nav>}

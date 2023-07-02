@@ -75,10 +75,6 @@ export default function TaskEditForm({ errorMessage, onSubmit, task }) {
           width: 15px !important;
           margin-bottom: 10px;
         }
-        .error {
-          color: brown;
-          margin: 1rem 0 0;
-        }
       `}</style>
     </form>
   );

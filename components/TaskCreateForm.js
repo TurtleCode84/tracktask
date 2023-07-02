@@ -10,7 +10,7 @@ export default function TaskCreateForm({ collections, errorMessage, onSubmit }) 
       </label>
       <label>
         <span>Description</span>
-        <textarea name="description" rows="4" cols="30" maxlength="500" required />
+        <textarea name="description" rows="8" cols="30" maxlength="500" required />
       </label><br/>
       <label>
         <span>Due Date (optional)</span>
@@ -52,10 +52,6 @@ export default function TaskCreateForm({ collections, errorMessage, onSubmit }) 
           vertical-align: middle;
           width: 15px !important;
           margin-bottom: 10px;
-        }
-        .error {
-          color: brown;
-          margin: 1rem 0 0;
         }
       `}</style>
     </form>

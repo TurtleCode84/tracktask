@@ -7,7 +7,7 @@ export default function CollectionCreateForm({ verified, errorMessage, onSubmit 
       </label>
       <label>
         <span>Description</span>
-        <textarea name="description" rows="4" cols="30" maxlength="500" required />
+        <textarea name="description" rows="8" cols="30" maxlength="500" required />
       </label>
       {verified && <p style={{ fontStyle: "italic" }}>You will be able to share this collection after you create it.</p>}
 
@@ -36,10 +36,6 @@ export default function CollectionCreateForm({ verified, errorMessage, onSubmit 
           vertical-align: middle;
           width: 15px !important;
           margin-bottom: 10px;
-        }
-        .error {
-          color: brown;
-          margin: 1rem 0 0;
         }
       `}</style>
     </form>
