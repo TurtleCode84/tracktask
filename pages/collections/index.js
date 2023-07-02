@@ -26,9 +26,10 @@ export default function Collections() {
     <Layout>
       <h1>All collections:</h1>
       <Link href="/dashboard">Back to dashboard</Link><br/>
+      {collectionList && collectionList.length === 0 ? <p style={{ fontStyle: "italic" }}>No collections found!</p> : null}
       {collectionList === undefined || allCollectionsError ?
       <>
-      {allCollectionsError ? <p style={{ fontStyle: "italic" }}>{allCollectionsError.data ? allCollectionsError.data.message : allCollectionsError.message}</p> : <p style={{ fontStyle: "italic" }}>Loading collections...</p>}
+      {allCollectionsError ? <p style={{ fontStyle: "italic" }}>{allCollectionsError.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading collections...</p>}
       </>
       :
       <><ul style={{ display: "table" }}>
