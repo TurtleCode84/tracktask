@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Header from "components/Header";
 import Link from "next/link";
+import { useEffect } from "react";
 
 export default function Layout({ children }) {
   var advisory = process.env.NEXT_PUBLIC_ADVISORY;
@@ -8,6 +9,12 @@ export default function Layout({ children }) {
   if (advisory?.split(',')[0] !== "default") {
     advisoryColor = advisory?.split(',')[0];
   }
+  useEffect(() => {
+    var theme;
+    // Get the value from local storage if it exists
+    theme = localStorage.getItem("theme") || "dark"
+  }, [])
+
   return (
     <>
       <Head>
@@ -32,7 +39,8 @@ export default function Layout({ children }) {
           box-sizing: border-box;
         }
 
-        /* Dark mode by default */
+        ${theme !== "light" ? 
+        `/* Dark mode (default) */
         :root {
           --text-color: #fff;
           --border-color: #333;
@@ -44,9 +52,10 @@ export default function Layout({ children }) {
           --nav-text-color: black;
           --icon-brightness: 1.3;
           --input-border-color: #ccc;
-        }
-      
-        [data-theme="light"] {
+        }`
+        :
+        `/* Light mode */
+        :root {
           --text-color: #333;
           --border-color: darkgray;
           --background-color: #fff;
@@ -57,7 +66,8 @@ export default function Layout({ children }) {
           --nav-text-color: #333;
           --icon-brightness: 1;
           ---input-border-color: #ccc;
-        }      
+        }`
+        }
 
         body {
           margin: 0;
