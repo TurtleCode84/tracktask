@@ -51,6 +51,9 @@ export default function TaskCreateForm({ collections, errorMessage, onSubmit }) 
           width: 15px !important;
           margin-bottom: 10px;
         }
+        textarea {
+          border-color: var(--input-border-color);
+        }
       `}</style>
     </form>
   );

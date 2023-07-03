@@ -28,9 +28,9 @@ function MyApp({ Component, pageProps }) {
       }    
     }
   
-    toggleSwitch.addEventListener('change', switchTheme, false);*/
+    toggleSwitch.addEventListener("change", switchTheme, false);*/
   }, [])
-  
+
   return (
     <GoogleReCaptchaProvider
       reCaptchaKey="6LdBzhUiAAAAAGnjMtWaqrFmFAG6gE_yM_LQq_tZ"

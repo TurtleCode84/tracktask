@@ -33,7 +33,7 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
           </ul>
         </details>
       </label>
-      <p style={{ fontStyle: "italic" }}>Preferences coming soon...</p><hr/>
+      <p style={{ fontStyle: "italic" }}>More preferences coming soon...</p><hr/>
 
       <button type="submit" id="editUserBtn">Save account details</button>
 

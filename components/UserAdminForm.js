@@ -103,6 +103,9 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
           width: 15px !important;
           margin-bottom: 10px;
         }
+        textarea {
+          border-color: var(--input-border-color);
+        }
       `}</style>
     </form>
   );

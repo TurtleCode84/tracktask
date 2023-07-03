@@ -58,7 +58,7 @@ export default function Layout({ children }) {
           --link-color: midnightblue;
           --nav-text-color: #333;
           --icon-brightness: 1;
-          ---input-border-color: #ccc;
+          --input-border-color: #ccc;
         }
 
         body {
@@ -159,10 +159,6 @@ export default function Layout({ children }) {
         .list-hover:hover {
           filter: brightness(0.9);
           cursor: pointer;
-        }
-
-        .list-inset {
-          border-color: var(--border-color);
         }
 
         a, a:visited {

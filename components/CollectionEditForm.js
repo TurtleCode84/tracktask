@@ -59,6 +59,9 @@ export default function CollectionEditForm({ verified, errorMessage, onSubmit, c
           width: 15px !important;
           margin-bottom: 10px;
         }
+        textarea {
+          border-color: var(--input-border-color);
+        }
       `}</style>
     </form>
   );
