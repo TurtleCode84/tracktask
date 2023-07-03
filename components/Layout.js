@@ -119,6 +119,8 @@ export default function Layout({ children }) {
         textarea {
           background-color: var(--element-background);
           color: var(--text-color);
+          border: 1px solid #ccc;
+          border-radius: 4px;
           resize: none;
           font-family: inherit;
           font-size: 15px;
@@ -129,6 +131,8 @@ export default function Layout({ children }) {
           background-color: var(--element-background);
           color: var(--text-color);
           font-family: inherit;
+          border: 1px solid #ccc;
+          border-radius: 4px;
         }
 
         summary {
