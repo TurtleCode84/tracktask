@@ -1,8 +1,26 @@
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 export default function UserEditForm({ errorMessage, onSubmit, user }) {
   const router = useRouter();
+  useEffect(() => {
+    const themeDropdown = document.querySelector('.theme-switch select');
+    const currentTheme = localStorage.getItem("theme");
+    if (currentTheme) {
+      themeDropdown.value = currentTheme;
+    } else {
+      themeDropdown.value = "dark";
+    }
+  
+    function switchTheme(e) {
+      document.documentElement.setAttribute("data-theme", e.target.value);
+      localStorage.setItem("theme", e.target.value);
+    }
+  
+    themeDropdown.addEventListener("change", switchTheme, false);
+  }, [])
+
   return (
     <form id="userEditForm" autocomplete="off" onSubmit={onSubmit}>
       <label>
@@ -35,10 +53,9 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
       </label><hr/>
       <label>
         <span>Theme</span>
-        <select name="theme" defaultValue={user.email} >
+        <select class="theme-switch" name="theme" >
           <option value="dark">Dark (default)</option>
-          <option value="light">Light (default)</option>
-          <option value="os">OS preference</option>
+          <option value="light">Light</option>
         </select>
       </label>
       <p style={{ fontStyle: "italic" }}>More preferences coming soon...</p><hr/>
