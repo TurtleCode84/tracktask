@@ -43,6 +43,7 @@ export default function Layout({ children }) {
           --link-color: dodgerblue;
           --nav-text-color: black;
           --icon-brightness: 1.3;
+          --input-border-color: #ccc;
         }
       
         [data-theme="light"] {
@@ -55,6 +56,7 @@ export default function Layout({ children }) {
           --link-color: midnightblue;
           --nav-text-color: #333;
           --icon-brightness: 1;
+          ---input-border-color: #ccc;
         }      
 
         body {
@@ -133,10 +135,6 @@ export default function Layout({ children }) {
           background-color: var(--element-background);
           color: var(--text-color);
           font-family: inherit;
-          border-width: 1px;
-          border-style: solid;
-          border-color: var(--border-color);
-          border-radius: 4px;
         }
 
         summary {

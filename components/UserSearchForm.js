@@ -31,6 +31,9 @@ export default function UserSearchForm({ errorMessage, onSubmit }) {
         input {
           padding: 8px;
           margin: 0.3rem 0 1rem;
+          border-width: 1px;
+          border-style: solid;
+          border-color: var(--input-border-color);
         }
       `}</style>
     </form>
