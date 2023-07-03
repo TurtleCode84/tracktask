@@ -10,9 +10,28 @@ export default function Layout({ children }) {
     advisoryColor = advisory?.split(',')[0];
   }
   useEffect(() => {
-    var theme;
-    // Get the value from local storage if it exists
-    theme = localStorage.getItem("theme") || "dark"
+    const currentTheme = localStorage.getItem("theme");
+    if (currentTheme) {
+      document.documentElement.setAttribute("data-theme", currentTheme);
+      /*if (currentTheme === "dark") {
+          toggleSwitch.checked = true;
+      }*/
+    } else {
+      document.documentElement.setAttribute("data-theme", "dark");
+      localStorage.setItem("theme", "dark");
+    }
+  
+    /*function switchTheme(e) {
+      if (e.target.checked) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          localStorage.setItem('theme', 'dark');
+      }
+      else {        document.documentElement.setAttribute('data-theme', 'light');
+            localStorage.setItem('theme', 'light');
+      }    
+    }
+  
+    toggleSwitch.addEventListener('change', switchTheme, false);*/
   }, [])
 
   return (
@@ -39,8 +58,7 @@ export default function Layout({ children }) {
           box-sizing: border-box;
         }
 
-        ${theme !== "light" ? 
-        `/* Dark mode (default) */
+        /* Dark mode (default) */
         :root {
           --text-color: #fff;
           --border-color: #333;
@@ -52,10 +70,10 @@ export default function Layout({ children }) {
           --nav-text-color: black;
           --icon-brightness: 1.3;
           --input-border-color: #ccc;
-        }`
-        :
-        `/* Light mode */
-        :root {
+        }
+        
+        /* Light mode */
+        [data-theme="light"] {
           --text-color: #333;
           --border-color: darkgray;
           --background-color: #fff;
@@ -66,7 +84,6 @@ export default function Layout({ children }) {
           --nav-text-color: #333;
           --icon-brightness: 1;
           ---input-border-color: #ccc;
-        }`
         }
 
         body {
