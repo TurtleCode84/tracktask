@@ -14,8 +14,8 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
     }
   
     function switchTheme(e) {
-      document.documentElement.setAttribute("data-theme", e.target.value);
-      localStorage.setItem("theme", e.target.value);
+      document.documentElement.setAttribute("data-theme", e.value);
+      localStorage.setItem("theme", e.value);
     }
   
     themeDropdown.addEventListener("change", switchTheme, false);
@@ -91,7 +91,7 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
         label > span {
           font-weight: 600;
         }
-        input {
+        input, select {
           padding: 8px;
           margin: 0.3rem 0 1rem;
           max-width: 400px;
