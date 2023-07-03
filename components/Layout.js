@@ -35,7 +35,7 @@ export default function Layout({ children }) {
         /* Dark mode by default */
         :root {
           --text-color: #fff;
-          --border-color: #ccc;
+          --border-color: #333;
           --background-color: #121212;
           --header-color: #1b2129;
           --element-background: #111;
