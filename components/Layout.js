@@ -161,6 +161,10 @@ export default function Layout({ children }) {
           cursor: pointer;
         }
 
+        .list-inset {
+          border-color: var(--border-color);
+        }
+
         a, a:visited {
           color: var(--link-color);
         }
