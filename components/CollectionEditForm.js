@@ -51,9 +51,6 @@ export default function CollectionEditForm({ verified, errorMessage, onSubmit, c
         input {
           padding: 8px;
           margin: 0.3rem 0 1rem;
-          border-width: 1px;
-          border-style: solid;
-          border-color: var(--input-border-color);
           max-width: 400px;
         }
         input[type="checkbox"] {

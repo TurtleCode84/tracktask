@@ -97,7 +97,7 @@ export default function Layout({ children }) {
           padding: 5px;
           border-width: 1px;
           border-style: solid;
-          border-color: var(--border-color);
+          border-color: var(--input-border-color);
           border-radius: 5px;
           width: auto;
           transition: filter 0.3s;
@@ -121,9 +121,6 @@ export default function Layout({ children }) {
         textarea {
           background-color: var(--element-background);
           color: var(--text-color);
-          /*border-width: 1px;
-          border-style: solid;
-          border-color: #333;*/
           border-radius: 4px;
           resize: none;
           font-family: inherit;
@@ -135,6 +132,10 @@ export default function Layout({ children }) {
           background-color: var(--element-background);
           color: var(--text-color);
           font-family: inherit;
+          border-width: 1px;
+          border-style: solid;
+          border-color: var(--input-border-color);
+          border-radius: 4px;
         }
 
         summary {
