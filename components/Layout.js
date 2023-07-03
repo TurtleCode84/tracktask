@@ -1,7 +1,6 @@
 import Head from "next/head";
 import Header from "components/Header";
 import Link from "next/link";
-import { useEffect } from "react";
 
 export default function Layout({ children }) {
   var advisory = process.env.NEXT_PUBLIC_ADVISORY;
@@ -9,30 +8,6 @@ export default function Layout({ children }) {
   if (advisory?.split(',')[0] !== "default") {
     advisoryColor = advisory?.split(',')[0];
   }
-  useEffect(() => {
-    const currentTheme = localStorage.getItem("theme");
-    if (currentTheme) {
-      document.documentElement.setAttribute("data-theme", currentTheme);
-      /*if (currentTheme === "dark") {
-          toggleSwitch.checked = true;
-      }*/
-    } else {
-      document.documentElement.setAttribute("data-theme", "dark");
-      localStorage.setItem("theme", "dark");
-    }
-  
-    /*function switchTheme(e) {
-      if (e.target.checked) {
-          document.documentElement.setAttribute('data-theme', 'dark');
-          localStorage.setItem('theme', 'dark');
-      }
-      else {        document.documentElement.setAttribute('data-theme', 'light');
-            localStorage.setItem('theme', 'light');
-      }    
-    }
-  
-    toggleSwitch.addEventListener('change', switchTheme, false);*/
-  }, [])
 
   return (
     <>
