@@ -17,6 +17,7 @@ export default function Layout({ children }) {
         <meta name="description" content="Create, share, and keep track of tasks in a collaboratively organized way." />
         <meta name="image" content="https://tracktask.eu.org/tracktaskmini.png" />
         <meta name="author" content="TurtleCode84" />
+        <meta property="og:site_name" content="TrackTask" />
         <meta property="og:title" content="TrackTask - Shareable Task Management" />
         <meta property="og:description" content="Create, share, and keep track of tasks in a collaboratively organized way." />
         <meta property="og:image" content="https://tracktask.eu.org/tracktaskmini.png" />

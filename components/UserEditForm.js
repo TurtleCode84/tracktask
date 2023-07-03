@@ -32,6 +32,14 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
             <li>api.wasteof.money</li>
           </ul>
         </details>
+      </label><hr/>
+      <label>
+        <span>Theme</span>
+        <select name="theme" defaultValue={user.email} >
+          <option value="dark">Dark (default)</option>
+          <option value="light">Light (default)</option>
+          <option value="os">OS preference</option>
+        </select>
       </label>
       <p style={{ fontStyle: "italic" }}>More preferences coming soon...</p><hr/>
 
