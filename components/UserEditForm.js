@@ -8,9 +8,9 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
     const themeDropdown = document.getElementById("theme-dropdown");
     const currentTheme = localStorage.getItem("theme");
     if (currentTheme) {
-      themeDropdown?.value = currentTheme;
+      themeDropdown.value = currentTheme;
     } else {
-      themeDropdown?.value = "dark";
+      themeDropdown.value = "dark";
     }
   
     function switchTheme(e) {
