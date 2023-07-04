@@ -5,12 +5,12 @@ import { useEffect } from "react";
 export default function UserEditForm({ errorMessage, onSubmit, user }) {
   const router = useRouter();
   useEffect(() => {
-    const themeDropdown = document.querySelector('.theme-switch select');
+    const themeDropdown = document.getElementById("theme-dropdown");
     const currentTheme = localStorage.getItem("theme");
     if (currentTheme) {
-      themeDropdown.value = currentTheme;
+      themeDropdown?.value = currentTheme;
     } else {
-      themeDropdown.value = "dark";
+      themeDropdown?.value = "dark";
     }
   
     function switchTheme(e) {
@@ -53,7 +53,7 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
       </label><hr/>
       <label>
         <span>Theme</span>
-        <select class="theme-switch" name="theme" >
+        <select id="theme-dropdown" name="theme" >
           <option value="dark">Dark (default)</option>
           <option value="light">Light</option>
         </select>
