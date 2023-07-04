@@ -14,8 +14,8 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
     }
   
     function switchTheme(e) {
-      document.documentElement.setAttribute("data-theme", e.value);
-      localStorage.setItem("theme", e.value);
+      document.documentElement.setAttribute("data-theme", e.currentTarget.value);
+      localStorage.setItem("theme", e.currentTarget.value);
     }
   
     themeDropdown.addEventListener("change", switchTheme, false);
