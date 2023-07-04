@@ -46,6 +46,7 @@ export default function Layout({ children }) {
           --nav-text-color: black;
           --icon-brightness: 1.3;
           --input-border-color: #ccc;
+          --inset-border-color: var(--border-color);
         }
         
         /* Light mode */
@@ -60,6 +61,7 @@ export default function Layout({ children }) {
           --nav-text-color: #333;
           --icon-brightness: 1;
           --input-border-color: #ccc;
+          --inset-border-color: #777;
         }
 
         body {
