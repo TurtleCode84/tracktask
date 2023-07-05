@@ -19,10 +19,6 @@ export default function CollectionShare() {
   const { data: collection, error } = useData(user, "collections", collectionId, false);
   
   const [errorMsg, setErrorMsg] = useState("");
-  var clientError;
-  /*if (collections && !collection) {
-    clientError = "No collection found";
-  }*/
   const sharedWithList = collection?.sharing.sharedWith.map((item) =>
     <li key={item.id}><User user={user} id={item.id}/></li>
   );
@@ -54,7 +50,7 @@ export default function CollectionShare() {
           };
 
           try {
-            const getUrl = await fetchJson(`/api/tasks?id=${collection._id}`, {
+            const getUrl = await fetchJson(`/api/collections/${collection._id}`, {
               method: "PUT",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(body),
@@ -72,7 +68,7 @@ export default function CollectionShare() {
       />
       </>
       :
-        <>{error || clientError ? <p>{clientError ? clientError : error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading collection...</p>}</>
+        <>{error ? <p>{error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading collection...</p>}</>
       }
     </Layout>
   );
