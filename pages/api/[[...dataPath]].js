@@ -242,6 +242,8 @@ async function dataRoute(req, res) {
 
     } else if (req.method === 'PATCH') { // Updates a task
 
+      // Still need to add ability for shared users to mark as completed
+
       // Make sure there is a valid task ID to update
       if (!ObjectId.isValid(dataPath[1])) {
         res.status(422).json({ message: "Invalid task ID" });
@@ -285,7 +287,7 @@ async function dataRoute(req, res) {
         const updatedTask = await db.collection("tasks").updateOne(query, updateDoc);
         res.json(updatedTask);
       } catch (error) {
-        res.status(500).json(error);
+        res.status(500).json({ message: error.message });
         return;
       }
 
