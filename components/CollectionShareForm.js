@@ -29,7 +29,7 @@ export default function CollectionShareForm({ errorMessage, onSubmit }) {
         label > span {
           font-weight: 600;
         }
-        input {
+        input, select {
           padding: 8px;
           margin: 0.3rem 0 1rem;
           max-width: 400px;
