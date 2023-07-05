@@ -20,6 +20,7 @@ export default function Task() {
   const router = useRouter();
   const { taskId } = router.query;
   const { data: task, error: taskError } = useData(user, "tasks", taskId, false);
+  const { data: collections, error: collectionsError } = useData(user, "collections", false, false);
   
   const [errorMsg, setErrorMsg] = useState("");
   var roles = ["none", "viewer", "collaborator", "contributor", "owner"]
