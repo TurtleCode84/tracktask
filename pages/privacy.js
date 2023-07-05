@@ -21,7 +21,7 @@ export default function Privacy() {
       </ul>
       <p>The above information is collected to allow the site to function correctly & securely, and so our development team can provide fixes and new features for TrackTask users. For questions and concerns related to your privacy on TrackTask, please contact the email linked below.</p>
       <h3>We legally cannot collect information from users under 13 years of age without parental consent, if you are a user or parent of a user under 13, please contact <a href="mailto:privacy@tracktask.eu.org">privacy@tracktask.eu.org</a> to have your information removed.</h3>
-      <p style="font-style: italic">This page was last updated 7/5/23.</p>
+      <p style={{ fontStyle: "italic" }}>This page was last updated 7/5/23.</p>
 
       <style jsx>{`
         li {
