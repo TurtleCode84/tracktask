@@ -22,24 +22,17 @@ export default function Task() {
   const { data: task, error: taskError } = useData(user, "tasks", taskId, false);
   
   const [errorMsg, setErrorMsg] = useState("");
-  // Temporary
-  var canEdit = true;
-  var canComplete = true;
-  /*if (!task) {
-    canEdit = false;
-    canComplete = false;
-    const collection = collections?.find(item => item.tasks?.some((element) => element._id === taskId));
-    canEdit = collection?.sharing?.sharedWith?.some((element) => element.id === user?.id && element.role === "editor");
-    canComplete = collection?.sharing?.sharedWith?.some((element) => element.id === user?.id && element.role === "collaborator");
-    if (!canComplete) {
-      canComplete = canEdit
+  var roles = ["none", "viewer", "collaborator", "contributor", "owner"]
+  var perms = 0;
+  if (user.id === task?.owner) {
+    perms = 4;
+  } else {
+    for (var i=0; i<task?.collections.length; i++) {
+      if (roles.indexOf(task?.collections[i].role) > perms) {
+        perms = roles.indexOf(task?.collections[i].role)
+      }
     }
-    task = collection?.tasks.filter(item => item._id === taskId)?.[0];
-  }*/
-  var clientError;
-  /*if (tasks && !task) {
-    clientError = "Task not found!";
-  }*/
+  }
     
   if (!user || !user.isLoggedIn || user.permissions.banned) {
     return (
@@ -61,7 +54,7 @@ export default function Task() {
         {user.permissions.verified && <p>Completed by: <User user={user} id={task.completion.completedBy}/></p>}
         </>
         :
-        <>{canComplete && <><a href={`/api/tasks/${task._id}`}
+        <>{perms >= 2 && <><a href={`/api/tasks/${task._id}`}
         onClick={async (e) => {
           e.preventDefault();
           document.getElementById("markCompleteBtn").disabled = true;
@@ -90,7 +83,7 @@ export default function Task() {
         }}
         ><button id="markCompleteBtn">Mark completed <span style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">task_alt</span></button></a></>}</>}
         <hr/>
-        {canEdit && <><details>
+        {perms >= 4 && <><details>
           <summary>Edit task</summary>
           <br/><TaskEditForm
             errorMessage={errorMsg}
@@ -141,7 +134,7 @@ export default function Task() {
             }}
         />
         </details></>}
-        {/*user.id === task.owner && <><br/><details>
+        {perms >= 4 && <><br/><details>
           <summary>Add/remove from collection</summary>
           <br/><AddRemoveCollectionForm
             errorMessage={errorMsg}
@@ -156,12 +149,14 @@ export default function Task() {
               const removedCollections = event.currentTarget.removeCollections.selectedOptions;
               const removedCollectionsValues = Array.from(removedCollections)?.map((item) => item.value);
               
-              const body = {};
+              const body = {
+                taskId: task._id,
+              };
               if (addedCollectionsValues.length > 0) {body.addCollections = addedCollectionsValues};
               if (removedCollectionsValues.length > 0) {body.removeCollections = removedCollectionsValues};
                             
               try {
-                await fetchJson(`/api/collections/${task._id}`, {
+                await fetchJson(`/api/collections`, {
                   method: "PATCH",
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify(body),
@@ -177,10 +172,10 @@ export default function Task() {
               }
             }}
           />
-        </details></>*/}
-        {task.owner !== user.id && <><br/><ReportButton user={user} type="task" reported={task}/></>}</>
+        </details></>}
+        {perms < 4 && <><br/><ReportButton user={user} type="task" reported={task}/></>}</>
       :
-        <>{taskError || clientError ? <p>{clientError ? clientError : taskError.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading task...</p>}</>
+        <>{taskError ? <p>{taskError.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading task...</p>}</>
       }
     </Layout>
   );

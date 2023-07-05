@@ -1,8 +1,8 @@
 export default function addRemoveCollectionForm({ errorMessage, onSubmit, collections, taskId }) {
-  const addCollections = collections?.filter(collection => !collection.tasks?.some((element) => element._id === taskId) && collection.sharing?.role === "owner").map((collection) =>
+  const addCollections = collections?.filter(collection => !collection.tasks?.some((element) => element._id === taskId) && (collection.sharing?.role === "owner" || collection.sharing?.role === "contributor")).map((collection) =>
     <option key={collection._id} value={collection._id}>{collection.name}</option>
   );
-  const removeCollections = collections?.filter(collection => collection.tasks?.some((element) => element._id === taskId) && collection.sharing?.role === "owner").map((collection) =>
+  const removeCollections = collections?.filter(collection => collection.tasks?.some((element) => element._id === taskId) && (collection.sharing?.role === "owner" || collection.sharing?.role === "contributor")).map((collection) =>
     <option key={collection._id} value={collection._id}>{collection.name}</option>
   );
   return (

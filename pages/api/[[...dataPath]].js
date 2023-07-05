@@ -132,6 +132,7 @@ async function dataRoute(req, res) {
                   }
                 }
                 const collectionInfo = {
+                  _id: allCollections[j]._id,
                   name: allCollections[j].name,
                   role: collectionRole,
                 };
