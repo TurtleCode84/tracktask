@@ -24,7 +24,7 @@ export default function Task() {
   const [errorMsg, setErrorMsg] = useState("");
   var roles = ["none", "viewer", "collaborator", "contributor", "owner"]
   var perms = 0;
-  if (user.id === task?.owner) {
+  if (user?.id === task?.owner) {
     perms = 4;
   } else {
     for (var i=0; i<task?.collections.length; i++) {
