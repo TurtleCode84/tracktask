@@ -84,7 +84,7 @@ export default function Task() {
         }}
         ><button id="markCompleteBtn">Mark completed <span style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">task_alt</span></button></a></>}</>}
         <hr/>
-        {perms >= 3 && <><details>
+        {perms >= 4 && <><details>
           <summary>Edit task</summary>
           <br/><TaskEditForm
             errorMessage={errorMsg}
