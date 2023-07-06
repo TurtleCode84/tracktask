@@ -701,7 +701,6 @@ async function dataRoute(req, res) {
       return;
     }
   } else {
-    res.status(405).json({ message: "Method not allowed" });
-    return;
+
   }*/
 }
