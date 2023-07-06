@@ -251,40 +251,84 @@ async function dataRoute(req, res) {
       }
 
       const body = await req.body;
-      const canCompleteQuery = {
-        hidden: false,
-        $or: [
-          { owner: new ObjectId(user.id) },
-          { 'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user.id), role: {$not: /pending/i}}} }, // Need to add regex to exclude pending collections
-        ],
+      const taskInCollabCollectionQuery = { // Find a collection
+        hidden: false, // that is not hidden
+        'sharing.shared': true, // is shared
+        'sharing.sharedWith': { // properly with me
+          $elemMatch: {
+            id: new ObjectId(user.id), // (meaning that I am in the sharing list
+            $and: [
+              {role: {$not: /pending/i}}, // not pending
+              {$or: [
+                {role: "collaborator"}, // and am a collab or contrib)
+                {role: "contributor"},
+              ]},
+            ],
+          }
+        },
+        tasks: new ObjectId(dataPath[1]), // and contains the task
       };
-      const editQuery = {
+      const ownTaskQuery = {
         _id: new ObjectId(dataPath[1]),
         hidden: false,
         owner: new ObjectId(user.id),
       };
+      const taskQuery = { // Dangerous!
+        _id: new ObjectId(dataPath[1]),
+        hidden: false,
+      };
       var updateDoc = {};
 
-      if (body.name) {updateDoc.name = body.name.trim().slice(0, 55)} // Enforce length limit
-      if (body.description) {updateDoc.description = body.description.trim().slice(0, 500)}
-      if (body.dueDate !== undefined) {
-        if (body.dueDate) {
-          updateDoc.dueDate = moment(body.dueDate).unix();
+      // Check if proper perms are present
+      var perms;
+      const isOwnTask = await db.collection("tasks").countDocuments(ownTaskQuery);
+      if (isOwnTask < 1) {
+        const isCollabTask = await db.collection("collections").countDocuments(taskInCollabCollectionQuery);
+        if (isCollabTask < 1) {
+          res.status(403).json({ message: "You do not have permission to edit this task!" });
+          return;
         } else {
-          updateDoc.dueDate = 0;
+          perms = "complete"
         }
+      } else {
+        perms = "edit"
       }
-      if (body.priority !== undefined) {updateDoc.priority = body.priority}
-      if (body.completion) {
-        updateDoc.completion = {};
-        updateDoc.completion.completed = body.completion.completed;
-        updateDoc.completion.completedBy = body.completion.completedBy;
+
+      if (perms = "complete") {
+
+        if (body.completion) {
+          updateDoc.completion = {};
+          updateDoc.completion.completed = body.completion.completed;
+          updateDoc.completion.completedBy = body.completion.completedBy;
+        }
+
+      } else if (perms = "edit") {
+
+        if (body.name) {updateDoc.name = body.name.trim().slice(0, 55)} // Enforce length limit
+        if (body.description) {updateDoc.description = body.description.trim().slice(0, 500)}
+        if (body.dueDate !== undefined) {
+          if (body.dueDate) {
+            updateDoc.dueDate = moment(body.dueDate).unix();
+          } else {
+            updateDoc.dueDate = 0;
+          }
+        }
+        if (body.priority !== undefined) {updateDoc.priority = body.priority}
+        if (body.completion) {
+          updateDoc.completion = {};
+          updateDoc.completion.completed = body.completion.completed;
+          updateDoc.completion.completedBy = body.completion.completedBy;
+        }
+
+      } else {
+        res.status(403).json({ message: "Permissions error" }); // This should not happen
+        return;
       }
       updateDoc = {
         $set: updateDoc,
       }
       try {
-        const updatedTask = await db.collection("tasks").updateOne(query, updateDoc);
+        const updatedTask = await db.collection("tasks").updateOne(taskQuery, updateDoc); // Dangerous!
         res.json(updatedTask);
       } catch (error) {
         res.status(500).json({ message: error.message });
