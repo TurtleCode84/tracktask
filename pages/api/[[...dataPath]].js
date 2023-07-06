@@ -242,8 +242,6 @@ async function dataRoute(req, res) {
 
     } else if (req.method === 'PATCH') { // Updates a task
 
-      // Still need to add ability for shared users to mark as completed
-
       // Make sure there is a valid task ID to update
       if (!ObjectId.isValid(dataPath[1])) {
         res.status(422).json({ message: "Invalid task ID" });
@@ -251,22 +249,22 @@ async function dataRoute(req, res) {
       }
 
       const body = await req.body;
-      const taskInCollabCollectionQuery = { // Find a collection
-        hidden: false, // that is not hidden
-        'sharing.shared': true, // is shared
-        'sharing.sharedWith': { // properly with me
+      const taskInCollabCollectionQuery = {
+        hidden: false,
+        'sharing.shared': true,
+        'sharing.sharedWith': {
           $elemMatch: {
-            id: new ObjectId(user.id), // (meaning that I am in the sharing list
+            id: new ObjectId(user.id),
             $and: [
-              {role: {$not: /pending/i}}, // not pending
+              {role: {$not: /pending/i}},
               {$or: [
-                {role: "collaborator"}, // and am a collab or contrib)
+                {role: "collaborator"},
                 {role: "contributor"},
               ]},
             ],
           }
         },
-        tasks: new ObjectId(dataPath[1]), // and contains the task
+        tasks: new ObjectId(dataPath[1]),
       };
       const ownTaskQuery = {
         _id: new ObjectId(dataPath[1]),
