@@ -21,7 +21,7 @@
     "react-google-recaptcha-v3": "^1.10.0"
   },
   "devDependencies": {
-    "eslint": "8.43.0",
+    "eslint": "8.45.0",
     "eslint-config-next": "13.4.7"
   }
 }
