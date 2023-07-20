@@ -1,9 +1,12 @@
 import { SWRConfig } from "swr";
 import fetchJson from "lib/fetchJson";
+import urlBase64ToUint8Array from "lib/urlBase64ToUint8Array";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import { useEffect } from "react";
 
 function MyApp({ Component, pageProps }) {
+  const vapidKey = urlBase64ToUint8Array("BCzvkm2UtPKfiL0AdAY2pCKBAIRmcnYHn9omjbufYuNf2-RxxkJD-L0fTO9w9yCwaw6kGjajItmqQaX_GillRKA");
+
   useEffect(() => {
     const currentTheme = localStorage.getItem("theme");
     if (currentTheme) {
@@ -16,21 +19,15 @@ function MyApp({ Component, pageProps }) {
 
   useEffect(() => {
     if("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("/notifications.js").then(
-        (registration) =>
+      navigator.serviceWorker.register("/notifications.js");
+
+      navigator.serviceWorker.ready.then(
+        (registration) => {
         registration.pushManager.subscribe({
           userVisibleOnly: true,
-          applicationServerKey: "not really a key lol",
-        })     
-      );
-      navigator.serviceWorker.ready.then(
-        (serviceWorker) => {
-        serviceWorker.waitUntil(
-          serviceWorker.showNotification('TrackTask', {
-            body: "Hello, world!",
-            icon: "/tracktaskmini.png",
-          })
-        );
+          applicationServerKey: vapidKey,
+        })
+        console.log(registration);
       });
     } else {
       console.log("Service Workers are not supported");
