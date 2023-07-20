@@ -13,6 +13,7 @@ self.addEventListener("push", (event) => {
   event.waitUntil(
     self.registration.showNotification('TrackTask', {
       body: payload,
+      icon: "/tracktaskmini.png",
     })
   );
 });

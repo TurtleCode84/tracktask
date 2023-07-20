@@ -16,13 +16,20 @@ function MyApp({ Component, pageProps }) {
 
   useEffect(() => {
     if("serviceWorker" in navigator) {
-      window.addEventListener("load", function () {
-        navigator.serviceWorker.register("/notifications.js").then(
-          (registration) =>
-          registration.pushManager.subscribe({
-            userVisibleOnly: true,
-            applicationServerKey: "not really a key lol",
-          })     
+      navigator.serviceWorker.register("/notifications.js").then(
+        (registration) =>
+        registration.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: "not really a key lol",
+        })     
+      );
+      navigator.serviceWorker.ready.then(
+        (serviceWorker) => {
+        serviceWorker.waitUntil(
+          serviceWorker.showNotification('TrackTask', {
+            body: "Hello, world!",
+            icon: "/tracktaskmini.png",
+          })
         );
       });
     } else {
