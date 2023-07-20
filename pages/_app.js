@@ -26,8 +26,12 @@ function MyApp({ Component, pageProps }) {
         registration.pushManager.subscribe({
           userVisibleOnly: true,
           applicationServerKey: vapidKey,
-        })
-        console.log(JSON.stringify(registration));
+        }).then((pushSubscription) => {
+          console.log(
+            'Received PushSubscription: ',
+            JSON.stringify(pushSubscription),
+          )
+        });  
       });
     } else {
       console.log("Service Workers are not supported");
