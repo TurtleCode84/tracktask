@@ -21,7 +21,7 @@ function MyApp({ Component, pageProps }) {
           (registration) =>
           registration.pushManager.subscribe({
             userVisibleOnly: true,
-            applicationServerKey,
+            applicationServerKey: "not really a key lol",
           })     
         );
       });
