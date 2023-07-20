@@ -5,7 +5,7 @@ import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import { useEffect } from "react";
 
 function MyApp({ Component, pageProps }) {
-  const vapidKey = urlBase64ToUint8Array("BCzvkm2UtPKfiL0AdAY2pCKBAIRmcnYHn9omjbufYuNf2-RxxkJD-L0fTO9w9yCwaw6kGjajItmqQaX_GillRKA");
+  const vapidKey = urlBase64ToUint8Array("BA8NKRSdID4uU7rW-ALT2emBCdhnopbkOig-HI9wUjKcHTIWnmCcpVfpPdhV-P576TaV3rLZ_35IJF2iV29E9mM");
 
   useEffect(() => {
     const currentTheme = localStorage.getItem("theme");
