@@ -14,6 +14,23 @@ function MyApp({ Component, pageProps }) {
     }
   }, [])
 
+  useEffect(() => {
+    if("serviceWorker" in navigator) {
+      window.addEventListener("load", function () {
+       navigator.serviceWorker.register("/notifications.js").then(
+          function (registration) {
+            console.log("Service Worker registration successful with scope: ", registration.scope);
+          },
+          function (err) {
+            console.log("Service Worker registration failed: ", err);
+          }
+        );
+      });
+    } else {
+      console.log("Service Workers are not supported");
+    }
+  }, [])
+
   return (
     <GoogleReCaptchaProvider
       reCaptchaKey="6LdBzhUiAAAAAGnjMtWaqrFmFAG6gE_yM_LQq_tZ"
