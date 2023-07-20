@@ -27,7 +27,7 @@ function MyApp({ Component, pageProps }) {
           userVisibleOnly: true,
           applicationServerKey: vapidKey,
         })
-        console.log(registration);
+        console.log(JSON.stringify(registration));
       });
     } else {
       console.log("Service Workers are not supported");
