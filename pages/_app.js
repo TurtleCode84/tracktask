@@ -17,13 +17,12 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     if("serviceWorker" in navigator) {
       window.addEventListener("load", function () {
-       navigator.serviceWorker.register("/notifications.js").then(
-          function (registration) {
-            console.log("Service Worker registration successful with scope: ", registration.scope);
-          },
-          function (err) {
-            console.log("Service Worker registration failed: ", err);
-          }
+        navigator.serviceWorker.register("/notifications.js").then(
+          (registration) =>
+          registration.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey,
+          })     
         );
       });
     } else {
