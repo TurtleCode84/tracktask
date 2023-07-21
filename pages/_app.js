@@ -33,6 +33,10 @@ function MyApp({ Component, pageProps }) {
           }).then((pushSubscription) => {
             console.log("Received PushSubscription: ", JSON.stringify(pushSubscription));
           });
+          registration.showNotification('TrackTask', {
+            body: "You have enabled push notifications!",
+            icon: "/tracktaskmini.png",
+          })
         });
         //localStorage.setItem("notifications", "enabled");
         alert("push notif enabled");
