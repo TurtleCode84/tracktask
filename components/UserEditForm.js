@@ -6,19 +6,31 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
   const router = useRouter();
   useEffect(() => {
     const themeDropdown = document.getElementById("theme-dropdown");
+    const notificationsDropdown = document.getElementById("notifications-dropdown");
     const currentTheme = localStorage.getItem("theme");
+    const currentNotifications = localStorage.getItem("pushNotifications");
     if (currentTheme) {
       themeDropdown.value = currentTheme;
     } else {
       themeDropdown.value = "dark";
+    }
+    if (currentNotifications) {
+      notificationsDropdown.value = currentNotifications;
+    } else {
+      notificationsDropdown.value = "disabled";
     }
   
     function switchTheme(e) {
       document.documentElement.setAttribute("data-theme", e.currentTarget.value);
       localStorage.setItem("theme", e.currentTarget.value);
     }
+    function toggleNotifications(e) {
+      localStorage.setItem("pushNotifications", e.currentTarget.value);
+      router.reload();
+    }
   
     themeDropdown.addEventListener("change", switchTheme, false);
+    notificationsDropdown.addEventListener("change", toggleNotifications, false);
   }, [])
 
   return (
@@ -56,6 +68,13 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
         <select id="theme-dropdown" name="theme" >
           <option value="dark">Dark (default)</option>
           <option value="light">Light</option>
+        </select>
+      </label>
+      <label>
+        <span>Push Notifications (beta)</span>
+        <select id="notifications-dropdown" name="notifications" >
+          <option value="disabled">Disabled (default)</option>
+          <option value="enabled">Enabled</option>
         </select>
       </label>
       <p style={{ fontStyle: "italic" }}>More preferences coming soon...</p><hr/>
