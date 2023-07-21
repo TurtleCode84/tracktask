@@ -34,7 +34,7 @@ function MyApp({ Component, pageProps }) {
             console.log("Received PushSubscription: ", JSON.stringify(pushSubscription));
           });
         });
-        localStorage.setItem("notifications", "enabled");
+        //localStorage.setItem("notifications", "enabled");
         alert("push notif enabled");
       } else {
         localStorage.setItem("notifications", "disabled");
