@@ -25,7 +25,6 @@ function MyApp({ Component, pageProps }) {
         if (Notification.permission !== "denied") {
           // We need to ask the user for permission
           Notification.requestPermission().then((permission) => {
-            // If the user accepts, let's create a notification
             if (permission !== "granted") {
               localStorage.setItem("notifications", "disable");
               alert("You've blocked notifications, so push notifications cannot be enabled.");
