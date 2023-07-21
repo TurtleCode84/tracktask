@@ -20,6 +20,7 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     const pushNotifications = localStorage.getItem("notifications");
     if (pushNotifications === "enable") {
+      alert("push notif enabling");
       if("serviceWorker" in navigator) {
         // In the future, request notification permission as well!
         navigator.serviceWorker.register("/notifications.js");
@@ -40,6 +41,7 @@ function MyApp({ Component, pageProps }) {
         alert("Unfortunately, Service Workers are not supported by your browser, so notifications could not be enabled.");
       }
     } else if (pushNotifications === "disable") {
+      alert("push notif disabling");
       navigator.serviceWorker.getRegistrations().then(function(registrations) {
         for(let registration of registrations) {
           registration.unregister();
