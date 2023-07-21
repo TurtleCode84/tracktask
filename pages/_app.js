@@ -36,8 +36,12 @@ function MyApp({ Component, pageProps }) {
       } else {
         console.log("Service Workers are not supported");
       }
-    } else if (!pushNotifications) {
-      localStorage.setItem("notifications", "disabled");
+    } else {
+      if (pushNotifications) {
+        navigator.serviceWorker.unregister();
+      } else {
+        localStorage.setItem("notifications", "disabled");
+      }
     }
   }, [])
 
