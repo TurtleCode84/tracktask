@@ -20,7 +20,6 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     const pushNotifications = localStorage.getItem("notifications");
     if (pushNotifications === "enable") {
-      alert("push notif enabling");
       if("serviceWorker" in navigator && "Notification" in window) {
         
         if (Notification.permission !== "denied") {
@@ -28,7 +27,8 @@ function MyApp({ Component, pageProps }) {
           Notification.requestPermission().then((permission) => {
             // If the user accepts, let's create a notification
             if (permission !== "granted") {
-              // it won't work
+              localStorage.setItem("notifications", "disable");
+              alert("You've blocked notifications, so push notifications cannot be enabled.");
             }
           });
         }      
@@ -49,13 +49,11 @@ function MyApp({ Component, pageProps }) {
           })
         });
         localStorage.setItem("notifications", "enabled");
-        alert("push notif enabled");
       } else {
         localStorage.setItem("notifications", "disabled");
         alert("Unfortunately, push notifications are not supported by your browser, so they could not be enabled.");
       }
     } else if (pushNotifications === "disable") {
-      alert("push notif disabling");
       navigator.serviceWorker.getRegistrations().then(function(registrations) {
         for(let registration of registrations) {
           registration.unregister();
@@ -64,7 +62,6 @@ function MyApp({ Component, pageProps }) {
       localStorage.setItem("notifications", "disabled");
     } else if (!pushNotifications) {
       localStorage.setItem("notifications", "disabled");
-      alert("push notif initialized");
     }
   }, [])
 
