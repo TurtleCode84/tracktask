@@ -5,9 +5,14 @@ self.addEventListener("install", (event) => {
 self.addEventListener("activate", (event) => {
   console.log("I am now activated");
   event.waitUntil(
-    self.registration.showNotification('TrackTask', {
-        body: "You have enabled push notifications!",
-        icon: "/tracktaskmini.png",
+    Notification.requestPermission().then((permission) => {
+      // If the user accepts, create a notification
+      if (permission === "granted") {
+        self.registration.showNotification('TrackTask', {
+            body: "You have enabled push notifications!",
+            icon: "/tracktaskmini.png",
+        })
+      }
     })
   );
 });
