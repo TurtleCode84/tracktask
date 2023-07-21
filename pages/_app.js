@@ -19,7 +19,7 @@ function MyApp({ Component, pageProps }) {
 
   useEffect(() => {
     const pushNotifications = localStorage.getItem("notifications");
-    if (pushNotifications === "enabled") {
+    if (pushNotifications === "enable") {
       if("serviceWorker" in navigator) {
         // In the future, request notification permission as well!
         navigator.serviceWorker.register("/notifications.js");
@@ -33,19 +33,22 @@ function MyApp({ Component, pageProps }) {
             console.log("Received PushSubscription: ", JSON.stringify(pushSubscription));
           });
         });
+        localStorage.setItem("notifications", "enabled");
+        alert("push notif enabled");
       } else {
         localStorage.setItem("notifications", "disabled");
         alert("Unfortunately, Service Workers are not supported by your browser, so notifications could not be enabled.");
       }
-    } else {
-      if (pushNotifications !== "disabled") {
-        localStorage.setItem("notifications", "disabled");
-      }
+    } else if (pushNotifications === "disable") {
       navigator.serviceWorker.getRegistrations().then(function(registrations) {
         for(let registration of registrations) {
           registration.unregister();
         } 
       });
+      localStorage.setItem("notifications", "disabled");
+    } else if (!pushNotifications) {
+      localStorage.setItem("notifications", "disabled");
+      alert("push notif initialized");
     }
   }, [])
 

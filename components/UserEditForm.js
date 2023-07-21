@@ -73,8 +73,8 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
       <label>
         <span>Push Notifications (beta)</span>
         <select id="notifications-dropdown" name="notifications" >
-          <option value="disabled">Disabled (default)</option>
-          <option value="enabled">Enabled</option>
+          <option value="disable">Disabled (default)</option>
+          <option value="enable">Enabled</option>
         </select>
       </label>
       <p style={{ fontStyle: "italic" }}>More preferences coming soon...</p><hr/>
