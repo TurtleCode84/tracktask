@@ -1,15 +1,15 @@
 self.addEventListener("install", (event) => {
   console.log("Hello world from the Service Worker!");
+});
+  
+self.addEventListener("activate", (event) => {
+  console.log("I am now activated");
   event.waitUntil(
     self.registration.showNotification('TrackTask', {
         body: "You have enabled push notifications!",
         icon: "/tracktaskmini.png",
     })
   );
-});
-  
-self.addEventListener("activate", (event) => {
-  console.log("I am now activated");
 });
 
 self.addEventListener("push", (event) => {
