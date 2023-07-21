@@ -21,8 +21,18 @@ function MyApp({ Component, pageProps }) {
     const pushNotifications = localStorage.getItem("notifications");
     if (pushNotifications === "enable") {
       alert("push notif enabling");
-      if("serviceWorker" in navigator) {
-        // In the future, request notification permission as well!
+      if("serviceWorker" in navigator && "Notification" in window) {
+        
+        if (Notification.permission !== "denied") {
+          // We need to ask the user for permission
+          Notification.requestPermission().then((permission) => {
+            // If the user accepts, let's create a notification
+            if (permission !== "granted") {
+              // it won't work
+            }
+          });
+        }      
+
         navigator.serviceWorker.register("/notifications.js");
 
         navigator.serviceWorker.ready.then(
@@ -42,7 +52,7 @@ function MyApp({ Component, pageProps }) {
         alert("push notif enabled");
       } else {
         localStorage.setItem("notifications", "disabled");
-        alert("Unfortunately, Service Workers are not supported by your browser, so notifications could not be enabled.");
+        alert("Unfortunately, push notifications are not supported by your browser, so they could not be enabled.");
       }
     } else if (pushNotifications === "disable") {
       alert("push notif disabling");
