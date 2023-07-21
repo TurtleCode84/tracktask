@@ -32,10 +32,6 @@ function MyApp({ Component, pageProps }) {
           }).then((pushSubscription) => {
             console.log("Received PushSubscription: ", JSON.stringify(pushSubscription));
           });
-          registration.showNotification('TrackTask', {
-            body: "You have enabled push notifications!",
-            icon: "/tracktaskmini.png",
-          });
         });
       } else {
         console.log("Service Workers are not supported");
