@@ -18,23 +18,29 @@ function MyApp({ Component, pageProps }) {
   }, [])
 
   useEffect(() => {
-    if("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("/notifications.js");
+    const pushNotifications = localStorage.getItem("notifications");
+    if (pushNotifications && pushNotifications === "enabled") {
+      if("serviceWorker" in navigator) {
+        // In the future, request notification permission as well!
+        navigator.serviceWorker.register("/notifications.js");
 
-      navigator.serviceWorker.ready.then(
-        (registration) => {
-        registration.pushManager.subscribe({
-          userVisibleOnly: true,
-          applicationServerKey: vapidKey,
-        }).then((pushSubscription) => {
-          console.log(
-            'Received PushSubscription: ',
-            JSON.stringify(pushSubscription),
-          )
+        navigator.serviceWorker.ready.then(
+          (registration) => {
+          registration.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: vapidKey,
+          }).then((pushSubscription) => {
+            console.log(
+              'Received PushSubscription: ',
+              JSON.stringify(pushSubscription),
+            )
+          });
         });
-      });
-    } else {
-      console.log("Service Workers are not supported");
+      } else {
+        console.log("Service Workers are not supported");
+      }
+    } else if (!pushNotifications) {
+      localStorage.setItem("pushNotifications", "disabled");
     }
   }, [])
 
