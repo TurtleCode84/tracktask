@@ -17,7 +17,7 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
     if (currentNotifications.includes("enable")) {
       notificationsDropdown.value = "enable";
     } else {
-      notificationsDropdown.value = "disabled";
+      notificationsDropdown.value = "disable";
     }
   
     function switchTheme(e) {
