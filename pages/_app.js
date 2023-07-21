@@ -30,10 +30,11 @@ function MyApp({ Component, pageProps }) {
             userVisibleOnly: true,
             applicationServerKey: vapidKey,
           }).then((pushSubscription) => {
-            console.log(
-              'Received PushSubscription: ',
-              JSON.stringify(pushSubscription),
-            )
+            console.log("Received PushSubscription: ", JSON.stringify(pushSubscription));
+          });
+          registration.showNotification('TrackTask', {
+            body: "You have enabled push notifications!",
+            icon: "/tracktaskmini.png",
           });
         });
       } else {

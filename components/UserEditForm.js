@@ -25,7 +25,7 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
       localStorage.setItem("theme", e.currentTarget.value);
     }
     function toggleNotifications(e) {
-      e.waitUntil(localStorage.setItem("notifications", e.currentTarget.value));
+      localStorage.setItem("notifications", e.currentTarget.value);
       router.reload();
     }
   
