@@ -31,7 +31,7 @@ function MyApp({ Component, pageProps }) {
             'Received PushSubscription: ',
             JSON.stringify(pushSubscription),
           )
-        });  
+        });
       });
     } else {
       console.log("Service Workers are not supported");

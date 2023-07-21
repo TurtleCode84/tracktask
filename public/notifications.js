@@ -17,3 +17,21 @@ self.addEventListener("push", (event) => {
     })
   );
 });
+
+self.addEventListener("pushsubscriptionchange", (event) => {
+  console.log("Something is different here...");
+  /*const subscription = swRegistration.pushManager
+    .subscribe(event.oldSubscription.options)
+    .then((subscription) =>
+      fetch("register", {
+        method: "post",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({
+          endpoint: subscription.endpoint,
+        }),
+      }),
+    );
+  event.waitUntil(subscription);*/
+});
