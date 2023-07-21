@@ -38,7 +38,7 @@ function MyApp({ Component, pageProps }) {
             icon: "/tracktaskmini.png",
           })
         });
-        //localStorage.setItem("notifications", "enabled");
+        localStorage.setItem("notifications", "enabled");
         alert("push notif enabled");
       } else {
         localStorage.setItem("notifications", "disabled");
