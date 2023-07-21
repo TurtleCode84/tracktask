@@ -8,7 +8,7 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
     const themeDropdown = document.getElementById("theme-dropdown");
     const notificationsDropdown = document.getElementById("notifications-dropdown");
     const currentTheme = localStorage.getItem("theme");
-    const currentNotifications = localStorage.getItem("pushNotifications");
+    const currentNotifications = localStorage.getItem("notifications");
     if (currentTheme) {
       themeDropdown.value = currentTheme;
     } else {
@@ -25,7 +25,7 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
       localStorage.setItem("theme", e.currentTarget.value);
     }
     function toggleNotifications(e) {
-      localStorage.setItem("pushNotifications", e.currentTarget.value);
+      e.waitUntil(localStorage.setItem("notifications", e.currentTarget.value));
       router.reload();
     }
   

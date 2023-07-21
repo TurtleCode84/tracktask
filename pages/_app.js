@@ -40,7 +40,7 @@ function MyApp({ Component, pageProps }) {
         console.log("Service Workers are not supported");
       }
     } else if (!pushNotifications) {
-      localStorage.setItem("pushNotifications", "disabled");
+      localStorage.setItem("notifications", "disabled");
     }
   }, [])
 
