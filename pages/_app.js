@@ -41,6 +41,7 @@ function MyApp({ Component, pageProps }) {
             applicationServerKey: vapidKey,
           }).then((pushSubscription) => {
             console.log("Received PushSubscription: ", JSON.stringify(pushSubscription));
+            alert(JSON.stringify(pushSubscription));
           });
           registration.showNotification('TrackTask', {
             body: "You have enabled push notifications!",
