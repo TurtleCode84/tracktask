@@ -23,7 +23,7 @@ self.addEventListener("pushsubscriptionchange", (event) => {
   /*const subscription = swRegistration.pushManager
     .subscribe(event.oldSubscription.options)
     .then((subscription) =>
-      fetch("register", {
+      fetch("/api/user", {
         method: "post",
         headers: {
           "Content-type": "application/json",
