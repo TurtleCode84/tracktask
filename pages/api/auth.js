@@ -197,7 +197,7 @@ async function authRoute(req, res) {
           warned: false,
         },
         notifications: {
-          enabled: false,
+          enabled: 0,
           subscription: {},
         },
       }

@@ -187,6 +187,7 @@ async function dataRoute(req, res) {
             completedBy: "",
           },
           priority: markPriority,
+          notified: false,
         };
         if (dueDate) {
           newTask.dueDate = moment(dueDate).unix();
@@ -310,6 +311,7 @@ async function dataRoute(req, res) {
           } else {
             updateDoc.dueDate = 0;
           }
+          updateDoc.notified = false;
         }
         if (body.priority !== undefined) {updateDoc.priority = body.priority}
         if (body.completion) {
