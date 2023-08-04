@@ -13,6 +13,11 @@ async function notificationsRoute(req, res) {
       var debug = {};
       const client = await clientPromise;
       const db = client.db("data");
+      webpush.setVapidDetails(
+        'mailto:tracktask@tracktask.eu.org',
+        process.env.NEXT_PUBLIC_NOTIFICATIONS_PUBLIC_KEY,
+        process.env.NOTIFICATIONS_PRIVATE_KEY
+      );      
       const usersQuery = { 'permissions.banned': false, 'permissions.verified': true, 'notifications.enabled': {$gt: 0} };
       const usersOptions = { projection: { _id: 1, notifications: 1 } };
       try {
