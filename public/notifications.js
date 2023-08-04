@@ -5,7 +5,14 @@ self.addEventListener("install", (event) => {
 self.addEventListener("activate", (event) => {
   console.log("Push notifications are now ready to enable!");
   async function checkTasks() {
-    const tasks = await fetch("/api/tasks");
+    const response = await fetch("/api/tasks");
+    const tasks = await response.json();
+    event.waitUntil(
+      self.registration.showNotification('TrackTask', {
+        body: `We did a thing, code ${tasks.length}`,
+        icon: "/tracktaskmini.png",
+      })
+    );
     for (var i=0; i<tasks.length; i++) {
       if (tasks[i].dueDate > 0 && tasks[i].dueDate <= Math.floor(Date.now()/1000) && tasks[i].dueDate > Math.floor(Date.now()/1000)-60) {
         event.waitUntil(
