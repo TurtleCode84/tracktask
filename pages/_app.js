@@ -57,9 +57,10 @@ function MyApp({ Component, pageProps }) {
       navigator.serviceWorker.getRegistrations().then(function(registrations) {
         for(let registration of registrations) {
           registration.unregister();
-        } 
+        }
       });
       localStorage.setItem("notifications", "disabled");
+      window.location.reload();
     } else if (!pushNotifications) {
       localStorage.setItem("notifications", "disabled");
     }
