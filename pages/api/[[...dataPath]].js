@@ -311,7 +311,7 @@ async function dataRoute(req, res) {
           } else {
             updateDoc.dueDate = 0;
           }
-          //updateDoc.notified = false;
+          updateDoc.notified = false;
         }
         if (body.priority !== undefined) {updateDoc.priority = body.priority}
         if (body.completion) {
