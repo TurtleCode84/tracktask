@@ -22,7 +22,7 @@ self.addEventListener("push", (event) => {
   );
 });
 
-self.addEventListener('notificationclick', (event) => {
+self.addEventListener("notificationclick", (event) => {
   const url = `https://tracktask.eu.org/tasks/${event.notification.data.taskId}`;
   event.notification.close();
   clients.matchAll({includeUncontrolled: true, type: 'window'}).then( windowClients => {
@@ -39,22 +39,4 @@ self.addEventListener('notificationclick', (event) => {
       return clients.openWindow(url);
     }
   })
-});
-
-self.addEventListener("pushsubscriptionchange", (event) => {
-  console.log("Something is different here...");
-  /*const subscription = swRegistration.pushManager
-    .subscribe(event.oldSubscription.options)
-    .then((subscription) =>
-      fetch("/api/notifications", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-          subscription: subscription,
-        }),
-      }),
-    );
-  event.waitUntil(subscription);*/
 });

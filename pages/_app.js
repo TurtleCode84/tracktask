@@ -41,17 +41,13 @@ function MyApp({ Component, pageProps }) {
             applicationServerKey: vapidKey,
           }).then((pushSubscription) => {
             console.log("Received PushSubscription: ", JSON.stringify(pushSubscription));
-            try {
-              fetch(`/api/notifications`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                  subscription: pushSubscription,
-                }),
-              })
-            } catch (error) {
-              alert(error.message);
-            }
+            const sendSub = fetch("/api/notifications", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                subscription: pushSubscription,
+              }),
+            })
           });
           registration.showNotification('TrackTask', {
             body: "You have enabled push notifications!",
