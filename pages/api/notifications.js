@@ -29,7 +29,7 @@ async function notificationsRoute(req, res) {
           projection: { name: 1 },
         };
         for (var i=0; i<users.length; i++) {
-          const tasksQuery = { hidden: false, owner: new ObjectId(users[i]._id), 'completion.completed': 0, dueDate: {$lte: Math.floor(Date.now()/1000)}, dueDate: {$gte: users[i].notifications.enabled}, dueDate: {$ne: 0}, notified: {$ne: true} };
+          const tasksQuery = { hidden: false, owner: new ObjectId(users[i]._id), 'completion.completed': 0, dueDate: {$lte: Math.floor(Date.now()/1000), $gte: users[i].notifications.enabled, $ne: 0}, notified: {$ne: true} };
           const tasks = await db.collection("tasks").find(tasksQuery, tasksOptions).toArray(); // Now we should have all tasks eligible for notification in this particular user
           debug.tasks.push(tasks);
           for (var j=0; j<tasks.length; j++) {
