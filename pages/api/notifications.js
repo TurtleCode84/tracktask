@@ -17,13 +17,13 @@ async function notificationsRoute(req, res) {
       const usersOptions = { projection: { _id: 1, notifications: 1 } };
       try {
         // Due to API constraints, we can only notify task owners
-        const users = await db.collection("users").find({}, usersOptions); // This gets verified, non-banned users that have notifications enabled
-        /*debug.users = users;
+        const users = await db.collection("users").find(usersQuery, usersOptions).toArray(); // This gets verified, non-banned users that have notifications enabled
+        debug.users = users;
         const tasksOptions = {
           projection: { name: 1 },
         };
         for (var i=0; i<users.length; i++) {
-          const tasksQuery = { hidden: false, owner: new ObjectId(users[i]._id), 'completion.completed': 0, dueDate: {$gt: 0}, dueDate: {$lte: Math.floor(Date.now()/1000)}, dueDate: {$gte: users[i].notifications.enabled}, notified: {$ne: true} };
+          const tasksQuery = { hidden: false, owner: new ObjectId(users[i]._id).toArray(), 'completion.completed': 0, dueDate: {$gt: 0}, dueDate: {$lte: Math.floor(Date.now()/1000)}, dueDate: {$gte: users[i].notifications.enabled}, notified: {$ne: true} };
           const tasks = await db.collection("tasks").find(tasksQuery, tasksOptions); // Now we should have all tasks eligible for notification in this particular user
           debug.tasks = tasks;
           for (var j=0; j<tasks.length; j++) {
@@ -31,8 +31,7 @@ async function notificationsRoute(req, res) {
           const notified = await db.collection("tasks").updateOne({ _id: new ObjectId(tasks[j]._id)}, { $set: {notified: true} });
           }
         }
-        res.status(200).json({ message: "Notifications successfully delivered", debug: debug });*/
-        res.status(200).json({ message: users });
+        res.status(200).json({ message: "Notifications successfully delivered", debug: debug });
         return;
       } catch (error) {
         res.status(500).json({ message: error.message });
