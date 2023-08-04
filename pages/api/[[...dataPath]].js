@@ -329,7 +329,7 @@ async function dataRoute(req, res) {
       }
       try {
         const updatedTask = await db.collection("tasks").updateOne(taskQuery, updateDoc); // Dangerous!
-        res.json(updatedTask);
+        res.status(500).json({...updatedTask, perms: perms});
       } catch (error) {
         res.status(500).json({ message: error.message });
         return;
