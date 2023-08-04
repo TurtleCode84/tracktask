@@ -25,7 +25,7 @@ self.addEventListener("push", (event) => {
 self.addEventListener('notificationclick', (event) => {
   const url = `https://tracktask.eu.org/tasks/${event.notification.data.taskId}`;
   event.notification.close();
-  clients.matchAll({type: 'window'}).then( windowClients => {
+  clients.matchAll({includeUncontrolled: true, type: 'window'}).then( windowClients => {
     // Check if there is already a window/tab open with the target URL
     for (var i = 0; i < windowClients.length; i++) {
       var client = windowClients[i];
