@@ -5,7 +5,7 @@ import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import { useEffect } from "react";
 
 function MyApp({ Component, pageProps }) {
-  const vapidKey = urlBase64ToUint8Array("BA8NKRSdID4uU7rW-ALT2emBCdhnopbkOig-HI9wUjKcHTIWnmCcpVfpPdhV-P576TaV3rLZ_35IJF2iV29E9mM");
+  const vapidKey = urlBase64ToUint8Array("BJDe6zDBZ-9oL0Y3hGtk9043abmCidSQzNmGSpgPkj1OJrTLyqYyz1etLd6VyGMhS_f4IAVUk8uISNhnb7WFCLg");
 
   useEffect(() => {
     const currentTheme = localStorage.getItem("theme");
@@ -41,7 +41,7 @@ function MyApp({ Component, pageProps }) {
             applicationServerKey: vapidKey,
           }).then((pushSubscription) => {
             console.log("Received PushSubscription: ", JSON.stringify(pushSubscription));
-            prompt("[DEV] subscription", JSON.stringify(pushSubscription));
+            //prompt("[DEV] subscription", JSON.stringify(pushSubscription));
           });
           registration.showNotification('TrackTask', {
             body: "You have enabled push notifications!",

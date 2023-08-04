@@ -75,7 +75,7 @@ async function userRoute(req, res) {
       }
     } else {
       var updateUser = {};
-      const query = { _id: new ObjectId(user.id) }
+      //const query = { _id: new ObjectId(user.id) }
       if (body.username && user.permissions.verified) {
         const taken = await db.collection('users').countDocuments({ username: body.username.trim().toLowerCase() });
         if (taken > 0) {

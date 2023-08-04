@@ -196,6 +196,10 @@ async function authRoute(req, res) {
           verified: false,
           warned: false,
         },
+        notifications: {
+          enabled: false,
+          subscription: {},
+        },
       }
       const createdUser = await db.collection('users').insertOne(newUser);
       res.json(createdUser);

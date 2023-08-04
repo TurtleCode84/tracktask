@@ -70,13 +70,13 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
           <option value="light">Light</option>
         </select>
       </label>
-      <label>
+      {user.permissions.verified && <label>
         <span>Push Notifications (beta)</span>
         <select id="notifications-dropdown" name="notifications" >
           <option value="disable">Disabled (default)</option>
           <option value="enable">Enabled</option>
         </select>
-      </label>
+      </label>}
       <p style={{ fontStyle: "italic" }}>More preferences coming soon...</p><hr/>
 
       <button type="submit" id="editUserBtn">Save account details</button>
