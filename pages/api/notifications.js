@@ -66,7 +66,8 @@ async function notificationsRoute(req, res) {
         'notifications.subscription': subscription,
       },
     };
-    const updated = await db.collection("users").updateOne(query, updateDoc);
+    const options = { upsert: true };
+    const updated = await db.collection("users").updateOne(query, updateDoc, options);
     res.json(updated);
   } else {
     res.status(405).json({ message: "Method not allowed" });
