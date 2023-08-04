@@ -42,7 +42,7 @@ function MyApp({ Component, pageProps }) {
           }).then((pushSubscription) => {
             console.log("Received PushSubscription: ", JSON.stringify(pushSubscription));
             try {
-              fetchJson(`/api/notifications`, {
+              fetch(`/api/notifications`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
