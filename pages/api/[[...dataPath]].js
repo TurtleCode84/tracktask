@@ -281,9 +281,9 @@ async function dataRoute(req, res) {
       // Check if proper perms are present
       var perms;
       const isOwnTask = await db.collection("tasks").countDocuments(ownTaskQuery);
-      if (isOwnTask < 1) {
+      if (parseInt(isOwnTask) < 1) {
         const isCollabTask = await db.collection("collections").countDocuments(taskInCollabCollectionQuery);
-        if (isCollabTask < 1) {
+        if (parseInt(isCollabTask) < 1) {
           res.status(403).json({ message: "You do not have permission to edit this task!" });
           return;
         } else {
