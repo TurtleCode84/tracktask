@@ -33,7 +33,7 @@ async function notificationsRoute(req, res) {
           const tasks = await db.collection("tasks").find(tasksQuery, tasksOptions).toArray(); // Now we should have all tasks eligible for notification in this particular user
           debug.tasks.push(tasks.length);
           for (var j=0; j<tasks.length; j++) {
-            webpush.sendNotification(users[i].notifications.subscription, tasks[j]);
+            webpush.sendNotification(users[i].notifications.subscription, JSON.stringify(tasks[j]));
             const notified = await db.collection("tasks").updateOne({ _id: new ObjectId(tasks[j]._id)}, { $set: {notified: true} });
           }
         }
