@@ -13,30 +13,26 @@ async function notificationsRoute(req, res) {
       var debug = {};
       const client = await clientPromise;
       const db = client.db("data");
-      webpush.setVapidDetails(
-        'mailto:tracktask@tracktask.eu.org',
-        process.env.NEXT_PUBLIC_NOTIFICATIONS_PUBLIC_KEY,
-        process.env.NOTIFICATIONS_PRIVATE_KEY
-      );
       const usersQuery = { 'permissions.banned': false, 'permissions.verified': true, 'notifications.enabled': {$gt: 0} };
       const usersOptions = { projection: { _id: 1, notifications: 1 } };
       try {
         // Due to API constraints, we can only notify task owners
-        const users = await db.collection("users").find(usersQuery, usersOptions); // This gets verified, non-banned users that have notifications enabled
-        debug.users = users;
+        const users = await db.collection("users").find({}, usersOptions); // This gets verified, non-banned users that have notifications enabled
+        /*debug.users = users;
         const tasksOptions = {
-            projection: { name: 1 },
+          projection: { name: 1 },
         };
         for (var i=0; i<users.length; i++) {
-            const tasksQuery = { hidden: false, owner: new ObjectId(users[i]._id), 'completion.completed': 0, dueDate: {$gt: 0}, dueDate: {$lte: Math.floor(Date.now()/1000)}, dueDate: {$gte: users[i].notifications.enabled}, notified: {$ne: true} };
-            const tasks = await db.collection("tasks").find(tasksQuery, tasksOptions); // Now we should have all tasks eligible for notification in this particular user
-            debug.tasks = tasks;
-            for (var j=0; j<tasks.length; j++) {
-            webpush.sendNotification(users[i].notifications.subscription, "You have a task that is due, but we're too lazy to tell you what it is. Go check TrackTask yourself.");
-            const notified = await db.collection("tasks").updateOne({ _id: new ObjectId(tasks[j]._id)}, { $set: {notified: true} });
-            }
+          const tasksQuery = { hidden: false, owner: new ObjectId(users[i]._id), 'completion.completed': 0, dueDate: {$gt: 0}, dueDate: {$lte: Math.floor(Date.now()/1000)}, dueDate: {$gte: users[i].notifications.enabled}, notified: {$ne: true} };
+          const tasks = await db.collection("tasks").find(tasksQuery, tasksOptions); // Now we should have all tasks eligible for notification in this particular user
+          debug.tasks = tasks;
+          for (var j=0; j<tasks.length; j++) {
+          webpush.sendNotification(users[i].notifications.subscription, "You have a task that is due, but we're too lazy to tell you what it is. Go check TrackTask yourself.");
+          const notified = await db.collection("tasks").updateOne({ _id: new ObjectId(tasks[j]._id)}, { $set: {notified: true} });
+          }
         }
-        res.status(200).json({ message: "Notifications successfully delivered", debug: debug });
+        res.status(200).json({ message: "Notifications successfully delivered", debug: debug });*/
+        res.status(200).json({ message: users });
         return;
       } catch (error) {
         res.status(500).json({ message: error.message });
