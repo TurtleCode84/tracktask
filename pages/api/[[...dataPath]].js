@@ -280,26 +280,20 @@ async function dataRoute(req, res) {
 
       // Check if proper perms are present
       var perms;
-      const debug = {};
       const isOwnTask = await db.collection("tasks").countDocuments(ownTaskQuery);
-      debug.isOwnTask = isOwnTask;
       if (isOwnTask >= 1) {
         perms = "edit";
-        debug.gotPerm1 = perms;
       } else {
-        debug.wentIntoElse = true;
         const isCollabTask = await db.collection("collections").countDocuments(taskInCollabCollectionQuery);
-        debug.isCollabTask = isCollabTask;
         if (isCollabTask >= 1) {
           perms = "complete";
-          debug.gotPerm2 = perms;
         } else {
           res.status(403).json({ message: "You do not have permission to edit this task!" });
           return;
         }
       }
 
-      if (perms = "complete") {
+      if (perms === "complete") {
 
         if (body.completion) {
           updateDoc.completion = {};
@@ -307,7 +301,7 @@ async function dataRoute(req, res) {
           updateDoc.completion.completedBy = body.completion.completedBy;
         }
 
-      } else if (perms = "edit") {
+      } else if (perms === "edit") {
 
         if (body.name) {updateDoc.name = body.name.trim().slice(0, 55)} // Enforce length limit
         if (body.description) {updateDoc.description = body.description.trim().slice(0, 500)}
@@ -335,7 +329,7 @@ async function dataRoute(req, res) {
       }
       try {
         const updatedTask = await db.collection("tasks").updateOne(taskQuery, updateDoc); // Dangerous!
-        res.status(500).json({...updatedTask, message: JSON.stringify(debug)});
+        res.json(updatedTask);
       } catch (error) {
         res.status(500).json({ message: error.message });
         return;
