@@ -60,7 +60,6 @@ function MyApp({ Component, pageProps }) {
         }
       });
       localStorage.setItem("notifications", "disabled");
-      window.location.replace(window.location.href);
     } else if (!pushNotifications) {
       localStorage.setItem("notifications", "disabled");
     }
