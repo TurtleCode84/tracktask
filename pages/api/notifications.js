@@ -36,7 +36,7 @@ async function notificationsRoute(req, res) {
           const notified = await db.collection("tasks").updateOne({ _id: new ObjectId(tasks[j]._id)}, { $set: {notified: true} });
         }
       }
-      res.status(200).json({ message: "Notifications successfully delivered" });
+      res.status(200).json({ message: "Notifications successfully delivered", debug: debug });
       return;
     } else {
       res.status(401).json({ message: "Authentication required" });
