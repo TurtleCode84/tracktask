@@ -23,8 +23,8 @@ async function notificationsRoute(req, res) {
           projection: { name: 1 },
         };
         for (var i=0; i<users.length; i++) {
-          const tasksQuery = { hidden: false, owner: new ObjectId(users[i]._id).toArray(), 'completion.completed': 0, dueDate: {$gt: 0}, dueDate: {$lte: Math.floor(Date.now()/1000)}, dueDate: {$gte: users[i].notifications.enabled}, notified: {$ne: true} };
-          const tasks = await db.collection("tasks").find(tasksQuery, tasksOptions); // Now we should have all tasks eligible for notification in this particular user
+          const tasksQuery = { hidden: false, owner: new ObjectId(users[i]._id), 'completion.completed': 0, dueDate: {$gt: 0}, dueDate: {$lte: Math.floor(Date.now()/1000)}, dueDate: {$gte: users[i].notifications.enabled}, notified: {$ne: true} };
+          const tasks = await db.collection("tasks").find(tasksQuery, tasksOptions).toArray(); // Now we should have all tasks eligible for notification in this particular user
           debug.tasks = tasks;
           for (var j=0; j<tasks.length; j++) {
           webpush.sendNotification(users[i].notifications.subscription, "You have a task that is due, but we're too lazy to tell you what it is. Go check TrackTask yourself.");
