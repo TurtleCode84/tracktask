@@ -23,17 +23,17 @@ async function notificationsRoute(req, res) {
       try {
         // Due to API constraints, we can only notify task owners
         const users = await db.collection("users").find(usersQuery, usersOptions).toArray(); // This gets verified, non-banned users that have notifications enabled
-        debug.users = users;
+        debug.users = users.length;
         debug.tasks = [];
         const tasksOptions = {
-          projection: { name: 1 },
+          projection: { _id: 1, name: 1, description: 1 },
         };
         for (var i=0; i<users.length; i++) {
           const tasksQuery = { hidden: false, owner: new ObjectId(users[i]._id), 'completion.completed': 0, dueDate: {$lte: Math.floor(Date.now()/1000), $gte: users[i].notifications.enabled, $ne: 0}, notified: {$ne: true} };
           const tasks = await db.collection("tasks").find(tasksQuery, tasksOptions).toArray(); // Now we should have all tasks eligible for notification in this particular user
-          debug.tasks.push(tasks);
+          debug.tasks.push(tasks.length);
           for (var j=0; j<tasks.length; j++) {
-            webpush.sendNotification(users[i].notifications.subscription, "You have a task that is due, but we're too lazy to tell you what it is. Go check TrackTask yourself.");
+            webpush.sendNotification(users[i].notifications.subscription, tasks[j]);
             const notified = await db.collection("tasks").updateOne({ _id: new ObjectId(tasks[j]._id)}, { $set: {notified: true} });
           }
         }
