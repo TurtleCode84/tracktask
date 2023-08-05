@@ -14,8 +14,7 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
     }
     themeDropdown.addEventListener("change", switchTheme, false);
 
-    if (true) { //temporary
-    //if (user.permissions.verified) {
+    if (user.permissions.verified) {
       const notificationsDropdown = document.getElementById("notifications-dropdown");
       const currentNotifications = localStorage.getItem("notifications");
       if (currentNotifications.includes("enable")) {
