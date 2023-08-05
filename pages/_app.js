@@ -3,6 +3,7 @@ import fetchJson from "lib/fetchJson";
 import urlBase64ToUint8Array from "lib/urlBase64ToUint8Array";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import { useEffect } from "react";
+import ErrorBoundary from "components/ErrorBoundary";
 
 function MyApp({ Component, pageProps }) {
   const vapidKey = urlBase64ToUint8Array(process.env.NEXT_PUBLIC_NOTIFICATIONS_PUBLIC_KEY);
@@ -93,7 +94,9 @@ function MyApp({ Component, pageProps }) {
         },
       }}
     >
+      <ErrorBoundary>
       <Component {...pageProps} />
+      </ErrorBoundary>
     </SWRConfig>
     </GoogleReCaptchaProvider>
   );
