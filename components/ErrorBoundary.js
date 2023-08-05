@@ -1,6 +1,5 @@
 import React from "react";
 import Layout from "components/Layout";
-import { useRouter } from "next/router";
 
 class ErrorBoundary extends React.Component {
     constructor(props) {
@@ -19,7 +18,6 @@ class ErrorBoundary extends React.Component {
       console.log({ error, errorInfo })
     }
     render() {
-      const router = useRouter();
       // Check if the error is thrown
       if (this.state.hasError) {
         // You can render any custom fallback UI
@@ -29,8 +27,8 @@ class ErrorBoundary extends React.Component {
             <h3>We&apos;re not sure why this happened, but the error has been reported and will be resolved as soon as possible.</h3>
             <p>In the meantime, you probably want to go back to <a href="" onClick={(e) => {
               e.preventDefault();
-              this.setState({ hasError: false, errorMsg: error.message });
-              router.push("/");
+              {/*this.setState({ hasError: false, errorMsg: error.message });*/}
+              window.location.replace("/");
             }}>a page that does work</a>?</p>
             <details style={{ fontSize: "90%", color: "darkgray" }}>
               <summary>More details</summary>
