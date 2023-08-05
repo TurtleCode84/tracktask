@@ -6,12 +6,12 @@
 <hr>
 
 # Next Big Goal:
-- [ ] Finish and stabilize collection & task sharing
+- [ ] Grow and maintain an active userbase
 <hr>
 
 ## What is TrackTask?
-TrackTask is a Shareable Task Management system. Users can create tasks with names, descriptions, due dates, etc. and keep track of their completion & priority.
-Additionally, tasks can be (potentially must be) grouped in collections, which can be shared with other users and edited by them if they have the right permissions. [Learn more](https://tracktask.eu.org/about)
+TrackTask is a shareable task management platform. Users can create tasks with names, descriptions, due dates, etc. and keep track of their completion & priority.
+Additionally, tasks can be grouped in collections, which can be shared with other users and modified by them if they have the right permissions. [Learn more](https://tracktask.eu.org/about)
 
 ## Where is it?
 TrackTask lives at the following domains:
@@ -27,6 +27,7 @@ Glad you asked! Here's a running features list:
 - [x] Individual task & collection UI (`/tasks/{id}` and `/collections/{id}`)
 - [x] Documentation pages (About, Privacy Policy, ToU)
 - [x] Reporting for admin attention (tasks, users, collections)
+- [x] Optional push notifications
 <br>... and more to come!
 
 ## Who are the developers?
@@ -42,6 +43,7 @@ These are the current official developers of the project:
 ## Things to consider:
 - This project is still in development, some things may be incomplete or not work as expected. We're working on adding the rest of the main structure, but most of us have other commitments such as school, so we can't always devote our attention to this project.
 - If you find something that you really dislike and think could be a lot better, please don't just tell us that it could be better. Sometimes we miss things, but other times we'd like to know _how_ we can make things good, so just complaining about it won't get us anywhere.
+- The work you see here is the product of hundreds of hours of work and improvement. We are very proud of how far we've come since development on TrackTask first started nearly a year ago. The truth is, this project was created to satisfy a single person's need to keep track of school assignments, but it's grown to be much more; a worthwhile learning experience, a result that hopefully a few others will continue to find useful for many years to come.
 
 ## Contributing
 Please see our [CONTRIBUTING.md](/CONTRIBUTING.md) for contributing guidelines and instructions. Thanks for your input!
