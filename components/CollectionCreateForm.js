@@ -9,7 +9,7 @@ export default function CollectionCreateForm({ verified, errorMessage, onSubmit 
         <span>Description</span>
         <textarea name="description" rows="8" cols="30" maxlength="500" required />
       </label>
-      {verified && <p style={{ fontStyle: "italic" }}>You will be able to share this collection after you create it.</p>}
+      {verified ? <p style={{ fontStyle: "italic" }}>You will be able to share this collection after you create it.</p> : <br/>}
 
       <button type="submit" id="createCollectionBtn">Create collection</button>
 
