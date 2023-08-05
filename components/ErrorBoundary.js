@@ -23,13 +23,12 @@ class ErrorBoundary extends React.Component {
         // You can render any custom fallback UI
         return (
           <Layout>
-            <h2>An client-side error occurred during rendering.</h2>
-            <button
-              type="button"
-              onClick={() => this.setState({ hasError: false })}
-            >
-              Retry?
-            </button>
+            <h1 style={{marginBottom: "0px", marginTop: "60px"}}><span style={{color: "red", fontSize: "inherit"}} className="material-symbols-outlined">error</span> 500: A client-side error occurred during rendering.</h1>
+            <h3>We&apos;re not sure why this happened, but the error has been reported and will be resolved as soon as possible.</h3>
+            <p>In the meantime, you probably want to go back to <a href="" onClick={(e) => {
+              e.preventDefault();
+              this.setState({ hasError: false });
+            }}>a page that does work</a>?</p>
           </Layout>
         )
       }
