@@ -2,6 +2,7 @@ import React from "react";
 import Layout from "components/Layout";
 
 export default function About() {
+  const errorforcer = null;
   return (
     <Layout>
       <h1>About TrackTask:</h1>
