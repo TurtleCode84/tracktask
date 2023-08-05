@@ -6,20 +6,23 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
   const router = useRouter();
   useEffect(() => {
     const themeDropdown = document.getElementById("theme-dropdown");
-    const notificationsDropdown = document.getElementById("notifications-dropdown");
     const currentTheme = localStorage.getItem("theme");
-    const currentNotifications = localStorage.getItem("notifications");
     if (currentTheme) {
       themeDropdown.value = currentTheme;
     } else {
       themeDropdown.value = "dark";
     }
+    themeDropdown.addEventListener("change", switchTheme, false);
+
     if (user.permissions.verified) {
+      const notificationsDropdown = document.getElementById("notifications-dropdown");
+      const currentNotifications = localStorage.getItem("notifications");
       if (currentNotifications.includes("enable")) {
         notificationsDropdown.value = "enable";
       } else {
         notificationsDropdown.value = "disable";
       }
+      notificationsDropdown.addEventListener("change", toggleNotifications, false);
     }
   
     function switchTheme(e) {
@@ -30,9 +33,6 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
       localStorage.setItem("notifications", e.currentTarget.value);
       router.reload();
     }
-  
-    themeDropdown.addEventListener("change", switchTheme, false);
-    notificationsDropdown.addEventListener("change", toggleNotifications, false);
   }, [])
 
   return (
