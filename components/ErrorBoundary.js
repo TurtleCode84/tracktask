@@ -1,4 +1,5 @@
 import React from "react";
+import Layout from "components/Layout";
 
 class ErrorBoundary extends React.Component {
     constructor(props) {
@@ -21,7 +22,7 @@ class ErrorBoundary extends React.Component {
       if (this.state.hasError) {
         // You can render any custom fallback UI
         return (
-          <div>
+          <Layout>
             <h2>An client-side error occurred during rendering.</h2>
             <button
               type="button"
@@ -29,7 +30,7 @@ class ErrorBoundary extends React.Component {
             >
               Retry?
             </button>
-          </div>
+          </Layout>
         )
       }
    
