@@ -2,8 +2,6 @@ import React from "react";
 import Layout from "components/Layout";
 import { useRouter } from "next/router";
 
-const router = useRouter();
-
 class ErrorBoundary extends React.Component {
     constructor(props) {
       super(props)
@@ -21,6 +19,7 @@ class ErrorBoundary extends React.Component {
       console.log({ error, errorInfo })
     }
     render() {
+      const router = useRouter();
       // Check if the error is thrown
       if (this.state.hasError) {
         // You can render any custom fallback UI
