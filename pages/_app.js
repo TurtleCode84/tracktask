@@ -65,6 +65,7 @@ function MyApp({ Component, pageProps }) {
           registration.unregister();
         }
       });
+      setTimeout(() => {window.location.reload();}, 500);
       localStorage.setItem("notifications", "disabled");
     } else if (!pushNotifications) {
       localStorage.setItem("notifications", "disabled");
