@@ -74,6 +74,32 @@ async function notificationsRoute(req, res) {
       res.status(500).json({ message: error.message });
       return;
     }
+  } else if (req.method === 'DELETE') {
+    const user = req.session.user;
+    if (!user || !user.isLoggedIn || user.permissions.banned ) {
+      res.status(401).json({ message: "Authentication required" });
+      return;
+    } else if (!user.permissions.verified) {
+      res.status(403).json({ message: "You do not have permission to modify your subscription!" });
+      return;
+    }
+    const client = await clientPromise;
+    const db = client.db("data");
+    const query = { _id: new ObjectId(user.id) };
+    const updateDoc = {
+      $set: {
+        'notifications.enabled': 0,
+        'notifications.subscription': {},
+      },
+    };
+    const options = { upsert: true };
+    try {
+      const updated = await db.collection("users").updateOne(query, updateDoc, options);
+      res.json(updated);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+      return;
+    }
   } else {
     res.status(405).json({ message: "Method not allowed" });
     return;

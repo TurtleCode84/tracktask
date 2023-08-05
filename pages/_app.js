@@ -40,7 +40,7 @@ function MyApp({ Component, pageProps }) {
             userVisibleOnly: true,
             applicationServerKey: vapidKey,
           }).then((pushSubscription) => {
-            console.log("Received PushSubscription: ", JSON.stringify(pushSubscription));
+            //console.log("Received PushSubscription: ", JSON.stringify(pushSubscription));
             const sendSub = fetch("/api/notifications", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
@@ -60,13 +60,16 @@ function MyApp({ Component, pageProps }) {
         alert("Unfortunately, push notifications are not supported by your browser, so they could not be enabled.");
       }
     } else if (pushNotifications === "disable") {
+      const clearSub = fetch("/api/notifications", {
+        method: "DELETE",
+      })
       navigator.serviceWorker.getRegistrations().then(function(registrations) {
         for(let registration of registrations) {
           registration.unregister();
         }
       });
-      setTimeout(() => {window.location.reload();}, 500);
       localStorage.setItem("notifications", "disabled");
+      setTimeout(() => {window.location.reload();}, 500);
     } else if (!pushNotifications) {
       localStorage.setItem("notifications", "disabled");
     }
