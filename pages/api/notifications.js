@@ -37,7 +37,7 @@ async function notificationsRoute(req, res) {
             const notified = await db.collection("tasks").updateOne({ _id: new ObjectId(tasks[j]._id)}, { $set: {notified: true} });
           }
         }
-        res.status(200).json({ message: "Notifications successfully delivered", debug: debug });
+        res.status(200).json({ message: "Success", debug: debug });
         return;
       } catch (error) {
         res.status(500).json({ message: error.message });
@@ -62,7 +62,7 @@ async function notificationsRoute(req, res) {
     const query = { _id: new ObjectId(user.id) };
     const updateDoc = {
       $set: {
-        'notifications.enabled': Math.floor(Date.now()/1000),
+        'notifications.enabled': Math.floor(Date.now()/1000)-60, // 1 minute ago to avoid conflicts with new tasks
         'notifications.subscription': subscription,
       },
     };
