@@ -7,7 +7,7 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("push", (event) => {
-  var payload = JSON.parse(event.data);
+  var payload = event.data;
   if (!payload) { return; }
 
   // Keep the service worker alive until the notification is created.
