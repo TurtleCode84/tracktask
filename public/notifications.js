@@ -25,18 +25,7 @@ self.addEventListener("push", (event) => {
 self.addEventListener("notificationclick", (event) => {
   const url = `https://tracktask.eu.org/tasks/${event.notification.data.taskId}`;
   event.notification.close();
-  clients.matchAll({includeUncontrolled: true, type: 'window'}).then( windowClients => {
-    // Check if there is already a window/tab open with the target URL
-    for (var i=0; i<windowClients.length; i++) {
-      var client = windowClients[i];
-      // If so, just focus it.
-      if (client.url === url && 'focus' in client) {
-        return client.focus();
-      }
-    }
-    // If not, then open the target URL in a new window/tab.
-    if (clients.openWindow) {
-      return clients.openWindow(url);
-    }
-  })
+  event.waitUntil(
+    clients.openWindow(url)
+  );
 });
