@@ -33,6 +33,7 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
       localStorage.setItem("notifications", e.currentTarget.value);
       router.reload();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
