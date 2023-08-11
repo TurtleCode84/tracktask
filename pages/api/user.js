@@ -25,13 +25,16 @@ async function userRoute(req, res) {
         });
         return;
       }
+      userInfo.history.warnings.forEach((warning) => {
+        delete warning.by;
+      });
       const user = {
         ...req.session.user,
         isLoggedIn: true,
         username: userInfo.username,
         email: userInfo.email,
         profilePicture: userInfo.profilePicture,
-        history: { joined: userInfo.history.joined, banReason: userInfo.history.ban.reason, warnings: userInfo.history.warnings, lastEdit: userInfo.history.lastEdit },
+        history: { joined: userInfo.history.joined, ban: { reason: userInfo.history.ban.reason, timestamp: userInfo.history.ban.timestamp }, warnings: userInfo.history.warnings, lastEdit: userInfo.history.lastEdit.timestamp },
         permissions: userInfo.permissions,
         stats: { tasks: taskCount, collections: collectionCount },
       };
