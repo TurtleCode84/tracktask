@@ -53,7 +53,7 @@ async function authRoute(req, res) {
       return;
     }
     //Get basic user info
-    const options = { projection: { password: 1, _id: 1, username: 1, profilePicture: 1, permissions: 1, "history.banReason": 1, "history.loginIpList": 1 } };
+    const options = { projection: { password: 1, _id: 1, username: 1, profilePicture: 1, permissions: 1, "history.ban.reason": 1, "history.loginIpList": 1 } };
     const userInfo = await db.collection("users").findOne(query, options);
     //Check the password
     const passwordMatch = await compare(password, userInfo.password);
@@ -90,7 +90,7 @@ async function authRoute(req, res) {
         },
       };
       const ipUpdate = await db.collection('users').updateOne(query, ipUpdateDoc);
-      const user = { isLoggedIn: true, id: userInfo._id, username: userInfo.username, profilePicture: userInfo.profilePicture, permissions: userInfo.permissions, history: { "ban": userInfo.history.ban } };
+      const user = { isLoggedIn: true, id: userInfo._id, username: userInfo.username, profilePicture: userInfo.profilePicture, permissions: userInfo.permissions, history: { "banReason": userInfo.history.ban.reason } };
       req.session.user = user;
       await req.session.save();
       res.json(user);

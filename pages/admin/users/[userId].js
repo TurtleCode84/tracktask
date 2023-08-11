@@ -56,7 +56,7 @@ export default function UserAdmin() {
       <Link href="/admin/users/search">Back to user search</Link><br/>
       <Link href="/admin">Back to admin dashboard</Link><br/>
       {lookup ?
-      <><p>{lookup.permissions.banned && <b>This user is banned.</b>}{' '}{lookup.permissions.banned && lookup.history.banReason && <i>Reason: {lookup.history.banReason}</i> }</p>
+      <><p>{lookup.permissions.banned && <b>This user is banned.</b>}{' '}{lookup.permissions.banned && lookup.history.ban.reason && <i>Reason: {lookup.history.ban.reason}</i> }</p>
       <h3>General information</h3>
       <p>User ID: {lookup._id}</p>
       <p>Email: {lookup.email ? <><a href={`mailto:${lookup.email}`} target="_blank" rel="noreferrer">{lookup.email}</a></> : 'none'}</p>
@@ -81,7 +81,7 @@ export default function UserAdmin() {
         <ul>{warningList?.length > 0 ? warningList : 'No warnings found'}</ul>
       </details>
       <p>Acknowledged last warning: {lookup.history.warnings.length > 0 ? <>{lookup.permissions.warned ? <span style={{ color: "red" }} className="material-symbols-outlined icon-list">close</span> : <span style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">done</span>}</> : 'N\/A'}</p>
-      {!lookup.permissions.banned && <p>Last ban reason: {lookup.history.banReason ? lookup.history.banReason : 'none'}</p>}
+      {!lookup.permissions.banned && <p>Last ban reason: {lookup.history.ban.reason ? lookup.history.ban.reason : 'none'}</p>}
       <hr/>
       <details>
         <summary>Edit user info</summary>

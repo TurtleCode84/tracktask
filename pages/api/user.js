@@ -31,7 +31,7 @@ async function userRoute(req, res) {
         username: userInfo.username,
         email: userInfo.email,
         profilePicture: userInfo.profilePicture,
-        history: { joined: userInfo.history.joined, banReason: userInfo.history.banReason, warnings: userInfo.history.warnings, lastEdit: userInfo.history.lastEdit },
+        history: { joined: userInfo.history.joined, banReason: userInfo.history.ban.reason, warnings: userInfo.history.warnings, lastEdit: userInfo.history.lastEdit },
         permissions: userInfo.permissions,
         stats: { tasks: taskCount, collections: collectionCount },
       };
@@ -50,7 +50,7 @@ async function userRoute(req, res) {
     const body = await req.body;
     const user = req.session.user;
     if (!user || !user.isLoggedIn || user.permissions.banned ) {
-      res.status(401).json({ message: "Unauthorized" });
+      res.status(401).json({ message: "Authentication required" });
       return;
     }
     const client = await clientPromise;
@@ -61,14 +61,14 @@ async function userRoute(req, res) {
         const warnUpdateDoc = {
           $set: {'permissions.warned': false},
         };
-        const updatedWarn = await db.collection('users').updateOne(query, warnUpdateDoc);
+        const updatedWarn = await db.collection("users").updateOne(query, warnUpdateDoc);
         const lastEditDoc = {
           $set: {
             'lastEdit.timestamp': Math.floor(Date.now()/1000),
             'lastEdit.by': new ObjectId(user.id),
           },
         };
-        const lastEditUpdate = await db.collection('users').updateOne(query, lastEditDoc);
+        const lastEditUpdate = await db.collection("users").updateOne(query, lastEditDoc);
         res.json(updatedWarn);
       } catch (error) {
         res.status(500).json({ "message": error.data.message });
@@ -76,7 +76,7 @@ async function userRoute(req, res) {
     } else {
       var updateUser = {};
       if (body.username && user.permissions.verified) {
-        const taken = await db.collection('users').countDocuments({ username: body.username.trim().toLowerCase() });
+        const taken = await db.collection("users").countDocuments({ username: body.username.trim().toLowerCase() });
         if (taken > 0) {
           res.status(422).json({ message: "Username is already taken!" });
           return;
@@ -102,14 +102,14 @@ async function userRoute(req, res) {
       const updateDoc = {
         $set: updateUser,
       };
-      const updated = await db.collection('users').updateOne(query, updateDoc);
+      const updated = await db.collection("users").updateOne(query, updateDoc);
       const lastEditDoc = {
         $set: {
           'history.lastEdit.timestamp': Math.floor(Date.now()/1000),
           'history.lastEdit.by': new ObjectId(user.id),
         },
       };
-      const lastEditUpdate = await db.collection('users').updateOne(query, lastEditDoc);
+      const lastEditUpdate = await db.collection("users").updateOne(query, lastEditDoc);
       res.json(updated);
     }
   } else if (req.method === 'DELETE') {
