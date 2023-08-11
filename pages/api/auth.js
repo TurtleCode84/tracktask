@@ -63,8 +63,8 @@ async function authRoute(req, res) {
     }
     //Check if banned
     if (userInfo.permissions.banned) {
-      if (userInfo.history.banReason) {
-        res.status(401).json({ message: 'Your account has been banned for the following reason: ' + userInfo.history.banReason + '. Please contact us at appeals@tracktask.eu.org if you would like to appeal or request more information.' });
+      if (userInfo.history.ban.reason) {
+        res.status(401).json({ message: 'Your account has been banned for the following reason: ' + userInfo.history.ban.reason + '. Please contact us at appeals@tracktask.eu.org if you would like to appeal or request more information.' });
         return;
       } else {
         res.status(401).json({ message: 'Your account has been banned, please contact us at appeals@tracktask.eu.org if you would like to appeal or request more information.' });
@@ -90,7 +90,7 @@ async function authRoute(req, res) {
         },
       };
       const ipUpdate = await db.collection('users').updateOne(query, ipUpdateDoc);
-      const user = { isLoggedIn: true, id: userInfo._id, username: userInfo.username, profilePicture: userInfo.profilePicture, permissions: userInfo.permissions, history: { "banReason": userInfo.history.banReason } };
+      const user = { isLoggedIn: true, id: userInfo._id, username: userInfo.username, profilePicture: userInfo.profilePicture, permissions: userInfo.permissions, history: { "ban": userInfo.history.ban } };
       req.session.user = user;
       await req.session.save();
       res.json(user);
@@ -186,7 +186,11 @@ async function authRoute(req, res) {
           },
           joinedIp: ip,
           loginIpList: [],
-          banReason: "",
+          ban: {
+            reason: "",
+            timestamp: 0,
+            by: "",
+          },
           notes: "",
           warnings: [],
         },

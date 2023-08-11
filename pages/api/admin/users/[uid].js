@@ -89,11 +89,16 @@ async function adminUserRoute(req, res) {
       const updatedAdmin = await db.collection('users').updateOne(query, adminUpdateDoc); // See above
     }
     if (body.warn && body.warning && !body.clearWarnings) {
+      const warningDoc = {
+        reason: body.warning,
+        timestamp: Math.floor(Date.now()/1000),
+        by: new ObjectId(user.id),
+      };
       const warnUpdateDoc = {
         $set: {'permissions.warned': true},
         $push: {
           'history.warnings': {
-            $each: [ body.warning ],
+            $each: [ warningDoc ],
             $position: 0,
           },
         },
@@ -114,7 +119,7 @@ async function adminUserRoute(req, res) {
     }
     if (body.ban !== undefined && body.ban) { // true or false
       const banUpdateDoc = {
-        $set: {'permissions.banned': body.ban, 'history.banReason': body.banReason},
+        $set: {'permissions.banned': body.ban, 'history.ban.reason': body.banReason, 'history.ban.timestamp': Math.floor(Date.now()/1000), 'history.ban.by': new ObjectId(user.id)},
       };
       const updatedBan = await db.collection('users').updateOne(query, banUpdateDoc); // See above
     } else if (body.ban !== undefined && !body.ban) {
@@ -124,7 +129,7 @@ async function adminUserRoute(req, res) {
       const updatedBan = await db.collection('users').updateOne(query, banUpdateDoc); // See above
     } else if (body.ban === undefined && body.banReason) {
       const banReasonUpdateDoc = {
-        $set: {'history.banReason': body.banReason},
+        $set: {'history.ban.reason': body.banReason, 'history.ban.timestamp': Math.floor(Date.now()/1000), 'history.ban.by': new ObjectId(user.id)},
       };
       const updatedBanReason = await db.collection('users').updateOne(query, banReasonUpdateDoc); // See above
     }

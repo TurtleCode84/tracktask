@@ -42,7 +42,7 @@ export default function UserAdmin() {
   if (lookup?.history.warnings) {
     warningList = lookup?.history.warnings.map((warning, index) =>
       <li key={index} style={{ margin: "0.5em" }}>
-        {warning}
+        {warning.reason}
       </li>
     );
   }
