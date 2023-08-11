@@ -30,7 +30,6 @@ async function userRoute(req, res) {
       });
       if (userInfo.history.lastEdit.by !== req.session.user.id) {
         delete userInfo.history.lastEdit.by;
-        userInfo.history.lastEdit.by = false;
       }
       const user = {
         ...req.session.user,
