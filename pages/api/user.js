@@ -28,7 +28,7 @@ async function userRoute(req, res) {
       userInfo.history.warnings.forEach((warning) => {
         delete warning.by;
       });
-      if (userInfo.history.lastEdit.by !== req.session.user.id) {
+      if (userInfo.history.lastEdit.by != req.session.user.id) {
         delete userInfo.history.lastEdit.by;
         userInfo.history.lastEdit.by = false;
       }
