@@ -28,13 +28,17 @@ async function userRoute(req, res) {
       userInfo.history.warnings.forEach((warning) => {
         delete warning.by;
       });
+      if (userInfo.history.lastEdit.by !== req.session.user.id) {
+        delete userInfo.history.lastEdit.by;
+        userInfo.history.lastEdit.by = false;
+      }
       const user = {
         ...req.session.user,
         isLoggedIn: true,
         username: userInfo.username,
         email: userInfo.email,
         profilePicture: userInfo.profilePicture,
-        history: { joined: userInfo.history.joined, ban: { reason: userInfo.history.ban.reason, timestamp: userInfo.history.ban.timestamp }, warnings: userInfo.history.warnings, lastEdit: userInfo.history.lastEdit.timestamp },
+        history: { joined: userInfo.history.joined, ban: { reason: userInfo.history.ban.reason, timestamp: userInfo.history.ban.timestamp }, warnings: userInfo.history.warnings, lastEdit: userInfo.history.lastEdit },
         permissions: userInfo.permissions,
         stats: { tasks: taskCount, collections: collectionCount },
       };
@@ -67,8 +71,8 @@ async function userRoute(req, res) {
         const updatedWarn = await db.collection("users").updateOne(query, warnUpdateDoc);
         const lastEditDoc = {
           $set: {
-            'lastEdit.timestamp': Math.floor(Date.now()/1000),
-            'lastEdit.by': new ObjectId(user.id),
+            'history.lastEdit.timestamp': Math.floor(Date.now()/1000),
+            'history.lastEdit.by': new ObjectId(user.id),
           },
         };
         const lastEditUpdate = await db.collection("users").updateOne(query, lastEditDoc);
