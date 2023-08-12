@@ -81,7 +81,7 @@ export default function UserAdmin() {
         <ul>{warningList?.length > 0 ? warningList : 'No warnings found'}</ul>
       </details>
       <p>Acknowledged last warning: {lookup.history.warnings.length > 0 ? <>{lookup.permissions.warned ? <span style={{ color: "red" }} className="material-symbols-outlined icon-list">close</span> : <span style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">done</span>}</> : 'N\/A'}</p>
-      {!lookup.permissions.banned && <p>Last ban: {lookup.history.ban.timestamp > 0 ? <span title={moment.unix(lookup.history.ban.timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")}>{moment.unix(lookup.history.ban.timestamp).fromNow()} by <User user={user} id={lookup.history.ban.by} link={true}/>{lookup.history.ban.reason && 'for \"' + lookup.history.ban.reason + '\"'}</span> : 'never'}</p>}
+      {!lookup.permissions.banned && <p>Last banned: {lookup.history.ban.timestamp > 0 ? <span title={moment.unix(lookup.history.ban.timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")}>{moment.unix(lookup.history.ban.timestamp).fromNow()} by <User user={user} id={lookup.history.ban.by} link={true}/>{lookup.history.ban.reason && ' for \"' + lookup.history.ban.reason + '\"'}</span> : 'never'}</p>}
       <hr/>
       <details>
         <summary>Edit user info</summary>
