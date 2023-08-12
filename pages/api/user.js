@@ -89,7 +89,7 @@ async function userRoute(req, res) {
           res.status(422).json({ message: "Username length must be within 3 to 20 characters." });
           return;
         }
-        const splitUsername = body.cleanUsername.split('');
+        const splitUsername = cleanUsername.split('');
         var contains = blacklist.some(element => { // Check for blacklisted elements
           if (cleanUsername.includes(element.toLowerCase())) {
             return true;
