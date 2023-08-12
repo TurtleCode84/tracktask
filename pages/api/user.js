@@ -1,5 +1,6 @@
 import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "lib/session";
+import { allowedChars } from "lib/allowedChars";
 import { ObjectId } from 'mongodb'
 import clientPromise from "lib/mongodb";
 import { compare, hash } from 'bcryptjs';
@@ -80,20 +81,56 @@ async function userRoute(req, res) {
         res.status(500).json({ "message": error.data.message });
       }
     } else {
+      const blacklist = process.env.BLACKLIST.split(',');
       var updateUser = {};
       if (body.username && user.permissions.verified) {
-        const taken = await db.collection("users").countDocuments({ username: body.username.trim().toLowerCase() });
+        const cleanUsername = body.username.trim().toLowerCase();
+        if (cleanUsername.length < 3 || cleanUsername.length > 20) {
+          res.status(422).json({ message: "Username length must be within 3 to 20 characters." });
+          return;
+        }
+        const splitUsername = body.cleanUsername.split('');
+        var contains = blacklist.some(element => { // Check for blacklisted elements
+          if (cleanUsername.includes(element.toLowerCase())) {
+            return true;
+          }
+        });
+        if (!cleanUsername) {
+          contains = true;
+        }
+        for (var i=0; i<splitUsername.length; i++) { // Check for disallowed username characters
+          if (!allowedChars.includes(splitUsername[i])) {
+            contains = true;
+          }
+        }
+        if (contains && blacklist) { // Figure out a way to do this when no blacklist is provided
+          res.status(403).json({ message: "The username you provided is not allowed, please choose something else." });
+          return;
+        }
+        const taken = await db.collection("users").countDocuments({ username: cleanUsername });
         if (taken > 0) {
           res.status(422).json({ message: "Username is already taken!" });
           return;
         } else {
-          updateUser.username = body.username.trim().toLowerCase();
+          updateUser.username = cleanUsername;
         }
       } else if (body.username) {
         res.status(401).json({ message: "Only verified users can change their username!" });
         return;
       }
-      if (body.email !== undefined) {updateUser.email = body.email.trim().toLowerCase()}
+      if (body.email !== undefined) {
+        const cleanEmail = body.email.trim().toLowerCase();
+        var contains = blacklist.some(element => { // Check for blacklisted elements
+          if (cleanEmail.includes(element.toLowerCase())) {
+            return true;
+          }
+        });
+        if (contains && blacklist) { // Figure out a way to do this when no blacklist is provided
+          res.status(403).json({ message: "The email you provided is not allowed, please choose something else." });
+          return;
+        }
+        updateUser.email = cleanEmail;
+      }
       if (body.newPassword && body.oldPassword) {
         const currPass = await db.collection("users").findOne(query, { projection: { password: 1 } }); // current password hash
         const passwordMatch = await compare(body.oldPassword, currPass.password); // string vs hash

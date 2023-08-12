@@ -5,7 +5,7 @@ export default function CollectionShareForm({ errorMessage, onSubmit }) {
     <form id="collectionShareForm" autocomplete="off" onSubmit={onSubmit}>
       <label>
         <span>Username</span>
-        <input type="text" name="username" maxlength="55" required />
+        <input type="text" name="username" required />
       </label>
       <label>
         <span>Role</span>

@@ -3,6 +3,7 @@ import { compare, hash } from 'bcryptjs';
 import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "lib/session";
 import fetchJson from "lib/fetchJson";
+import { allowedChars } from "lib/allowedChars";
 
 export default withIronSessionApiRoute(authRoute, sessionOptions);
 
@@ -136,7 +137,6 @@ async function authRoute(req, res) {
     }
     
     const blacklist = process.env.BLACKLIST.split(',');
-    const allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890";
     const cleanUsername = username.trim().toLowerCase();
     const splitUsername = cleanUsername.split('');
     const cleanEmail = email.trim().toLowerCase();
