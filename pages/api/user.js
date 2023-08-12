@@ -115,7 +115,7 @@ async function userRoute(req, res) {
           updateUser.username = cleanUsername;
         }
       } else if (body.username) {
-        res.status(401).json({ message: "Only verified users can change their username!" });
+        res.status(403).json({ message: "Only verified users can change their username!" });
         return;
       }
       if (body.email !== undefined) {
