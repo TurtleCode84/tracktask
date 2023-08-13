@@ -490,7 +490,7 @@ async function dataRoute(req, res) {
         };
         if (body.name) {updateDoc.name = body.name.trim().slice(0, 55)} // Enforce length limit
         if (body.description) {updateDoc.description = body.description.trim().slice(0, 500)}
-        if (body.shared !== undefined) {
+        if (body.shared !== undefined && user.permissions.verified) {
           updateDoc = {
             $set: {
               ...updateDoc,

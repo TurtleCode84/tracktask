@@ -21,10 +21,6 @@ export default function Collection() {
   const { data: collection, error } = useData(user, "collections", collectionId, false);
   
   const [errorMsg, setErrorMsg] = useState("");
-  var clientError;
-  /*if (collections && !collection) {
-    clientError = "No collection found";
-  }*/
   var sharedColor = "lightslategray";
   if (collection?.owner !== user?.id) {
     sharedColor = "#006dbe";
@@ -108,7 +104,7 @@ export default function Collection() {
         </details></>}
         {collection.owner !== user.id && <><br/><ReportButton user={user} type="collection" reported={collection}/></>}</>
       :
-        <>{error || clientError ? <p>{clientError ? clientError : error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading collection...</p>}</>
+        <>{error ? <p>{error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading collection...</p>}</>
       }
     </Layout>
   );
