@@ -25,6 +25,20 @@ export default function Collection() {
   if (collection?.owner !== user?.id) {
     sharedColor = "#006dbe";
   }
+  const titleInfo = {
+    hover: "Private",
+    iconColor: "lightslategray",
+    iconName: "lock",
+  };
+  if (collection?.pending) {
+    titleInfo.hover = "Share Request";
+    titleInfo.iconColor = sharedColor;
+    titleInfo.iconName = "share_reviews";
+  } else if (collection?.sharing.shared) {
+    titleInfo.hover = "Shared";
+    titleInfo.iconColor = sharedColor;
+    titleInfo.iconName = "group";
+  }
   const taskList = collection?.tasks?.map((task) =>
     <Task task={task} key={task._id}/>
   );
@@ -41,16 +55,19 @@ export default function Collection() {
       <Loading/>
     );
   }
-  if (collection?.pending) {
-    router.push(`/collections/${collectionId}/pending`);
-    return;
-  }
   
   return (
     <Layout>
-      <h2>{collection?.sharing.shared ? <span title="Shared" style={{ color: sharedColor }} className="material-symbols-outlined">group</span> : <span title="Private" style={{ color: "lightslategray" }} className="material-symbols-outlined">lock</span>}{' '}{collection ? <>{collection.name}:</> : 'Loading...'}</h2>
+      <h2>{collection ? <><span title={titleInfo.hover} style={{ color: titleInfo.iconColor }} className="material-symbols-outlined">{titleInfo.iconName}</span>{' '}{collection.pending ? <>Share request for &quot;{collection.name}&quot;:</> : collection.name}</> : 'Loading...'}</h2>
       <Link href="/dashboard">Back to dashboard</Link><br/>
       {collection ?
+        <>{collection.pending ?
+        <><h3>Preview information:</h3>
+        <p>Shared by: <User user={user} id={collection.owner}/></p>
+        <p>Description:</p>{' '}<textarea value={collection.description} rows="4" cols="70" disabled /><br/>
+        <p title={collection.created > 0 ? moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a") : 'Never'}>Created: {collection.created > 0 ? <>{moment.unix(collection.created).fromNow()}</> : 'never'}</p>
+        <p style={{ fontStyle: "italic" }}>Eventually, you will be able to accept or reject this request.</p></>
+        :
         <><h3>General information</h3>
         <p>Description:</p>{' '}<textarea value={collection.description} rows="8" cols="70" disabled /><br/>
         <p title={collection.created > 0 ? moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a") : 'Never'}>Created: {collection.created > 0 ? <>{moment.unix(collection.created).fromNow()}</> : 'never'}</p>
@@ -102,7 +119,8 @@ export default function Collection() {
             }}
         />
         </details></>}
-        {collection.owner !== user.id && <><br/><ReportButton user={user} type="collection" reported={collection}/></>}</>
+        </>}
+        {collection.owner !== user.id && <><br/><ReportButton user={user} type={collection.pending ? "share" : "collection"} reported={collection}/></>}</>
       :
         <>{error ? <p>{error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading collection...</p>}</>
       }
