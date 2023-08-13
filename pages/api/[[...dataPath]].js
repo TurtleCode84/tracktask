@@ -473,24 +473,21 @@ async function dataRoute(req, res) {
 
     } else if (req.method === 'PATCH') { // Updates or adds/removes tasks from a collection
 
-      // Make sure there is a valid task ID to delete
-      /*if (dataPath[1] && !ObjectId.isValid(dataPath[1])) {
-
-        res.status(422).json({ message: "Invalid task ID" });
+      // Make sure there is a valid collection ID to update
+      if (dataPath[1] && !ObjectId.isValid(dataPath[1])) {
+        res.status(422).json({ message: "Invalid collection ID" });
         return;
+      }
 
-      } else {
+      const body = await req.body;
+      var updateDoc = {};
 
-        const body = await req.body;
+      if (dataPath[1]) { // Updating a specific collection
         const query = {
-          _id: new ObjectId(id),
+          _id: new ObjectId(dataPath[1]),
           hidden: false,
           owner: new ObjectId(user.id),
         };
-        var updateDoc = {};
-
-        if (dataPath[1]) {} // Updating collection
-
         if (body.name) {updateDoc.name = body.name.trim().slice(0, 55)} // Enforce length limit
         if (body.description) {updateDoc.description = body.description.trim().slice(0, 500)}
         if (body.shared !== undefined) {
@@ -505,6 +502,14 @@ async function dataRoute(req, res) {
             $set: updateDoc,
           }
         }
+        try {
+          const updatedCollection = await db.collection("collections").updateOne(query, updateDoc);
+          res.json(updatedCollection);
+        } catch (error) {
+          res.status(500).json(error);
+          return;
+        }
+      } else { // Adding a task to collections
         var addCollectionsId = [];
         if (body.addCollections) {
           for (var i=0; i<body.addCollections.length; i++) {
@@ -518,19 +523,19 @@ async function dataRoute(req, res) {
           }
         }
         try {
-          const updatedCollection = await db.collection("collections").updateOne(query, updateDoc);
+          var updatedCollections;
           if (addCollectionsId.length > 0) {
             const addCollectionsQuery = {
               _id: {
                 $in: addCollectionsId,
               },
               tasks: {
-                $nin: [new ObjectId(id)],
+                $nin: [new ObjectId(body.taskId)],
               },
               hidden: false,
               owner: new ObjectId(user.id),
             };
-            const addedTasks = await db.collection("collections").updateMany(addCollectionsQuery, {$push: {tasks: new ObjectId(id)}});
+            updatedCollections = await db.collection("collections").updateMany(addCollectionsQuery, {$push: {tasks: new ObjectId(body.taskId)}});
           }
           if (removeCollectionsId.length > 0) {
             const removeCollectionsQuery = {
@@ -538,23 +543,19 @@ async function dataRoute(req, res) {
                 $in: removeCollectionsId,
               },
               tasks: {
-                $in: [new ObjectId(id)],
+                $in: [new ObjectId(body.taskId)],
               },
               hidden: false,
               owner: new ObjectId(user.id),
             };
-            const removedTasks = await db.collection("collections").updateMany(removeCollectionsQuery, {$pull: {tasks: new ObjectId(id)}});
+            updatedCollections = await db.collection("collections").updateMany(removeCollectionsQuery, {$pull: {tasks: new ObjectId(body.taskId)}});
           }
-          res.json(updatedCollection);
+          res.json(updatedCollections); // Output whatever updates last
         } catch (error) {
           res.status(500).json(error);
           return;
         }
-
-      }*/
-
-      res.status(503).json({ message: "Under construction" });
-      return;
+      }
 
     } else if (req.method === 'PUT') {
 
@@ -582,84 +583,7 @@ async function dataRoute(req, res) {
   } else if (req.method === 'DELETE') { // Deletes a task or collection
     
   } else if (req.method === 'PATCH') { // Updates a task or collection
-    const body = await req.body;
-    const { id, collection } = req.query;
-    if (!ObjectId.isValid(id)) {
-      res.status(422).json({ message: "Invalid object ID" });
-      return;
-    }
-    const query = {
-      _id: new ObjectId(id),
-      hidden: false,
-      $or: [
-        { owner: new ObjectId(user.id) },
-        { 'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user.id), role: "editor"}} },
-      ],
-    };
-    var updateDoc = {};
-    if (collection !== "true") {
-      
-    } else {
-      if (body.name) {updateDoc.name = body.name.trim().slice(0, 55)} // If you're really going to try to pass the limit via API...
-      if (body.description) {updateDoc.description = body.description.trim().slice(0, 500)}
-      if (body.shared !== undefined) { // Find a better way to do this
-        updateDoc = {
-          $set: {
-            ...updateDoc,
-            'sharing.shared': body.shared,
-          },
-        }
-      } else {
-        updateDoc = {
-          $set: updateDoc,
-        }
-      }
-      var addCollectionsId = [];
-      if (body.addCollections) {
-        for (var i=0; i<body.addCollections.length; i++) {
-          addCollectionsId[i] = new ObjectId(body.addCollections[i]);
-        }
-      }
-      var removeCollectionsId = [];
-      if (body.removeCollections) {
-        for (var i=0; i<body.removeCollections.length; i++) {
-          removeCollectionsId[i] = new ObjectId(body.removeCollections[i]);
-        }
-      }
-      try {
-        const updatedCollection = await db.collection("collections").updateOne(query, updateDoc);
-        if (addCollectionsId.length > 0) {
-          const addCollectionsQuery = {
-            _id: {
-              $in: addCollectionsId,
-            },
-            tasks: {
-              $nin: [new ObjectId(id)],
-            },
-            hidden: false,
-            owner: new ObjectId(user.id),
-          };
-          const addedTasks = await db.collection("collections").updateMany(addCollectionsQuery, {$push: {tasks: new ObjectId(id)}});
-        }
-        if (removeCollectionsId.length > 0) {
-          const removeCollectionsQuery = {
-            _id: {
-              $in: removeCollectionsId,
-            },
-            tasks: {
-              $in: [new ObjectId(id)],
-            },
-            hidden: false,
-            owner: new ObjectId(user.id),
-          };
-          const removedTasks = await db.collection("collections").updateMany(removeCollectionsQuery, {$pull: {tasks: new ObjectId(id)}});
-        }
-        res.json(updatedCollection);
-      } catch (error) {
-        res.status(500).json(error);
-        return;
-      }
-    }
+    
   } else if (req.method === 'PUT') { // Shares a collection
     const { username, role } = await req.body;
     const { id } = req.query;
