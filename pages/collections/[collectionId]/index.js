@@ -89,7 +89,7 @@ export default function Collection() {
               if (event.currentTarget.shared && event.currentTarget.shared.checked !== event.currentTarget.shared.defaultChecked) {body.shared = event.currentTarget.shared.checked}
 
               try {
-                await fetchJson(`/api/tasks?collection=true&id=${collection._id}`, {
+                await fetchJson(`/api/collections/${collection._id}`, {
                   method: "PATCH",
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify(body),
