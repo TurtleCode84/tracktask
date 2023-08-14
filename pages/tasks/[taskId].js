@@ -8,6 +8,7 @@ import ReportButton from "components/ReportButton";
 import useUser from "lib/useUser";
 import useData from "lib/useData";
 import fetchJson, { FetchError } from "lib/fetchJson";
+import stringToColor from "lib/stringToColor";
 import { useRouter } from 'next/router';
 import moment from "moment";
 import Link from "next/link";
@@ -34,6 +35,9 @@ export default function Task() {
       }
     }
   }
+  const collectionTags = task?.collections.map((item, index) =>
+    <span key={index} style={{fontSize: "18px", verticalAlign: "2px", backgroundColor: stringToColor(item.name), padding: "0.5px 4px", borderStyle: "solid", borderWidth: "2px", borderColor: "var(--inset-border-color)", borderRadius: "7px", color: "#111", marginRight: "6px", display: "inline-block", filter: "grayscale(0.4) brightness(1.5)" }}>{item.name}</span>
+  );
     
   if (!user || !user.isLoggedIn || user.permissions.banned) {
     return (
@@ -43,7 +47,7 @@ export default function Task() {
   
   return (
     <Layout>
-      <h2>{task ? <>{task.completion.completed > 0 ? <><span title="Completed" style={{ color: "darkgreen" }} className="material-symbols-outlined">task_alt</span>{' '}</> : null}{task.priority ? <><span title="Priority" style={{ color: "red" }} className="material-symbols-outlined">priority_high</span>{' '}</> : null}{task.name}:</> : 'Loading...'}</h2>
+      <h2>{task ? <>{task.completion.completed > 0 ? <span title="Completed" style={{ color: "darkgreen", marginRight: "8px" }} className="material-symbols-outlined">task_alt</span> : null}{task.priority ? <span title="Priority" style={{ color: "red", marginRight: "8px" }} className="material-symbols-outlined">priority_high</span> : null}{collectionTags.length > 0 && collectionTags}{task.name}:</> : 'Loading...'}</h2>
       <Link href="/dashboard">Back to dashboard</Link><br/>
       {task ?
         <><h3>General information</h3>
