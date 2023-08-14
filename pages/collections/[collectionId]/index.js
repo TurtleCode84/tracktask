@@ -22,22 +22,19 @@ export default function Collection() {
   
   const [errorMsg, setErrorMsg] = useState("");
   var sharedColor = "lightslategray";
-  if (collection?.owner !== user?.id) {
+  if (collection?.pending || collection?.owner !== user?.id) {
     sharedColor = "#006dbe";
   }
   const titleInfo = {
     hover: "Private",
-    iconColor: "lightslategray",
-    iconName: "lock",
+    icon: "lock",
   };
   if (collection?.pending) {
     titleInfo.hover = "Share Request";
-    titleInfo.iconColor = sharedColor;
-    titleInfo.iconName = "share_reviews";
+    titleInfo.icon = "share_reviews";
   } else if (collection?.sharing.shared) {
     titleInfo.hover = "Shared";
-    titleInfo.iconColor = sharedColor;
-    titleInfo.iconName = "group";
+    titleInfo.icon = "group";
   }
   const taskList = collection?.tasks?.map((task) =>
     <Task task={task} key={task._id}/>
@@ -58,7 +55,7 @@ export default function Collection() {
   
   return (
     <Layout>
-      <h2>{collection ? <><span title={titleInfo.hover} style={{ color: titleInfo.iconColor }} className="material-symbols-outlined">{titleInfo.iconName}</span>{' '}{collection.pending ? <>Share request for &quot;{collection.name}&quot;:</> : collection.name}</> : 'Loading...'}</h2>
+      <h2>{collection ? <><span title={titleInfo.hover} style={{ color: sharedColor }} className="material-symbols-outlined">{titleInfo.icon}</span>{' '}{collection.pending ? <>Share request for &quot;{collection.name}&quot;</> : collection.name}:</> : 'Loading...'}</h2>
       <Link href="/dashboard">Back to dashboard</Link><br/>
       {collection ?
         <>{collection.pending ?
