@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import moment from "moment";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
@@ -22,14 +22,18 @@ export default function CollectionShare() {
   const sharedWithList = collection?.sharing.sharedWith.map((item) =>
     <li key={item.id} style={{ paddingBottom: "5px" }}><User user={user} id={item.id}/> <span style={{ fontSize: "80%", fontStyle: "italic", color: "darkgray" }}>({item.role.split('-')[0]})</span></li>
   );
+
+  useEffect(() => {
+    if (!user.permissions.verified || user.id !== collection?.owner) {
+      router.push(`/collections/${collectionId}`);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   
   if (!user || !user.isLoggedIn || user.permissions.banned) {
     return (
       <Loading/>
     );
-  } else if (!user.permissions.verified || user.id !== collection?.owner) { // Due to data load times, this unfortunately means you can't navigate to this page without a pre-rendered link
-    router.push(`/collections/${collectionId}`);
-    return;
   }
   return (
     <Layout>
