@@ -39,7 +39,7 @@ export default function Collection() {
   const taskList = collection?.tasks?.map((task) =>
     <Task task={task} key={task._id}/>
   );
-  const sharedWithList = collection?.sharing.sharedWith.map((item) =>
+  const sharedWithList = collection?.sharing?.sharedWith?.map((item) =>
     <li key={item.id} style={{ paddingBottom: "5px" }}><User user={user} id={item.id}/> <span style={{ fontSize: "80%", fontStyle: "italic", color: "darkgray" }}>({item.role.split('-')[0]})</span></li>
   );
   var currentUserRole = collection?.sharing?.sharedWith?.filter(item => item.id === user?.id)?.[0]?.role.split('-')[0];
