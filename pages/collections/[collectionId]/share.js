@@ -9,7 +9,6 @@ import useData from "lib/useData";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import Custom404 from "pages/404";
 
 export default function CollectionShare() {
   const { user } = useUser({
@@ -28,8 +27,9 @@ export default function CollectionShare() {
     return (
       <Loading/>
     );
-  } else if (!user.permissions.verified || user.id !== collection?.owner) {
-    return <Custom404/>
+  } else if (!user.permissions.verified || user.id !== collection?.owner) { // Due to data load times, this unfortunately means you can't navigate to this page without a pre-rendered link
+    router.push(`/collections/${collectionId}`);
+    return;
   }
   return (
     <Layout>
