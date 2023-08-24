@@ -28,9 +28,12 @@ export default function CollectionShare() {
       <Loading/>
     );
   }
-  if (!user.permissions.verified || user?.id !== collection?.owner) {
-    router.push(`/collections/${collectionId}`);
-    return;
+  if (!user.permissions.verified || user.id !== collection?.owner) {
+    return (
+      <Layout>
+        <h3>You do not have permission to view this page!</h3>
+      </Layout>
+    );
   }
   return (
     <Layout>
