@@ -24,7 +24,7 @@ export default function CollectionShare() {
   );
 
   useEffect(() => {
-    if (!user.permissions.verified || user.id !== collection?.owner) {
+    if (!user?.permissions.verified || user?.id !== collection?.owner) {
       router.push(`/collections/${collectionId}`);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
