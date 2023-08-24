@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import moment from "moment";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
@@ -22,21 +22,15 @@ export default function CollectionShare() {
   const sharedWithList = collection?.sharing.sharedWith.map((item) =>
     <li key={item.id} style={{ paddingBottom: "5px" }}><User user={user} id={item.id}/> <span style={{ fontSize: "80%", fontStyle: "italic", color: "darkgray" }}>({item.role.split('-')[0]})</span></li>
   );
-
-  useEffect(() => {
-    if (!user?.permissions.verified || user?.id !== collection?.owner) {
-      router.push(`/collections/${collectionId}`);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
   
-  if (!user || !user.isLoggedIn || user.permissions.banned) {
+  if (!user || !user.isLoggedIn || user.permissions.banned || !collection) {
     return (
       <Loading/>
     );
   }
   return (
     <Layout>
+      {user?.permissions.verified || user?.id !== collection?.owner ? <>
       <h1>Share settings for {collection ? <>&quot;{collection.name}&quot;</> : 'a collection'}:</h1>
       <p>Back to <Link href={`/collections/${collection?._id}`}>collection</Link> or <Link href="/dashboard">dashboard</Link></p>
       {collection ?
@@ -103,6 +97,12 @@ export default function CollectionShare() {
       </>
       :
         <>{error ? <p>{error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading collection...</p>}</>
+      }
+      </>
+      :
+      <><h1 style={{marginBottom: "0px", marginTop: "60px"}}><span style={{color: "lightslategray", fontSize: "inherit"}} className="material-symbols-outlined">lock</span> 403: You don&apos;t have access to this page.</h1>
+      <h3>We&apos;re not sure how you got here, but you don&apos;t have permission to view this page. Maybe you aren&apos;t logged in?</h3>
+      <p>In the meantime, you probably want to go back to <Link href="/">a page you can access</Link>?</p></>
       }
     </Layout>
   );
