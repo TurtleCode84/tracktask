@@ -20,7 +20,7 @@ export default function CollectionShare() {
   
   const [errorMsg, setErrorMsg] = useState("");
   const sharedWithList = collection?.sharing.sharedWith.map((item) =>
-    <li key={item.id}><User user={user} id={item.id}/></li>
+    <li key={item.id} style={{ paddingBottom: "5px" }}><User user={user} id={item.id}/> <span style={{ fontSize: "80%", fontStyle: "italic", color: "darkgray" }}>({item.role.split('-')[0]})</span></li>
   );
   
   if (!user || !user.isLoggedIn || user.permissions.banned) {
@@ -28,16 +28,23 @@ export default function CollectionShare() {
       <Loading/>
     );
   }
-  if (!user.permissions.verified) {
+  if (!user.permissions.verified || user.id !== collection?.owner) {
     router.push(`/collections/${collectionId}`);
     return;
   }
   return (
     <Layout>
-      <h1>Share {collection ? <>&quot;{collection.name}&quot;</> : 'a collection'}:</h1>
+      <h1>Share settings for {collection ? <>&quot;{collection.name}&quot;</> : 'a collection'}:</h1>
       <p>Back to <Link href={`/collections/${collection?._id}`}>collection</Link> or <Link href="/dashboard">dashboard</Link></p>
       {collection ?
       <>
+      {collection.sharing.shared ?
+      <><h3>Currently shared with:</h3>
+      <p><ul>{sharedWithList.length > 0 ? sharedWithList : <li>Nobody!</li>}</ul></p></>
+      :
+      <><h3>Sharing is currently disabled for this collection.</h3></>
+      }
+      <details><summary>Add a new user</summary>
       <CollectionShareForm
         errorMessage={errorMsg}
         onSubmit={async function handleSubmit(event) {
@@ -65,7 +72,7 @@ export default function CollectionShare() {
             document.getElementById("shareCollectionBtn").disabled = false;
           }
         }}
-      />
+      /></details>
       </>
       :
         <>{error ? <p>{error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading collection...</p>}</>
