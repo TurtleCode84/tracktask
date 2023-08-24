@@ -33,8 +33,8 @@ export default function CollectionShare() {
       {user?.permissions.verified && user?.id === collection?.owner ? <>
       <h1>Share settings for {collection ? <>&quot;{collection.name}&quot;</> : 'a collection'}:</h1>
       <p>Back to <Link href={`/collections/${collection?._id}`}>collection</Link> or <Link href="/dashboard">dashboard</Link></p>
-      {collection ?
-      <>
+      {/*collection ?
+      <>*/}
       {collection.sharing.shared ?
       <><h3>Currently shared with:</h3>
       <p><ul>{sharedWithList.length > 0 ? sharedWithList : <li>Nobody!</li>}</ul></p></>
@@ -94,10 +94,10 @@ export default function CollectionShare() {
           }
         }}
       /></details>
-      </>
+      {/*</>
       :
         <>{error ? <p>{error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading collection...</p>}</>
-      }
+      */}
       </>
       :
       <><h1 style={{marginBottom: "0px", marginTop: "60px"}}><span style={{color: "lightslategray", fontSize: "inherit"}} className="material-symbols-outlined">lock</span> 403: You don&apos;t have access to this page.</h1>
