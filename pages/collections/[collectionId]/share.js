@@ -28,7 +28,7 @@ export default function CollectionShare() {
       <Loading/>
     );
   }
-  if (!user.permissions.verified || user.id !== collection?.owner) {
+  if (!user.permissions.verified || user?.id !== collection?.owner) {
     router.push(`/collections/${collectionId}`);
     return;
   }
@@ -42,9 +42,33 @@ export default function CollectionShare() {
       <><h3>Currently shared with:</h3>
       <p><ul>{sharedWithList.length > 0 ? sharedWithList : <li>Nobody!</li>}</ul></p></>
       :
-      <><h3>Sharing is currently disabled for this collection.</h3></>
+      <><p style={{ fontStyle: "italic" }}>Sharing is currently disabled for this collection.</p>
+      <a href={`/api/collections/${collection._id}`}
+        onClick={async (e) => {
+          e.preventDefault();
+          document.getElementById("enableSharingBtn").disabled = true;
+          const body = {
+            shared: true,
+          };
+          try {
+            await fetchJson(`/api/collections/${collection._id}`, {
+              method: "PATCH",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(body),
+            })
+            router.reload();
+          } catch (error) {
+            if (error instanceof FetchError) {
+              setErrorMsg(error.data.message);
+            } else {
+              console.error("An unexpected error happened:", error);
+            }
+            document.getElementById("enableSharingBtn").disabled = false;
+          }
+        }}
+        ><button id="enableSharingBtn">Enable sharing <span style={{ color: "lightslategray" }} className="material-symbols-outlined icon-list">group</span></button></a></>
       }
-      <details><summary>Add a new user</summary>
+      <details><summary>Add a new user</summary><br/>
       <CollectionShareForm
         errorMessage={errorMsg}
         onSubmit={async function handleSubmit(event) {
