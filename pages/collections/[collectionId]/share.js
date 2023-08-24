@@ -9,7 +9,7 @@ import useData from "lib/useData";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import ErrorPage from "next/error";
+import Custom404 from "404";
 
 export default function CollectionShare() {
   const { user } = useUser({
@@ -29,7 +29,7 @@ export default function CollectionShare() {
       <Loading/>
     );
   } else if (!user.permissions.verified || user.id !== collection?.owner) {
-    return <ErrorPage statusCode={404} />
+    return <Custom404/>
   }
   return (
     <Layout>
