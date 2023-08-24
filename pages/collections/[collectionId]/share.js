@@ -23,10 +23,14 @@ export default function CollectionShare() {
     <li key={item.id} style={{ paddingBottom: "5px" }}><User user={user} id={item.id}/> <span style={{ fontSize: "80%", fontStyle: "italic", color: "darkgray" }}>({item.role.split('-')[0]})</span></li>
   );
   
-  if (!user || !user.isLoggedIn || user.permissions.banned || !user.permissions.verified || user.id !== collection?.owner) {
+  if (!user || !user.isLoggedIn || user.permissions.banned) {
     return (
       <Loading/>
     );
+  } else if (!user.permissions.verified || user.id !== collection?.owner) {
+    return {
+      notFound: true,
+    }
   }
   return (
     <Layout>
@@ -62,7 +66,7 @@ export default function CollectionShare() {
             document.getElementById("enableSharingBtn").disabled = false;
           }
         }}
-        ><button id="enableSharingBtn">Enable sharing <span style={{ color: "lightslategray" }} className="material-symbols-outlined icon-list">group</span></button></a></>
+        ><button id="enableSharingBtn">Enable sharing <span style={{ color: "lightslategray" }} className="material-symbols-outlined icon-list">group</span></button></a><br/></>
       }
       <details><summary>Add a new user</summary><br/>
       <CollectionShareForm
