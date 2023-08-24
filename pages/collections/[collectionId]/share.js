@@ -23,16 +23,9 @@ export default function CollectionShare() {
     <li key={item.id} style={{ paddingBottom: "5px" }}><User user={user} id={item.id}/> <span style={{ fontSize: "80%", fontStyle: "italic", color: "darkgray" }}>({item.role.split('-')[0]})</span></li>
   );
   
-  if (!user || !user.isLoggedIn || user.permissions.banned) {
+  if (!user || !user.isLoggedIn || user.permissions.banned || !user.permissions.verified || user.id !== collection?.owner) {
     return (
       <Loading/>
-    );
-  }
-  if (!user.permissions.verified || user.id !== collection?.owner) {
-    return (
-      <Layout>
-        <h3>You do not have permission to view this page!</h3>
-      </Layout>
     );
   }
   return (
