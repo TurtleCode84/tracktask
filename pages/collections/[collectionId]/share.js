@@ -9,7 +9,7 @@ import useData from "lib/useData";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import Custom404 from "404";
+import Custom404 from "pages/404";
 
 export default function CollectionShare() {
   const { user } = useUser({
