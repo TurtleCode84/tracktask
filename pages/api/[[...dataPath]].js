@@ -557,7 +557,7 @@ async function dataRoute(req, res) {
         }
       }
 
-    } else if (req.method === 'PUT') {
+    } else if (req.method === 'PUT') { // Shares a collection
 
       res.status(503).json({ message: "Under construction" });
       return;
