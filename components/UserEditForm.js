@@ -54,14 +54,14 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
       </label><hr/>
       <label>
         <span>Profile picture</span>
-        <input type="url" name="profilePicture" defaultValue={user.profilePicture} />
+        <input type="text" pattern="(^https?:\/\/.*?\..{2,}?|^\/.*?)" oninvalid="this.setCustomValidity('Please enter a valid URL.')" oninput="this.setCustomValidity('')" name="profilePicture" defaultValue={user.profilePicture} />
         <details style={{ fontSize: "80%", color: "gray" }}>
         <summary>Allowed image hosts</summary>
           <ul>
             <li>tracktask.eu.org</li>
             <li>avatars.githubusercontent.com</li>
             <li>u.cubeupload.com</li>
-            <li>i.bb.com</li>
+            <li>i.ibb.co</li>
             <li>api.wasteof.money</li>
           </ul>
         </details>

@@ -20,7 +20,7 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
       </label><hr/>
       <label>
         <span>Profile picture</span>
-        <input type="text" pattern="(^https?:\/\/.*?\..{2,}?|^\/.*?)" name="profilePicture" defaultValue={lookup.profilePicture} />
+        <input type="text" pattern="(^https?:\/\/.*?\..{2,}?|^\/.*?)" oninvalid="this.setCustomValidity('Please enter a valid URL.')" oninput="this.setCustomValidity('')" name="profilePicture" defaultValue={lookup.profilePicture} />
       </label>
       <label>
         <span>Admin notes</span>
