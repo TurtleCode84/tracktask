@@ -31,7 +31,7 @@ export default function CollectionShare() {
   return (
     <Layout>
       {user.permissions.verified && user.id === collection.owner ? <>
-      <h1>Share settings for {collection ? <>&quot;{collection.name}&quot;</> : 'a collection'}:</h1>
+      <h2>Share settings for {collection ? <>&quot;{collection.name}&quot;</> : 'a collection'}:</h2>
       <p>Back to <Link href={`/collections/${collection?._id}`}>collection</Link> or <Link href="/dashboard">dashboard</Link></p>
       {collection.sharing.shared ?
       <><h3>Currently shared with:</h3>
