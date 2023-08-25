@@ -20,7 +20,7 @@ export default function CollectionShare() {
   
   const [errorMsg, setErrorMsg] = useState("");
   const sharedWithList = collection?.sharing.sharedWith.map((item) =>
-    <li key={item.id} style={{ paddingBottom: "5px" }}><User user={user} id={item.id}/> <span style={{ fontSize: "80%", fontStyle: "italic", color: "darkgray" }}>({item.role.split('-')[0]})</span></li>
+    <details id={item.id} key={item.id} style={{ marginBottom: "5px", marginLeft: "23px" }}><summary><User user={user} id={item.id}/> <span style={{ fontSize: "80%", fontStyle: "italic", color: "darkgray" }}>({item.role.split('-')[0]})</span></summary>placeholder</details>
   );
   
   if (!user || !user.isLoggedIn || user.permissions.banned || !collection) { // We need to know the collection details before we show the page
@@ -35,7 +35,7 @@ export default function CollectionShare() {
       <p>Back to <Link href={`/collections/${collection?._id}`}>collection</Link> or <Link href="/dashboard">dashboard</Link></p>
       {collection.sharing.shared ?
       <><h3>Currently shared with:</h3>
-      <p><ul>{sharedWithList.length > 0 ? sharedWithList : <li>Nobody!</li>}</ul></p>
+      {sharedWithList.length > 0 ? <div style={{ marginBottom: "10px" }}>sharedWithList</div> : <ul style={{ marginBottom: "20px" }}><li>Nobody!</li></ul>}
       <a href={`/api/collections/${collection._id}`}
         onClick={async (e) => {
           e.preventDefault();
