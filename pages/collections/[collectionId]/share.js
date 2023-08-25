@@ -35,7 +35,7 @@ export default function CollectionShare() {
       <p>Back to <Link href={`/collections/${collection?._id}`}>collection</Link> or <Link href="/dashboard">dashboard</Link></p>
       {collection.sharing.shared ?
       <><h3>Currently shared with:</h3>
-      {sharedWithList.length > 0 ? <div style={{ marginBottom: "10px" }}>sharedWithList</div> : <ul style={{ marginBottom: "20px" }}><li>Nobody!</li></ul>}
+      {sharedWithList.length > 0 ? <div style={{ marginBottom: "10px" }}>{sharedWithList}</div> : <ul style={{ marginBottom: "20px" }}><li>Nobody!</li></ul>}
       <a href={`/api/collections/${collection._id}`}
         onClick={async (e) => {
           e.preventDefault();
