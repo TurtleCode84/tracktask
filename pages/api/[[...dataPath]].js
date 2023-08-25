@@ -237,7 +237,7 @@ async function dataRoute(req, res) {
         const deletedTask = await db.collection("tasks").deleteOne(query);
         res.json(deletedTask);
       } catch (error) {
-        res.status(500).json(error);
+        res.status(500).json({ message: error.message });
         return;
       }
 
@@ -467,7 +467,7 @@ async function dataRoute(req, res) {
         const deletedCollection = await db.collection("collections").deleteOne(query);
         res.json(deletedCollection);
       } catch (error) {
-        res.status(500).json(error);
+        res.status(500).json({ message: error.message });
         return;
       }
 
@@ -506,7 +506,7 @@ async function dataRoute(req, res) {
           const updatedCollection = await db.collection("collections").updateOne(query, updateDoc);
           res.json(updatedCollection);
         } catch (error) {
-          res.status(500).json(error);
+          res.status(500).json({ message: error.message });
           return;
         }
       } else { // Adding a task to collections
@@ -552,7 +552,7 @@ async function dataRoute(req, res) {
           }
           res.json(updatedCollections); // Output whatever updates last
         } catch (error) {
-          res.status(500).json(error);
+          res.status(500).json({ message: error.message });
           return;
         }
       }
@@ -573,7 +573,7 @@ async function dataRoute(req, res) {
       if (body.action === "share") {
 
         const roles = ["viewer", "collaborator", "contributor"];
-        if (!body.username || !body.role || !roles.includes(role)) {
+        if (!body.username || !body.role || !roles.includes(body.role)) {
           res.status(422).json({ message: "Invalid data" });
           return;
         } else if (user.username === username) {
@@ -595,7 +595,7 @@ async function dataRoute(req, res) {
           res.status(403).json({ message: "Collection is already shared with this user!" });
           return;
         }
-        const pendingRole = "pending-" + role;
+        const pendingRole = "pending-" + body.role;
         const updateDoc = {
           $push: {
             'sharing.sharedWith': {id: validateUser._id, role: pendingRole },
@@ -605,7 +605,7 @@ async function dataRoute(req, res) {
           const sharedCollection = await db.collection("collections").updateOne(query, updateDoc);
           res.json(sharedCollection);
         } catch (error) {
-          res.status(500).json(error);
+          res.status(500).json({ message: error.message });
           return;
         }
 
