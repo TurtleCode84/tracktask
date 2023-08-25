@@ -3,19 +3,19 @@ import fetchJson, { FetchError } from "lib/fetchJson";
 export default function UserShareForm({ errorMessage, onSubmit, share, collectionId }) {
   const role = share.role.split("-");
   return (
-    <form id={share.id} autocomplete="off" onSubmit={onSubmit}>
-      <label>
+    <form id={share.id + "-userShareForm"} autocomplete="off" onSubmit={onSubmit}><br/>
+      <label style={{ marginBottom: "-5px" }}>
         <span>Role</span>
-        <select name="role" selected={role[1] ? role[1] : role[0]} required>
+        <select name="role" value={role[1] ? role[1] : role[0]} required>
             <option value="viewer">Viewer (can view the collection)</option>
             <option value="collaborator">Collaborator (can complete tasks ඞ)</option>
             <option value="contributor">Contributor (can add to the collection)</option>
         </select>
-      </label><hr/>
+      </label>
 
-      <button type="submit" id="modifyUserShareBtn">Modify share settings</button>
+      <button type="submit" id="modifyUserShareBtn" style={{ width: "max-content" }}><span style={{ color: "darkslategray" }} className="material-symbols-outlined icon-list">settings</span> Modify share settings</button>
 
-      {errorMessage && <p className="error">{errorMessage}</p>}<hr/>
+      {errorMessage ? <p className="error">{errorMessage}</p> : <br/>}
       
       <a href={`/api/collections/${collectionId}`}
         onClick={async (e) => {
@@ -33,12 +33,12 @@ export default function UserShareForm({ errorMessage, onSubmit, share, collectio
               });
               router.push(`/collections/${collection._id}/share?removed=true`);
             } catch (error) {
-              document.getElementById("removeShareMessage").innerHTML = error.data.message;
+              document.getElementById(share.id + "-removeShareMessage").innerHTML = error.data.message;
             }
           }
         }}
       ><button><span style={{ color: "darkslategray" }} className="material-symbols-outlined icon-list">person_remove</span> Remove user</button></a>
-      <p className="error" id="removeShareMessage"></p>
+      <p className="error" id={share.id + "-removeShareMessage"}></p>
 
       <style jsx>{`
         form,
@@ -61,6 +61,6 @@ export default function UserShareForm({ errorMessage, onSubmit, share, collectio
           margin-bottom: 10px;
         }
       `}</style>
-    </form>
+    <br/></form>
   );
 }
