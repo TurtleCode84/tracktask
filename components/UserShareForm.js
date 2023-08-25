@@ -6,7 +6,7 @@ export default function UserShareForm({ errorMessage, onSubmit, share, collectio
     <form id={share.id + "-userShareForm"} autocomplete="off" onSubmit={onSubmit}><br/>
       <label style={{ marginBottom: "-5px" }}>
         <span>Role</span>
-        <select name="role" value={role[1] ? role[1] : role[0]} required>
+        <select name="role" value={role[1] ? role[1] : role[0]} style={{ width: "max-content" }} required>
             <option value="viewer">Viewer (can view the collection)</option>
             <option value="collaborator">Collaborator (can complete tasks ඞ)</option>
             <option value="contributor">Contributor (can add to the collection)</option>
@@ -15,7 +15,7 @@ export default function UserShareForm({ errorMessage, onSubmit, share, collectio
 
       <button type="submit" id="modifyUserShareBtn" style={{ width: "max-content" }}><span style={{ color: "darkslategray" }} className="material-symbols-outlined icon-list">settings</span> Modify share settings</button>
 
-      {errorMessage ? <p className="error">{errorMessage}</p> : <br/>}
+      {errorMessage && <p className="error">{errorMessage}</p>}<br/>
       
       <a href={`/api/collections/${collectionId}`}
         onClick={async (e) => {
