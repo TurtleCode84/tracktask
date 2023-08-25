@@ -79,7 +79,7 @@ export default function Collection() {
                   method: "PATCH",
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify(body),
-                })
+                });
                 router.reload();
               } catch (error) {
                 if (error instanceof FetchError) {

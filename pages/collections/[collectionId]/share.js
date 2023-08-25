@@ -20,7 +20,9 @@ export default function CollectionShare() {
   
   const [errorMsg, setErrorMsg] = useState("");
   const sharedWithList = collection?.sharing.sharedWith.map((item) =>
-    <details id={item.id} key={item.id} style={{ paddingBottom: "10px", marginLeft: "23px" }}><summary><User user={user} id={item.id}/> <span style={{ fontSize: "80%", fontStyle: "italic", color: "darkgray" }}>({item.role.split('-')[0]})</span></summary>placeholder</details>
+    <details key={item.id} style={{ paddingBottom: "10px", marginLeft: "23px" }}><summary><User user={user} id={item.id}/> <span style={{ fontSize: "80%", fontStyle: "italic", color: "darkgray" }}>({item.role.split('-')[0]})</span></summary>
+    placeholder
+    </details>
   );
   
   if (!user || !user.isLoggedIn || user.permissions.banned || !collection) { // We need to know the collection details before we show the page
@@ -48,7 +50,7 @@ export default function CollectionShare() {
               method: "PATCH",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(body),
-            })
+            });
             router.reload();
           } catch (error) {
             if (error instanceof FetchError) {
@@ -74,7 +76,7 @@ export default function CollectionShare() {
               method: "PATCH",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(body),
-            })
+            });
             router.reload();
           } catch (error) {
             if (error instanceof FetchError) {
@@ -100,11 +102,11 @@ export default function CollectionShare() {
           };
 
           try {
-            const getUrl = await fetchJson(`/api/collections/${collection._id}`, {
+            await fetchJson(`/api/collections/${collection._id}`, {
               method: "PUT",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(body),
-            })
+            });
             router.push(`/collections/${collection._id}?shared=true`);
           } catch (error) {
             if (error instanceof FetchError) {

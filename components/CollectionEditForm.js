@@ -21,6 +21,7 @@ export default function CollectionEditForm({ verified, errorMessage, onSubmit, c
       <a href={`/api/collections/${collection._id}`}
         onClick={async (e) => {
           e.preventDefault();
+          document.getElementById("deleteCollectionBtn").disabled = true;
           if (confirm("Are you sure? Deleting a collection is irreversable! Tasks in this collection will not be deleted.")) {
             try {
               await fetchJson(`/api/collections/${collection._id}`, { method: "DELETE" });
@@ -29,8 +30,9 @@ export default function CollectionEditForm({ verified, errorMessage, onSubmit, c
               document.getElementById("deleteCollectionMessage").innerHTML = error.data.message;
             }
           }
+          document.getElementById("deleteCollectionBtn").disabled = false;
         }}
-      ><button><span style={{ color: "orange" }} className="material-symbols-outlined icon-list">warning</span> Delete collection <span style={{ color: "orange" }} className="material-symbols-outlined icon-list">warning</span></button></a>
+      ><button id="deleteCollectionBtn"><span style={{ color: "orange" }} className="material-symbols-outlined icon-list">warning</span> Delete collection <span style={{ color: "orange" }} className="material-symbols-outlined icon-list">warning</span></button></a>
       <p className="error" id="deleteCollectionMessage"></p>
 
       <style jsx>{`

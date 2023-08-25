@@ -23,6 +23,5 @@ module.exports = {
         pathname: "/*/*/*",
       },
     ],
-    //domains: ["tracktask.eu.org"],
   },
 };

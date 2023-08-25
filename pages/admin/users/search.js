@@ -44,7 +44,7 @@ export default function UserSearch() {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body),
-              })
+              });
               router.push(`/admin/users/${getUrl?._id}`);
             } catch (error) {
               if (error instanceof FetchError) {

@@ -19,8 +19,8 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
         <input type="password" placeholder="Retype new password" name="cpassword" />
       </label><hr/>
       <label>
-        <span>Profile picture</span>
-        <input type="text" pattern="(^https?:\/\/.*?\..{2,}?|^\/.*?)" oninvalid="this.setCustomValidity('Please enter a valid URL.')" oninput="this.setCustomValidity('')" name="profilePicture" defaultValue={lookup.profilePicture} />
+        <span>Profile picture (URL)</span>
+        <input type="text" title="Must be a valid absolute or relative URL." pattern="(^https?:\/\/.*?\..{2,}?|^\/.*?)" name="profilePicture" defaultValue={lookup.profilePicture} />
       </label>
       <label>
         <span>Admin notes</span>
@@ -68,6 +68,7 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
       <a href={`/api/admin/users/${lookup._id}`}
         onClick={async (e) => {
           e.preventDefault();
+          document.getElementById("deleteUserBtn").disabled = true;
           const confirm = prompt("Are you sure? Deleting a user is irreversable, and will delete all of their tasks and collections as well! Type \"delete this account\" to confirm.");
           if (confirm.trim().toLowerCase() === "delete this account") {
             try {
@@ -79,8 +80,9 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
           } else if (confirm) {
             alert("You didn't type \"delete this account\", so we'll assume you didn't want to. Only delete a user if it's completely necessary!");
           }
+          document.getElementById("deleteUserBtn").disabled = false;
         }}
-      ><button><span style={{ color: "orange" }} className="material-symbols-outlined icon-list">warning</span> Delete user <span style={{ color: "orange" }} className="material-symbols-outlined icon-list">warning</span></button></a>
+      ><button id="deleteUserBtn"><span style={{ color: "orange" }} className="material-symbols-outlined icon-list">warning</span> Delete user <span style={{ color: "orange" }} className="material-symbols-outlined icon-list">warning</span></button></a>
       <p className="error" id="deleteUserMessage"></p>
 
       <style jsx>{`

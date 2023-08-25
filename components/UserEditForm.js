@@ -53,8 +53,8 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
         <input type="password" placeholder="Retype new password" name="cpassword" />
       </label><hr/>
       <label>
-        <span>Profile picture</span>
-        <input type="text" pattern="(^https?:\/\/.*?\..{2,}?|^\/.*?)" oninvalid="this.setCustomValidity('Please enter a valid URL.')" oninput="this.setCustomValidity('')" name="profilePicture" defaultValue={user.profilePicture} />
+        <span>Profile picture (URL)</span>
+        <input type="text" title="Must be a valid absolute or relative URL." pattern="(^https?:\/\/.*?\..{2,}?|^\/.*?)" name="profilePicture" defaultValue={user.profilePicture} />
         <details style={{ fontSize: "80%", color: "gray" }}>
         <summary>Allowed image hosts</summary>
           <ul>
@@ -89,6 +89,7 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
       <a href={`/api/user`}
         onClick={async (e) => {
           e.preventDefault();
+          document.getElementById("deleteUserBtn").disabled = true;
           const confirm = prompt("Are you sure? Deleting your account is irreversable and will also delete all of your tasks and collections! Type \"delete my account\" to confirm.");
           if (confirm.trim().toLowerCase() === "delete my account") {
             try {
@@ -100,8 +101,9 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
           } else if (confirm) {
             alert("You didn't type \"delete my account\", so we'll assume you didn't want to. Great choice!");
           }
+          document.getElementById("deleteUserBtn").disabled = false;
         }}
-      ><button><span style={{ color: "orange" }} className="material-symbols-outlined icon-list">warning</span> Delete my account <span style={{ color: "orange" }} className="material-symbols-outlined icon-list">warning</span></button></a>
+      ><button id="deleteUserBtn"><span style={{ color: "orange" }} className="material-symbols-outlined icon-list">warning</span> Delete my account <span style={{ color: "orange" }} className="material-symbols-outlined icon-list">warning</span></button></a>
       <p className="error" id="deleteUserMessage"></p>
 
       <style jsx>{`

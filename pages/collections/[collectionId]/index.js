@@ -63,7 +63,6 @@ export default function Collection() {
         <p>Shared by: <User user={user} id={collection.owner}/></p>
         <p>Description:</p>{' '}<textarea value={collection.description} rows="4" cols="70" disabled /><br/>
         <p title={collection.created > 0 ? moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a") : 'Never'}>Created: {collection.created > 0 ? <>{moment.unix(collection.created).fromNow()}</> : 'never'}</p>
-        {/*<p style={{ fontStyle: "italic" }}>Eventually, you will be able to accept or reject this request.</p>*/}
         <a href={`/api/collections/${collection._id}`} style={{ marginRight: "10px" }}
         onClick={async (e) => {
           e.preventDefault();
@@ -76,7 +75,7 @@ export default function Collection() {
               method: "PUT",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(body),
-            })
+            });
             router.reload();
           } catch (error) {
             if (error instanceof FetchError) {
@@ -100,7 +99,7 @@ export default function Collection() {
               method: "PUT",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(body),
-            })
+            });
             router.reload();
           } catch (error) {
             if (error instanceof FetchError) {
@@ -150,7 +149,7 @@ export default function Collection() {
                   method: "PATCH",
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify(body),
-                })
+                });
                 router.reload();
               } catch (error) {
                 if (error instanceof FetchError) {

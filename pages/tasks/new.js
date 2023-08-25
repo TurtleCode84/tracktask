@@ -60,7 +60,7 @@ export default function TasksCreate() {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(body),
-            })
+            });
             router.push(`/tasks/${getUrl.insertedId}`);
           } catch (error) {
             if (error instanceof FetchError) {

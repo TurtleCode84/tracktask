@@ -43,7 +43,7 @@ export default function CollectionsCreate() {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(body),
-            })
+            });
             router.push(`/collections/${getUrl.insertedId}`);
           } catch (error) {
             if (error instanceof FetchError) {
