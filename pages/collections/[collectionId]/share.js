@@ -19,9 +19,40 @@ export default function CollectionShare() {
   const { data: collection, error } = useData(user, "collections", collectionId, false);
   
   const [errorMsg, setErrorMsg] = useState("");
+  const [userErrorMsg, setUserErrorMsg] = useState("");
   const sharedWithList = collection?.sharing.sharedWith.map((item) =>
     <details key={item.id} style={{ paddingBottom: "10px", marginLeft: "23px" }}><summary><User user={user} id={item.id}/> <span style={{ fontSize: "80%", fontStyle: "italic", color: "darkgray" }}>({item.role.split('-')[0]})</span></summary>
-    placeholder
+    <UserShareForm
+      collectionId={collectionId}
+      errorMessage={userErrorMsg}
+      share={item}
+      onSubmit={async function handleSubmit(event) {
+        event.preventDefault();
+        document.getElementById("modifyUserShareBtn").disabled = true;
+
+        const body = {
+          action: "modify",
+          id: item.id,
+          role: event.currentTarget.role.value, // This will require some ironing
+        };
+
+        try {
+          await fetchJson(`/api/collections/${collection._id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body),
+          });
+          router.push(`/collections/${collection._id}/share?modified=true`);
+        } catch (error) {
+          if (error instanceof FetchError) {
+            setUserErrorMsg(error.data.message);
+          } else {
+            console.error("An unexpected error happened:", error);
+          }
+          document.getElementById("modifyUserShareBtn").disabled = false;
+        }
+      }}
+    />
     </details>
   );
   
