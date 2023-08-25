@@ -4,10 +4,6 @@ module.exports = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "**.tracktask.eu.org",
-      },
-      {
-        protocol: "https",
         hostname: "avatars.githubusercontent.com",
         pathname: "/*",
       },
