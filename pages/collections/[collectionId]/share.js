@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import moment from "moment";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
@@ -22,6 +22,14 @@ export default function CollectionShare() {
   const sharedWithList = collection?.sharing.sharedWith.map((item) =>
     <li key={item.id} style={{ paddingBottom: "5px" }}><User user={user} id={item.id}/> <span style={{ fontSize: "80%", fontStyle: "italic", color: "darkgray" }}>({item.role.split('-')[0]})</span></li>
   );
+  
+  useEffect(() => {
+    if (collection?.sharing?.shared) {
+      document.getElementById("addNewUserDetails").removeAttribute("disabled");
+      document.getElementById("addNewUserSummary").removeAttribute("tabindex");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   
   if (!user || !user.isLoggedIn || user.permissions.banned || !collection) { // We need to know the collection details before we show the page
     return (
@@ -87,7 +95,7 @@ export default function CollectionShare() {
         }}
         ><button id="enableSharingBtn"><span style={{ color: "lightslategray" }} className="material-symbols-outlined icon-list">group</span> Enable sharing</button></a><hr/></>
       }
-      <details><summary>Add a new user</summary><br/>
+      <details id="addNewUserDetails" disabled><summary id="addNewUserSummary" tabindex="-1">Add a new user</summary><br/>
       <CollectionShareForm
         errorMessage={errorMsg}
         onSubmit={async function handleSubmit(event) {

@@ -179,6 +179,12 @@ export default function Layout({ children }) {
         nav {
           color: var(--nav-text-color);
         }
+
+        details[disabled] summary {
+          pointer-events: none;
+          filter: brightness(0.95);
+          color: #757575;
+        }
         
         .material-symbols-outlined {
           display: inline-block;
