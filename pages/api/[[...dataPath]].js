@@ -576,11 +576,11 @@ async function dataRoute(req, res) {
         if (!body.username || !body.role || !roles.includes(body.role)) {
           res.status(422).json({ message: "Invalid data" });
           return;
-        } else if (user.username === username) {
+        } else if (user.username === body.username) {
           res.status(403).json({ message: "Collection is already shared with this user!" });
           return;
         }
-        const validateUser = await db.collection("users").findOne({username: username.trim().toLowerCase(), 'permissions.banned': false}, { projection: { _id: 1 } });
+        const validateUser = await db.collection("users").findOne({username: body.username.trim().toLowerCase(), 'permissions.banned': false}, { projection: { _id: 1 } });
         if (!validateUser) {
           res.status(404).json({ message: "Username not found!" });
           return;
