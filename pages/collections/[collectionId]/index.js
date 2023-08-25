@@ -40,7 +40,7 @@ export default function Collection() {
     <Task task={task} key={task._id}/>
   );
   const sharedWithList = collection?.sharing?.sharedWith?.map((item) =>
-    <li key={item.id} style={{ paddingBottom: "5px" }}><User user={user} id={item.id}/> <span style={{ fontSize: "80%", fontStyle: "italic", color: "darkgray" }}>({item.role.split('-')[0]})</span></li>
+    <li key={item.id} style={{ paddingBottom: "5px" }}><User user={user} id={item.id}/> <span style={{ fontSize: "80%", fontStyle: "italic", color: "darkgray" }}>({item.role.split('-')[1] ? "pending " + item.role.split('-')[1] : item.role.split('-')[0]})</span></li>
   );
   var currentUserRole = collection?.sharing?.sharedWith?.filter(item => item.id === user?.id)?.[0]?.role.split('-')[0];
   if (currentUserRole !== "editor" && user?.id === collection?.owner) {
