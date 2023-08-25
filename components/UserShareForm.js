@@ -20,7 +20,6 @@ export default function UserShareForm({ errorMessage, onSubmit, share, collectio
       <a href={`/api/collections/${collectionId}`}
         onClick={async (e) => {
           e.preventDefault();
-          document.getElementById("removeShareBtn").disabled = true;
           if (confirm("Are you sure? This user will lose access to the tasks in this collection!")) {
             const body = {
               action: "remove",
@@ -34,13 +33,12 @@ export default function UserShareForm({ errorMessage, onSubmit, share, collectio
               });
               router.reload();
             } catch (error) {
-              document.getElementById("deleteTaskMessage").innerHTML = error.data.message;
+              document.getElementById("removeShareMessage").innerHTML = error.data.message;
             }
           }
-          document.getElementById("removeShareBtn").disabled = false;
         }}
-      ><button id="removeShareBtn"><span style={{ color: "darkslategray" }} className="material-symbols-outlined icon-list">person_remove</span> Remove user</button></a>
-      <p className="error" id="deleteTaskMessage"></p>
+      ><button><span style={{ color: "darkslategray" }} className="material-symbols-outlined icon-list">person_remove</span> Remove user</button></a>
+      <p className="error" id="removeShareMessage"></p>
 
       <style jsx>{`
         form,

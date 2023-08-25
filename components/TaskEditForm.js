@@ -41,7 +41,6 @@ export default function TaskEditForm({ errorMessage, onSubmit, task }) {
       <a href={`/api/tasks/${task._id}`}
         onClick={async (e) => {
           e.preventDefault();
-          document.getElementById("deleteTaskBtn").disabled = true;
           if (confirm("Are you sure? Deleting a task is irreversable!")) {
             try {
               await fetchJson(`/api/tasks/${task._id}`, { method: "DELETE" });
@@ -50,9 +49,8 @@ export default function TaskEditForm({ errorMessage, onSubmit, task }) {
               document.getElementById("deleteTaskMessage").innerHTML = error.data.message;
             }
           }
-          document.getElementById("deleteTaskBtn").disabled = false;
         }}
-      ><button id="deleteTaskBtn"><span style={{ color: "orange" }} className="material-symbols-outlined icon-list">warning</span> Delete task <span style={{ color: "orange" }} className="material-symbols-outlined icon-list">warning</span></button></a>
+      ><button><span style={{ color: "orange" }} className="material-symbols-outlined icon-list">warning</span> Delete task <span style={{ color: "orange" }} className="material-symbols-outlined icon-list">warning</span></button></a>
       <p className="error" id="deleteTaskMessage"></p>
 
       <style jsx>{`

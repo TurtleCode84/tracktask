@@ -89,7 +89,6 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
       <a href={`/api/user`}
         onClick={async (e) => {
           e.preventDefault();
-          document.getElementById("deleteUserBtn").disabled = true;
           const confirm = prompt("Are you sure? Deleting your account is irreversable and will also delete all of your tasks and collections! Type \"delete my account\" to confirm.");
           if (confirm.trim().toLowerCase() === "delete my account") {
             try {
@@ -101,9 +100,8 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
           } else if (confirm) {
             alert("You didn't type \"delete my account\", so we'll assume you didn't want to. Great choice!");
           }
-          document.getElementById("deleteUserBtn").disabled = false;
         }}
-      ><button id="deleteUserBtn"><span style={{ color: "orange" }} className="material-symbols-outlined icon-list">warning</span> Delete my account <span style={{ color: "orange" }} className="material-symbols-outlined icon-list">warning</span></button></a>
+      ><button><span style={{ color: "orange" }} className="material-symbols-outlined icon-list">warning</span> Delete my account <span style={{ color: "orange" }} className="material-symbols-outlined icon-list">warning</span></button></a>
       <p className="error" id="deleteUserMessage"></p>
 
       <style jsx>{`

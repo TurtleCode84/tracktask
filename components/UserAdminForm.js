@@ -68,7 +68,6 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
       <a href={`/api/admin/users/${lookup._id}`}
         onClick={async (e) => {
           e.preventDefault();
-          document.getElementById("deleteUserBtn").disabled = true;
           const confirm = prompt("Are you sure? Deleting a user is irreversable, and will delete all of their tasks and collections as well! Type \"delete this account\" to confirm.");
           if (confirm.trim().toLowerCase() === "delete this account") {
             try {
@@ -80,9 +79,8 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
           } else if (confirm) {
             alert("You didn't type \"delete this account\", so we'll assume you didn't want to. Only delete a user if it's completely necessary!");
           }
-          document.getElementById("deleteUserBtn").disabled = false;
         }}
-      ><button id="deleteUserBtn"><span style={{ color: "orange" }} className="material-symbols-outlined icon-list">warning</span> Delete user <span style={{ color: "orange" }} className="material-symbols-outlined icon-list">warning</span></button></a>
+      ><button><span style={{ color: "orange" }} className="material-symbols-outlined icon-list">warning</span> Delete user <span style={{ color: "orange" }} className="material-symbols-outlined icon-list">warning</span></button></a>
       <p className="error" id="deleteUserMessage"></p>
 
       <style jsx>{`
