@@ -1,6 +1,32 @@
 module.exports = {
   reactStrictMode: true,
   images: {
-    domains: ["tracktask.eu.org", "dev.tracktask.eu.org", "avatars.githubusercontent.com", "u.cubeupload.com", "i.bb.co", "api.wasteof.money"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**.tracktask.eu.org",
+      },
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+        pathname: "/*",
+      },
+      {
+        protocol: "https",
+        hostname: "u.cubeupload.com",
+        pathname: "/*/*",
+      },
+      {
+        protocol: "https",
+        hostname: "i.ibb.co",
+        pathname: "/*/*",
+      },
+      {
+        protocol: "https",
+        hostname: "api.wasteof.money",
+        pathname: "/*/*/*",
+      },
+    ],
+    //domains: ["tracktask.eu.org"],
   },
 };
