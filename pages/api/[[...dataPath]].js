@@ -559,8 +559,60 @@ async function dataRoute(req, res) {
 
     } else if (req.method === 'PUT') { // Shares a collection
 
-      res.status(503).json({ message: "Under construction" });
-      return;
+      const body = await req.body;
+      
+      // Make sure there is a valid collection ID to share
+      if (!ObjectId.isValid(dataPath[1])) {
+        res.status(422).json({ message: "Invalid collection ID" });
+        return;
+      } else if (!body.action) {
+        res.status(422).json({ message: "An action must be specified" });
+        return;
+      }
+
+      if (body.action === "share") {
+
+        const roles = ["viewer", "collaborator", "contributor"];
+        if (!body.username || !body.role || !roles.includes(role)) {
+          res.status(422).json({ message: "Invalid data" });
+          return;
+        } else if (user.username === username) {
+          res.status(403).json({ message: "Collection is already shared with this user!" });
+          return;
+        }
+        const validateUser = await db.collection("users").findOne({username: username.trim().toLowerCase(), 'permissions.banned': false}, { projection: { _id: 1 } });
+        if (!validateUser) {
+          res.status(404).json({ message: "Username not found!" });
+          return;
+        }
+        const query = {
+          _id: new ObjectId(id),
+          hidden: false,
+          owner: new ObjectId(user.id),
+        };
+        const validateCollection = await db.collection("collections").findOne({...query, 'sharing.sharedWith': {$elemMatch: {id: new ObjectId(validateUser._id)}} });
+        if (validateCollection) {
+          res.status(403).json({ message: "Collection is already shared with this user!" });
+          return;
+        }
+        const pendingRole = "pending-" + role;
+        const updateDoc = {
+          $push: {
+            'sharing.sharedWith': {id: validateUser._id, role: pendingRole },
+          },
+        }
+        try {
+          const sharedCollection = await db.collection("collections").updateOne(query, updateDoc);
+          res.json(sharedCollection);
+        } catch (error) {
+          res.status(500).json(error);
+          return;
+        }
+
+      } else {
+        res.status(422).json({ message: "Invalid action" });
+        return;
+      }
       
     } else {
       res.status(405).json({ message: "Method not allowed" });
