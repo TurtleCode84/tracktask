@@ -3,6 +3,7 @@ import moment from "moment";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
 import CollectionShareForm from "components/CollectionShareForm";
+import UserShareForm from "components/UserShareForm";
 import User from "components/User";
 import useUser from "lib/useUser";
 import useData from "lib/useData";
