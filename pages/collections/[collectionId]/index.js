@@ -87,7 +87,7 @@ export default function Collection() {
             document.getElementById("acceptRequestBtn").disabled = false;
           }
         }}
-        ><button id="acceptRequestBtn">Accept request <span style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">check_circle</span></button></a>
+        ><button id="acceptRequestBtn"><span style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">check_circle</span> Accept request</button></a>
         <a href={`/api/collections/${collection._id}`} style={{ marginRight: "10px" }}
         onClick={async (e) => {
           e.preventDefault();
@@ -111,7 +111,7 @@ export default function Collection() {
             document.getElementById("rejectRequestBtn").disabled = false;
           }
         }}
-        ><button id="rejectRequestBtn">Reject request <span style={{ color: "brown" }} className="material-symbols-outlined icon-list">cancel</span></button></a></>
+        ><button id="rejectRequestBtn"><span style={{ color: "brown" }} className="material-symbols-outlined icon-list">cancel</span> Reject request</button></a></>
         :
         <><h3>General information</h3>
         <p>Description:</p>{' '}<textarea value={collection.description} rows="8" cols="70" disabled /><br/>
@@ -144,7 +144,6 @@ export default function Collection() {
               const body = {};
               if (event.currentTarget.name.value !== event.currentTarget.name.defaultValue) {body.name = event.currentTarget.name.value};
               if (event.currentTarget.description.value !== event.currentTarget.description.defaultValue) {body.description = event.currentTarget.description.value};
-              //if (event.currentTarget.shared && event.currentTarget.shared.checked !== event.currentTarget.shared.defaultChecked) {body.shared = event.currentTarget.shared.checked}
 
               try {
                 await fetchJson(`/api/collections/${collection._id}`, {

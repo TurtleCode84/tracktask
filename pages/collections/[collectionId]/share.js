@@ -59,7 +59,7 @@ export default function CollectionShare() {
             document.getElementById("disableSharingBtn").disabled = false;
           }
         }}
-        ><button id="disableSharingBtn">Disable sharing <span style={{ color: "lightslategray" }} className="material-symbols-outlined icon-list">lock</span></button></a><hr/></>
+        ><button id="disableSharingBtn"><span style={{ color: "lightslategray" }} className="material-symbols-outlined icon-list">lock</span> Disable sharing</button></a><hr/></>
       :
       <><p style={{ fontStyle: "italic" }}>Sharing is currently disabled for this collection.</p>
       <a href={`/api/collections/${collection._id}`}
@@ -85,7 +85,7 @@ export default function CollectionShare() {
             document.getElementById("enableSharingBtn").disabled = false;
           }
         }}
-        ><button id="enableSharingBtn">Enable sharing <span style={{ color: "lightslategray" }} className="material-symbols-outlined icon-list">group</span></button></a><hr/></>
+        ><button id="enableSharingBtn"><span style={{ color: "lightslategray" }} className="material-symbols-outlined icon-list">group</span> Enable sharing</button></a><hr/></>
       }
       <details><summary>Add a new user</summary><br/>
       <CollectionShareForm

@@ -86,7 +86,7 @@ export default function Task() {
             document.getElementById("markCompleteBtn").disabled = false;
           }
         }}
-        ><button id="markCompleteBtn">Mark completed <span style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">task_alt</span></button></a></>}</>}
+        ><button id="markCompleteBtn"><span style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">task_alt</span> Mark completed</button></a></>}</>}
         <hr/>
         {perms >= 4 && <><details>
           <summary>Edit task</summary>
