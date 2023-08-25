@@ -46,7 +46,7 @@ export default function CollectionShare() {
           router.push(`/collections/${collection._id}/share?modified=true`);
         } catch (error) {
           if (error instanceof FetchError) {
-            setUserErrorMsg(error.data.message);
+            setUserErrorMsg({id: item.id, message: error.data.message}); // Currently this displays the error on every user element, I should use an object to append the ID to the error message and filter it in the form
           } else {
             console.error("An unexpected error happened:", error);
           }

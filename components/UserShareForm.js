@@ -15,7 +15,7 @@ export default function UserShareForm({ errorMessage, onSubmit, share, collectio
 
       <button type="submit" id="modifyUserShareBtn" style={{ width: "max-content" }}><span style={{ color: "darkslategray" }} className="material-symbols-outlined icon-list">settings</span> Modify share settings</button>
 
-      {errorMessage && <p className="error">{errorMessage}</p>}<br/>
+      {errorMessage && errorMessage.id === share.id && <p className="error">{errorMessage.message}</p>}<br/>
       
       <a href={`/api/collections/${collectionId}`}
         onClick={async (e) => {
