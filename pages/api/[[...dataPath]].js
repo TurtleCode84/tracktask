@@ -586,7 +586,7 @@ async function dataRoute(req, res) {
           return;
         }
         const query = {
-          _id: new ObjectId(id),
+          _id: new ObjectId(dataPath[1]),
           hidden: false,
           owner: new ObjectId(user.id),
         };
