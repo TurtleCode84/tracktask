@@ -511,7 +511,7 @@ async function dataRoute(req, res) {
         }
       } else { // Adding a task to collections
         // Check if the user owns the task
-        const taskInfo = await db.collection("tasks").getOne({_id: new ObjectId(body.taskId), owner: new ObjectId(user.id), hidden: false}, { projection: { owner: 1 } }); // Will only return valid if owned by the user
+        const taskInfo = await db.collection("tasks").findOne({_id: new ObjectId(body.taskId), owner: new ObjectId(user.id), hidden: false}, { projection: { owner: 1 } }); // Will only return valid if owned by the user
 
         var addCollectionsId = [];
         if (body.addCollections) {
