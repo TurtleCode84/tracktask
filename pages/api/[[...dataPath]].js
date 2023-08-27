@@ -252,19 +252,24 @@ async function dataRoute(req, res) {
       const body = await req.body;
       const taskInCollabCollectionQuery = {
         hidden: false,
-        'sharing.shared': true,
-        'sharing.sharedWith': {
-          $elemMatch: {
-            id: new ObjectId(user.id),
-            $and: [
-              {role: {$not: /pending/i}},
-              {$or: [
-                {role: "collaborator"},
-                {role: "contributor"},
-              ]},
-            ],
-          }
-        },
+        $or: [
+          { owner: new ObjectId(user.id) },
+          {
+            'sharing.shared': true,
+            'sharing.sharedWith': {
+              $elemMatch: {
+                id: new ObjectId(user.id),
+                $and: [
+                  {role: {$not: /pending/i}},
+                  {$or: [
+                    {role: "collaborator"},
+                    {role: "contributor"},
+                  ]},
+                ],
+              }
+            }
+        }
+      ],
         tasks: new ObjectId(dataPath[1]),
       };
       const ownTaskQuery = {
@@ -511,7 +516,7 @@ async function dataRoute(req, res) {
         }
       } else { // Adding a task to collections
         // The following query will return null if the user does not own the task
-        const taskInfo = await db.collection("tasks").findOne({_id: new ObjectId(body.taskId), owner: new ObjectId(user.id), hidden: false}, { projection: { owner: 1 } }); // Will only return valid if owned by the user
+        const taskInfo = await db.collection("tasks").findOne({_id: new ObjectId(body.taskId), owner: new ObjectId(user.id), hidden: false}, { projection: { owner: 1 } });
 
         var addCollectionsId = [];
         if (body.addCollections) {
