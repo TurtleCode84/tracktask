@@ -510,6 +510,9 @@ async function dataRoute(req, res) {
           return;
         }
       } else { // Adding a task to collections
+        // Check if the user owns the task
+        const taskInfo = await db.collection("tasks").getOne({_id: new ObjectId(body.taskId), owner: new ObjectId(user.id), hidden: false}, { projection: { owner: 1 } }); // Will only return valid if owned by the user
+
         var addCollectionsId = [];
         if (body.addCollections) {
           for (var i=0; i<body.addCollections.length; i++) {
@@ -525,6 +528,10 @@ async function dataRoute(req, res) {
         try {
           var updatedCollections;
           if (addCollectionsId.length > 0) {
+            if (taskInfo?.owner !== user.id) { // null !== user.id
+              res.status(403).json({ message: "You do not own this task!" });
+              return;
+            }
             const addCollectionsQuery = {
               _id: {
                 $in: addCollectionsId,
@@ -533,7 +540,14 @@ async function dataRoute(req, res) {
                 $nin: [new ObjectId(body.taskId)],
               },
               hidden: false,
-              owner: new ObjectId(user.id),
+              $or: [
+                { owner: new ObjectId(user.id) },
+                {
+                  'sharing.shared': true,
+                  'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user.id), role: "contributor"}}
+                },
+              ],
+              //owner: new ObjectId(user.id), // Change so anyone can only add their own tasks
             };
             updatedCollections = await db.collection("collections").updateMany(addCollectionsQuery, {$push: {tasks: new ObjectId(body.taskId)}});
           }
@@ -546,7 +560,15 @@ async function dataRoute(req, res) {
                 $in: [new ObjectId(body.taskId)],
               },
               hidden: false,
-              owner: new ObjectId(user.id),
+              $or: [
+                { owner: new ObjectId(user.id) },
+                {
+                  'sharing.shared': true,
+                  'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user.id), role: "contributor"}},
+                  tasks: {$in : [new ObjectId(taskInfo._id)]}
+                },
+              ],
+              //owner: new ObjectId(user.id), // Change so contributors can only remove their own tasks (owners can remove any task)
             };
             updatedCollections = await db.collection("collections").updateMany(removeCollectionsQuery, {$pull: {tasks: new ObjectId(body.taskId)}});
           }
