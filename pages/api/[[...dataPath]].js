@@ -510,7 +510,7 @@ async function dataRoute(req, res) {
           return;
         }
       } else { // Adding a task to collections
-        // Check if the user owns the task
+        // The following query will return null if the user does not own the task
         const taskInfo = await db.collection("tasks").findOne({_id: new ObjectId(body.taskId), owner: new ObjectId(user.id), hidden: false}, { projection: { owner: 1 } }); // Will only return valid if owned by the user
 
         var addCollectionsId = [];
@@ -547,7 +547,7 @@ async function dataRoute(req, res) {
                   'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user.id), role: "contributor"}}
                 },
               ],
-              //owner: new ObjectId(user.id), // Change so anyone can only add their own tasks
+              // Anyone can only add their own tasks
             };
             updatedCollections = await db.collection("collections").updateMany(addCollectionsQuery, {$push: {tasks: new ObjectId(body.taskId)}});
           }
@@ -565,10 +565,10 @@ async function dataRoute(req, res) {
                 {
                   'sharing.shared': true,
                   'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user.id), role: "contributor"}},
-                  tasks: {$in : [new ObjectId(taskInfo._id)]}
+                  tasks: {$in : [new ObjectId(taskInfo?._id)]}
                 },
               ],
-              //owner: new ObjectId(user.id), // Change so contributors can only remove their own tasks (owners can remove any task)
+              // Contributors can only remove their own tasks, owners can remove any task
             };
             updatedCollections = await db.collection("collections").updateMany(removeCollectionsQuery, {$pull: {tasks: new ObjectId(body.taskId)}});
           }
