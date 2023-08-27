@@ -528,7 +528,7 @@ async function dataRoute(req, res) {
         try {
           var updatedCollections;
           if (addCollectionsId.length > 0) {
-            if (taskInfo?.owner !== user.id) { // null !== user.id
+            if (!taskInfo) {
               res.status(403).json({ message: "You do not own this task!" });
               return;
             }
