@@ -43,7 +43,6 @@ export default function CollectionShare() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(body),
           });
-          //router.push(`/collections/${collection._id}/share?modified=true`);
           window.location.replace(`/collections/${collection._id}/share?modified=true`);
         } catch (error) {
           if (error instanceof FetchError) {
@@ -141,7 +140,6 @@ export default function CollectionShare() {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(body),
             });
-            //router.push(`/collections/${collection._id}?shared=true`);
             window.location.replace(`/collections/${collection._id}?shared=true`);
           } catch (error) {
             if (error instanceof FetchError) {

@@ -110,7 +110,8 @@ export default function Collection() {
             document.getElementById("rejectRequestBtn").disabled = false;
           }
         }}
-        ><button id="rejectRequestBtn"><span style={{ color: "brown" }} className="material-symbols-outlined icon-list">cancel</span> Reject request</button></a></>
+        ><button id="rejectRequestBtn"><span style={{ color: "brown" }} className="material-symbols-outlined icon-list">cancel</span> Reject request</button></a><br/>
+        {errorMsg && <p className="error">{errorMsg}</p>}</>
         :
         <><h3>General information</h3>
         <p>Description:</p>{' '}<textarea value={collection.description} rows="8" cols="70" disabled /><br/>
