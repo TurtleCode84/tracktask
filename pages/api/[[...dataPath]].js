@@ -650,6 +650,11 @@ async function dataRoute(req, res) {
         res.status(422).json({ message: "This feature is coming VERY soon!" });
         return;
 
+      } else if (body.action === "remove") {
+
+        res.status(422).json({ message: "This feature is coming VERY soon!" });
+        return;
+
       } else {
         res.status(422).json({ message: "Invalid action" });
         return;

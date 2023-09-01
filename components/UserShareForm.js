@@ -31,7 +31,8 @@ export default function UserShareForm({ errorMessage, onSubmit, share, collectio
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body),
               });
-              router.push(`/collections/${collection._id}/share?removed=true`);
+              //router.push(`/collections/${collection._id}/share?removed=true`);
+              window.location.replace(`/collections/${collection._id}/share?removed=true`);
             } catch (error) {
               document.getElementById(share.id + "-removeShareMessage").innerHTML = error.data.message;
             }
