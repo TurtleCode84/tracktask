@@ -62,6 +62,7 @@ export default function Dashboard() {
 
       {dynamicMsg && <p className="success">{dynamicMsg}{' '}<Link href="/dashboard">Ok</Link></p>}
 
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "40px" }}><div style={{ borderStyle: "solid", borderWidth: "2px", borderColor: "var(--inset-border-color)", borderRadius: "7px" }}>
       {upcomingTaskList === undefined || overdueTaskList === undefined || notdueTaskList === undefined && <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
       {(upcomingTasksError || overdueTasksError || notdueTasksError) && <p style={{ fontStyle: "italic" }}>An error occurred while loading your tasks.</p>}
       {(upcomingTaskList && upcomingTaskList.length === 0) && (overdueTaskList && overdueTaskList.length === 0) && (notdueTaskList && notdueTaskList.length === 0) &&
@@ -71,37 +72,40 @@ export default function Dashboard() {
 
       {upcomingTaskList && upcomingTaskList.length > 0 &&
       <><h2>Upcoming tasks:</h2>
-      <ul style={{ display: "table" }}>
+      <ul style={{ display: "table", listStyle: "none", marginLeft: "-20px" }}>
         {upcomingTaskList}
       </ul></>
       }
       
       {overdueTaskList && overdueTaskList.length > 0 &&
       <><h2>Past due date:</h2>
-      <ul style={{ display: "table" }}>
+      <ul style={{ display: "table", listStyle: "none", marginLeft: "-20px" }}>
         {overdueTaskList}
       </ul></>
       }
       
       {notdueTaskList && notdueTaskList.length > 0 &&
       <><h2>Not due:</h2>
-      <ul style={{ display: "table" }}>
+      <ul style={{ display: "table", listStyle: "none", marginLeft: "-20px" }}>
         {notdueTaskList}
       </ul></>
       }
       <Link href="/tasks">View all tasks</Link>
+      </div>
       
+      <div style={{ borderStyle: "solid", borderWidth: "2px", borderColor: "var(--inset-border-color)", borderRadius: "7px" }}>
       <h2>Your collections:</h2>
       {collectionList === undefined && !collectionsError && <p style={{ fontStyle: "italic" }}>Loading collections...</p>}
       {collectionsError && <p style={{ fontStyle: "italic" }}>An error occurred while loading your collections.</p>}
       {collectionList && collectionList.length === 0 ?
       <p style={{ fontStyle: "italic" }}>You have no collections!</p>
       :
-      <ul style={{ display: "table" }}>
+      <ul style={{ display: "table", listStyle: "none", marginLeft: "-20px" }}>
         {collectionList}
       </ul>
       }
       <Link href="/collections">View all collections</Link>
+      </div></div>
     </Layout>    
   );
 }
