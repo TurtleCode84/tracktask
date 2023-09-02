@@ -164,7 +164,7 @@ export default function Collection() {
         </details><br/></>}
         </>}
         {collection.owner !== user.id && <ReportButton user={user} type={collection.pending ? "share" : "collection"} reported={collection}/>}
-        {collection.pending && <>{errorMsg && <><br/><p className="error">{errorMsg}</p></>}</>}</>
+        {collection.pending && <>{errorMsg && <p className="error">{errorMsg}</p>}</>}</>
       :
         <>{error ? <p>{error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading collection...</p>}</>
       }
