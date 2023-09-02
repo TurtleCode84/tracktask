@@ -62,38 +62,38 @@ export default function Dashboard() {
 
       {dynamicMsg && <p className="success">{dynamicMsg}{' '}<Link href="/dashboard">Ok</Link></p>}
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "40px" }}><div style={{ borderStyle: "solid", borderWidth: "2px", borderColor: "var(--inset-border-color)", borderRadius: "7px" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "3fr 2fr", gap: "40px", minHeight: "300px" }}><div style={{ position: "relative", padding: "5px", borderStyle: "solid", borderWidth: "2px", borderColor: "var(--inset-border-color)", borderRadius: "7px" }}>
       {upcomingTaskList === undefined || overdueTaskList === undefined || notdueTaskList === undefined && <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
       {(upcomingTasksError || overdueTasksError || notdueTasksError) && <p style={{ fontStyle: "italic" }}>An error occurred while loading your tasks.</p>}
       {(upcomingTaskList && upcomingTaskList.length === 0) && (overdueTaskList && overdueTaskList.length === 0) && (notdueTaskList && notdueTaskList.length === 0) &&
-      <><h2>Your tasks:</h2>
+      <><h2 style={{ marginTop: 0 }}>Your tasks:</h2>
       <p style={{ fontStyle: "italic" }}>You have no relevant tasks!</p></>
       }
 
       {upcomingTaskList && upcomingTaskList.length > 0 &&
-      <><h2>Upcoming tasks:</h2>
+      <><h2 style={{ marginTop: 0 }}>Upcoming tasks:</h2>
       <ul style={{ display: "table", listStyle: "none", marginLeft: "-20px" }}>
         {upcomingTaskList}
       </ul></>
       }
       
       {overdueTaskList && overdueTaskList.length > 0 &&
-      <><h2>Past due date:</h2>
+      <><h2 style={{ marginTop: 0 }}>Past due date:</h2>
       <ul style={{ display: "table", listStyle: "none", marginLeft: "-20px" }}>
         {overdueTaskList}
       </ul></>
       }
       
       {notdueTaskList && notdueTaskList.length > 0 &&
-      <><h2>Not due:</h2>
+      <><h2 style={{ marginTop: 0 }}>No due date:</h2>
       <ul style={{ display: "table", listStyle: "none", marginLeft: "-20px" }}>
         {notdueTaskList}
       </ul></>
       }
-      <Link href="/tasks">View all tasks</Link>
+      <Link href="/tasks" style={{ position: "absolute", bottom: 0, right: 0, paddingRight: "5px", paddingBottom: "5px" }}>View all tasks</Link>
       </div>
       
-      <div style={{ borderStyle: "solid", borderWidth: "2px", borderColor: "var(--inset-border-color)", borderRadius: "7px" }}>
+      <div style={{ position: "relative", padding: "5px", borderStyle: "solid", borderWidth: "2px", borderColor: "var(--inset-border-color)", borderRadius: "7px" }}>
       <h2>Your collections:</h2>
       {collectionList === undefined && !collectionsError && <p style={{ fontStyle: "italic" }}>Loading collections...</p>}
       {collectionsError && <p style={{ fontStyle: "italic" }}>An error occurred while loading your collections.</p>}
@@ -104,7 +104,7 @@ export default function Dashboard() {
         {collectionList}
       </ul>
       }
-      <Link href="/collections">View all collections</Link>
+      <Link href="/collections" style={{ position: "absolute", bottom: 0, right: 0, paddingRight: "5px", paddingBottom: "5px" }}>View all collections</Link>
       </div></div>
     </Layout>    
   );
