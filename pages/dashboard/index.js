@@ -94,7 +94,7 @@ export default function Dashboard() {
       </div>
       
       <div style={{ position: "relative", padding: "5px", borderStyle: "solid", borderWidth: "2px", borderColor: "var(--inset-border-color)", borderRadius: "7px" }}>
-      <h2>Your collections:</h2>
+      <h2 style={{ marginTop: 0 }}>Your collections:</h2>
       {collectionList === undefined && !collectionsError && <p style={{ fontStyle: "italic" }}>Loading collections...</p>}
       {collectionsError && <p style={{ fontStyle: "italic" }}>An error occurred while loading your collections.</p>}
       {collectionList && collectionList.length === 0 ?
