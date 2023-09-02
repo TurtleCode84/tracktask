@@ -1,11 +1,12 @@
 import moment from "moment";
 import { useRouter } from "next/router";
 import stringToColor from "lib/stringToColor";
+import Link from "next/link";
 
 export default function Task({ task, key }) {
   const router = useRouter();
   const collectionTags = task.collections?.map((item, index) =>
-    <span key={index} style={{backgroundColor: stringToColor(item.name), padding: "0.5px 4px", borderStyle: "solid", borderWidth: "2px", borderColor: "var(--inset-border-color)", borderRadius: "7px", color: "#111", marginTop: "5px", marginLeft: "20px", marginRight: "-15px", display: "inline-block", filter: "grayscale(0.4) brightness(1.5)" }}>{item.name}</span>
+    <Link key={index} href={`/collections/${item._id}`}><span style={{backgroundColor: stringToColor(item.name), padding: "0.5px 4px", borderStyle: "solid", borderWidth: "2px", borderColor: "var(--inset-border-color)", borderRadius: "7px", color: "#111", marginTop: "5px", marginLeft: "20px", marginRight: "-15px", display: "inline-block", filter: "grayscale(0.4) brightness(1.5)" }}>{item.name}</span></Link>
   );
   return (
     <li key={key} title={task.dueDate > 0 ? moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a") : 'No due date'} className="list-hover" style={{ margin: "0.5em", background: "var(--element-background)", padding: "8px", borderWidth: "2px", borderStyle: "solid", borderColor: "var(--border-color)", borderRadius: "10px", width: "auto" }} onClick={() => router.push(`/tasks/${task._id}`)}>
