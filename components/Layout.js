@@ -143,6 +143,11 @@ export default function Layout({ children }) {
           border-radius: 4px;
         }
 
+        ul {
+          list-style: none;
+          margin-left: -20px;
+        }
+
         summary {
           user-select: none;
         }

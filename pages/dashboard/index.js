@@ -72,21 +72,21 @@ export default function Dashboard() {
 
       {upcomingTaskList && upcomingTaskList.length > 0 &&
       <><h2 style={{ marginTop: 0 }}>Upcoming tasks:</h2>
-      <ul style={{ display: "table", listStyle: "none", marginLeft: "-20px" }}>
+      <ul style={{ display: "table" }}>
         {upcomingTaskList}
       </ul></>
       }
       
       {overdueTaskList && overdueTaskList.length > 0 &&
       <><h2 style={{ marginTop: 0 }}>Past due date:</h2>
-      <ul style={{ display: "table", listStyle: "none", marginLeft: "-20px" }}>
+      <ul style={{ display: "table" }}>
         {overdueTaskList}
       </ul></>
       }
       
       {notdueTaskList && notdueTaskList.length > 0 &&
       <><h2 style={{ marginTop: 0 }}>No due date:</h2>
-      <ul style={{ display: "table", listStyle: "none", marginLeft: "-20px" }}>
+      <ul style={{ display: "table" }}>
         {notdueTaskList}
       </ul></>
       }
@@ -100,7 +100,7 @@ export default function Dashboard() {
       {collectionList && collectionList.length === 0 ?
       <p style={{ fontStyle: "italic" }}>You have no collections!</p>
       :
-      <ul style={{ display: "table", listStyle: "none", marginLeft: "-20px" }}>
+      <ul style={{ display: "table" }}>
         {collectionList}
       </ul>
       }
