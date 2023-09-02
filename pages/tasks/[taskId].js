@@ -36,7 +36,7 @@ export default function Task() {
     }
   }
   const collectionTags = task?.collections.map((item, index) =>
-    <span key={index} style={{fontSize: "18px", verticalAlign: "2px", backgroundColor: stringToColor(item.name), padding: "0.5px 4px", borderStyle: "solid", borderWidth: "2px", borderColor: "var(--inset-border-color)", borderRadius: "7px", color: "#111", marginRight: "6px", display: "inline-block", filter: "grayscale(0.4) brightness(1.5)" }}>{item.name}</span>
+    <Link href={`/collections/${item._id}`}><span key={index} style={{fontSize: "18px", verticalAlign: "2px", backgroundColor: stringToColor(item.name), padding: "0.5px 4px", borderStyle: "solid", borderWidth: "2px", borderColor: "var(--inset-border-color)", borderRadius: "7px", color: "#111", marginRight: "6px", display: "inline-block", filter: "grayscale(0.4) brightness(1.5)" }}>{item.name}</span></Link>
   );
     
   if (!user || !user.isLoggedIn || user.permissions.banned) {
@@ -178,7 +178,7 @@ export default function Task() {
             }}
           />
         </details></>}
-        {perms < 4 && <><br/><ReportButton user={user} type="task" reported={task}/></>}</>
+        {perms < 4 && <ReportButton user={user} type="task" reported={task}/>}</>
       :
         <>{taskError ? <p>{taskError.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading task...</p>}</>
       }
