@@ -128,9 +128,9 @@ export default function Collection() {
         </>
         :
         <ul style={{ display: "table" }}>
-          {relTaskList.length > 0 && comTaskList.length > 0 ?
+          {relTaskList.length > 0 || comTaskList.length > 0 ?
           <>{relTaskList.length > 0 && relTaskList}
-          {comTaskList.length > 0 && <details><summary>View more</summary>{comTaskList}</details>}</>
+          {comTaskList.length > 0 && <details><summary style={{ fontSize: "90%", color: "gray", paddingTop: "10px" }}>View more</summary>{comTaskList}</details>}</>
           :
           <li>No tasks found!</li>}
         </ul>
