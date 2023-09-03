@@ -130,11 +130,11 @@ export default function Collection() {
         <ul style={{ display: "table" }}>
           {relTaskList.length > 0 || comTaskList.length > 0 ?
           <>{relTaskList.length > 0 && relTaskList}
-          {comTaskList.length > 0 && <details><summary style={{ fontSize: "90%", color: "gray", paddingTop: "10px" }}>View more</summary>{comTaskList}</details>}</>
+          {comTaskList.length > 0 && <details><summary style={{ fontSize: "90%", color: "gray", paddingTop: "8px" }}>View more</summary>{comTaskList}</details>}</>
           :
-          <li>No tasks found!</li>}
+          <li style={{ paddingBottom: "2px" }}>No tasks found!</li>}
         </ul>
-        } 
+        }
         {user.permissions.verified && user.id === collection.owner && <><hr/><Link href={`/collections/${collection._id}/share`}>Share this collection</Link></>}
         <hr/>
         {currentUserRole === "editor" && <><details>

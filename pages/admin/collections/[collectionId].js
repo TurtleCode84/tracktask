@@ -23,7 +23,10 @@ export default function Collection() {
   
   const [errorMsg, setErrorMsg] = useState("");
   const collection = collections?.[0];
-  const taskList = collection?.tasks.map((task) =>
+  const relTaskList = collection?.tasks?.filter(task => task.completion.completed === 0).map((task) =>
+    <Task task={task} key={task._id}/>
+  );
+  const comTaskList = collection?.tasks?.filter(task => task.completion.completed > 0).map((task) =>
     <Task task={task} key={task._id}/>
   );
 
@@ -50,15 +53,19 @@ export default function Collection() {
         {collection.sharing.shared && <p>Shared with: <ul>{sharedWithList.length > 0 ? sharedWithList : <li>Nobody!</li>}</ul></p>}
         <p>Number of tasks: {collection.tasks.length}</p>
         <p>Tasks in collection:</p>
-        {taskList === undefined || error ?
+        {relTaskList === undefined || comTaskList === undefined || error ?
         <>
         {error ? <p style={{ fontStyle: "italic" }}>{error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
         </>
         :
-        <><ul style={{ display: "table" }}>
-          {taskList.length > 0 ? taskList : <li>No tasks found!</li>}
-        </ul></>
-        } 
+        <ul style={{ display: "table" }}>
+          {relTaskList.length > 0 || comTaskList.length > 0 ?
+          <>{relTaskList.length > 0 && relTaskList}
+          {comTaskList.length > 0 && <details><summary style={{ fontSize: "90%", color: "gray", paddingTop: "8px" }}>View more</summary>{comTaskList}</details>}</>
+          :
+          <li style={{ paddingBottom: "2px" }}>No tasks found!</li>}
+        </ul>
+        }
         <hr/>
         {/*<details>
           <summary>Edit collection</summary>
