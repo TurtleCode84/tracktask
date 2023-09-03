@@ -12,14 +12,14 @@ export default function About() {
       </p>
       <h2>Credits:</h2>
       <p>This project was made possible by the following people, groups, and projects...</p>
-      <ul>
+      <ul style={{ listStyle: "revert", margin: "revert" }}>
         <li><a href="https://github.com/vvo" target="_blank" rel="noreferrer">vvo&apos;s</a>{' '}<a href="https://github.com/vvo/iron-session" target="_blank" rel="noreferrer">iron-session</a> (for the site&apos;s structure & session framework)</li>
         <li><a href="https://vercel.com" target="_blank" rel="noreferrer">Vercel</a> for build and deployment</li>
         <li><a href="https://nextjs.org" target="_blank" rel="noreferrer">Next.js</a> for an easy-to-use API & static rendering framework</li>
         <li>All contributors to the TrackTask codebase!</li>
       </ul>
       <p>And of course, we can&apos;t have credits without mentioning the amazing people who have helped build and run TrackTask...</p>
-      <ul>
+      <ul style={{ listStyle: "revert", margin: "revert" }}>
         <li><a href="https://wasteof.money/users/daily_meme" target="_blank" rel="noreferrer">@daily_meme</a>, logo designer</li>
         <li><a href="https://github.com/radeeyate" target="_blank" rel="noreferrer">@radi8</a>, tester & developer</li>
         <li><a href="https://github.com/Quantum-Codes" target="_blank" rel="noreferrer">@ankit_anmol</a>, tester & developer</li>

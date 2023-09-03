@@ -57,7 +57,7 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
         <input type="text" title="Must be a valid absolute or relative URL." pattern="(^https?:\/\/.*?\..{2,}?|^\/.*?)" name="profilePicture" defaultValue={user.profilePicture} />
         <details style={{ fontSize: "80%", color: "gray" }}>
         <summary>Allowed image hosts</summary>
-          <ul>
+          <ul style={{ listStyle: "revert", margin: "revert" }}>
             <li>tracktask.eu.org</li>
             <li>avatars.githubusercontent.com</li>
             <li>u.cubeupload.com</li>
