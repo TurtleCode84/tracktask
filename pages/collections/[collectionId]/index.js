@@ -122,7 +122,7 @@ export default function Collection() {
         {collection.sharing.shared && <p>Shared with: <ul>{sharedWithList.length > 0 ? sharedWithList : <li>Nobody!</li>}</ul></p>}
         <p>Number of tasks: {collection.tasks.length}</p>
         <p>Tasks in collection:</p>
-        {taskList === undefined || error ?
+        {relTaskList === undefined || comTaskList === undefined || error ?
         <>
         {error ? <p style={{ fontStyle: "italic" }}>{error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
         </>
