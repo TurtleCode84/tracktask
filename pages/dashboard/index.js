@@ -90,7 +90,7 @@ export default function Dashboard() {
         {notdueTaskList}
       </ul></>
       }
-      <Link href="/tasks" style={{ position: "absolute", bottom: 0, right: 0, paddingRight: "5px", paddingBottom: "5px" }}>View all tasks</Link>
+      <br/><Link href="/tasks" style={{ position: "absolute", bottom: "5px", right: "5px" }}>View all tasks</Link>
       </div>
       
       <div style={{ position: "relative", padding: "5px", borderStyle: "solid", borderWidth: "2px", borderColor: "var(--border-color)", borderRadius: "7px" }}>
@@ -104,7 +104,7 @@ export default function Dashboard() {
         {collectionList}
       </ul>
       }
-      <Link href="/collections" style={{ position: "absolute", bottom: 0, right: 0, paddingRight: "5px", paddingBottom: "5px" }}>View all collections</Link>
+      <br/><Link href="/collections" style={{ position: "absolute", bottom: "5px", right: "5px" }}>View all collections</Link>
       </div></div>
     </Layout>    
   );
