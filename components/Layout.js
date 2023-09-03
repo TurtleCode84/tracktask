@@ -87,11 +87,24 @@ export default function Layout({ children }) {
           .container {
             max-width: 100%;
           }
+          .dashboard {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            minHeight: 300px;
+            width: max-content;
+          }
         }
         
         @media only screen and (min-width: 600px) {
           .container {
             max-width: 65rem;
+          }
+          .dashboard {
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            gap: 40px;
+            minHeight: 300px;
           }
         }
 

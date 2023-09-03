@@ -62,7 +62,7 @@ export default function Dashboard() {
 
       {dynamicMsg && <p className="success">{dynamicMsg}{' '}<Link href="/dashboard">Ok</Link></p>}
 
-      <div style={{ display: "grid", gridTemplateColumns: "3fr 2fr", gap: "40px", minHeight: "300px" }}><div style={{ position: "relative", padding: "5px", borderStyle: "solid", borderWidth: "2px", borderColor: "var(--border-color)", borderRadius: "7px" }}>
+      <div className="dashboard"><div style={{ position: "relative", padding: "5px", borderStyle: "solid", borderWidth: "2px", borderColor: "var(--border-color)", borderRadius: "7px" }}>
       {(upcomingTaskList === undefined || overdueTaskList === undefined || notdueTaskList === undefined) && <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
       {(upcomingTasksError || overdueTasksError || notdueTasksError) && <p style={{ fontStyle: "italic" }}>An error occurred while loading your tasks.</p>}
       {(upcomingTaskList && upcomingTaskList.length === 0) && (overdueTaskList && overdueTaskList.length === 0) && (notdueTaskList && notdueTaskList.length === 0) &&
