@@ -10,7 +10,7 @@ export default function Terms() {
       <ul style={{ listStyle: "revert", margin: "revert" }}>
         <li>All users must review and consent to the <Link href="/privacy">Privacy Policy</Link>.</li>
         <li>&quot;The site&quot; is defined as TrackTask in all of its domains & services.</li>
-        <li>You must be at least 13 years of age to use a TrackTask account, if you are under 13 years of age you may use TrackTask with confirmed parent consent. Please contact <a href="mailto:tracktask@tracktask.eu.org">tracktask@tracktask.eu.org</a> for more information.</li>
+        <li>You must be at least 13 years of age to create or use a TrackTask account, if you are under 13 years of age you may use TrackTask with confirmed parent consent. Please contact <a href="mailto:privacy@tracktask.eu.org">privacy@tracktask.eu.org</a> for more information.</li>
         <li>The following activities are prohibited:</li>
         <ul style={{ listStyle: "revert", margin: "revert" }}>
           <li>Spamming or attempting to spam on any part of the site.</li>
@@ -26,7 +26,7 @@ export default function Terms() {
         <li>Failure to follow the above terms will lead to administrative action, including but not limited to an account warning, ban, or IP block, in no particular order.</li>
       </ul>
       <p>If you have any questions about the terms listed above, please contact us at <a href="mailto:tracktask@tracktask.eu.org">tracktask@tracktask.eu.org</a>.</p>
-      <p style={{ fontStyle: "italic" }}>This page was last updated 7/5/23.</p>
+      <p style={{ fontStyle: "italic" }}>This page was last updated 9/3/23.</p>
 
       <style jsx>{`
         li {
