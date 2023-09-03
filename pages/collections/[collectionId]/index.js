@@ -36,7 +36,10 @@ export default function Collection() {
     titleInfo.hover = "Shared";
     titleInfo.icon = "group";
   }
-  const taskList = collection?.tasks?.map((task) =>
+  const relTaskList = collection?.tasks?.filter(task => task.completion.completed === 0).map((task) =>
+    <Task task={task} key={task._id}/>
+  );
+  const comTaskList = collection?.tasks?.filter(task => task.completion.completed > 0).map((task) =>
     <Task task={task} key={task._id}/>
   );
   const sharedWithList = collection?.sharing?.sharedWith?.map((item) =>
@@ -124,9 +127,13 @@ export default function Collection() {
         {error ? <p style={{ fontStyle: "italic" }}>{error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
         </>
         :
-        <><ul style={{ display: "table" }}>
-          {taskList.length > 0 ? taskList : <li>No tasks found!</li>}
-        </ul></>
+        <ul style={{ display: "table" }}>
+          {relTaskList.length > 0 && comTaskList.length > 0 ?
+          <>{relTaskList.length > 0 && relTaskList}
+          {comTaskList.length > 0 && <details><summary>View more</summary>{comTaskList}</details>}</>
+          :
+          <li>No tasks found!</li>}
+        </ul>
         } 
         {user.permissions.verified && user.id === collection.owner && <><hr/><Link href={`/collections/${collection._id}/share`}>Share this collection</Link></>}
         <hr/>
