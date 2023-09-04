@@ -20,7 +20,7 @@ export default function Report({ user, report, key }) {
     path = "users";
   }
   return (
-    <li key={key} className="report-li" style={{ margin: "0.5em", background: "#f8f8f8", padding: "5px 20px", borderWidth: "2px", borderStyle: "solid", borderColor: "darkgray", borderRadius: "10px", width: "auto" }}>
+    <li key={key} className="report-li" style={{ margin: "0.5em", background: "var(--element-background)", padding: "5px 20px", borderWidth: "2px", borderStyle: "solid", borderColor: "var(--border-color)", borderRadius: "10px", width: "auto" }}>
       <p style={{ fontWeight: "bold" }}>{report.reviewed > 0 && <><span title="Reviewed" style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">task_alt</span>{' '}</>}{moment.unix(report.timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")}</p><p>Type: {report.type}</p><p>Reported {report.type}: {report.type === "user" ? <User user={user} id={report.reported._id} link={true}/> : <Link href={`/admin/${path}/${report.reported._id}`}>{report.reported.name}</Link>}</p><p>Reason: {report.reason}</p><p>Reported by: <User user={user} id={report.reporter} link={true}/></p>{report.reviewed > 0 && <p>Reviewed on: {moment.unix(report.reviewed).format("dddd, MMMM Do YYYY, h:mm:ss a")}</p>}<details><summary>View snapshot</summary><pre>{JSON.stringify(report.reported, null, 2)}</pre></details>
       {/* Fix later */}
       {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}

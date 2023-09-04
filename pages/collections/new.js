@@ -37,14 +37,13 @@ export default function CollectionsCreate() {
             name: event.currentTarget.name.value,
             description: event.currentTarget.description.value,
           };
-          if (event.currentTarget.shared) {body.shared = event.currentTarget.shared.checked} else {body.shared = false}
 
           try {
-            const getUrl = await fetchJson("/api/tasks?collection=true", {
+            const getUrl = await fetchJson("/api/collections", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(body),
-            })
+            });
             router.push(`/collections/${getUrl.insertedId}`);
           } catch (error) {
             if (error instanceof FetchError) {

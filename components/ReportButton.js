@@ -35,6 +35,6 @@ export default function ReportButton({ type, reported, flag }) {
         }
         }}
     ><button>{flag ? <><span style={{ color: "red" }} className="material-symbols-outlined icon-list">flag</span> Flag for review</> : <><span style={{ color: "red" }} className="material-symbols-outlined icon-list">report</span> Report abuse</>}</button></a>
-    <p className="error" id="reportMessage" style={{ color: "brown", margin: "1rem 0 0" }}></p>
+    <p className="error" id="reportMessage"></p>
     </>);
 }

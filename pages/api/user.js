@@ -1,5 +1,6 @@
 import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "lib/session";
+import { allowedChars } from "lib/allowedChars";
 import { ObjectId } from 'mongodb'
 import clientPromise from "lib/mongodb";
 import { compare, hash } from 'bcryptjs';
@@ -25,13 +26,19 @@ async function userRoute(req, res) {
         });
         return;
       }
+      userInfo.history.warnings.forEach((warning) => {
+        delete warning.by;
+      });
+      if (userInfo.history.lastEdit.by != req.session.user.id) {
+        delete userInfo.history.lastEdit.by;
+      }
       const user = {
         ...req.session.user,
         isLoggedIn: true,
         username: userInfo.username,
         email: userInfo.email,
         profilePicture: userInfo.profilePicture,
-        history: { joined: userInfo.history.joined, banReason: userInfo.history.banReason, warnings: userInfo.history.warnings, lastEdit: userInfo.history.lastEdit },
+        history: { joined: userInfo.history.joined, ban: { reason: userInfo.history.ban.reason, timestamp: userInfo.history.ban.timestamp }, warnings: userInfo.history.warnings, lastEdit: userInfo.history.lastEdit },
         permissions: userInfo.permissions,
         stats: { tasks: taskCount, collections: collectionCount },
       };
@@ -50,7 +57,7 @@ async function userRoute(req, res) {
     const body = await req.body;
     const user = req.session.user;
     if (!user || !user.isLoggedIn || user.permissions.banned ) {
-      res.status(401).json({ message: "Unauthorized" });
+      res.status(401).json({ message: "Authentication required" });
       return;
     }
     const client = await clientPromise;
@@ -61,34 +68,69 @@ async function userRoute(req, res) {
         const warnUpdateDoc = {
           $set: {'permissions.warned': false},
         };
-        const updatedWarn = await db.collection('users').updateOne(query, warnUpdateDoc);
+        const updatedWarn = await db.collection("users").updateOne(query, warnUpdateDoc);
         const lastEditDoc = {
           $set: {
-            'lastEdit.timestamp': Math.floor(Date.now()/1000),
-            'lastEdit.by': new ObjectId(user.id),
+            'history.lastEdit.timestamp': Math.floor(Date.now()/1000),
+            'history.lastEdit.by': new ObjectId(user.id),
           },
         };
-        const lastEditUpdate = await db.collection('users').updateOne(query, lastEditDoc);
+        const lastEditUpdate = await db.collection("users").updateOne(query, lastEditDoc);
         res.json(updatedWarn);
       } catch (error) {
         res.status(500).json({ "message": error.data.message });
       }
     } else {
+      const blacklist = process.env.BLACKLIST.split(',');
       var updateUser = {};
-      const query = { _id: new ObjectId(user.id) }
       if (body.username && user.permissions.verified) {
-        const taken = await db.collection('users').countDocuments({ username: body.username.trim().toLowerCase() });
+        const cleanUsername = body.username.trim().toLowerCase();
+        if (cleanUsername.length < 3 || cleanUsername.length > 20) {
+          res.status(422).json({ message: "Username length must be within 3 to 20 characters." });
+          return;
+        }
+        const splitUsername = cleanUsername.split('');
+        var contains = blacklist.some(element => { // Check for blacklisted elements
+          if (cleanUsername.includes(element.toLowerCase())) {
+            return true;
+          }
+        });
+        if (!cleanUsername) {
+          contains = true;
+        }
+        for (var i=0; i<splitUsername.length; i++) { // Check for disallowed username characters
+          if (!allowedChars.includes(splitUsername[i])) {
+            contains = true;
+          }
+        }
+        if (contains && blacklist) { // Figure out a way to do this when no blacklist is provided
+          res.status(403).json({ message: "The username you provided is not allowed, please choose something else." });
+          return;
+        }
+        const taken = await db.collection("users").countDocuments({ username: cleanUsername });
         if (taken > 0) {
           res.status(422).json({ message: "Username is already taken!" });
           return;
         } else {
-          updateUser.username = body.username.trim().toLowerCase();
+          updateUser.username = cleanUsername;
         }
       } else if (body.username) {
-        res.status(401).json({ message: "Only verified users can change their username!" });
+        res.status(403).json({ message: "Only verified users can change their username!" });
         return;
       }
-      if (body.email !== undefined) {updateUser.email = body.email.trim().toLowerCase()}
+      if (body.email !== undefined) {
+        const cleanEmail = body.email.trim().toLowerCase();
+        var contains = blacklist.some(element => { // Check for blacklisted elements
+          if (cleanEmail.includes(element.toLowerCase())) {
+            return true;
+          }
+        });
+        if (contains && blacklist) { // Figure out a way to do this when no blacklist is provided
+          res.status(403).json({ message: "The email you provided is not allowed, please choose something else." });
+          return;
+        }
+        updateUser.email = cleanEmail;
+      }
       if (body.newPassword && body.oldPassword) {
         const currPass = await db.collection("users").findOne(query, { projection: { password: 1 } }); // current password hash
         const passwordMatch = await compare(body.oldPassword, currPass.password); // string vs hash
@@ -103,14 +145,14 @@ async function userRoute(req, res) {
       const updateDoc = {
         $set: updateUser,
       };
-      const updated = await db.collection('users').updateOne(query, updateDoc);
+      const updated = await db.collection("users").updateOne(query, updateDoc);
       const lastEditDoc = {
         $set: {
           'history.lastEdit.timestamp': Math.floor(Date.now()/1000),
           'history.lastEdit.by': new ObjectId(user.id),
         },
       };
-      const lastEditUpdate = await db.collection('users').updateOne(query, lastEditDoc);
+      const lastEditUpdate = await db.collection("users").updateOne(query, lastEditDoc);
       res.json(updated);
     }
   } else if (req.method === 'DELETE') {

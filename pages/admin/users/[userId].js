@@ -41,8 +41,8 @@ export default function UserAdmin() {
   var warningList = [];
   if (lookup?.history.warnings) {
     warningList = lookup?.history.warnings.map((warning, index) =>
-      <li key={index} style={{ margin: "0.5em" }}>
-        {warning}
+      <li key={index} title={moment.unix(warning.timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")} style={{ margin: "0.5em" }}>
+        &quot;{warning.reason}&quot; {moment.unix(warning.timestamp).fromNow()} by <User user={user} id={warning.by} link={true}/>
       </li>
     );
   }
@@ -56,7 +56,7 @@ export default function UserAdmin() {
       <Link href="/admin/users/search">Back to user search</Link><br/>
       <Link href="/admin">Back to admin dashboard</Link><br/>
       {lookup ?
-      <><p>{lookup.permissions.banned && <b>This user is banned.</b>}{' '}{lookup.permissions.banned && lookup.history.banReason && <i>Reason: {lookup.history.banReason}</i> }</p>
+      <><p>{lookup.permissions.banned && <b>This user is banned.</b>}{' '}{lookup.permissions.banned && lookup.history.ban.reason && <i>Reason: {lookup.history.ban.reason}</i> }</p>
       <h3>General information</h3>
       <p>User ID: {lookup._id}</p>
       <p>Email: {lookup.email ? <><a href={`mailto:${lookup.email}`} target="_blank" rel="noreferrer">{lookup.email}</a></> : 'none'}</p>
@@ -67,7 +67,7 @@ export default function UserAdmin() {
       <details>
         <summary>Last 5 IP addresses</summary>
         <p style={{ fontStyle: "italic" }}>(Newest to oldest)</p>
-        <ul>{ipList?.length > 0 ? ipList : 'No IPs found'}</ul>
+        <ul style={{ listStyle: "revert", margin: "revert" }}>{ipList?.length > 0 ? ipList : 'No IPs found'}</ul>
       </details>
       <p title={moment.unix(lookup.history.lastLogin).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Last login: {lookup.history.lastLogin > 0 ? moment.unix(lookup.history.lastLogin).fromNow() : 'never'}</p>
       <p>Last modified: {lookup.history.lastEdit?.timestamp > 0 ? <span title={moment.unix(lookup.history.lastEdit.timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")}>{moment.unix(lookup.history.lastEdit.timestamp).fromNow()} by <User user={user} id={lookup.history.lastEdit.by} link={true}/></span> : 'never'}</p>
@@ -78,10 +78,10 @@ export default function UserAdmin() {
       <br/><details>
         <summary>Warnings</summary>
         <p style={{ fontStyle: "italic" }}>(Newest to oldest)</p>
-        <ul>{warningList?.length > 0 ? warningList : 'No warnings found'}</ul>
+        <ul style={{ listStyle: "revert", margin: "revert" }}>{warningList?.length > 0 ? warningList : 'No warnings found'}</ul>
       </details>
       <p>Acknowledged last warning: {lookup.history.warnings.length > 0 ? <>{lookup.permissions.warned ? <span style={{ color: "red" }} className="material-symbols-outlined icon-list">close</span> : <span style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">done</span>}</> : 'N\/A'}</p>
-      {!lookup.permissions.banned && <p>Last ban reason: {lookup.history.banReason ? lookup.history.banReason : 'none'}</p>}
+      {!lookup.permissions.banned && <p>Last banned: {lookup.history.ban.timestamp > 0 ? <span title={moment.unix(lookup.history.ban.timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")}>{moment.unix(lookup.history.ban.timestamp).fromNow()} by <User user={user} id={lookup.history.ban.by} link={true}/>{lookup.history.ban.reason && ' for \"' + lookup.history.ban.reason + '\"'}</span> : 'never'}</p>}
       <hr/>
       <details>
         <summary>Edit user info</summary>
@@ -122,7 +122,7 @@ export default function UserAdmin() {
                   method: "POST",
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify(body),
-                })
+                });
                 router.reload();
               } catch (error) {
                 if (error instanceof FetchError) {
@@ -134,23 +134,6 @@ export default function UserAdmin() {
               }
             }}
         />
-        <a href={"/api/admin/users/impersonate"}
-        onClick={async (e) => {
-          e.preventDefault();
-          if (confirm("Are you sure? You will be logged out of your account.")) {
-            try {
-              await fetchJson("/api/admin/users/impersonate", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ id: lookup._id }),
-              });
-              router.reload();
-            } catch (error) {
-              setErrorMsg(error.data.message);
-            }
-          }
-        }}
-        ><button><span style={{ color: "#006dbe" }} className="material-symbols-outlined icon-list">settings_account_box</span> Impersonate</button></a>
       </details></>
       :
       <>{error ? <p>{error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading user info...</p>}</>

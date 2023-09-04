@@ -38,13 +38,13 @@ export default function TaskEditForm({ errorMessage, onSubmit, task }) {
 
       {errorMessage && <p className="error">{errorMessage}</p>}<hr/>
        
-      <a href={`/api/tasks?id=${task._id}`}
+      <a href={`/api/tasks/${task._id}`}
         onClick={async (e) => {
           e.preventDefault();
           if (confirm("Are you sure? Deleting a task is irreversable!")) {
             try {
-              await fetchJson(`/api/tasks?id=${task._id}`, { method: "DELETE" });
-              router.push("/dashboard?deleted=true");
+              await fetchJson(`/api/tasks/${task._id}`, { method: "DELETE" });
+              router.push("/dashboard?deleted=t");
             } catch (error) {
               document.getElementById("deleteTaskMessage").innerHTML = error.data.message;
             }
@@ -65,8 +65,6 @@ export default function TaskEditForm({ errorMessage, onSubmit, task }) {
         input {
           padding: 8px;
           margin: 0.3rem 0 1rem;
-          border: 1px solid #ccc;
-          border-radius: 4px;
           max-width: 400px;
         }
         input[type="checkbox"] {
@@ -75,9 +73,8 @@ export default function TaskEditForm({ errorMessage, onSubmit, task }) {
           width: 15px !important;
           margin-bottom: 10px;
         }
-        .error {
-          color: brown;
-          margin: 1rem 0 0;
+        textarea {
+          border-color: var(--input-border-color);
         }
       `}</style>
     </form>
