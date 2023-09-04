@@ -60,7 +60,7 @@ export default function Dashboard() {
         }
       </h1>
 
-      {dynamicMsg && <p className="success" style={{ marginBottom: "1rem" }}>{dynamicMsg}{' '}<Link href="/dashboard">Ok</Link></p>}
+      {dynamicMsg && <p className="success" style={{ marginBottom: "1rem", marginTop: "-0.5rem" }}>{dynamicMsg}{' '}<Link href="/dashboard">Ok</Link></p>}
 
       <div className="dashboard"><div style={{ position: "relative", padding: "5px", borderStyle: "solid", borderWidth: "2px", borderColor: "var(--border-color)", borderRadius: "7px" }}>
       {(upcomingTaskList === undefined || overdueTaskList === undefined || notdueTaskList === undefined) && <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
