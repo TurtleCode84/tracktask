@@ -7,12 +7,12 @@ export default function Terms() {
     <Layout>
       <h1>Terms of Use:</h1>
       <h3>By using TrackTask, you agree to these terms:</h3>
-      <ul>
+      <ul style={{ listStyle: "revert", margin: "revert" }}>
         <li>All users must review and consent to the <Link href="/privacy">Privacy Policy</Link>.</li>
         <li>&quot;The site&quot; is defined as TrackTask in all of its domains & services.</li>
-        <li>You must be at least 13 years of age to use a TrackTask account, if you are under 13 years of age you may use TrackTask with confirmed parent consent. Please contact <a href="mailto:tracktask@tracktask.eu.org">tracktask@tracktask.eu.org</a> for more information.</li>
+        <li>You must be at least 13 years of age to create or use a TrackTask account, if you are under 13 years of age you may use TrackTask with confirmed parent consent. Please contact <a href="mailto:privacy@tracktask.eu.org">privacy@tracktask.eu.org</a> for more information.</li>
         <li>The following activities are prohibited:</li>
-        <ul>
+        <ul style={{ listStyle: "revert", margin: "revert" }}>
           <li>Spamming or attempting to spam on any part of the site.</li>
           <li>&quot;Hacking&quot;, attempting to gain unauthorized access, or performing unauthorized actions on any part of the site. This includes unauthorized use of another user&apos;s account.</li>
           <li>Bypassing any security measure or account protection put in place by the site&apos;s developers to provide a secure user experience.</li>
@@ -26,6 +26,7 @@ export default function Terms() {
         <li>Failure to follow the above terms will lead to administrative action, including but not limited to an account warning, ban, or IP block, in no particular order.</li>
       </ul>
       <p>If you have any questions about the terms listed above, please contact us at <a href="mailto:tracktask@tracktask.eu.org">tracktask@tracktask.eu.org</a>.</p>
+      <p style={{ fontStyle: "italic" }}>This page was last updated 9/3/23.</p>
 
       <style jsx>{`
         li {

@@ -1,6 +1,6 @@
 {
   "name": "tracktask",
-  "version": "1.2.25",
+  "version": "2.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -18,7 +18,8 @@
     "bcryptjs": "^2.4.3",
     "moment": "^2.29.4",
     "iron-session": "^6.2.0",
-    "react-google-recaptcha-v3": "^1.10.0"
+    "react-google-recaptcha-v3": "^1.10.0",
+    "web-push": "^3.6.4"
   },
   "devDependencies": {
     "eslint": "8.43.0",

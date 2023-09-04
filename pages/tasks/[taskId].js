@@ -6,8 +6,9 @@ import AddRemoveCollectionForm from "components/AddRemoveCollectionForm";
 import User from "components/User";
 import ReportButton from "components/ReportButton";
 import useUser from "lib/useUser";
-import useTasks from "lib/useTasks";
+import useData from "lib/useData";
 import fetchJson, { FetchError } from "lib/fetchJson";
+import stringToColor from "lib/stringToColor";
 import { useRouter } from 'next/router';
 import moment from "moment";
 import Link from "next/link";
@@ -17,30 +18,26 @@ export default function Task() {
   const { user } = useUser({
     redirectTo: "/login",
   });
-  const { tasks, error } = useTasks(user, false, "all");
-  const { tasks: collections, error: collectionsError } = useTasks(user, true, false); //unused error
-  
-  const [errorMsg, setErrorMsg] = useState("");
   const router = useRouter();
   const { taskId } = router.query;
-  var task = tasks?.filter(item => item._id === taskId)?.[0];
-  var canEdit = true;
-  var canComplete = true;
-  if (!task) {
-    canEdit = false;
-    canComplete = false;
-    const collection = collections?.find(item => item.tasks?.some((element) => element._id === taskId));
-    canEdit = collection?.sharing?.sharedWith?.some((element) => element.id === user?.id && element.role === "editor");
-    canComplete = collection?.sharing?.sharedWith?.some((element) => element.id === user?.id && element.role === "collaborator");
-    if (!canComplete) {
-      canComplete = canEdit
+  const { data: task, error: taskError } = useData(user, "tasks", taskId, false);
+  const { data: collections, error: collectionsError } = useData(user, "collections", false, false);
+  
+  const [errorMsg, setErrorMsg] = useState("");
+  var roles = ["none", "viewer", "collaborator", "contributor", "owner"]
+  var perms = 0;
+  if (user?.id === task?.owner) {
+    perms = 4;
+  } else {
+    for (var i=0; i<task?.collections.length; i++) {
+      if (roles.indexOf(task?.collections[i].role) > perms) {
+        perms = roles.indexOf(task?.collections[i].role)
+      }
     }
-    task = collection?.tasks.filter(item => item._id === taskId)?.[0];
   }
-  var clientError;
-  if (tasks && !task) {
-    clientError = "Task not found!";
-  }
+  const collectionTags = task?.collections.map((item, index) =>
+    <Link key={index} href={`/collections/${item._id}`}><span style={{fontSize: "18px", verticalAlign: "2px", backgroundColor: stringToColor(item.name), padding: "0.5px 4px", borderStyle: "solid", borderWidth: "2px", borderColor: "var(--inset-border-color)", borderRadius: "7px", color: "#111", marginRight: "6px", display: "inline-block", filter: "grayscale(0.4) brightness(1.5)" }}>{item.name}</span></Link>
+  );
     
   if (!user || !user.isLoggedIn || user.permissions.banned) {
     return (
@@ -50,7 +47,7 @@ export default function Task() {
   
   return (
     <Layout>
-      <h2>{task ? <>{task.completion.completed > 0 ? <><span title="Completed" style={{ color: "darkgreen" }} className="material-symbols-outlined">task_alt</span>{' '}</> : null}{task.priority ? <><span title="Priority" style={{ color: "red" }} className="material-symbols-outlined">priority_high</span>{' '}</> : null}{task.name}:</> : 'Loading...'}</h2>
+      <h2>{task ? <>{task.completion.completed > 0 ? <span title="Completed" style={{ color: "darkgreen", marginRight: "8px" }} className="material-symbols-outlined">task_alt</span> : null}{task.priority ? <span title="Priority" style={{ color: "red", marginRight: "8px" }} className="material-symbols-outlined">priority_high</span> : null}{collectionTags.length > 0 && collectionTags}{task.name}:</> : 'Loading...'}</h2>
       <Link href="/dashboard">Back to dashboard</Link><br/>
       {task ?
         <><h3>General information</h3>
@@ -62,7 +59,7 @@ export default function Task() {
         {user.permissions.verified && <p>Completed by: <User user={user} id={task.completion.completedBy}/></p>}
         </>
         :
-        <>{canComplete && <><a href={`/api/tasks?id=${task._id}`}
+        <>{perms >= 2 && <><a href={`/api/tasks/${task._id}`}
         onClick={async (e) => {
           e.preventDefault();
           document.getElementById("markCompleteBtn").disabled = true;
@@ -74,11 +71,11 @@ export default function Task() {
             priority: false,
           };
           try {
-            await fetchJson(`/api/tasks?id=${task._id}`, {
+            await fetchJson(`/api/tasks/${task._id}`, {
               method: "PATCH",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(body),
-            })
+            });
             router.reload();
           } catch (error) {
             if (error instanceof FetchError) {
@@ -89,9 +86,9 @@ export default function Task() {
             document.getElementById("markCompleteBtn").disabled = false;
           }
         }}
-        ><button id="markCompleteBtn">Mark completed <span style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">task_alt</span></button></a></>}</>}
+        ><button id="markCompleteBtn"><span style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">task_alt</span> Mark completed</button></a></>}</>}
         <hr/>
-        {canEdit && <><details>
+        {perms >= 4 && <><details>
           <summary>Edit task</summary>
           <br/><TaskEditForm
             errorMessage={errorMsg}
@@ -125,11 +122,11 @@ export default function Task() {
               }
 
               try {
-                await fetchJson(`/api/tasks?id=${task._id}`, {
+                await fetchJson(`/api/tasks/${task._id}`, {
                   method: "PATCH",
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify(body),
-                })
+                });
                 router.reload();
               } catch (error) {
                 if (error instanceof FetchError) {
@@ -142,7 +139,7 @@ export default function Task() {
             }}
         />
         </details></>}
-        {user.id === task.owner && <><br/><details>
+        {perms >= 4 && <><br/><details>
           <summary>Add/remove from collection</summary>
           <br/><AddRemoveCollectionForm
             errorMessage={errorMsg}
@@ -157,16 +154,18 @@ export default function Task() {
               const removedCollections = event.currentTarget.removeCollections.selectedOptions;
               const removedCollectionsValues = Array.from(removedCollections)?.map((item) => item.value);
               
-              const body = {};
+              const body = {
+                taskId: task._id,
+              };
               if (addedCollectionsValues.length > 0) {body.addCollections = addedCollectionsValues};
               if (removedCollectionsValues.length > 0) {body.removeCollections = removedCollectionsValues};
                             
               try {
-                await fetchJson(`/api/tasks?collection=true&id=${task._id}`, {
+                await fetchJson(`/api/collections`, {
                   method: "PATCH",
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify(body),
-                })
+                });
                 router.reload();
               } catch (error) {
                 if (error instanceof FetchError) {
@@ -179,9 +178,9 @@ export default function Task() {
             }}
           />
         </details></>}
-        {task.owner !== user.id && <><br/><ReportButton user={user} type="task" reported={task}/></>}</>
+        {perms < 4 && <ReportButton user={user} type="task" reported={task}/>}</>
       :
-        <>{error || clientError ? <p>{clientError ? clientError : error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading task...</p>}</>
+        <>{taskError ? <p>{taskError.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading task...</p>}</>
       }
     </Layout>
   );

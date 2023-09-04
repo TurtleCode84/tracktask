@@ -3,6 +3,7 @@ import { compare, hash } from 'bcryptjs';
 import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "lib/session";
 import fetchJson from "lib/fetchJson";
+import { allowedChars } from "lib/allowedChars";
 
 export default withIronSessionApiRoute(authRoute, sessionOptions);
 
@@ -53,7 +54,7 @@ async function authRoute(req, res) {
       return;
     }
     //Get basic user info
-    const options = { projection: { password: 1, _id: 1, username: 1, profilePicture: 1, permissions: 1, "history.banReason": 1, "history.loginIpList": 1 } };
+    const options = { projection: { password: 1, _id: 1, username: 1, profilePicture: 1, permissions: 1, "history.ban.reason": 1, "history.loginIpList": 1 } };
     const userInfo = await db.collection("users").findOne(query, options);
     //Check the password
     const passwordMatch = await compare(password, userInfo.password);
@@ -63,8 +64,8 @@ async function authRoute(req, res) {
     }
     //Check if banned
     if (userInfo.permissions.banned) {
-      if (userInfo.history.banReason) {
-        res.status(401).json({ message: 'Your account has been banned for the following reason: ' + userInfo.history.banReason + '. Please contact us at appeals@tracktask.eu.org if you would like to appeal or request more information.' });
+      if (userInfo.history.ban.reason) {
+        res.status(401).json({ message: 'Your account has been banned for the following reason: ' + userInfo.history.ban.reason + '. Please contact us at appeals@tracktask.eu.org if you would like to appeal or request more information.' });
         return;
       } else {
         res.status(401).json({ message: 'Your account has been banned, please contact us at appeals@tracktask.eu.org if you would like to appeal or request more information.' });
@@ -90,7 +91,7 @@ async function authRoute(req, res) {
         },
       };
       const ipUpdate = await db.collection('users').updateOne(query, ipUpdateDoc);
-      const user = { isLoggedIn: true, id: userInfo._id, username: userInfo.username, profilePicture: userInfo.profilePicture, permissions: userInfo.permissions, history: { "banReason": userInfo.history.banReason } };
+      const user = { isLoggedIn: true, id: userInfo._id, username: userInfo.username, profilePicture: userInfo.profilePicture, permissions: userInfo.permissions, history: { "banReason": userInfo.history.ban.reason } };
       req.session.user = user;
       await req.session.save();
       res.json(user);
@@ -136,7 +137,6 @@ async function authRoute(req, res) {
     }
     
     const blacklist = process.env.BLACKLIST.split(',');
-    const allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890";
     const cleanUsername = username.trim().toLowerCase();
     const splitUsername = cleanUsername.split('');
     const cleanEmail = email.trim().toLowerCase();
@@ -186,7 +186,11 @@ async function authRoute(req, res) {
           },
           joinedIp: ip,
           loginIpList: [],
-          banReason: "",
+          ban: {
+            reason: "",
+            timestamp: 0,
+            by: "",
+          },
           notes: "",
           warnings: [],
         },
@@ -195,6 +199,10 @@ async function authRoute(req, res) {
           banned: false,
           verified: false,
           warned: false,
+        },
+        notifications: {
+          enabled: 0,
+          subscription: {},
         },
       }
       const createdUser = await db.collection('users').insertOne(newUser);

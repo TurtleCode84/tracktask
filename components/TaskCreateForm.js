@@ -1,5 +1,5 @@
 export default function TaskCreateForm({ collections, errorMessage, onSubmit }) {
-  const listCollections = collections?.filter(collection => collection.sharing?.role === "owner").map((collection) =>
+  const listCollections = collections?.filter(collection => collection.sharing?.role === "owner" || collection.sharing?.role === "contributor").map((collection) =>
     <option key={collection._id} value={collection._id}>{collection.name}</option>
   );
   return (
@@ -10,7 +10,7 @@ export default function TaskCreateForm({ collections, errorMessage, onSubmit }) 
       </label>
       <label>
         <span>Description</span>
-        <textarea name="description" rows="4" cols="30" maxlength="500" required />
+        <textarea name="description" rows="8" cols="30" maxlength="500" required />
       </label><br/>
       <label>
         <span>Due Date (optional)</span>
@@ -43,8 +43,6 @@ export default function TaskCreateForm({ collections, errorMessage, onSubmit }) 
         input, select {
           padding: 8px;
           margin: 0.3rem 0 1rem;
-          border: 1px solid #ccc;
-          border-radius: 4px;
           max-width: 400px;
         }
         input[type="checkbox"] {
@@ -53,9 +51,8 @@ export default function TaskCreateForm({ collections, errorMessage, onSubmit }) 
           width: 15px !important;
           margin-bottom: 10px;
         }
-        .error {
-          color: brown;
-          margin: 1rem 0 0;
+        textarea {
+          border-color: var(--input-border-color);
         }
       `}</style>
     </form>

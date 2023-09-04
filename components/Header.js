@@ -149,7 +149,7 @@ export default function Header() {
           padding: 0.2rem;
           color: #fff;
           font-weight: 500;
-          background-color: #333;
+          background-color: var(--header-color);
         }
       `}</style>
     </header>
