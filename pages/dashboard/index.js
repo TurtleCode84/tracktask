@@ -6,7 +6,7 @@ import Task from "components/Task";
 import Collection from "components/Collection";
 import Link from "next/link";
 import useUser from "lib/useUser";
-import useTasks from "lib/useTasks";
+import useData from "lib/useData";
 import { useRouter } from "next/router";
 
 export default function Dashboard() {
@@ -14,27 +14,29 @@ export default function Dashboard() {
     redirectTo: "/login",
   });
   
-  const { tasks: upcomingTasks, error: upcomingTasksError } = useTasks(user, false, "upcoming");
+  const { data: upcomingTasks, error: upcomingTasksError } = useData(user, "tasks", false, "upcoming");
   const router = useRouter();
   const { reported, deleted } = router.query;
   var dynamicMsg;
   if (reported === "true") {
     dynamicMsg = "Your report had been sent, an administrator will review it soon."
-  } else if (deleted === "true") {
+  } else if (deleted === "t") {
     dynamicMsg = "Task successfully deleted!"
+  } else if (deleted === "c") {
+    dynamicMsg = "Collection successfully deleted!"
   }
   const upcomingTaskList = upcomingTasks?.map((task) =>
     <Task task={task} key={task._id}/>
   );
-  const { tasks: overdueTasks, error: overdueTasksError } = useTasks(user, false, "overdue");
+  const { data: overdueTasks, error: overdueTasksError } = useData(user, "tasks", false, "overdue");
   const overdueTaskList = overdueTasks?.map((task) =>
     <Task task={task} key={task._id}/>
   );
-  const { tasks: notdueTasks, error: notdueTasksError } = useTasks(user, false, "notdue");
+  const { data: notdueTasks, error: notdueTasksError } = useData(user, "tasks", false, "notdue");
   const notdueTaskList = notdueTasks?.map((task) =>
     <Task task={task} key={task._id}/>
   );
-  const { tasks: collections, error: collectionsError } = useTasks(user, true, false);
+  const { data: collections, error: collectionsError } = useData(user, "collections", false, false);
   const collectionList = collections?.map((collection) =>
     <Collection user={user} collection={collection} key={collection._id}/>
   );
@@ -60,44 +62,50 @@ export default function Dashboard() {
 
       {dynamicMsg && <p className="success">{dynamicMsg}{' '}<Link href="/dashboard">Ok</Link></p>}
 
-      {(upcomingTaskList === undefined && !upcomingTasksError) || (overdueTaskList === undefined && !overdueTasksError) || (notdueTaskList === undefined && !notdueTasksError) && <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
-      {upcomingTasksError && overdueTasksError && notdueTasksError &&
-      <><h2>Your tasks:</h2>
+      <div className="dashboard"><div style={{ position: "relative", padding: "5px", borderStyle: "solid", borderWidth: "2px", borderColor: "var(--border-color)", borderRadius: "7px" }}>
+      {(upcomingTaskList === undefined || overdueTaskList === undefined || notdueTaskList === undefined) && <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
+      {(upcomingTasksError || overdueTasksError || notdueTasksError) && <p style={{ fontStyle: "italic" }}>An error occurred while loading your tasks.</p>}
+      {(upcomingTaskList && upcomingTaskList.length === 0) && (overdueTaskList && overdueTaskList.length === 0) && (notdueTaskList && notdueTaskList.length === 0) &&
+      <><h2 style={{ marginTop: 0 }}>Your tasks:</h2>
       <p style={{ fontStyle: "italic" }}>You have no relevant tasks!</p></>
       }
 
-      {!upcomingTasksError &&
-      <><h2>Upcoming tasks:</h2>
+      {upcomingTaskList && upcomingTaskList.length > 0 &&
+      <><h2 style={{ marginTop: 0 }}>Upcoming tasks:</h2>
       <ul style={{ display: "table" }}>
         {upcomingTaskList}
       </ul></>
       }
       
-      {!overdueTasksError &&
-      <><h2>Past due date:</h2>
+      {overdueTaskList && overdueTaskList.length > 0 &&
+      <><h2 style={{ marginTop: 0 }}>Past due date:</h2>
       <ul style={{ display: "table" }}>
         {overdueTaskList}
       </ul></>
       }
       
-      {!notdueTasksError &&
-      <><h2>Not due:</h2>
+      {notdueTaskList && notdueTaskList.length > 0 &&
+      <><h2 style={{ marginTop: 0 }}>No due date:</h2>
       <ul style={{ display: "table" }}>
         {notdueTaskList}
       </ul></>
       }
-      <Link href="/tasks">View all tasks</Link>
+      <br/><Link href="/tasks" style={{ position: "absolute", bottom: "5px", right: "5px" }}>View all tasks</Link>
+      </div>
       
-      <h2>Your collections:</h2>
+      <div style={{ position: "relative", padding: "5px", borderStyle: "solid", borderWidth: "2px", borderColor: "var(--border-color)", borderRadius: "7px" }}>
+      <h2 style={{ marginTop: 0 }}>Your collections:</h2>
       {collectionList === undefined && !collectionsError && <p style={{ fontStyle: "italic" }}>Loading collections...</p>}
-      {collectionsError ?
+      {collectionsError && <p style={{ fontStyle: "italic" }}>An error occurred while loading your collections.</p>}
+      {collectionList && collectionList.length === 0 ?
       <p style={{ fontStyle: "italic" }}>You have no collections!</p>
       :
       <ul style={{ display: "table" }}>
         {collectionList}
       </ul>
       }
-      <Link href="/collections">View all collections</Link>
+      <br/><Link href="/collections" style={{ position: "absolute", bottom: "5px", right: "5px" }}>View all collections</Link>
+      </div></div>
     </Layout>    
   );
 }

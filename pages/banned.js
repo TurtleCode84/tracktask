@@ -22,9 +22,9 @@ export default function Banned() {
         Your TrackTask account was banned by an administrator.
       </h2>
 
-      {user !== undefined && user.history.banReason && (
+      {user !== undefined && user.history.ban.reason && (
         <p>
-          The following ban reason was given: <b>{user.history.banReason}</b>
+          The following ban reason was given: <b>{user.history.ban.reason}</b>
         </p>
       )}
 

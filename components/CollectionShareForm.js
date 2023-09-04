@@ -5,14 +5,14 @@ export default function CollectionShareForm({ errorMessage, onSubmit }) {
     <form id="collectionShareForm" autocomplete="off" onSubmit={onSubmit}>
       <label>
         <span>Username</span>
-        <input type="text" name="username" maxlength="55" required />
+        <input type="text" name="username" required />
       </label>
       <label>
         <span>Role</span>
         <select name="role" required>
             <option value="viewer">Viewer (can view the collection)</option>
             <option value="collaborator">Collaborator (can complete tasks ඞ)</option>
-            <option value="editor">Editor (can add to & edit the collection)</option>
+            <option value="contributor">Contributor (can add to the collection)</option>
         </select>
       </label><hr/>
 
@@ -29,11 +29,9 @@ export default function CollectionShareForm({ errorMessage, onSubmit }) {
         label > span {
           font-weight: 600;
         }
-        input {
+        input, select {
           padding: 8px;
           margin: 0.3rem 0 1rem;
-          border: 1px solid #ccc;
-          border-radius: 4px;
           max-width: 400px;
         }
         input[type="checkbox"] {
@@ -41,10 +39,6 @@ export default function CollectionShareForm({ errorMessage, onSubmit }) {
           vertical-align: middle;
           width: 15px !important;
           margin-bottom: 10px;
-        }
-        .error {
-          color: brown;
-          margin: 1rem 0 0;
         }
       `}</style>
     </form>

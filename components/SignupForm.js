@@ -34,12 +34,6 @@ export default function SignupForm({ errorMessage, onSubmit }) {
         input {
           padding: 8px;
           margin: 0.3rem 0 1rem;
-          border: 1px solid #ccc;
-          border-radius: 4px;
-        }
-        .error {
-          color: brown;
-          margin: 1rem 0 0;
         }
       `}</style>
     </form>

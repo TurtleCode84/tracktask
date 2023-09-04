@@ -25,12 +25,12 @@ export default function Home() {
       </h1>
 
       <h1>
-        A task-tracking platform built on Next.js,{" "}
+        A task-tracking platform built on Next.js,{' '}
         <i>perfect for keeping lists and sharing them with teams</i>.
       </h1>
 
       <h2>What&apos;s inside?</h2>
-      <ul>
+      <ul style={{ listStyle: "revert", margin: "revert" }}>
         <li>Tasks with priority and completion labels,</li>
         <li>A sorted dashboard so you can prioritize what needs to get done,</li>
         <li>Collections to group your tasks or share them with others,</li>

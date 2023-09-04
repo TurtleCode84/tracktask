@@ -28,11 +28,10 @@ export default function UserSearchForm({ errorMessage, onSubmit }) {
         label > span {
           font-weight: 600;
         }
-        input {
+        input, select {
           padding: 8px;
           margin: 0.3rem 0 1rem;
-          border: 1px solid #ccc;
-          border-radius: 4px;
+          max-width: 400px;
         }
       `}</style>
     </form>

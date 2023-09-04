@@ -7,14 +7,9 @@ export default function CollectionCreateForm({ verified, errorMessage, onSubmit 
       </label>
       <label>
         <span>Description</span>
-        <textarea name="description" rows="4" cols="30" maxlength="500" required />
-      </label><br/>
-      {verified ? <>
-      <label>
-        <span>Shared <span style={{ color: "lightslategray" }} className="material-symbols-outlined icon-list">group</span></span>
-        <input type="checkbox" name="shared" />
-      </label></>
-      : null}
+        <textarea name="description" rows="8" cols="30" maxlength="500" required />
+      </label>
+      {verified ? <p style={{ fontStyle: "italic" }}>You will be able to share this collection after you create it.</p> : <br/>}
 
       <button type="submit" id="createCollectionBtn">Create collection</button>
 
@@ -32,8 +27,6 @@ export default function CollectionCreateForm({ verified, errorMessage, onSubmit 
         input {
           padding: 8px;
           margin: 0.3rem 0 1rem;
-          border: 1px solid #ccc;
-          border-radius: 4px;
           max-width: 400px;
         }
         input[type="checkbox"] {
@@ -42,9 +35,8 @@ export default function CollectionCreateForm({ verified, errorMessage, onSubmit 
           width: 15px !important;
           margin-bottom: 10px;
         }
-        .error {
-          color: brown;
-          margin: 1rem 0 0;
+        textarea {
+          border-color: var(--input-border-color);
         }
       `}</style>
     </form>

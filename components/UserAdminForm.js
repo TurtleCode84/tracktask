@@ -19,8 +19,8 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
         <input type="password" placeholder="Retype new password" name="cpassword" />
       </label><hr/>
       <label>
-        <span>Profile picture</span>
-        <input type="url" name="profilePicture" defaultValue={lookup.profilePicture} />
+        <span>Profile picture (URL)</span>
+        <input type="text" title="Must be a valid absolute or relative URL." pattern="(^https?:\/\/.*?\..{2,}?|^\/.*?)" name="profilePicture" defaultValue={lookup.profilePicture} />
       </label>
       <label>
         <span>Admin notes</span>
@@ -95,8 +95,6 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
         input {
           padding: 8px;
           margin: 0.3rem 0 1rem;
-          border: 1px solid #ccc;
-          border-radius: 4px;
           max-width: 400px;
         }
         input[type="checkbox"] {
@@ -105,9 +103,8 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
           width: 15px !important;
           margin-bottom: 10px;
         }
-        .error {
-          color: brown;
-          margin: 1rem 0 0;
+        textarea {
+          border-color: var(--input-border-color);
         }
       `}</style>
     </form>
