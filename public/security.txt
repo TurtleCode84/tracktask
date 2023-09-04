@@ -1,1 +1,3 @@
-Contact: mailto:security@tracktask.eu.org	
+Contact: mailto:security@tracktask.eu.org
+Expires: 2024-09-05T03:59:00.000Z
+Policy: https://github.com/TurtleCode84/tracktask/security/policy
