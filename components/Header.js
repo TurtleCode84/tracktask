@@ -9,12 +9,13 @@ export default function Header() {
   const { user, mutateUser } = useUser();
   const router = useRouter();
 
-  const [width, setWidth] = useState(window.innerWidth);
-  const breakpoint = 600;
-  const isMobile = width <= breakpoint;
+  const [mobile, setMobile] = useState(false);
 
   useEffect(() => {
-    window.addEventListener("resize", () => setWidth(window.innerWidth));
+    setMobile(window.innerWidth <= 600);
+    const handleWindowResize = () => setMobile(window.innerWidth <= 600);
+    window.addEventListener("resize", handleWindowResize);
+    return () => window.removeEventListener("resize", handleWindowResize);
   }, []);
 
   return (
@@ -24,22 +25,22 @@ export default function Header() {
           {user?.isLoggedIn === false && (<>
           <li>
             <Link href="/" legacyBehavior>
-              {isMobile ? <span style={{ color: "white" }} className="material-symbols-outlined">home</span> : <a>Home</a>}
+              {mobile ? <span style={{ color: "white" }} className="material-symbols-outlined">home</span> : <a>Home</a>}
             </Link>
           </li>
           <li>
             <Link href="/about" legacyBehavior>
-              {isMobile ? <span style={{ color: "white" }} className="material-symbols-outlined">info</span> : <a>About</a>}
+              {mobile ? <span style={{ color: "white" }} className="material-symbols-outlined">info</span> : <a>About</a>}
             </Link>
           </li>
           <li>
             <Link href="/login" legacyBehavior>
-              {isMobile ? <span style={{ color: "white" }} className="material-symbols-outlined">login</span> : <a>Login</a>}
+              {mobile ? <span style={{ color: "white" }} className="material-symbols-outlined">login</span> : <a>Login</a>}
             </Link>
           </li>
           <li>
             <Link href="/join" legacyBehavior>
-              {isMobile ? <span style={{ color: "white" }} className="material-symbols-outlined">person_add</span> : <a>Join</a>}
+              {mobile ? <span style={{ color: "white" }} className="material-symbols-outlined">person_add</span> : <a>Join</a>}
             </Link>
           </li>
           </>)}
@@ -47,7 +48,7 @@ export default function Header() {
             <>
               <li>
                 <Link href="/dashboard" legacyBehavior>
-                  {isMobile ? <span style={{ color: "white" }} className="material-symbols-outlined">space_dashboard</span> : <a>Dashboard</a>}
+                  {mobile ? <span style={{ color: "white" }} className="material-symbols-outlined">space_dashboard</span> : <a>Dashboard</a>}
                 </Link>
               </li>
               <li>
@@ -66,24 +67,24 @@ export default function Header() {
                       quality={85}
                       alt=""
                     />
-                    {!isMobile && 'Account'}
+                    {!mobile && 'Account'}
                   </a>
                 </Link>
               </li>
               <li>
                 <Link href="/tasks/new" legacyBehavior>
-                  <a><span style={{ color: "white", margin: "0 5px 0 0", fontSize: "18px" }} className="material-symbols-outlined icon-list">add_task</span>{!isMobile && 'New task'}</a>
+                  <a><span style={{ color: "white", margin: "0 5px 0 0", fontSize: "18px" }} className="material-symbols-outlined icon-list">add_task</span>{!mobile && 'New task'}</a>
                 </Link>
               </li>
               <li>
                 <Link href="/collections/new" legacyBehavior>
-                  <a><span style={{ color: "white", margin: "0 5px 0 0", fontSize: "18px" }} className="material-symbols-outlined icon-list">playlist_add_check</span>{!isMobile && 'New collection'}</a>
+                  <a><span style={{ color: "white", margin: "0 5px 0 0", fontSize: "18px" }} className="material-symbols-outlined icon-list">playlist_add_check</span>{!mobile && 'New collection'}</a>
                 </Link>
               </li>
               {user?.permissions.admin === true && (
                 <li>
                   <Link href="/admin" legacyBehavior>
-                    {isMobile ? <span style={{ color: "white" }} className="material-symbols-outlined">shield</span> : <a>Admin</a>}
+                    {mobile ? <span style={{ color: "white" }} className="material-symbols-outlined">shield</span> : <a>Admin</a>}
                   </Link>
                 </li>
               )}
@@ -100,7 +101,7 @@ export default function Header() {
                     router.push("/login");
                   }}
                 >
-                  {isMobile ? <span style={{ color: "inherit" }} className="material-symbols-outlined">logout</span> : 'Logout' }
+                  {mobile ? <span style={{ color: "inherit" }} className="material-symbols-outlined">logout</span> : 'Logout' }
                 </a>
               </li>
             </>
