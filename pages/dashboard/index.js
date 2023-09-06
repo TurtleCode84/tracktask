@@ -48,7 +48,7 @@ export default function Dashboard() {
   }
   return (
     <Layout>
-      <h1>
+      <h1 className="welcome-text">
         {user ? 
         <>
         Welcome back, {user.username}!{user.permissions.verified ? <>{' '}<span title="Verified" style={{ color: "#006dbe" }} className="material-symbols-outlined">verified</span></> : null}{user.permissions.admin ? <>{' '}<span title="Admin" style={{ color: "slategray" }} className="material-symbols-outlined">verified_user</span></> : null}

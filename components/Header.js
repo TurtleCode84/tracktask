@@ -9,7 +9,7 @@ export default function Header() {
   const { user, mutateUser } = useUser();
   const router = useRouter();
 
-  const [mobile, setMobile] = useState(false);
+  const [mobile, setMobile] = useState(true);
 
   useEffect(() => {
     setMobile(window.innerWidth <= 600);
@@ -48,7 +48,7 @@ export default function Header() {
             <>
               <li>
                 <Link href="/dashboard" legacyBehavior>
-                  <a>{mobile ? <span style={{ color: "white", margin: "0 5px 0 0", fontSize: "18px" }} className="material-symbols-outlined">space_dashboard</span> : 'Dashboard'}</a>
+                  <a>{mobile ? <span style={{ color: "white", margin: "0 5px 0 0", fontSize: "18px" }} className="material-symbols-outlined">home</span> : 'Dashboard'}</a>
                 </Link>
               </li>
               <li>
@@ -59,7 +59,7 @@ export default function Header() {
                       width={32}
                       height={32}
                       style={{
-                        marginRight: ".3em",
+                        marginRight: mobile ? "0" : ".3em",
                         verticalAlign: "middle",
                         borderRadius: "100%",
                         overflow: "hidden",
@@ -78,7 +78,7 @@ export default function Header() {
               </li>
               <li>
                 <Link href="/collections/new" legacyBehavior>
-                  <a><span style={{ color: "white", margin: "0 5px 0 0", fontSize: "18px" }} className="material-symbols-outlined icon-list">playlist_add_check</span>{!mobile && 'New collection'}</a>
+                  <a><span style={{ color: "white", margin: "0 5px 0 0", fontSize: "24px" }} className="material-symbols-outlined icon-list">playlist_add_check</span>{!mobile && 'New collection'}</a>
                 </Link>
               </li>
               {user?.permissions.admin === true && (
@@ -151,6 +151,9 @@ export default function Header() {
           li {
             margin-right: auto;
             margin-left: auto;
+          }
+          li:first-child {
+            margin-left: 0;
           }
           a img {
             margin-right: auto;

@@ -98,6 +98,9 @@ export default function Layout({ children }) {
             gap: 30px;
             width: fit-content;
           }
+          .welcome-text {
+            font-size: 24px;
+          }
         }
         
         @media only screen and (min-width: 600px) {
