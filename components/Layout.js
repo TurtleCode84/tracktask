@@ -89,7 +89,7 @@ export default function Layout({ children }) {
             display: flex;
             /*overflow: auto;*/
             overflow-x: hidden;
-            max-width: 100%;
+            max-width: 100vw;
           }
           .container {
             max-width: 100%;
@@ -98,7 +98,6 @@ export default function Layout({ children }) {
             grid-template-columns: 1fr;
             gap: 30px;
             width: max-content;
-            max-width: 100%;
           }
         }
         
