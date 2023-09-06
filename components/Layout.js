@@ -96,7 +96,7 @@ export default function Layout({ children }) {
           .dashboard {
             grid-template-columns: 1fr;
             gap: 30px;
-            width: 100vw;
+            width: fit-content;
           }
         }
         
