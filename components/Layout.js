@@ -101,6 +101,9 @@ export default function Layout({ children }) {
           .welcome-text {
             font-size: 24px;
           }
+          .dashboard .tasks ul {
+            margin-left: -40px;
+          }
         }
         
         @media only screen and (min-width: 600px) {
