@@ -88,6 +88,8 @@ export default function Layout({ children }) {
           body {
             display: flex;
             /*overflow: auto;*/
+            overflow-x: hidden;
+            max-width: 100%;
           }
           .container {
             max-width: 100%;

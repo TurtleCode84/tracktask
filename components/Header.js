@@ -127,7 +127,6 @@ export default function Header() {
         }
 
         li {
-          margin-right: 2.5rem;
           display: flex;
         }
         
@@ -136,12 +135,18 @@ export default function Header() {
             padding-left: 2rem;
           }
           li {
-            margin-right: 2rem;
+            margin-right: auto;
+            margin-left: auto;
           }
         }
 
-        li:first-child {
-          margin-left: auto;
+        @media only screen and (min-width: 600px) {
+          li {
+            margin-right: 2.5rem;
+          }
+          li:first-child {
+            margin-left: auto;
+          }
         }
 
         a {
