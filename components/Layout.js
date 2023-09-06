@@ -98,6 +98,7 @@ export default function Layout({ children }) {
             grid-template-columns: 1fr;
             gap: 30px;
             width: max-content;
+            max-width: 100%;
           }
         }
         
