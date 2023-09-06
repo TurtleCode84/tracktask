@@ -25,22 +25,22 @@ export default function Header() {
           {user?.isLoggedIn === false && (<>
           <li>
             <Link href="/" legacyBehavior>
-              {mobile ? <span style={{ color: "white" }} className="material-symbols-outlined">home</span> : <a>Home</a>}
+              {mobile ? <span style={{ color: "white", margin: "0 5px 0 0", fontSize: "18px" }} className="material-symbols-outlined">home</span> : <a>Home</a>}
             </Link>
           </li>
           <li>
             <Link href="/about" legacyBehavior>
-              {mobile ? <span style={{ color: "white" }} className="material-symbols-outlined">info</span> : <a>About</a>}
+              {mobile ? <span style={{ color: "white", margin: "0 5px 0 0", fontSize: "18px" }} className="material-symbols-outlined">info</span> : <a>About</a>}
             </Link>
           </li>
           <li>
             <Link href="/login" legacyBehavior>
-              {mobile ? <span style={{ color: "white" }} className="material-symbols-outlined">login</span> : <a>Login</a>}
+              {mobile ? <span style={{ color: "white", margin: "0 5px 0 0", fontSize: "18px" }} className="material-symbols-outlined">login</span> : <a>Login</a>}
             </Link>
           </li>
           <li>
             <Link href="/join" legacyBehavior>
-              {mobile ? <span style={{ color: "white" }} className="material-symbols-outlined">person_add</span> : <a>Join</a>}
+              {mobile ? <span style={{ color: "white", margin: "0 5px 0 0", fontSize: "18px" }} className="material-symbols-outlined">person_add</span> : <a>Join</a>}
             </Link>
           </li>
           </>)}
@@ -48,7 +48,7 @@ export default function Header() {
             <>
               <li>
                 <Link href="/dashboard" legacyBehavior>
-                  {mobile ? <span style={{ color: "white" }} className="material-symbols-outlined">space_dashboard</span> : <a>Dashboard</a>}
+                  {mobile ? <span style={{ color: "white", margin: "0 5px 0 0", fontSize: "18px" }} className="material-symbols-outlined">space_dashboard</span> : <a>Dashboard</a>}
                 </Link>
               </li>
               <li>
@@ -84,7 +84,7 @@ export default function Header() {
               {user?.permissions.admin === true && (
                 <li>
                   <Link href="/admin" legacyBehavior>
-                    {mobile ? <span style={{ color: "white" }} className="material-symbols-outlined">shield</span> : <a>Admin</a>}
+                    {mobile ? <span style={{ color: "white", margin: "0 5px 0 0", fontSize: "18px" }} className="material-symbols-outlined">shield</span> : <a>Admin</a>}
                   </Link>
                 </li>
               )}
