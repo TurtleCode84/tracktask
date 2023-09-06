@@ -89,15 +89,15 @@ export default function Layout({ children }) {
             display: flex;
             /*overflow: auto;*/
             overflow-x: hidden;
-            max-width: 100vw;
           }
           .container {
-            max-width: 100%;
+            max-width: 100vw;
           }
           .dashboard {
             grid-template-columns: 1fr;
             gap: 30px;
             width: max-content;
+            max-width: 100vw;
           }
         }
         
