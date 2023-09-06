@@ -129,7 +129,21 @@ export default function Header() {
         li {
           display: flex;
         }
-        
+
+        a {
+          color: #fff;
+          text-decoration: none;
+          display: flex;
+          align-items: center;
+        }
+
+        header {
+          padding: 0.2rem;
+          color: #fff;
+          font-weight: 500;
+          background-color: var(--header-color);
+        }
+
         @media only screen and (max-width: 600px) {
           ul {
             padding-left: 2rem;
@@ -137,6 +151,9 @@ export default function Header() {
           li {
             margin-right: auto;
             margin-left: auto;
+          }
+          a img {
+            margin-right: auto;
           }
         }
 
@@ -147,24 +164,9 @@ export default function Header() {
           li:first-child {
             margin-left: auto;
           }
-        }
-
-        a {
-          color: #fff;
-          text-decoration: none;
-          display: flex;
-          align-items: center;
-        }
-
-        a img {
-          margin-right: 1em;
-        }
-
-        header {
-          padding: 0.2rem;
-          color: #fff;
-          font-weight: 500;
-          background-color: var(--header-color);
+          a img {
+            margin-right: 1em;
+          }
         }
       `}</style>
     </header>

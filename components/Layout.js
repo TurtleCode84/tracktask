@@ -87,8 +87,8 @@ export default function Layout({ children }) {
         @media only screen and (max-width: 600px) {
           body {
             display: flex;
-            /*overflow: auto;*/
-            overflow-x: hidden;
+            overflow: auto;
+            /*overflow-x: hidden;*/
           }
           .container {
             max-width: 100vw;
