@@ -52,7 +52,7 @@ export default function Task() {
       {task ?
         <><h3>General information</h3>
         {user.id !== task.owner && <p>Owner: <User user={user} id={task.owner}/></p>}
-        <p>Description:</p>{' '}<textarea value={task.description} rows="8" cols="70" disabled /><br/>
+        <p>Description:</p>{' '}<textarea value={task.description} rows="8" cols="70" style={{ maxWidth: "90vw" }} disabled /><br/>
         <p title={task.dueDate > 0 ? moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a") : 'Never'}>Due date: {task.dueDate > 0 ? <>{moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}{' '}({moment.unix(task.dueDate).fromNow()})</> : 'never'}</p>
         {task.completion.completed > 0 ? <>
         <p>Completed on: {moment.unix(task.completion.completed).format("dddd, MMMM Do YYYY, h:mm:ss a")}{' '}({moment.unix(task.completion.completed).fromNow()})</p>
