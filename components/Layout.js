@@ -78,6 +78,11 @@ export default function Layout({ children }) {
           padding-left: 1rem;
           padding-right: 1rem;
         }
+
+        .dashboard {
+          display: grid;
+          minHeight: 300px;
+        }
         
         @media only screen and (max-width: 600px) {
           body {
@@ -88,10 +93,8 @@ export default function Layout({ children }) {
             max-width: 100%;
           }
           .dashboard {
-            display: grid;
             grid-template-columns: 1fr;
             gap: 30px;
-            minHeight: 300px;
             width: max-content;
           }
         }
@@ -101,10 +104,8 @@ export default function Layout({ children }) {
             max-width: 65rem;
           }
           .dashboard {
-            display: grid;
             grid-template-columns: 3fr 2fr;
             gap: 40px;
-            minHeight: 300px;
           }
         }
 

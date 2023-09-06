@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import useUser from "lib/useUser";
 import { useRouter } from "next/router";
@@ -8,6 +9,14 @@ export default function Header() {
   const { user, mutateUser } = useUser();
   const router = useRouter();
 
+  const [width, setWidth] = useState(window.innerWidth);
+  const breakpoint = 600;
+  const isMobile = width <= breakpoint;
+
+  useEffect(() => {
+    window.addEventListener("resize", () => setWidth(window.innerWidth));
+  }, []);
+
   return (
     <header>
       <nav>
@@ -15,22 +24,22 @@ export default function Header() {
           {user?.isLoggedIn === false && (<>
           <li>
             <Link href="/" legacyBehavior>
-              <a>Home</a>
+              {isMobile ? <span style={{ color: "white" }} className="material-symbols-outlined">home</span> : <a>Home</a>}
             </Link>
           </li>
           <li>
             <Link href="/about" legacyBehavior>
-              <a>About</a>
+              {isMobile ? <span style={{ color: "white" }} className="material-symbols-outlined">info</span> : <a>About</a>}
             </Link>
           </li>
           <li>
             <Link href="/login" legacyBehavior>
-              <a>Login</a>
+              {isMobile ? <span style={{ color: "white" }} className="material-symbols-outlined">login</span> : <a>Login</a>}
             </Link>
           </li>
           <li>
             <Link href="/join" legacyBehavior>
-              <a>Join</a>
+              {isMobile ? <span style={{ color: "white" }} className="material-symbols-outlined">person_add</span> : <a>Join</a>}
             </Link>
           </li>
           </>)}
@@ -38,7 +47,7 @@ export default function Header() {
             <>
               <li>
                 <Link href="/dashboard" legacyBehavior>
-                  <a>Dashboard</a>
+                  {isMobile ? <span style={{ color: "white" }} className="material-symbols-outlined">space_dashboard</span> : <a>Dashboard</a>}
                 </Link>
               </li>
               <li>
@@ -57,24 +66,24 @@ export default function Header() {
                       quality={85}
                       alt=""
                     />
-                    Account
+                    {!isMobile && 'Account'}
                   </a>
                 </Link>
               </li>
               <li>
                 <Link href="/tasks/new" legacyBehavior>
-                  <a><span style={{ color: "white", margin: "0 5px 0 0", fontSize: "18px" }} className="material-symbols-outlined icon-list">add_task</span>New task</a>
+                  <a><span style={{ color: "white", margin: "0 5px 0 0", fontSize: "18px" }} className="material-symbols-outlined icon-list">add_task</span>{!isMobile && 'New task'}</a>
                 </Link>
               </li>
               <li>
                 <Link href="/collections/new" legacyBehavior>
-                  <a><span style={{ color: "white", margin: "0 5px 0 0", fontSize: "18px" }} className="material-symbols-outlined icon-list">playlist_add_check</span>New collection</a>
+                  <a><span style={{ color: "white", margin: "0 5px 0 0", fontSize: "18px" }} className="material-symbols-outlined icon-list">playlist_add_check</span>{!isMobile && 'New collection'}</a>
                 </Link>
               </li>
               {user?.permissions.admin === true && (
                 <li>
                   <Link href="/admin" legacyBehavior>
-                    <a>Admin</a>
+                    {isMobile ? <span style={{ color: "white" }} className="material-symbols-outlined">shield</span> : <a>Admin</a>}
                   </Link>
                 </li>
               )}
@@ -91,7 +100,7 @@ export default function Header() {
                     router.push("/login");
                   }}
                 >
-                  Logout
+                  {isMobile ? <span style={{ color: "inherit" }} className="material-symbols-outlined">logout</span> : 'Logout' }
                 </a>
               </li>
             </>
