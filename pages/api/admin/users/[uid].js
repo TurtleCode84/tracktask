@@ -32,7 +32,7 @@ async function adminUserRoute(req, res) {
           stats: {
             tasks: countTasks,
             collections: countCollections,
-            shared: countCollections.filter((collection) => collection.sharing.shared === true).length,
+            //shared: countCollections.filter((collection) => collection.sharing.shared === true).length,
           },
         });
       } else {
