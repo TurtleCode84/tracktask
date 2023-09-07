@@ -23,7 +23,7 @@ async function reportsRoute(req, res) {
     } else {
       query = { reviewed: 0 };
     }
-    const reports = await db.collection('reports').find(query).sort({ timestamp: -1 }).toArray();
+    const reports = await db.collection("reports").find(query).sort({ timestamp: -1 }).toArray();
     res.json(reports);
   } else if (req.method === 'POST') {
     const { type, reported, reason } = await req.body;
@@ -40,7 +40,7 @@ async function reportsRoute(req, res) {
         reviewed: 0,
         timestamp: Math.floor(Date.now()/1000),
       };
-      const createdReport = await db.collection('reports').insertOne(newReport);
+      const createdReport = await db.collection("reports").insertOne(newReport);
       if (type === "share") {
         const query = {
           _id: new ObjectId(reported._id),
@@ -54,7 +54,7 @@ async function reportsRoute(req, res) {
             },
           }
         };
-        const updatedCollection = await db.collection('collections').updateOne(query, updateDoc);
+        const updatedCollection = await db.collection("collections").updateOne(query, updateDoc);
       }
       res.json(createdReport);
     } catch (error) {
@@ -69,12 +69,12 @@ async function reportsRoute(req, res) {
         reviewed: Math.floor(Date.now()/1000),
       }
     }
-    const updatedReport = await db.collection('reports').updateOne(query, updateDoc);
+    const updatedReport = await db.collection("reports").updateOne(query, updateDoc);
     res.json(updatedReport);
   } else if (req.method === 'DELETE' && user.permissions.admin) {
     const { id } = await req.query;
     const query = {_id: new ObjectId(id)};
-    const deletedReport = await db.collection('reports').deleteOne(query);
+    const deletedReport = await db.collection("reports").deleteOne(query);
     res.json(deletedReport);
   } else {
     res.status(405).json({ message: "Method not allowed" });

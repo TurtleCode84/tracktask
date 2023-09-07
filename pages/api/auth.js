@@ -90,7 +90,7 @@ async function authRoute(req, res) {
           },
         },
       };
-      const ipUpdate = await db.collection('users').updateOne(query, ipUpdateDoc);
+      const ipUpdate = await db.collection("users").updateOne(query, ipUpdateDoc);
       const user = { isLoggedIn: true, id: userInfo._id, username: userInfo.username, profilePicture: userInfo.profilePicture, permissions: userInfo.permissions, history: { "banReason": userInfo.history.ban.reason } };
       req.session.user = user;
       await req.session.save();
@@ -205,7 +205,7 @@ async function authRoute(req, res) {
           subscription: {},
         },
       }
-      const createdUser = await db.collection('users').insertOne(newUser);
+      const createdUser = await db.collection("users").insertOne(newUser);
       res.json(createdUser);
     } catch (error) {
       res.status(500).json({ message: error.message });

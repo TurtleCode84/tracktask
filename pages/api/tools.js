@@ -30,23 +30,6 @@ async function toolsRoute(req, res) {
           res.status(404).json({ message: "User does not exist" });
           return;
         }
-      } else if (tool === "userStats" && user.permissions.admin) {
-        if (!ObjectId.isValid(param)) {
-          res.status(422).json({ message: "Invalid user ID!" });
-          return;
-        }
-        const query = {
-          hidden: false,
-          $or: [
-            { owner: new ObjectId(param) },
-            { 'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: new ObjectId(param)}} },
-          ],
-        };
-        const getStats = {};
-        getStats._id = new ObjectId(param); // Not strictly necessary
-        getStats.tasks = await db.collection("tasks").countDocuments(query);
-        getStats.collections = await db.collection("collections").countDocuments(query);
-        res.json(getStats);
       } else {
         res.status(418).json({ message: "Under construction" });
         return;

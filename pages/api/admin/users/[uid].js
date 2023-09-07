@@ -32,6 +32,7 @@ async function adminUserRoute(req, res) {
           stats: {
             tasks: countTasks,
             collections: countCollections,
+            shared: countCollections.filter((collection) => collection.sharing.shared === true).length,
           },
         });
       } else {
@@ -139,7 +140,7 @@ async function adminUserRoute(req, res) {
         'history.lastEdit.by': new ObjectId(user.id),
       },
     };
-    const lastEditUpdate = await db.collection('users').updateOne(query, lastEditDoc); // See above
+    const lastEditUpdate = await db.collection("users").updateOne(query, lastEditDoc); // See above
     res.json(updated);
   } else if (req.method === 'DELETE') {
     if (user.id === uid) {
