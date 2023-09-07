@@ -27,12 +27,13 @@ async function adminUserRoute(req, res) {
       if (getUser) {
         const countTasks = await db.collection("tasks").countDocuments({ owner: new ObjectId(getUser._id) });
         const countCollections = await db.collection("collections").countDocuments({ owner: new ObjectId(getUser._id) });
+        const countShared = countCollections.filter((collection) => collection.sharing.shared === true).length;
         res.json({
           ...getUser,
           stats: {
             tasks: countTasks,
             collections: countCollections,
-            //shared: countCollections.filter((collection) => collection.sharing.shared === true).length,
+            shared: countShared,
           },
         });
       } else {
