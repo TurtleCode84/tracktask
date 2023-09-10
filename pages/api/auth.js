@@ -9,10 +9,11 @@ export default withIronSessionApiRoute(authRoute, sessionOptions);
 
 async function authRoute(req, res) {
   if (req.method === 'POST') {
-    const { username, password, gReCaptchaToken } = await req.body;
+    //const { username, password, gReCaptchaToken } = await req.body;
+    const { username, password } = await req.body;
     
     //Check if robot
-    const captchaResponse = await fetchJson("https://www.google.com/recaptcha/api/siteverify", {
+    /*const captchaResponse = await fetchJson("https://www.google.com/recaptcha/api/siteverify", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded", },
       body: `secret=${process.env.RECAPTCHA_SECRET}&response=${gReCaptchaToken}`,
@@ -22,7 +23,7 @@ async function authRoute(req, res) {
         res.status(401).json({ message: "reCAPTCHA verification failed, please try again." });
         return;
       }
-    }
+    }*/
     
     //Check if IP banned
     var ip;
