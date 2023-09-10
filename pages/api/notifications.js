@@ -33,7 +33,7 @@ async function notificationsRoute(req, res) {
           debug.tasks.push(tasks.length);
           for (var j=0; j<tasks.length; j++) {
             webpush.sendNotification(users[i].notifications.subscription, JSON.stringify(tasks[j]));
-            const notified = await db.collection("tasks").updateOne({ _id: new ObjectId(tasks[j]._id)}, { $set: {notified: true} });
+            const notified = await db.collection("tasks").updateOne({ hidden: false, _id: new ObjectId(tasks[j]._id)}, { $set: {notified: true} });
           }
         }
         res.status(200).json({ message: "Success", debug: debug });

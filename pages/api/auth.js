@@ -9,10 +9,11 @@ export default withIronSessionApiRoute(authRoute, sessionOptions);
 
 async function authRoute(req, res) {
   if (req.method === 'POST') {
-    const { username, password, gReCaptchaToken } = await req.body;
+    //const { username, password, gReCaptchaToken } = await req.body;
+    const { username, password } = await req.body;
     
     //Check if robot
-    const captchaResponse = await fetchJson("https://www.google.com/recaptcha/api/siteverify", {
+    /*const captchaResponse = await fetchJson("https://www.google.com/recaptcha/api/siteverify", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded", },
       body: `secret=${process.env.RECAPTCHA_SECRET}&response=${gReCaptchaToken}`,
@@ -22,7 +23,7 @@ async function authRoute(req, res) {
         res.status(401).json({ message: "reCAPTCHA verification failed, please try again." });
         return;
       }
-    }
+    }*/
     
     //Check if IP banned
     var ip;
@@ -90,7 +91,7 @@ async function authRoute(req, res) {
           },
         },
       };
-      const ipUpdate = await db.collection('users').updateOne(query, ipUpdateDoc);
+      const ipUpdate = await db.collection("users").updateOne(query, ipUpdateDoc);
       const user = { isLoggedIn: true, id: userInfo._id, username: userInfo.username, profilePicture: userInfo.profilePicture, permissions: userInfo.permissions, history: { "banReason": userInfo.history.ban.reason } };
       req.session.user = user;
       await req.session.save();
@@ -205,7 +206,7 @@ async function authRoute(req, res) {
           subscription: {},
         },
       }
-      const createdUser = await db.collection('users').insertOne(newUser);
+      const createdUser = await db.collection("users").insertOne(newUser);
       res.json(createdUser);
     } catch (error) {
       res.status(500).json({ message: error.message });

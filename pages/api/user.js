@@ -14,8 +14,8 @@ async function userRoute(req, res) {
       const db = client.db("data");
       const query = { _id: new ObjectId(req.session.user.id) };
       const userInfo = await db.collection("users").findOne(query);
-      const taskCount = await db.collection("tasks").countDocuments({ owner: new ObjectId(req.session.user.id) });
-      const collectionCount = await db.collection("collections").countDocuments({ owner: new ObjectId(req.session.user.id) });
+      const taskCount = await db.collection("tasks").countDocuments({ hidden: false, owner: new ObjectId(req.session.user.id) });
+      const collectionCount = await db.collection("collections").countDocuments({ hidden: false, owner: new ObjectId(req.session.user.id) });
       if (!userInfo) {
         await req.session.destroy();
         res.json({
