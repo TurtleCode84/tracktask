@@ -6,7 +6,7 @@ import User from "components/User";
 import ReportButton from "components/ReportButton";
 //import CollectionAdminForm from "components/CollectionEditForm";
 import useUser from "lib/useUser";
-import useAdminCollections from "lib/useAdminCollections";
+import useAdminData from "lib/useAdminData";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from 'next/router';
 import moment from "moment";
