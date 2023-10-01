@@ -19,7 +19,7 @@ export default function Collection() {
   });
   const router = useRouter();
   const { collectionId } = router.query;
-  const { collections, error } = useAdminCollections(user, collectionId);
+  const { data: collections, error } = useAdminData(user, "collections", collectionId, false);
   
   const [errorMsg, setErrorMsg] = useState("");
   const collection = collections?.[0];
