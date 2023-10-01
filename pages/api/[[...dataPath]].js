@@ -156,7 +156,7 @@ async function dataRoute(req, res) {
       } else {
         data.sort((a, b) => a.dueDate > 0 ? -1 : 1);
         //data.sort((a, b) => a.completion.completed ? -1 : 1);
-        data.sort((a, b) => a.priority ? -1 : 1);
+        data.sort((a, b) => a.priority ? -1 : 0);
       }
 
       // Return data
