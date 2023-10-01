@@ -17,7 +17,7 @@ export default function CollectionsAdmin() {
     <Collection user={user} collection={collection} key={collection._id} admin={true}/>
   );
   
-  if (!user || !user.isLoggedIn || !user.permissions.admin) {
+  if (!user || !user.isLoggedIn || user.permissions.banned || !user.permissions.admin) {
     return (
       <Loading/>
     );

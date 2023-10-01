@@ -23,7 +23,7 @@ export default function UserAdmin() {
   const { userId } = router.query;
   const { lookup, error } = useAdminUser(user, userId);
   
-  if (!user || !user.isLoggedIn || !user.permissions.admin) {
+  if (!user || !user.isLoggedIn || user.permissions.banned || !user.permissions.admin) {
     return (
       <Loading/>
     );

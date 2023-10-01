@@ -9,7 +9,7 @@ export default withIronSessionApiRoute(reportsRoute, sessionOptions);
 
 async function reportsRoute(req, res) {
   const user = req.session.user;
-  if (!user || !user.isLoggedIn || user.permissions.banned ) {
+  if (!user || !user.isLoggedIn || user.permissions.banned) {
     res.status(401).json({ message: "Unauthorized" });
     return;
   }

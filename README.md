@@ -1,7 +1,7 @@
 <img src="/public/tracktask.png" width="1000"></img>
 # TrackTask - Shareable Task Management
 ### A task-tracking platform built on Next.js, perfect for keeping lists and sharing them with teams.
-<br>This repository contains our source code as well as our feature roadmap & collaborative development. Found an issue or want to make an improvement? Leave us an issue or pull request!
+<br>This repository contains our source code as well as our feature roadmap for collaborative development. Found an issue or want to make an improvement? Leave us an issue or pull request!
 
 <hr>
 

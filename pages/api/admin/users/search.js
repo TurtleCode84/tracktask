@@ -10,7 +10,7 @@ async function adminUserSearchRoute(req, res) {
     const { keyword, query } = await req.body;
     const user = req.session.user;
     
-    if (!user || !user.isLoggedIn || !user.permissions.admin ) {
+    if (!user || !user.isLoggedIn || user.permissions.banned || !user.permissions.admin) {
       res.status(401).json({ message: "Unauthorized" });
       return;
     }
