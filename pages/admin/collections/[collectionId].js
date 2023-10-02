@@ -47,7 +47,7 @@ export default function Collection() {
       <Link href="/admin">Back to admin dashboard</Link><br/>
       {collection ?
         <><h3>General information</h3>
-        <p>Description:</p>{' '}<div className="textarea" style={{ maxWidth: "90vw" }}><Linkify componentDecorator={(decoratedHref, decoratedText, key) => (<a target="blank" href={decoratedHref} key={key}>{decoratedText}</a>)}>{collection.description}</Linkify></div>
+        <p>Description:</p>{' '}<div className="textarea" style={{ maxWidth: "90vw" }}><Linkify componentDecorator={(decoratedHref, decoratedText, key) => (<a target="_blank" rel="noopener noreferrer" href={decoratedHref} key={key}>{decoratedText}</a>)}>{collection.description}</Linkify></div>
         <p title={collection.created > 0 ? moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a") : 'Never'}>Created: {collection.created > 0 ? <>{moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a")}{' '}({moment.unix(collection.created).fromNow()})</> : 'never'}</p>
         <p>Owner: <User user={user} id={collection.owner} link={true}/></p>
         {collection.sharing.shared && <p>Shared with: <ul>{sharedWithList.length > 0 ? sharedWithList : <li>Nobody!</li>}</ul></p>}

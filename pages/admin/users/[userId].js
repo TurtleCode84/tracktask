@@ -75,7 +75,7 @@ export default function UserAdmin() {
       <p>Tasks created: {lookup?.stats.tasks}</p>
       <p>Collections created: {lookup?.stats.collections}</p>
       <p>Collections shared: {lookup?.stats.shared}</p>
-      <p>Admin notes:</p>{' '}<div className="textarea" style={{ maxWidth: "90vw" }}><Linkify componentDecorator={(decoratedHref, decoratedText, key) => (<a target="blank" href={decoratedHref} key={key}>{decoratedText}</a>)}>{lookup.history.notes ? lookup.history.notes : 'None found!'}</Linkify></div>
+      <p>Admin notes:</p>{' '}<div className="textarea" style={{ maxWidth: "90vw" }}><Linkify componentDecorator={(decoratedHref, decoratedText, key) => (<a target="_blank" rel="noopener noreferrer" href={decoratedHref} key={key}>{decoratedText}</a>)}>{lookup.history.notes ? lookup.history.notes : 'None found!'}</Linkify></div>
       <br/><details>
         <summary>Warnings</summary>
         <p style={{ fontStyle: "italic" }}>(Newest to oldest)</p>
