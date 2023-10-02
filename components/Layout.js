@@ -169,6 +169,7 @@ export default function Layout({ children }) {
           font-size: 15px;
           letter-spacing: 0.1px;
           white-space: pre-line;
+          word-wrap: break-word;
         }
 
         input, select {
