@@ -45,7 +45,7 @@ async function adminDataRoute(req, res) {
 
         const reportedTasks = await db.collection("reports").find({ type: "task" }, { projection: { reported: 1 } }).toArray();
         var reportedTaskIds = [];
-        reportedTasks.forEach(task => reportedTaskIds.push(task.reported));
+        reportedTasks.forEach(task => reportedTaskIds.push(task.reported._id));
 
         if (dataPath[1]) {
           reportedTasksQuery.$and = [
@@ -104,7 +104,7 @@ async function adminDataRoute(req, res) {
       }
 
       // Return data
-      res.json({...data, debug: {"bruh": reportedTaskIds}});
+      res.json(data);
 
     } else if (req.method === 'POST') { // Does nothing
 
@@ -280,7 +280,7 @@ async function adminDataRoute(req, res) {
 
         const reportedCollections = await db.collection("reports").find({ $or: [ {type: "collection"}, {type: "share"} ] }, { projection: { reported: 1 } }).toArray();
         var reportedCollectionIds = [];
-        reportedCollections.forEach(collection => reportedCollectionIds.push(collection.reported));
+        reportedCollections.forEach(collection => reportedCollectionIds.push(collection.reported._id));
 
         if (dataPath[1]) {
           reportedCollectionsQuery.$and = [
@@ -313,7 +313,7 @@ async function adminDataRoute(req, res) {
       if (data.length === 1 && dataPath[1]) {data = data[0]}
 
       // Return data
-      res.json({...data, debug: {"bruh": reportedCollectionIds}});
+      res.json(data);
 
     } else if (req.method === 'POST') { // Does nothing
 
