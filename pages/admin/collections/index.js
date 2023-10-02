@@ -12,6 +12,7 @@ export default function CollectionsAdmin() {
     redirectTo: "/login",
     adminOnly: true,
   });
+  
   const { data: collections, error: collectionsError } = useAdminData(user, "collections", false, false);
   const collectionList = collections?.map((collection) =>
     <Collection user={user} collection={collection} key={collection._id} admin={true}/>

@@ -66,7 +66,8 @@ export default function Admin() {
       <p>Useful admin pages:</p>
       <ul style={{ listStyle: "revert", margin: "revert" }}>
         <li><Link href="/admin/users/search">Find a user</Link></li>
-        <li><Link href="/admin/collections">View shared collections</Link></li>
+        <li><Link href="/admin/tasks">View reported tasks</Link></li>
+        <li><Link href="/admin/collections">View reported collections</Link></li>
         <li><Link href="/admin/reports">Moderate reports</Link></li>
       </ul>
       <details>
