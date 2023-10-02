@@ -54,7 +54,7 @@ export default function Task() {
         {user.id !== task.owner && <p>Owner: <User user={user} id={task.owner}/></p>}
         <p>Description:</p>{' '}<textarea value={task.description} rows="8" cols="70" style={{ maxWidth: "90vw" }} disabled /><br/>
         <p title={task.dueDate > 0 ? moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a") : 'Never'}>Due date: {task.dueDate > 0 ? <>{moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}{' '}({moment.unix(task.dueDate).fromNow()})</> : 'never'}</p>
-        {task.completion.completed > 0 ? <p>Completed {moment.unix(task.completion.completed).format("dddd, MMMM Do YYYY, h:mm:ss a")}{' '}({moment.unix(task.completion.completed).fromNow()}) by <User user={user} id={task.completion.completedBy}/></p>
+        {task.completion.completed > 0 ? <p title={moment.unix(task.completion.completed).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Completed {moment.unix(task.completion.completed).fromNow()} by <User user={user} id={task.completion.completedBy}/></p>
         :
         <>{perms >= 2 && <><a href={`/api/tasks/${task._id}`}
         onClick={async (e) => {
