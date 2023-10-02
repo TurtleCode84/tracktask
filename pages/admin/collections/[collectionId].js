@@ -23,10 +23,10 @@ export default function Collection() {
   
   const [errorMsg, setErrorMsg] = useState("");
   const relTaskList = collection?.tasks?.filter(task => task.completion.completed === 0).map((task) =>
-    <Task task={task} key={task._id}/>
+    <Task task={task} key={task._id} admin={true}/>
   );
   const comTaskList = collection?.tasks?.filter(task => task.completion.completed > 0).map((task) =>
-    <Task task={task} key={task._id}/>
+    <Task task={task} key={task._id} admin={true}/>
   );
 
   const sharedWithList = collection?.sharing.sharedWith.map((item) =>

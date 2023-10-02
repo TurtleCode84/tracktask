@@ -68,6 +68,28 @@ async function adminDataRoute(req, res) {
         try {
 
           data = await db.collection("tasks").find(reportedTasksQuery, tasksOptions).toArray();
+
+          /*var taskIds = [];
+          data.forEach(item => taskIds.push(String(item._id)));
+
+          // Get and append tasks from reported collections as well
+          const allCollections = await db.collection("collections").find(inCollectionsQuery).toArray();
+          var sharedTasks = [];
+          allCollections.forEach(allCollection => {
+            sharedTasks.push(...allCollection.tasks.filter(task => !taskIds.includes(String(task))));
+          });
+          if (dataPath[1]) {
+            sharedTasks = sharedTasks.filter(sharedTask => String(sharedTask) === String(dataPath[1]));
+          }
+          const sharedTasksQuery = {
+            ...ownTasksQuery,
+            _id: {
+              $in: sharedTasks,
+            },
+          }
+          delete sharedTasksQuery.owner;
+          data = data.concat(await db.collection("tasks").find(sharedTasksQuery, tasksOptions).toArray());
+          // data should now contain all owned and shared tasks*/
           
           // At this point we can tell if the task exists
           if (dataPath[1] && data.length < 1) {
