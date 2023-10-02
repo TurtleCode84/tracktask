@@ -19,10 +19,9 @@ export default function Collection() {
   });
   const router = useRouter();
   const { collectionId } = router.query;
-  const { data: collections, error } = useAdminData(user, "collections", collectionId, false);
+  const { data: collection, error } = useAdminData(user, "collections", collectionId, false);
   
   const [errorMsg, setErrorMsg] = useState("");
-  const collection = collections?.[0];
   const relTaskList = collection?.tasks?.filter(task => task.completion.completed === 0).map((task) =>
     <Task task={task} key={task._id}/>
   );
