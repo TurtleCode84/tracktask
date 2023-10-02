@@ -47,6 +47,7 @@ export default function Layout({ children }) {
           --icon-brightness: 1.3;
           --input-border-color: #ccc;
           --inset-border-color: var(--border-color);
+          --textarea-border-color: #303030;
         }
         
         /* Light mode */
@@ -62,6 +63,7 @@ export default function Layout({ children }) {
           --icon-brightness: 1;
           --input-border-color: #ccc;
           --inset-border-color: #777;
+          --textarea-border-color: #d4d4d4;
         }
 
         body {
@@ -157,7 +159,8 @@ export default function Layout({ children }) {
         .textarea {
           background-color: var(--element-background);
           color: var(--text-color);
-          border: 1px solid #303030;
+          border: 1px solid;
+          border-color: var(--textarea-border-color);
           border-radius: 4px;
           width: 611px;
           height: 150px;

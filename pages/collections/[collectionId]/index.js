@@ -11,6 +11,7 @@ import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from 'next/router';
 import moment from "moment";
 import Link from "next/link";
+import Linkify from "linkify-react";
 
 export default function Collection() {
   const { user } = useUser({
@@ -64,7 +65,7 @@ export default function Collection() {
         <>{collection.pending ?
         <><h3>Preview information:</h3>
         <p>Shared by: <User user={user} id={collection.owner}/></p>
-        <p>Description:</p>{' '}<textarea value={collection.description} rows="4" cols="70" disabled /><br/>
+        <p>Description:</p>{' '}<div className="textarea" style={{ maxWidth: "90vw" }}><Linkify>{collection.description}</Linkify></div>
         <p title={collection.created > 0 ? moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a") : 'Never'}>Created: {collection.created > 0 ? <>{moment.unix(collection.created).fromNow()}</> : 'never'}</p>
         <a href={`/api/collections/${collection._id}`} style={{ marginRight: "10px" }}
         onClick={async (e) => {

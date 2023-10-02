@@ -11,6 +11,7 @@ import { useRouter } from 'next/router';
 import moment from "moment";
 import Link from "next/link";
 import Image from "next/image";
+import Linkify from "linkify-react";
 
 export default function UserAdmin() {
   const { user, mutateUser } = useUser({
@@ -74,7 +75,7 @@ export default function UserAdmin() {
       <p>Tasks created: {lookup?.stats.tasks}</p>
       <p>Collections created: {lookup?.stats.collections}</p>
       <p>Collections shared: {lookup?.stats.shared}</p>
-      <p>Admin notes:</p>{' '}<textarea value={lookup.history.notes ? lookup.history.notes : 'None found!'} rows="3" cols="70" style={{ maxWidth: "90vw" }} disabled /><br/>
+      <p>Admin notes:</p>{' '}<div className="textarea" style={{ maxWidth: "90vw" }}><Linkify>{lookup.history.notes ? lookup.history.notes : 'None found!'}</Linkify></div>
       <br/><details>
         <summary>Warnings</summary>
         <p style={{ fontStyle: "italic" }}>(Newest to oldest)</p>

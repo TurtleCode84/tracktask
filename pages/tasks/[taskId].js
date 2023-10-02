@@ -13,6 +13,7 @@ import { useRouter } from 'next/router';
 import moment from "moment";
 import Link from "next/link";
 import Image from "next/legacy/image";
+import Linkify from "linkify-react";
 
 export default function Task() {
   const { user } = useUser({
@@ -52,7 +53,7 @@ export default function Task() {
       {task ?
         <><h3>General information</h3>
         {user.id !== task.owner && <p>Owner: <User user={user} id={task.owner}/></p>}
-        <p>Description:</p>{' '}<textarea value={task.description} rows="8" cols="70" style={{ maxWidth: "90vw" }} disabled /><br/>
+        <p>Description:</p>{' '}<div className="textarea" style={{ maxWidth: "90vw" }}><Linkify>{task.description}</Linkify></div>
         <p title={task.dueDate > 0 ? moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a") : 'Never'}>Due date: {task.dueDate > 0 ? <>{moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}{' '}({moment.unix(task.dueDate).fromNow()})</> : 'never'}</p>
         {task.completion.completed > 0 ? <p title={moment.unix(task.completion.completed).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Completed {moment.unix(task.completion.completed).fromNow()} by <User user={user} id={task.completion.completedBy}/></p>
         :
