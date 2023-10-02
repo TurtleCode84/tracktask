@@ -153,6 +153,16 @@ export default function Layout({ children }) {
           letter-spacing: 0.1px;
         }
 
+        /* Fake textarea */
+        .textarea {
+          background-color: var(--element-background);
+          color: var(--text-color);
+          border-radius: 4px;
+          font-family: inherit;
+          font-size: 15px;
+          letter-spacing: 0.1px;
+        }
+
         input, select {
           background-color: var(--element-background);
           color: var(--text-color);
