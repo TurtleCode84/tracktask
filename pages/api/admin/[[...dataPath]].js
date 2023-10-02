@@ -45,7 +45,7 @@ async function adminDataRoute(req, res) {
 
         const reportedTasks = await db.collection("reports").find({ type: "task" }, { projection: { reported: 1 } }).toArray();
         var reportedTaskIds = [];
-        reportedTasks.forEach(task => reportedTaskIds.push(task.reported._id));
+        reportedTasks.forEach(task => reportedTaskIds.push(new ObjectId(task.reported._id)));
 
         if (dataPath[1]) {
           reportedTasksQuery.$and = [
@@ -280,7 +280,7 @@ async function adminDataRoute(req, res) {
 
         const reportedCollections = await db.collection("reports").find({ $or: [ {type: "collection"}, {type: "share"} ] }, { projection: { reported: 1 } }).toArray();
         var reportedCollectionIds = [];
-        reportedCollections.forEach(collection => reportedCollectionIds.push(collection.reported._id));
+        reportedCollections.forEach(collection => reportedCollectionIds.push(new ObjectId(collection.reported._id)));
 
         if (dataPath[1]) {
           reportedCollectionsQuery.$and = [
