@@ -153,11 +153,15 @@ export default function Layout({ children }) {
           letter-spacing: 0.1px;
         }
 
-        /* Fake textarea */
+        /* Linkify textarea */
         .textarea {
           background-color: var(--element-background);
           color: var(--text-color);
+          border: 1px solid #303030;
           border-radius: 4px;
+          width: 611px;
+          height: 150px;
+          padding: 2px;
           font-family: inherit;
           font-size: 15px;
           letter-spacing: 0.1px;
