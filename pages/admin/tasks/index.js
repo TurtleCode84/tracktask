@@ -15,10 +15,10 @@ export default function TasksAdmin() {
   
   const { data: tasks, error: tasksError } = useAdminData(user, "tasks", false, "all");
   const relTaskList = tasks?.filter(task => task.completion.completed === 0).map((task) =>
-    <Task task={task} key={task._id}/>
+    <Task task={task} key={task._id} admin={true}/>
   );
   const comTaskList = tasks?.filter(task => task.completion.completed > 0).map((task) =>
-    <Task task={task} key={task._id}/>
+    <Task task={task} key={task._id} admin={true}/>
   );
   
   if (!user || !user.isLoggedIn || user.permissions.banned || !user.permissions.admin) {
