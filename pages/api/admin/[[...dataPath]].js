@@ -104,7 +104,7 @@ async function adminDataRoute(req, res) {
       }
 
       // Return data
-      res.json({...data, debug: {"bruh": reportedTaskIds}});
+      res.json(data);
 
     } else if (req.method === 'POST') { // Does nothing
 
@@ -313,7 +313,7 @@ async function adminDataRoute(req, res) {
       if (data.length === 1 && dataPath[1]) {data = data[0]}
 
       // Return data
-      res.json({...data, debug: {"bruh": reportedCollectionIds}});
+      res.json(data);
 
     } else if (req.method === 'POST') { // Does nothing
 
