@@ -168,6 +168,7 @@ export default function Layout({ children }) {
           font-family: inherit;
           font-size: 15px;
           letter-spacing: 0.1px;
+          white-space: pre-line;
         }
 
         input, select {
