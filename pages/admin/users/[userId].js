@@ -141,8 +141,8 @@ export default function UserAdmin() {
       <br/><details>
         <summary>View raw JSON</summary>
         {error ? <pre>{JSON.stringify(error, null, 2)}</pre> : <pre>{JSON.stringify(lookup, null, 2)}</pre>}
-      </details>
-      <br/><ReportButton user={user} type="user" reported={lookup} flag={true}/>
+      </details><br/>
+      <ReportButton user={user} type="user" reported={lookup} flag={true}/>
     </Layout>
   );
 }

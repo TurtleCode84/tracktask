@@ -101,11 +101,11 @@ export default function Collection() {
       :
         <>{error ? <p>{error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading collection...</p>}</>
       }
-      <br/><details>
+      <details>
         <summary>View raw JSON</summary>
         {error ? <pre>{JSON.stringify(error, null, 2)}</pre> : <pre>{JSON.stringify(collection, null, 2)}</pre>}
-      </details>
-      <br/><ReportButton user={user} type="collection" reported={collection} flag={true}/>
+      </details><br/>
+      <ReportButton user={user} type="collection" reported={collection} flag={true}/>
     </Layout>
   );
 }

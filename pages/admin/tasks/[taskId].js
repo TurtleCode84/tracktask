@@ -133,7 +133,7 @@ export default function TaskAdmin() {
             }}
           />
         </details></>*/}
-        <br/><ReportButton user={user} type="task" reported={task} flag={true}/></>
+        <ReportButton user={user} type="task" reported={task} flag={true}/></>
       :
         <>{taskError ? <p>{taskError.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading task...</p>}</>
       }
