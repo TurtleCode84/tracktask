@@ -608,7 +608,7 @@ async function dataRoute(req, res) {
         }
         const validateUser = await db.collection("users").findOne({username: body.username.trim().toLowerCase(), 'permissions.banned': false}, { projection: { _id: 1 } });
         if (!validateUser) {
-          res.status(404).json({ message: "Username not found!" });
+          res.status(404).json({ message: "User not found!" });
           return;
         }
         const query = {

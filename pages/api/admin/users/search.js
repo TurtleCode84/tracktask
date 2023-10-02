@@ -47,7 +47,7 @@ async function adminUserSearchRoute(req, res) {
       if (searchUser) {
         res.json(searchUser);
       } else {
-        res.status(404).json({ message: "User does not exist" });
+        res.status(404).json({ message: "User not found" });
       }
     } catch (error) {
       res.status(200).json([]);
