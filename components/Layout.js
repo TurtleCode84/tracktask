@@ -170,6 +170,7 @@ export default function Layout({ children }) {
           letter-spacing: 0.1px;
           white-space: pre-line;
           word-wrap: break-word;
+          overflow-y: scroll;
         }
 
         input, select {
