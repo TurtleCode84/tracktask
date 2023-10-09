@@ -58,12 +58,10 @@ export default function UserAdmin() {
       <Link href="/admin">Back to admin dashboard</Link><br/>
       {lookup ?
       <><p>{lookup.permissions.banned && <b>This user is banned.</b>}{' '}{lookup.permissions.banned && lookup.history.ban.reason && <i>Reason: {lookup.history.ban.reason}</i> }</p>
-      <div className="dashboard"><div style={{ position: "relative", padding: "5px", borderStyle: "solid", borderWidth: "2px", borderColor: "var(--border-color)", borderRadius: "7px" }}>
       <h3>General information</h3>
       <p>User ID: {lookup._id}</p>
       <p>Email: {lookup.email ? <><a href={`mailto:${lookup.email}`} target="_blank" rel="noreferrer">{lookup.email}</a></> : 'none'}</p>
       <p>Profile picture: <Image src={lookup.profilePicture ? lookup.profilePicture : "/default-pfp.jpg" } width={32} height={32} style={{ verticalAlign: "middle", borderRadius: "100%", overflow: "hidden" }} quality={85} alt=""/> ({lookup.profilePicture ? <a href={lookup.profilePicture} target="_blank" rel="noreferrer">link</a> : 'default'})</p>
-      </div><div style={{ position: "relative", padding: "5px", borderStyle: "solid", borderWidth: "2px", borderColor: "var(--border-color)", borderRadius: "7px" }}>
       <h3>History</h3>
       <p title={moment.unix(lookup.history.joined).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Joined: {lookup.history.joined > 0 ? moment.unix(lookup.history.joined).fromNow() : 'never'}</p>
       <p>Join IP address: {lookup.history.joinedIp ? <a href={`https://whatismyipaddress.com/ip/${lookup.history.joinedIp}`} target="_blank" rel="noreferrer">{lookup.history.joinedIp}</a> : 'none'}</p>
@@ -85,7 +83,6 @@ export default function UserAdmin() {
       </details>
       <p>Acknowledged last warning: {lookup.history.warnings.length > 0 ? <>{lookup.permissions.warned ? <span style={{ color: "red" }} className="material-symbols-outlined icon-list">close</span> : <span style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">done</span>}</> : 'N\/A'}</p>
       {!lookup.permissions.banned && <p>Last banned: {lookup.history.ban.timestamp > 0 ? <span title={moment.unix(lookup.history.ban.timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")}>{moment.unix(lookup.history.ban.timestamp).fromNow()} by <User user={user} id={lookup.history.ban.by} link={true}/>{lookup.history.ban.reason && ' for \"' + lookup.history.ban.reason + '\"'}</span> : 'never'}</p>}
-      </div></div>
       <hr/>
       <details>
         <summary>Edit user info</summary>
