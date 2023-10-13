@@ -9,6 +9,11 @@ module.exports = {
       },
       {
         protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+        pathname: "/u/*",
+      },
+      {
+        protocol: "https",
         hostname: "u.cubeupload.com",
         pathname: "/*/*",
       },
