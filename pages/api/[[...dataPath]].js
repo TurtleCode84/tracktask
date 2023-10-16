@@ -639,11 +639,6 @@ async function dataRoute(req, res) {
         res.status(422).json({ message: "This feature is coming VERY soon!" });
         return;
 
-      } else if (body.action === "reject") {
-
-        res.status(422).json({ message: "This feature is coming VERY soon!" });
-        return;
-
       } else if (body.action === "modify") {
 
         res.status(422).json({ message: "This feature is coming VERY soon!" });
