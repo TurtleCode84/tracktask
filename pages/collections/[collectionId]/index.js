@@ -171,7 +171,31 @@ export default function Collection() {
         />
         </details><br/></>}
         </>}
-        {collection.owner !== user.id && <ReportButton user={user} type={collection.pending ? "share" : "collection"} reported={collection}/>}
+        {collection.owner !== user.id && <><a href={`/api/collections/${collection._id}`} style={{ marginRight: "8px" }}
+        onClick={async (e) => {
+          e.preventDefault();
+          document.getElementById("removeShareBtn").disabled = true;
+          const body = {
+            action: "remove",
+          };
+          try {
+            await fetchJson(`/api/collections/${collection._id}`, {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(body),
+            });
+            router.reload();
+          } catch (error) {
+            if (error instanceof FetchError) {
+              setErrorMsg(error.data.message);
+            } else {
+              console.error("An unexpected error happened:", error);
+            }
+            document.getElementById("removeShareBtn").disabled = false;
+          }
+        }}
+        ><button id="removeShareBtn"><span style={{ color: "lightslategray" }} className="material-symbols-outlined icon-list">logout</span> Leave collection</button></a>
+        <ReportButton user={user} type={collection.pending ? "share" : "collection"} reported={collection}/></>}
         {collection.pending && <>{errorMsg && <p className="error">{errorMsg}</p>}</>}</>
       :
         <>{error ? <p>{error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading collection...</p>}</>
