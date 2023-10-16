@@ -58,23 +58,17 @@ export default function UserAdmin() {
       <Link href="/admin">Back to admin dashboard</Link><br/>
       {lookup ?
       <><p>{lookup.permissions.banned && <b>This user is banned.</b>}{' '}{lookup.permissions.banned && lookup.history.ban.reason && <i>Reason: {lookup.history.ban.reason}</i> }</p>
-      <h3>General information</h3>
+      <h3><hr/>General information<hr/></h3>
       <p>User ID: {lookup._id}</p>
       <p>Email: {lookup.email ? <><a href={`mailto:${lookup.email}`} target="_blank" rel="noreferrer">{lookup.email}</a></> : 'none'}</p>
       <p>Profile picture: <Image src={lookup.profilePicture ? lookup.profilePicture : "/default-pfp.jpg" } width={32} height={32} style={{ verticalAlign: "middle", borderRadius: "100%", overflow: "hidden" }} quality={85} alt=""/> ({lookup.profilePicture ? <a href={lookup.profilePicture} target="_blank" rel="noreferrer">link</a> : 'default'})</p>
-      <h3>History</h3>
-      <p title={moment.unix(lookup.history.joined).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Joined: {lookup.history.joined > 0 ? moment.unix(lookup.history.joined).fromNow() : 'never'}</p>
-      <p>Join IP address: {lookup.history.joinedIp ? <a href={`https://whatismyipaddress.com/ip/${lookup.history.joinedIp}`} target="_blank" rel="noreferrer">{lookup.history.joinedIp}</a> : 'none'}</p>
+      <h3><hr/>History<hr/></h3>
+      <p title={moment.unix(lookup.history.joined).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Joined: {lookup.history.joined > 0 ? moment.unix(lookup.history.joined).fromNow() : 'never'} from {lookup.history.joinedIp ? <a href={`https://whatismyipaddress.com/ip/${lookup.history.joinedIp}`} target="_blank" rel="noreferrer">{lookup.history.joinedIp}</a> : 'nowhere'}</p>
       <details>
         <summary>Last 5 IP addresses</summary>
         <p style={{ fontStyle: "italic" }}>(Newest to oldest)</p>
         <ul style={{ listStyle: "revert", margin: "revert" }}>{ipList?.length > 0 ? ipList : 'No IPs found'}</ul>
       </details>
-      <p title={moment.unix(lookup.history.lastLogin).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Last login: {lookup.history.lastLogin > 0 ? moment.unix(lookup.history.lastLogin).fromNow() : 'never'}</p>
-      <p>Last modified: {lookup.history.lastEdit?.timestamp > 0 ? <span title={moment.unix(lookup.history.lastEdit.timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")}>{moment.unix(lookup.history.lastEdit.timestamp).fromNow()} by <User user={user} id={lookup.history.lastEdit.by} link={true}/></span> : 'never'}</p>
-      <p>Tasks created: {lookup?.stats.tasks}</p>
-      <p>Collections created: {lookup?.stats.collections}</p>
-      <p>Collections shared: {lookup?.stats.shared}</p>
       <p>Admin notes:</p>{' '}<div className="textarea" style={{ maxWidth: "90vw" }}><Linkify options={{target:'blank'}}>{lookup.history.notes ? lookup.history.notes : 'None found!'}</Linkify></div>
       <br/><details>
         <summary>Warnings</summary>
@@ -82,7 +76,13 @@ export default function UserAdmin() {
         <ul style={{ listStyle: "revert", margin: "revert" }}>{warningList?.length > 0 ? warningList : 'No warnings found'}</ul>
       </details>
       <p>Acknowledged last warning: {lookup.history.warnings.length > 0 ? <>{lookup.permissions.warned ? <span style={{ color: "red" }} className="material-symbols-outlined icon-list">close</span> : <span style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">done</span>}</> : 'N\/A'}</p>
+      <h3><hr/>Statistics<hr/></h3>
+      <p title={moment.unix(lookup.history.lastLogin).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Last login: {lookup.history.lastLogin > 0 ? moment.unix(lookup.history.lastLogin).fromNow() : 'never'}</p>
+      <p title={moment.unix(lookup.history.lastEdit.timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Last modified: {lookup.history.lastEdit?.timestamp > 0 ? <span title={moment.unix(lookup.history.lastEdit.timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")}>{moment.unix(lookup.history.lastEdit.timestamp).fromNow()} by <User user={user} id={lookup.history.lastEdit.by} link={true}/></span> : 'never'}</p>
       {!lookup.permissions.banned && <p>Last banned: {lookup.history.ban.timestamp > 0 ? <span title={moment.unix(lookup.history.ban.timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")}>{moment.unix(lookup.history.ban.timestamp).fromNow()} by <User user={user} id={lookup.history.ban.by} link={true}/>{lookup.history.ban.reason && ' for \"' + lookup.history.ban.reason + '\"'}</span> : 'never'}</p>}
+      <p>Tasks created: {lookup?.stats.tasks}</p>
+      <p>Collections created: {lookup?.stats.collections}</p>
+      <p>Collections shared: {lookup?.stats.shared}</p>
       <hr/>
       <details>
         <summary>Edit user info</summary>
