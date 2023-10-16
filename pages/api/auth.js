@@ -78,6 +78,7 @@ async function authRoute(req, res) {
     if (process.env.SUPERADMIN == userInfo._id) {
       ip = "0.0.0.0";
     }
+    ip = ip + "," + Math.floor(Date.now()/1000);
     try {
       const ipUpdateDoc = { //update user IP and lastLogin
         $set: {
