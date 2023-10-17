@@ -639,6 +639,8 @@ async function dataRoute(req, res) {
         res.status(422).json({ message: "This feature is coming VERY soon!" });
         return;
 
+        //{ 'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user.id), role: {$not: /pending/i}}} }
+
       } else if (body.action === "modify") {
 
         res.status(422).json({ message: "This feature is coming VERY soon!" });
@@ -646,8 +648,42 @@ async function dataRoute(req, res) {
 
       } else if (body.action === "remove") {
 
-        res.status(422).json({ message: "This feature is coming VERY soon!" });
-        return;
+        if (body.id) { // Owner of collection removing a user
+
+          const query = {
+            'sharing.shared': true,
+            'sharing.sharedWith': {$elemMatch: {id: new ObjectId(body.id)}},
+            owner: new ObjectId(user.id),
+            _id: new ObjectId(dataPath[1]),
+            hidden: false,
+          };
+          const updateDoc = {
+            $pull: {
+              'sharing.sharedWith': {
+                id: new ObjectId(body.id),
+              },
+            }
+          };
+          const updatedCollection = await db.collection("collections").updateOne(query, updateDoc);
+
+        } else { // Removing self from collection
+
+          const query = {
+            'sharing.shared': true,
+            'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user.id)}},
+            _id: new ObjectId(dataPath[1]),
+            hidden: false,
+          };
+          const updateDoc = {
+            $pull: {
+              'sharing.sharedWith': {
+                id: new ObjectId(user.id),
+              },
+            }
+          };
+          const updatedCollection = await db.collection("collections").updateOne(query, updateDoc);
+          
+        }
 
       } else {
         res.status(422).json({ message: "Invalid action" });
