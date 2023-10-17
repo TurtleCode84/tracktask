@@ -3,7 +3,7 @@ export default function CollectionCreateForm({ verified, errorMessage, onSubmit 
     <form id="collectionCreateForm" autocomplete="off" onSubmit={onSubmit}>
       <label>
         <span>Name</span>
-        <input type="text" name="name" maxlength="55" autofocus required />
+        <input type="text" name="name" maxlength="55" autoFocus required />
       </label>
       <label>
         <span>Description</span>
