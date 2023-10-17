@@ -50,7 +50,7 @@ export default function Join() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body),
               })
-              router.push(`/login?joined=true&user=${res.username}`);
+              router.push(`/login?joined=true&username=${res.username}`);
             } catch (error) {
               if (error instanceof FetchError) {
                 setErrorMsg(error.data.message);
