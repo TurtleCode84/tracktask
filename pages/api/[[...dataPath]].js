@@ -678,7 +678,7 @@ async function dataRoute(req, res) {
 
           const removedTasks = await db.collection("collections").updateOne({ _id: new ObjectId(dataPath[1]) }, { $pull: {tasks: {$in: taskIds}} });
           
-          res.status(418).json({ message: String({ one: updatedCollectionInfo, two: updatedCollectionTasks, three: taskIds, four: removedTasks }) });
+          res.status(418).json({ message: JSON.stringify({ one: updatedCollectionInfo, two: updatedCollectionTasks, three: taskIds, four: removedTasks }) });
           return;
           //res.json(updatedCollection);
 
