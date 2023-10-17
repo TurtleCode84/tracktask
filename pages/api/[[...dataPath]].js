@@ -664,7 +664,7 @@ async function dataRoute(req, res) {
               },
             }
           };
-          //const updatedCollection = await db.collection("collections").updateOne(query, updateDoc);
+          const updatedCollection = await db.collection("collections").updateOne(query, updateDoc);
           
           const updatedCollectionInfo = await db.collection("collections").findOne({ _id: new ObjectId(dataPath[1]) }, { projection: {tasks: 1} });
           const updatedCollectionTasks = await db.collection("tasks").find({ _id: {$in: updatedCollectionInfo.tasks} }, { projection: {owner: 1} }).toArray();
@@ -677,10 +677,7 @@ async function dataRoute(req, res) {
           });
 
           const removedTasks = await db.collection("collections").updateOne({ _id: new ObjectId(dataPath[1]) }, { $pull: {tasks: {$in: taskIds}} });
-          
-          res.status(418).json({ message: JSON.stringify({ one: updatedCollectionInfo, two: updatedCollectionTasks, three: taskIds, four: removedTasks }) });
-          return;
-          //res.json(updatedCollection);
+          res.json(updatedCollection);
 
         } else { // Removing self from collection
 
