@@ -8,7 +8,7 @@ import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from 'next/router'
 
 export default function Login() {
-  // here we just check if user is already logged in and redirect to dashboard
+  // Here we just check if user is already logged in and redirect to dashboard
   const { mutateUser } = useUser({
     redirectTo: "/dashboard",
     redirectIfFound: true,
@@ -17,7 +17,7 @@ export default function Login() {
   const [errorMsg, setErrorMsg] = useState("");
   //const { executeRecaptcha } = useGoogleReCaptcha();
   const router = useRouter();
-  const { joined } = router.query;
+  const { joined, username } = router.query;
   var joinMsg;
   if (joined === "true") {
     joinMsg = "Account created! You can log in now."
@@ -31,6 +31,7 @@ export default function Login() {
         <LoginForm
           errorMessage={errorMsg}
           joinMessage={joinMsg}
+          joinUsername={username}
           onSubmit={async function handleSubmit(event) {
             event.preventDefault();
             document.getElementById("loginBtn").disabled = true;
