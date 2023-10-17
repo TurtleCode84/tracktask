@@ -667,7 +667,7 @@ async function dataRoute(req, res) {
           //const updatedCollection = await db.collection("collections").updateOne(query, updateDoc);
           
           const updatedCollectionInfo = await db.collection("collections").findOne({ _id: new ObjectId(dataPath[1]) }, { projection: {tasks: 1} });
-          const updatedCollectionTasks = await db.collection("tasks").find({ _id: {$in: [updatedCollectionInfo.tasks]} }, { projection: {owner: 1} }).toArray();
+          const updatedCollectionTasks = await db.collection("tasks").find({ _id: {$in: updatedCollectionInfo.tasks} }, { projection: {owner: 1} }).toArray();
 
           var taskIds = [];
           updatedCollectionTasks.forEach(task => {
@@ -700,7 +700,7 @@ async function dataRoute(req, res) {
           const updatedCollection = await db.collection("collections").updateOne(query, updateDoc);
                     
           const updatedCollectionInfo = await db.collection("collections").findOne({ _id: new ObjectId(dataPath[1]) }, { projection: {tasks: 1} });
-          const updatedCollectionTasks = await db.collection("tasks").find({ _id: {$in: [updatedCollectionInfo.tasks]} }, { projection: {owner: 1} }).toArray();
+          const updatedCollectionTasks = await db.collection("tasks").find({ _id: {$in: updatedCollectionInfo.tasks} }, { projection: {owner: 1} }).toArray();
 
           var taskIds = [];
           updatedCollectionTasks.forEach(task => {
