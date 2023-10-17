@@ -3,7 +3,7 @@ export default function UserSearchForm({ errorMessage, onSubmit }) {
     <form id="userSearchForm" autocomplete="off" onSubmit={onSubmit}>
       <label>
         <span>Keyword...</span>
-        <input type="text" name="keyword" required />
+        <input type="text" name="keyword" autofocus required />
       </label>
       <label>
         <span>Search by...</span>

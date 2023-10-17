@@ -6,7 +6,7 @@ export default function TaskCreateForm({ collections, errorMessage, onSubmit }) 
     <form id="taskCreateForm" autocomplete="off" onSubmit={onSubmit}>
       <label>
         <span>Name</span>
-        <input type="text" name="name" maxlength="55" required />
+        <input type="text" name="name" maxlength="55" autofocus required />
       </label>
       <label>
         <span>Description</span>

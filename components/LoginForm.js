@@ -3,7 +3,7 @@ export default function LoginForm({ errorMessage, onSubmit, joinMessage, joinUse
     <form onSubmit={onSubmit}>
       <label>
         <span>Username</span>
-        <input type="text" name="username" defaultValue={joinUsername?.trim()} required />
+        <input type="text" name="username" defaultValue={joinUsername?.trim()} autofocus required />
       </label>
       <label>
         <span>Password</span>
