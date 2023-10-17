@@ -569,7 +569,7 @@ async function dataRoute(req, res) {
                 {
                   'sharing.shared': true,
                   'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user.id), role: "contributor"}},
-                  tasks: {$in : [new ObjectId(taskInfo?._id)]}
+                  tasks: {$in: [new ObjectId(taskInfo?._id)]}
                 },
               ],
               // Contributors can only remove their own tasks, owners can remove any task
@@ -648,9 +648,6 @@ async function dataRoute(req, res) {
 
       } else if (body.action === "remove") {
 
-        res.status(422).json({ message: "This feature is coming VERY soon!" });
-        return;
-
         if (body.id) { // Owner of collection removing a user
 
           const query = {
@@ -668,6 +665,18 @@ async function dataRoute(req, res) {
             }
           };
           const updatedCollection = await db.collection("collections").updateOne(query, updateDoc);
+          
+          const updatedCollectionInfo = await db.collection("collections").findOne({ _id: updatedCollection.upsertedId }, { projection: {tasks: 1} });
+          const updatedCollectionTasks = await db.collection("tasks").find({ _id: {$in: [updatedCollectionInfo.tasks]} }, { projection: {owner: 1} }).toArray();
+
+          var taskIds = [];
+          updatedCollectionTasks.forEach(task => {
+            if (task.owner == body.id) {
+              taskIds.push(new ObjectId(task._id));
+            }
+          });
+
+          const removedTasks = await db.collection("collections").updateOne({ _id: updatedCollection.upsertedId }, { $pull: {tasks: {$in: taskIds}} });
           res.json(updatedCollection);
 
         } else { // Removing self from collection
@@ -686,6 +695,18 @@ async function dataRoute(req, res) {
             }
           };
           const updatedCollection = await db.collection("collections").updateOne(query, updateDoc);
+                    
+          const updatedCollectionInfo = await db.collection("collections").findOne({ _id: updatedCollection.upsertedId }, { projection: {tasks: 1} });
+          const updatedCollectionTasks = await db.collection("tasks").find({ _id: {$in: [updatedCollectionInfo.tasks]} }, { projection: {owner: 1} }).toArray();
+
+          var taskIds = [];
+          updatedCollectionTasks.forEach(task => {
+            if (task.owner == user.id) {
+              taskIds.push(new ObjectId(task._id));
+            }
+          });
+
+          const removedTasks = await db.collection("collections").updateOne({ _id: updatedCollection.upsertedId }, { $pull: {tasks: {$in: taskIds}} });
           res.json(updatedCollection);
           
         }
