@@ -20,7 +20,7 @@ export default function UserShareForm({ errorMessage, onSubmit, share, collectio
       <a href={`/api/collections/${collectionId}`}
         onClick={async (e) => {
           e.preventDefault();
-          if (confirm("Are you sure? This user will lose access to the tasks in this collection!")) {
+          if (confirm("Are you sure? This user will lose access to the tasks that are not theirs in this collection!")) {
             const body = {
               action: "remove",
               id: share.id,

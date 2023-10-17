@@ -45,12 +45,12 @@ export default function Join() {
             };
 
             try {
-              await fetchJson("/api/auth", {
+              const res = await fetchJson("/api/auth", {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body),
               })
-              router.push('/login?joined=true');
+              router.push(`/login?joined=true&user=${res.username}`);
             } catch (error) {
               if (error instanceof FetchError) {
                 setErrorMsg(error.data.message);
