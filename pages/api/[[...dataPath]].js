@@ -665,6 +665,7 @@ async function dataRoute(req, res) {
             }
           };
           const updatedCollection = await db.collection("collections").updateOne(query, updateDoc);
+          res.json(updatedCollection);
 
         } else { // Removing self from collection
 
@@ -682,6 +683,7 @@ async function dataRoute(req, res) {
             }
           };
           const updatedCollection = await db.collection("collections").updateOne(query, updateDoc);
+          res.json(updatedCollection);
           
         }
 
