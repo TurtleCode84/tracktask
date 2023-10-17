@@ -648,6 +648,9 @@ async function dataRoute(req, res) {
 
       } else if (body.action === "remove") {
 
+        res.status(422).json({ message: "This feature is coming VERY soon!" });
+        return;
+
         if (body.id) { // Owner of collection removing a user
 
           const query = {
