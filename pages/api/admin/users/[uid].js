@@ -72,13 +72,13 @@ async function adminUserRoute(req, res) {
       const notesUpdateDoc = {
         $set: {'history.notes': body.notes},
       };
-      const updatedNotes = await db.collection("users").updateOne(query, notesUpdateDoc); // Does not catch errors, could be a problem if updated succeeds but updatedNotes does not?
+      await db.collection("users").updateOne(query, notesUpdateDoc); // Does not catch errors, could be a problem if updated succeeds but updatedNotes does not?
     }
     if (body.verify !== undefined) { // true or false
       const verifyUpdateDoc = {
         $set: {'permissions.verified': body.verify},
       };
-      const updatedVerify = await db.collection("users").updateOne(query, verifyUpdateDoc); // See above
+      await db.collection("users").updateOne(query, verifyUpdateDoc); // See above
     }
     if (body.admin !== undefined) { // true or false
       if (process.env.SUPERADMIN !== user.id || user.id === uid) {

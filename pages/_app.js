@@ -41,13 +41,13 @@ function MyApp({ Component, pageProps }) {
             applicationServerKey: vapidKey,
           }).then((pushSubscription) => {
             //console.log("Received PushSubscription: ", JSON.stringify(pushSubscription));
-            const sendSub = fetch("/api/notifications", {
+            fetch("/api/notifications", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
                 subscription: pushSubscription,
               }),
-            })
+            });
           });
           registration.showNotification('TrackTask', {
             body: "You have enabled push notifications!",
@@ -60,9 +60,9 @@ function MyApp({ Component, pageProps }) {
         alert("Unfortunately, push notifications are not supported by your browser, so they could not be enabled.");
       }
     } else if (pushNotifications === "disable") {
-      const clearSub = fetch("/api/notifications", {
+      fetch("/api/notifications", {
         method: "DELETE",
-      })
+      });
       navigator.serviceWorker.getRegistrations().then(function(registrations) {
         for(let registration of registrations) {
           registration.unregister();
