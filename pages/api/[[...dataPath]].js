@@ -676,7 +676,7 @@ async function dataRoute(req, res) {
             }
           });
 
-          const removedTasks = await db.collection("collections").updateOne({ _id: new ObjectId(dataPath[1]) }, { $pull: {tasks: {$in: taskIds}} });
+          await db.collection("collections").updateOne({ _id: new ObjectId(dataPath[1]) }, { $pull: {tasks: {$in: taskIds}} });
           res.json(updatedCollection);
 
         } else { // Removing self from collection
@@ -706,7 +706,7 @@ async function dataRoute(req, res) {
             }
           });
 
-          const removedTasks = await db.collection("collections").updateOne({ _id: new ObjectId(dataPath[1]) }, { $pull: {tasks: {$in: taskIds}} });
+          await db.collection("collections").updateOne({ _id: new ObjectId(dataPath[1]) }, { $pull: {tasks: {$in: taskIds}} });
           res.json(updatedCollection);
           
         }

@@ -8,11 +8,9 @@ import ReportButton from "components/ReportButton";
 import useUser from "lib/useUser";
 import useAdminData from "lib/useAdminData";
 import fetchJson, { FetchError } from "lib/fetchJson";
-import stringToColor from "lib/stringToColor";
 import { useRouter } from 'next/router';
 import moment from "moment";
 import Link from "next/link";
-import Image from "next/legacy/image";
 import Linkify from "linkify-react";
 
 export default function TaskAdmin() {

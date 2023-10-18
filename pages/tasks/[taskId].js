@@ -12,7 +12,6 @@ import stringToColor from "lib/stringToColor";
 import { useRouter } from 'next/router';
 import moment from "moment";
 import Link from "next/link";
-import Image from "next/legacy/image";
 import Linkify from "linkify-react";
 
 export default function Task() {

@@ -1,7 +1,6 @@
 import moment from "moment";
 import { useRouter } from "next/router";
 import stringToColor from "lib/stringToColor";
-import Link from "next/link";
 
 export default function Task({ task, key, admin }) {
   const router = useRouter();
