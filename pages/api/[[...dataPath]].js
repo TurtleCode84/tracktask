@@ -209,7 +209,7 @@ async function dataRoute(req, res) {
             hidden: false,
             owner: new ObjectId(user.id),
           };
-          const addedCollections = await db.collection("collections").updateMany(addCollectionsQuery, {$push: {tasks: new ObjectId(createdTask.insertedId)}});
+          await db.collection("collections").updateMany(addCollectionsQuery, {$push: {tasks: new ObjectId(createdTask.insertedId)}});
         }
         res.json(createdTask);
       } catch (error) {

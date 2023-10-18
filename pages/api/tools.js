@@ -2,7 +2,6 @@ import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "lib/session";
 import { ObjectId } from 'mongodb'
 import clientPromise from "lib/mongodb";
-import moment from "moment";
 
 export default withIronSessionApiRoute(toolsRoute, sessionOptions);
 
