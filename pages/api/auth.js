@@ -108,7 +108,7 @@ async function authRoute(req, res) {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded", },
       body: `secret=${process.env.RECAPTCHA_SECRET}&response=${gReCaptchaToken}`,
-    })
+    });
     if (process.env.VERCEL_ENV !== "preview") {
       if (!captchaResponse || !captchaResponse.success || captchaResponse.action !== "joinFormSubmit" || captchaResponse.score <= 0.5) {
         res.status(401).json({ message: "reCAPTCHA verification failed, please try again." });

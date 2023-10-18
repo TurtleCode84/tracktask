@@ -141,7 +141,7 @@ async function userRoute(req, res) {
           updateUser.password = await hash(body.newPassword, 10);
         }
       }
-      if (body.profilePicture !== undefined) {updateUser.profilePicture = body.profilePicture}
+      if (body.profilePicture !== undefined) {updateUser.profilePicture = body.profilePicture;}
       const updateDoc = {
         $set: updateUser,
       };

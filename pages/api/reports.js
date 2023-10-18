@@ -66,7 +66,7 @@ async function reportsRoute(req, res) {
       $set: {
         reviewed: Math.floor(Date.now()/1000),
       }
-    }
+    };
     const updatedReport = await db.collection("reports").updateOne(query, updateDoc);
     res.json(updatedReport);
   } else if (req.method === 'DELETE' && user.permissions.admin) {
