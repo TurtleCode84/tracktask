@@ -3,7 +3,6 @@ import { ObjectId } from 'mongodb'
 import { hash } from 'bcryptjs';
 import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "lib/session";
-import fetchJson from "lib/fetchJson";
 
 export default withIronSessionApiRoute(reportsRoute, sessionOptions);
 
@@ -54,7 +53,7 @@ async function reportsRoute(req, res) {
             },
           }
         };
-        const updatedCollection = await db.collection("collections").updateOne(query, updateDoc);
+        await db.collection("collections").updateOne(query, updateDoc);
       }
       res.json(createdReport);
     } catch (error) {
