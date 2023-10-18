@@ -49,7 +49,7 @@ export default function Join() {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body),
-              })
+              });
               router.push(`/login?joined=true&username=${res.username}`);
             } catch (error) {
               if (error instanceof FetchError) {

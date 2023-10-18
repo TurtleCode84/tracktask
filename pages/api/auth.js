@@ -206,7 +206,7 @@ async function authRoute(req, res) {
           enabled: 0,
           subscription: {},
         },
-      }
+      };
       const createdUser = await db.collection("users").insertOne(newUser);
       const createdUsername = await db.collection("users").findOne({ _id: createdUser.insertedId }, { projection: { username: 1 } });
       res.json(createdUsername);

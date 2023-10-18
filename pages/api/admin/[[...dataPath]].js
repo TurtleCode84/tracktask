@@ -235,8 +235,8 @@ async function adminDataRoute(req, res) {
 
       } else if (perms === "edit") {
 
-        if (body.name) {updateDoc.name = body.name.trim().slice(0, 55)} // Enforce length limit
-        if (body.description) {updateDoc.description = body.description.trim().slice(0, 500)}
+        if (body.name) {updateDoc.name = body.name.trim().slice(0, 55);} // Enforce length limit
+        if (body.description) {updateDoc.description = body.description.trim().slice(0, 500);}
         if (body.dueDate !== undefined) {
           if (body.dueDate) {
             updateDoc.dueDate = moment(body.dueDate).unix();
@@ -245,7 +245,7 @@ async function adminDataRoute(req, res) {
           }
           updateDoc.notified = false;
         }
-        if (body.priority !== undefined) {updateDoc.priority = body.priority}
+        if (body.priority !== undefined) {updateDoc.priority = body.priority;}
         if (body.completion) {
           updateDoc.completion = {};
           updateDoc.completion.completed = body.completion.completed;
@@ -258,7 +258,7 @@ async function adminDataRoute(req, res) {
       }
       updateDoc = {
         $set: updateDoc,
-      }
+      };
       try {
         const updatedTask = await db.collection("tasks").updateOne(taskQuery, updateDoc); // Dangerous!
         res.json(updatedTask);
@@ -332,7 +332,7 @@ async function adminDataRoute(req, res) {
       }
 
       // Remove array if single collection
-      if (data.length === 1 && dataPath[1]) {data = data[0]}
+      if (data.length === 1 && dataPath[1]) {data = data[0];}
 
       // Return data
       res.json(data);
@@ -391,19 +391,19 @@ async function adminDataRoute(req, res) {
           hidden: false,
           owner: new ObjectId(user.id),
         };
-        if (body.name) {updateDoc.name = body.name.trim().slice(0, 55)} // Enforce length limit
-        if (body.description) {updateDoc.description = body.description.trim().slice(0, 500)}
+        if (body.name) {updateDoc.name = body.name.trim().slice(0, 55);} // Enforce length limit
+        if (body.description) {updateDoc.description = body.description.trim().slice(0, 500);}
         if (body.shared !== undefined && user.permissions.verified) {
           updateDoc = {
             $set: {
               ...updateDoc,
               'sharing.shared': body.shared,
             },
-          }
+          };
         } else {
           updateDoc = {
             $set: updateDoc,
-          }
+          };
         }
         try {
           const updatedCollection = await db.collection("collections").updateOne(query, updateDoc);
@@ -528,7 +528,7 @@ async function adminDataRoute(req, res) {
           $push: {
             'sharing.sharedWith': {id: validateUser._id, role: pendingRole },
           },
-        }
+        };
         try {
           const sharedCollection = await db.collection("collections").updateOne(query, updateDoc);
           res.json(sharedCollection);
