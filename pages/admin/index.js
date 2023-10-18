@@ -72,11 +72,7 @@ export default function Admin() {
       </ul>
       <details>
         <summary>View my raw session info</summary>
-        {user && (
-          <>
-            <pre>{JSON.stringify(user, null, 2)}</pre>
-          </>
-        )}
+        {user && <pre>{JSON.stringify(user, null, 2)}</pre>}
       </details>
     </Layout>
   );
