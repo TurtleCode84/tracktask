@@ -19,7 +19,7 @@ export default function Admin() {
   const { deleted } = router.query;
   var dynamicMsg;
   if (deleted === "true") {
-    dynamicMsg = "User successfully deleted!"
+    dynamicMsg = "User successfully deleted!";
   }
   const { reports, error: reportsError } = useAdminReports(user, false);
   const reportList = reports?.slice(0,4).map((report) =>

@@ -57,12 +57,12 @@ async function adminUserRoute(req, res) {
         res.status(422).json({ message: "Username is already taken!" });
         return;
       } else {
-        updateUser.username = body.username.trim().toLowerCase()
+        updateUser.username = body.username.trim().toLowerCase();
       }
     }
-    if (body.email !== undefined) {updateUser.email = body.email.trim().toLowerCase()}
-    if (body.password) {updateUser.password = await hash(body.password, 10)}
-    if (body.profilePicture !== undefined) {updateUser.profilePicture = body.profilePicture}
+    if (body.email !== undefined) {updateUser.email = body.email.trim().toLowerCase();}
+    if (body.password) {updateUser.password = await hash(body.password, 10);}
+    if (body.profilePicture !== undefined) {updateUser.profilePicture = body.profilePicture;}
     const query = { _id: new ObjectId(uid) };
     const updateDoc = {
       $set: updateUser,
