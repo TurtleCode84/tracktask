@@ -673,6 +673,10 @@ async function dataRoute(req, res) {
         };
         const userRoleInfo = await db.collection("collections").findOne(query, { projection: {'sharing.sharedWith': 1} });
         var modifyUserRole = userRoleInfo.sharing.sharedWith.filter(share => share.id == body.id)[0].role.split("-");
+        if (modifyUserRole.includes(body.role)) {
+          res.status(422).json({ message: "User already has this role!" });
+          return;
+        }
         if (modifyUserRole[0] === "pending") {
           modifyUserRole = "pending-" + body.role;
         } else {
