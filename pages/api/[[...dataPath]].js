@@ -635,9 +635,6 @@ async function dataRoute(req, res) {
           return;
         }
       } else if (body.action === "accept") {
-
-        //res.status(422).json({ message: "This feature is coming VERY soon!" });
-        //return;
         
         const query = {
           'sharing.shared': true,
@@ -653,6 +650,7 @@ async function dataRoute(req, res) {
           }
         };
         const updatedCollection = await db.collection("collections").updateOne(query, updateDoc);
+        res.json(updatedCollection);
 
       } else if (body.action === "modify") {
 
