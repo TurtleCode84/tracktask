@@ -636,10 +636,23 @@ async function dataRoute(req, res) {
         }
       } else if (body.action === "accept") {
 
-        res.status(422).json({ message: "This feature is coming VERY soon!" });
-        return;
-
-        //{ 'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user.id), role: {$not: /pending/i}}} }
+        //res.status(422).json({ message: "This feature is coming VERY soon!" });
+        //return;
+        
+        const query = {
+          'sharing.shared': true,
+          'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user.id), role: /pending/i}},
+          _id: new ObjectId(dataPath[1]),
+          hidden: false,
+        };
+        const userRoleInfo = await db.collection("collections").findOne(query, { projection: {'sharing.sharedWith': 1} });
+        const acceptedUserRole = userRoleInfo.sharing.sharedWith.filter(share => share.id == user.id)[0].role.split("-")[1];
+        const updateDoc = {
+          $set: {
+            'sharing.sharedWith.$.role': acceptedUserRole,
+          }
+        };
+        const updatedCollection = await db.collection("collections").updateOne(query, updateDoc);
 
       } else if (body.action === "modify") {
 
