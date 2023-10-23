@@ -34,7 +34,8 @@ export default function TaskAdmin() {
   return (
     <Layout>
       <h2>{task ? <>{task.completion.completed > 0 ? <span title="Completed" style={{ color: "darkgreen", marginRight: "8px" }} className="material-symbols-outlined">task_alt</span> : null}{task.priority ? <span title="Priority" style={{ color: "red", marginRight: "8px" }} className="material-symbols-outlined">priority_high</span> : null}{task.name}:</> : 'Loading...'}</h2>
-      <Link href="/dashboard">Back to dashboard</Link><br/>
+      <Link href="/admin/tasks">Back to tasks</Link><br/>
+      <Link href="/admin">Back to admin dashboard</Link><br/>
       {task ?
         <><h3>General information</h3>
         <p>Owner: <User user={user} id={task.owner}/></p>
@@ -132,6 +133,30 @@ export default function TaskAdmin() {
             }}
           />
         </details></>*/}
+        <a href={`/api/admin/tasks/${task._id}`} style={{ marginRight: "8px" }}
+        onClick={async (e) => {
+          e.preventDefault();
+          document.getElementById("hideTaskBtn").disabled = true;
+          const body = {
+            hidden: true,
+          };
+          try {
+            await fetchJson(`/api/collections/${collection._id}`, {
+              method: "PATCH",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(body),
+            });
+            router.reload();
+          } catch (error) {
+            if (error instanceof FetchError) {
+              setErrorMsg(error.data.message);
+            } else {
+              console.error("An unexpected error happened:", error);
+            }
+            document.getElementById("hideTaskBtn").disabled = false;
+          }
+        }}
+        ><button id="hideTaskBtn"><span style={{ color: "darkgray" }} className="material-symbols-outlined icon-list">visibility_off</span> Hide task</button></a>
         <ReportButton user={user} type="task" reported={task} flag={true}/></>
       :
         <>{taskError ? <p>{taskError.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading task...</p>}</>
