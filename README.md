@@ -23,9 +23,10 @@ Glad you asked! Here's a running features list:
 - [x] User and Collection Roles
 - [x] Full user administration panel
 - [x] Tasks (with name, description, due date, priority, and completion)
-- [x] Anti-spam measures such as reCAPTCHA and rate-limiting
-- [x] Individual task & collection UI (`/tasks/{id}` and `/collections/{id}`)
-- [x] Information pages (About, Privacy Policy, ToU)
+- [x] Shareable collections (with name and description)
+- [x] Anti-spam measures like reCAPTCHA and rate-limiting
+- [x] User-friendly task, collection, and account UI
+- [x] Informational pages (about, privacy policy, terms of use)
 - [x] Reporting for admin attention (tasks, users, collections)
 - [x] Optional push notifications
 - [x] Selectable light and dark themes
@@ -54,5 +55,6 @@ Please see our [CONTRIBUTING.md](/CONTRIBUTING.md) for contributing guidelines a
 ### Contact:
 Email: `tracktask@tracktask.eu.org`
 <br>Github: [Discussions](https://github.com/TurtleCode84/tracktask/discussions)
+<br>Discord: [Community Server](https://discord.gg/WgZQpkk5QD)
 <br>Security: [SECURITY.md](/SECURITY.md)
 <br><br>(response within 7 days for non-urgent communications)
