@@ -657,7 +657,7 @@ async function dataRoute(req, res) {
         const updatedCollection = await db.collection("collections").updateOne(query, updateDoc);
         res.json(updatedCollection);
 
-      } else if (body.action === "modify") { // Only collection owners can do this
+      } else if (body.action === "modify") {
 
         res.status(422).json({ message: "This feature is coming VERY soon!" });
         return;
@@ -671,7 +671,7 @@ async function dataRoute(req, res) {
           'sharing.shared': true,
           'sharing.sharedWith': {$elemMatch: {id: new ObjectId(body.id)}},
           _id: new ObjectId(dataPath[1]),
-          owner: new ObjectId(user.id);
+          owner: new ObjectId(user.id),
           hidden: false,
         };
         const userRoleInfo = await db.collection("collections").findOne(query, { projection: {'sharing.sharedWith': 1} });
