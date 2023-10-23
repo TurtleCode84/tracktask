@@ -636,6 +636,11 @@ async function dataRoute(req, res) {
         }
       } else if (body.action === "accept") {
         
+        if (!body.id) {
+          res.status(422).json({ message: "Invalid data" });
+          return;
+        }
+        
         const query = {
           'sharing.shared': true,
           'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user.id), role: /pending/i}},
@@ -652,10 +657,37 @@ async function dataRoute(req, res) {
         const updatedCollection = await db.collection("collections").updateOne(query, updateDoc);
         res.json(updatedCollection);
 
-      } else if (body.action === "modify") {
+      } else if (body.action === "modify") { // Only collection owners can do this
 
         res.status(422).json({ message: "This feature is coming VERY soon!" });
         return;
+
+        const roles = ["viewer", "collaborator", "contributor"];
+        if (!body.id || !body.role || !roles.includes(body.role)) {
+          res.status(422).json({ message: "Invalid data" });
+          return;
+        }
+        const query = {
+          'sharing.shared': true,
+          'sharing.sharedWith': {$elemMatch: {id: new ObjectId(body.id)}},
+          _id: new ObjectId(dataPath[1]),
+          owner: new ObjectId(user.id);
+          hidden: false,
+        };
+        const userRoleInfo = await db.collection("collections").findOne(query, { projection: {'sharing.sharedWith': 1} });
+        var modifyUserRole = userRoleInfo.sharing.sharedWith.filter(share => share.id == body.id)[0].role.split("-");
+        if (modifyUserRole[0] === "pending") {
+          modifyUserRole = "pending-" + body.role;
+        } else {
+          modifyUserRole = body.role;
+        }
+        const updateDoc = {
+          $set: {
+            'sharing.sharedWith.$.role': modifyUserRole,
+          }
+        };
+        const updatedCollection = await db.collection("collections").updateOne(query, updateDoc);
+        res.json(updatedCollection);
 
       } else if (body.action === "remove") {
 

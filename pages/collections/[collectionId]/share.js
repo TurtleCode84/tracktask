@@ -33,7 +33,7 @@ export default function CollectionShare() {
         const body = {
           action: "modify",
           id: item.id,
-          role: event.currentTarget.role.value, // This will require some ironing
+          role: event.currentTarget.role.value,
         };
 
         try {
