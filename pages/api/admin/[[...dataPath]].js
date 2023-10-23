@@ -4,25 +4,22 @@ import { ObjectId } from 'mongodb'
 import clientPromise from "lib/mongodb";
 import moment from "moment";
 
-export default withIronSessionApiRoute(dataRoute, sessionOptions);
+export default withIronSessionApiRoute(adminDataRoute, sessionOptions);
 
-async function dataRoute(req, res) {
+async function adminDataRoute(req, res) {
   const user = req.session.user;
   const { dataPath, filter } = req.query;
   const allowedPaths = ["tasks", "collections"];
 
-  if (!dataPath) {
-    res.status(200).json({ message: "TrackTask API", isOnline: { frontend: true, backend: true, notifications: true }, maintenance: false });
-    return;
-  } else if (dataPath.length > 2 || !allowedPaths.includes(dataPath[0])) {
+  if (!dataPath || dataPath.length > 2 || !allowedPaths.includes(dataPath[0])) {
     res.status(404).json({ message: "Endpoint not found" });
     return;
-  } else if (!user || !user.isLoggedIn || user.permissions.banned) {
+  } else if (!user || !user.isLoggedIn || user.permissions.banned || !user.permissions.admin) {
     res.status(401).json({ message: "Authentication required" });
     return;
   }
 
-  // At this point we know that the first parameter is either tasks or collections, and the user is authorized
+  // At this point we know that the first parameter is either tasks or collections, and the user is an authorized admin
   // So now we might as well initialize the DB connector
 
   const client = await clientPromise;
@@ -30,21 +27,11 @@ async function dataRoute(req, res) {
 
   if (dataPath[0] === "tasks") {
 
-    if (req.method === 'GET') { // Returns a task or array of tasks
-
-      const ownTasksQuery = {
-        hidden: false,
-        owner: new ObjectId(user.id),
-      };
+    if (req.method === 'GET') { // Returns a task or array of tasks, but only if reported
+      
+      const reportedTasksQuery = {};
       const tasksOptions = {
-        projection: { name: 1, description: 1, dueDate: 1, created: 1, owner: 1, completion: 1, priority: 1 },
-      };
-      const inCollectionsQuery = {
-        hidden: false,
-        $or: [
-          { owner: new ObjectId(user.id) },
-          { 'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user.id), role: {$not: /pending/i}}} },
-        ],
+        projection: { name: 1, description: 1, dueDate: 1, created: 1, owner: 1, completion: 1, priority: 1, hidden: 1 },
       };
 
       var data;
@@ -56,27 +43,36 @@ async function dataRoute(req, res) {
 
       } else {
 
+        const reportedTasks = await db.collection("reports").find({ type: "task" }, { projection: { reported: 1 } }).toArray();
+        var reportedTaskIds = [];
+        reportedTasks.forEach(task => reportedTaskIds.push(new ObjectId(task.reported._id)));
+
         if (dataPath[1]) {
-          ownTasksQuery._id = new ObjectId(dataPath[1]);
+          reportedTasksQuery.$and = [
+            { _id: { $in: reportedTaskIds } },
+            { _id: new ObjectId(dataPath[1]) },
+          ];
         } else {
+          reportedTasksQuery._id = { $in: reportedTaskIds };
           if (filter === "recent") {
-            ownTasksQuery.created = {$gte: (Math.floor(Date.now()/1000) - 172800)}; // 2 days ago
+            reportedTasksQuery.created = {$gte: (Math.floor(Date.now()/1000) - 172800)}; // 2 days ago
           } else if (filter === "upcoming") {
-            ownTasksQuery.dueDate = {$gt: Math.floor(Date.now()/1000)};
+            reportedTasksQuery.dueDate = {$gt: Math.floor(Date.now()/1000)};
           } else if (filter === "overdue") {
-            ownTasksQuery.dueDate = {$lte: Math.floor(Date.now()/1000)};
+            reportedTasksQuery.dueDate = {$lte: Math.floor(Date.now()/1000)};
           } else if (filter === "notdue") {
-            ownTasksQuery.dueDate = 0;
+            reportedTasksQuery.dueDate = 0;
           }
         }
 
         try {
 
-          data = await db.collection("tasks").find(ownTasksQuery, tasksOptions).toArray();
-          var taskIds = [];
+          data = await db.collection("tasks").find(reportedTasksQuery, tasksOptions).toArray();
+
+          /*var taskIds = [];
           data.forEach(item => taskIds.push(String(item._id)));
 
-          // Get and append shared tasks from collections as well
+          // Get and append tasks from reported collections as well
           const allCollections = await db.collection("collections").find(inCollectionsQuery).toArray();
           var sharedTasks = [];
           allCollections.forEach(allCollection => {
@@ -90,10 +86,10 @@ async function dataRoute(req, res) {
             _id: {
               $in: sharedTasks,
             },
-          };
+          }
           delete sharedTasksQuery.owner;
           data = data.concat(await db.collection("tasks").find(sharedTasksQuery, tasksOptions).toArray());
-          // data should now contain all owned and shared tasks
+          // data should now contain all owned and shared tasks*/
           
           // At this point we can tell if the task exists
           if (dataPath[1] && data.length < 1) {
@@ -109,38 +105,9 @@ async function dataRoute(req, res) {
               data = data.filter(task => task.completion.completed === 0);
             }
             if (filter) {
-              delete ownTasksQuery.created; // Might find a better way to do this
-              delete ownTasksQuery.dueDate;
+              delete reportedTasksQuery.created; // Might find a better way to do this
+              delete reportedTasksQuery.dueDate;
             }
-          }
-
-          data.collections = [];
-          for (var i=0; i<data.length; i++) {
-            var taskInCollection = [];
-            for (var j=0; j<allCollections.length; j++) {
-              const allFilteredCollections = allCollections[j].tasks.filter(task => String(task) === String(data[i]._id));
-              if (allFilteredCollections.length > 0) {
-
-                var collectionRole;
-                if (allCollections[j].owner == user.id) {
-                  collectionRole = "owner";
-                } else {
-                  collectionRole = allCollections[j].sharing.sharedWith.find(element => element.id == user.id)?.role;
-                  if (!collectionRole) {
-                    res.status(500).json({ debug: allCollections[j], ownerTest: user.id == allCollections[j].owner });
-                    return;
-                  }
-                }
-                const collectionInfo = {
-                  _id: allCollections[j]._id,
-                  name: allCollections[j].name,
-                  role: collectionRole,
-                };
-                
-                taskInCollection.push(collectionInfo); // Returns defined if in collection
-              }
-            }
-            data[i].collections = taskInCollection;
           }
 
         } catch (error) {
@@ -161,61 +128,10 @@ async function dataRoute(req, res) {
       // Return data
       res.json(data);
 
-    } else if (req.method === 'POST') { // Creates a new task
+    } else if (req.method === 'POST') { // Does nothing
 
-      const { name, description, dueDate, addCollections, markPriority } = await req.body;
-      if (!name || !description) {
-        res.status(422).json({ message: "Invalid data" });
-        return;
-      } else if (name.trim().length > 55 || description.trim().length > 500) {
-        res.status(422).json({ message: "Length of title and description must not exceed 55 and 500 characters respectively." });
-        return;
-      } else if (user.stats.tasks >= 10000) {
-        res.status(403).json({ message: "Woah there, we didn't expect you to create so many tasks! If you have tasks completed over a year ago, we'll remove them within the week to clear space for new tasks, otherwise you should delete a few before creating any more." });
-        return;
-      }
-      try {
-        const newTask = {
-          name: name.trim(),
-          description: description.trim(),
-          hidden: false,
-          owner: new ObjectId(user.id),
-          created: Math.floor(Date.now()/1000),
-          completion: {
-            completed: 0,
-            completedBy: "",
-          },
-          priority: markPriority,
-          notified: false,
-        };
-        if (dueDate) {
-          newTask.dueDate = moment(dueDate).unix();
-        } else {
-          newTask.dueDate = 0;
-        }
-        const createdTask = await db.collection("tasks").insertOne(newTask);
-        if (addCollections) {
-          var addCollectionsId = [];
-          for (var i=0; i<addCollections.length; i++) {
-            addCollectionsId[i] = new ObjectId(addCollections[i]);
-          }
-          const addCollectionsQuery = {
-            _id: {
-              $in: addCollectionsId,
-            },
-            tasks: {
-              $nin: [new ObjectId(createdTask.insertedId)], // Safety validation in case of edit conflict
-            },
-            hidden: false,
-            owner: new ObjectId(user.id),
-          };
-          await db.collection("collections").updateMany(addCollectionsQuery, {$push: {tasks: new ObjectId(createdTask.insertedId)}});
-        }
-        res.json(createdTask);
-      } catch (error) {
-        res.status(500).json({ message: error.message });
-        return;
-      }
+      res.status(405).json({ message: "Method not allowed" });
+      return;
 
     } else if (req.method === 'DELETE') { // Deletes a task
 
@@ -225,10 +141,15 @@ async function dataRoute(req, res) {
         return;
       }
 
+      const reportedTasks = await db.collection("reports").find({ type: "task" }, { projection: { reported: 1 } }).toArray();
+      var reportedTaskIds = [];
+      reportedTasks.forEach(task => reportedTaskIds.push(task.reported));
+      
       const query = {
-        hidden: false, // Cannot be hidden
-        _id: new ObjectId(dataPath[1]), // Matches the specified task ID
-        owner: new ObjectId(user.id), // Can only be deleted by the owner of the task
+        $and: [
+          { _id: { $in: reportedTaskIds } }, // Is a reported task
+          { _id: new ObjectId(dataPath[1]) }, // Matches the specified task ID
+        ],
       };
 
       // Attempt to delete the task and return acknowledgement
@@ -240,13 +161,20 @@ async function dataRoute(req, res) {
         return;
       }
 
-    } else if (req.method === 'PATCH') { // Updates a task
+    } else if (req.method === 'PATCH') { // Updates a task (WIP)
 
       // Make sure there is a valid task ID to update
       if (!ObjectId.isValid(dataPath[1])) {
         res.status(422).json({ message: "Invalid task ID" });
         return;
       }
+
+      res.status(503).json({ message: "Under construction" });
+      return;
+
+      const reportedTasks = await db.collection("reports").find({ type: "task" }, { projection: { reported: 1 } }).toArray();
+      var reportedTaskIds = [];
+      reportedTasks.forEach(task => reportedTaskIds.push(task.reported));
 
       const body = await req.body;
       const taskInCollabCollectionQuery = {
@@ -351,22 +279,16 @@ async function dataRoute(req, res) {
     
   } else if (dataPath[0] === "collections") {
 
-    if (req.method === 'GET') { // Returns a collection or array of collections
+    if (req.method === 'GET') { // Returns a collection or array of collections, but only if reported
 
-      const collectionsQuery = {
-        hidden: false,
-        $or: [
-          { owner: new ObjectId(user.id) },
-          { 'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user.id)}} },
-        ],
-      };
+      const reportedCollectionsQuery = {};
       const collectionsOptions = {
         sort: { created: -1 },
-        projection: { name: 1, description: 1, created: 1, owner: 1, sharing: 1, tasks: 1 },
+        projection: { name: 1, description: 1, created: 1, owner: 1, sharing: 1, tasks: 1, hidden: 1 },
       };
       const sortedTasksOptions = {
         sort: { 'completion.completed': 1, priority: -1, dueDate: 1 },
-        projection: { name: 1, description: 1, dueDate: 1, created: 1, owner: 1, completion: 1, priority: 1 },
+        projection: { name: 1, description: 1, dueDate: 1, created: 1, owner: 1, completion: 1, priority: 1, hidden: 1 },
       };
 
       var data;
@@ -378,12 +300,21 @@ async function dataRoute(req, res) {
 
       } else {
 
+        const reportedCollections = await db.collection("reports").find({ $or: [ {type: "collection"}, {type: "share"} ] }, { projection: { reported: 1 } }).toArray();
+        var reportedCollectionIds = [];
+        reportedCollections.forEach(collection => reportedCollectionIds.push(new ObjectId(collection.reported._id)));
+
         if (dataPath[1]) {
-          collectionsQuery._id = new ObjectId(dataPath[1]);
+          reportedCollectionsQuery.$and = [
+            { _id: { $in: reportedCollectionIds } },
+            { _id: new ObjectId(dataPath[1]) },
+          ];
+        } else {
+          reportedCollectionsQuery._id = { $in: reportedCollectionIds };
         }
 
         try {
-          data = await db.collection("collections").find(collectionsQuery, collectionsOptions).toArray();
+          data = await db.collection("collections").find(reportedCollectionsQuery, collectionsOptions).toArray();
         } catch (error) {
           res.status(500).json({ message: error.message });
         }
@@ -395,20 +326,8 @@ async function dataRoute(req, res) {
         }
         
         for (var i=0; i<data.length; i++) {
-          if (data[i].sharing.sharedWith.some((element) => element.id == user.id && element.role.split('-')[0] === "pending")) {
-            delete data[i].tasks;
-            delete data[i].sharing;
-            data[i].pending = true;
-          } else {
-            if (data[i].owner == user.id) {
-              data[i].sharing.role = "owner";
-            } else {
-              data[i].sharing.role = data[i].sharing.sharedWith.filter(element => element.id == user.id)[0]?.role;
-            }
-              data[i].tasks = await db.collection("tasks").find({ _id: {$in: data[i].tasks}, hidden: false }, sortedTasksOptions).toArray();
-          }
+          data[i].tasks = await db.collection("tasks").find({ _id: {$in: data[i].tasks} }, sortedTasksOptions).toArray();
         }
-        data.sort((a, b) => a.pending ? -1 : 1); // Push share requests to the top
 
       }
 
@@ -418,38 +337,10 @@ async function dataRoute(req, res) {
       // Return data
       res.json(data);
 
-    } else if (req.method === 'POST') { // Creates a new collection
+    } else if (req.method === 'POST') { // Does nothing
 
-      const { name, description } = await req.body;
-      if (!name || !description) {
-        res.status(422).json({ message: "Invalid data" });
-        return;
-      } else if (name.trim().length > 55 || description.trim().length > 500) {
-        res.status(422).json({ message: "Length of title and description must not exceed 55 and 500 characters respectively." });
-        return;
-      } else if (user.stats.collections >= 100) {
-        res.status(403).json({ message: "Woah there, we didn't expect you to create so many collections! Try deleting a few before making a new one." });
-        return;
-      }
-      try {
-        const newCollection = {
-          name: name.trim(),
-          description: description.trim(),
-          sharing: {
-            shared: false,
-            sharedWith: [],
-          },
-          hidden: false,
-          owner: new ObjectId(user.id),
-          created: Math.floor(Date.now()/1000),
-          tasks: [],
-        };
-        const createdCollection = await db.collection("collections").insertOne(newCollection);
-        res.json(createdCollection);
-      } catch (error) {
-        res.status(500).json({ message: error.message });
-        return;
-      }
+      res.status(405).json({ message: "Method not allowed" });
+      return;
 
     } else if (req.method === 'DELETE') { // Deletes a collection
 
@@ -459,10 +350,15 @@ async function dataRoute(req, res) {
         return;
       }
 
+      const reportedCollections = await db.collection("reports").find({ $or: [ {type: "collection"}, {type: "share"} ] }, { projection: { reported: 1 } }).toArray();
+      var reportedCollectionIds = [];
+      reportedCollections.forEach(collection => reportedCollectionIds.push(collection.reported));
+
       const query = {
-        hidden: false, // Cannot be hidden
-        _id: new ObjectId(dataPath[1]), // Matches the specified collection ID
-        owner: new ObjectId(user.id), // Can only be deleted by the owner of the collection
+        $and: [
+          { _id: { $in: reportedCollectionIds } }, // Is a reported collection
+          { _id: new ObjectId(dataPath[1]) }, // Matches the specified collection ID
+        ],
       };
 
       // Attempt to delete the collection and return acknowledgement
@@ -475,13 +371,16 @@ async function dataRoute(req, res) {
         return;
       }
 
-    } else if (req.method === 'PATCH') { // Updates or adds/removes tasks from a collection
+    } else if (req.method === 'PATCH') { // Updates or adds/removes tasks from a collection (WIP)
 
       // Make sure there is a valid collection ID to update
       if (dataPath[1] && !ObjectId.isValid(dataPath[1])) {
         res.status(422).json({ message: "Invalid collection ID" });
         return;
       }
+
+      res.status(503).json({ message: "Under construction" });
+      return;
 
       const body = await req.body;
       var updateDoc = {};
@@ -569,7 +468,7 @@ async function dataRoute(req, res) {
                 {
                   'sharing.shared': true,
                   'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user.id), role: "contributor"}},
-                  tasks: {$in: [new ObjectId(taskInfo?._id)]}
+                  tasks: {$in : [new ObjectId(taskInfo?._id)]}
                 },
               ],
               // Contributors can only remove their own tasks, owners can remove any task
@@ -583,8 +482,11 @@ async function dataRoute(req, res) {
         }
       }
 
-    } else if (req.method === 'PUT') { // Shares a collection
+    } else if (req.method === 'PUT') { // Shares a collection (WIP)
 
+      res.status(503).json({ message: "Under construction" });
+      return;
+      
       const body = await req.body;
       
       // Make sure there is a valid collection ID to share
@@ -635,125 +537,24 @@ async function dataRoute(req, res) {
           return;
         }
       } else if (body.action === "accept") {
-        
-        if (!body.id) {
-          res.status(422).json({ message: "Invalid data" });
-          return;
-        }
-        
-        const query = {
-          'sharing.shared': true,
-          'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user.id), role: /pending/i}},
-          _id: new ObjectId(dataPath[1]),
-          hidden: false,
-        };
-        const userRoleInfo = await db.collection("collections").findOne(query, { projection: {'sharing.sharedWith': 1} });
-        const acceptedUserRole = userRoleInfo.sharing.sharedWith.filter(share => share.id == user.id)[0].role.split("-")[1];
-        const updateDoc = {
-          $set: {
-            'sharing.sharedWith.$.role': acceptedUserRole,
-          }
-        };
-        const updatedCollection = await db.collection("collections").updateOne(query, updateDoc);
-        res.json(updatedCollection);
+
+        res.status(422).json({ message: "This feature is coming VERY soon!" });
+        return;
+
+      } else if (body.action === "reject") {
+
+        res.status(422).json({ message: "This feature is coming VERY soon!" });
+        return;
 
       } else if (body.action === "modify") {
 
-        const roles = ["viewer", "collaborator", "contributor"];
-        if (!body.id || !body.role || !roles.includes(body.role)) {
-          res.status(422).json({ message: "Invalid data" });
-          return;
-        }
-        const query = {
-          'sharing.shared': true,
-          'sharing.sharedWith': {$elemMatch: {id: new ObjectId(body.id)}},
-          _id: new ObjectId(dataPath[1]),
-          owner: new ObjectId(user.id),
-          hidden: false,
-        };
-        const userRoleInfo = await db.collection("collections").findOne(query, { projection: {'sharing.sharedWith': 1} });
-        var modifyUserRole = userRoleInfo.sharing.sharedWith.filter(share => share.id == body.id)[0].role.split("-");
-        if (modifyUserRole.includes(body.role)) {
-          res.status(422).json({ message: "User already has this role!" });
-          return;
-        }
-        if (modifyUserRole[0] === "pending") {
-          modifyUserRole = "pending-" + body.role;
-        } else {
-          modifyUserRole = body.role;
-        }
-        const updateDoc = {
-          $set: {
-            'sharing.sharedWith.$.role': modifyUserRole,
-          }
-        };
-        const updatedCollection = await db.collection("collections").updateOne(query, updateDoc);
-        res.json(updatedCollection);
+        res.status(422).json({ message: "This feature is coming VERY soon!" });
+        return;
 
       } else if (body.action === "remove") {
 
-        if (body.id) { // Owner of collection removing a user
-
-          const query = {
-            'sharing.shared': true,
-            'sharing.sharedWith': {$elemMatch: {id: new ObjectId(body.id)}},
-            owner: new ObjectId(user.id),
-            _id: new ObjectId(dataPath[1]),
-            hidden: false,
-          };
-          const updateDoc = {
-            $pull: {
-              'sharing.sharedWith': {
-                id: new ObjectId(body.id),
-              },
-            }
-          };
-          const updatedCollection = await db.collection("collections").updateOne(query, updateDoc);
-          
-          const updatedCollectionInfo = await db.collection("collections").findOne({ _id: new ObjectId(dataPath[1]) }, { projection: {tasks: 1} });
-          const updatedCollectionTasks = await db.collection("tasks").find({ _id: {$in: updatedCollectionInfo.tasks} }, { projection: {owner: 1} }).toArray();
-
-          var taskIds = [];
-          updatedCollectionTasks.forEach(task => {
-            if (task.owner == body.id) {
-              taskIds.push(new ObjectId(task._id));
-            }
-          });
-
-          await db.collection("collections").updateOne({ _id: new ObjectId(dataPath[1]) }, { $pull: {tasks: {$in: taskIds}} });
-          res.json(updatedCollection);
-
-        } else { // Removing self from collection
-
-          const query = {
-            'sharing.shared': true,
-            'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user.id)}},
-            _id: new ObjectId(dataPath[1]),
-            hidden: false,
-          };
-          const updateDoc = {
-            $pull: {
-              'sharing.sharedWith': {
-                id: new ObjectId(user.id),
-              },
-            }
-          };
-          const updatedCollection = await db.collection("collections").updateOne(query, updateDoc);
-                    
-          const updatedCollectionInfo = await db.collection("collections").findOne({ _id: new ObjectId(dataPath[1]) }, { projection: {tasks: 1} });
-          const updatedCollectionTasks = await db.collection("tasks").find({ _id: {$in: updatedCollectionInfo.tasks} }, { projection: {owner: 1} }).toArray();
-
-          var taskIds = [];
-          updatedCollectionTasks.forEach(task => {
-            if (task.owner == user.id) {
-              taskIds.push(new ObjectId(task._id));
-            }
-          });
-
-          await db.collection("collections").updateOne({ _id: new ObjectId(dataPath[1]) }, { $pull: {tasks: {$in: taskIds}} });
-          res.json(updatedCollection);
-          
-        }
+        res.status(422).json({ message: "This feature is coming VERY soon!" });
+        return;
 
       } else {
         res.status(422).json({ message: "Invalid action" });

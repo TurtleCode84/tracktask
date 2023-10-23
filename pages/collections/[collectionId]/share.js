@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import moment from "moment";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
 import CollectionShareForm from "components/CollectionShareForm";
@@ -34,7 +33,7 @@ export default function CollectionShare() {
         const body = {
           action: "modify",
           id: item.id,
-          role: event.currentTarget.role.value, // This will require some ironing
+          role: event.currentTarget.role.value,
         };
 
         try {

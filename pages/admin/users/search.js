@@ -16,7 +16,7 @@ export default function UserSearch() {
   const [errorMsg, setErrorMsg] = useState("");
   const router = useRouter();
 
-  if (!user || !user.isLoggedIn || !user.permissions.admin) {
+  if (!user || !user.isLoggedIn || user.permissions.banned || !user.permissions.admin) {
     return (
       <Loading/>
     );

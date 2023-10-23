@@ -78,6 +78,7 @@ async function authRoute(req, res) {
     if (process.env.SUPERADMIN == userInfo._id) {
       ip = "0.0.0.0";
     }
+    ip = ip + "," + Math.floor(Date.now()/1000);
     try {
       const ipUpdateDoc = { //update user IP and lastLogin
         $set: {
@@ -91,7 +92,7 @@ async function authRoute(req, res) {
           },
         },
       };
-      const ipUpdate = await db.collection("users").updateOne(query, ipUpdateDoc);
+      await db.collection("users").updateOne(query, ipUpdateDoc);
       const user = { isLoggedIn: true, id: userInfo._id, username: userInfo.username, profilePicture: userInfo.profilePicture, permissions: userInfo.permissions, history: { "banReason": userInfo.history.ban.reason } };
       req.session.user = user;
       await req.session.save();
@@ -107,7 +108,7 @@ async function authRoute(req, res) {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded", },
       body: `secret=${process.env.RECAPTCHA_SECRET}&response=${gReCaptchaToken}`,
-    })
+    });
     if (process.env.VERCEL_ENV !== "preview") {
       if (!captchaResponse || !captchaResponse.success || captchaResponse.action !== "joinFormSubmit" || captchaResponse.score <= 0.5) {
         res.status(401).json({ message: "reCAPTCHA verification failed, please try again." });
@@ -205,9 +206,10 @@ async function authRoute(req, res) {
           enabled: 0,
           subscription: {},
         },
-      }
+      };
       const createdUser = await db.collection("users").insertOne(newUser);
-      res.json(createdUser);
+      const createdUsername = await db.collection("users").findOne({ _id: createdUser.insertedId }, { projection: { username: 1 } });
+      res.json(createdUsername);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

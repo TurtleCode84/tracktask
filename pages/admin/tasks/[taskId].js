@@ -1,45 +1,31 @@
 import React, { useState } from "react";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
-import TaskEditForm from "components/TaskEditForm";
-import AddRemoveCollectionForm from "components/AddRemoveCollectionForm";
+//import TaskEditForm from "components/TaskEditForm";
+//import AddRemoveCollectionForm from "components/AddRemoveCollectionForm";
 import User from "components/User";
 import ReportButton from "components/ReportButton";
 import useUser from "lib/useUser";
-import useData from "lib/useData";
+import useAdminData from "lib/useAdminData";
 import fetchJson, { FetchError } from "lib/fetchJson";
-import stringToColor from "lib/stringToColor";
 import { useRouter } from 'next/router';
 import moment from "moment";
 import Link from "next/link";
 import Linkify from "linkify-react";
 
-export default function Task() {
+export default function TaskAdmin() {
   const { user } = useUser({
     redirectTo: "/login",
+    adminOnly: true,
   });
   const router = useRouter();
   const { taskId } = router.query;
-  const { data: task, error: taskError } = useData(user, "tasks", taskId, false);
-  const { data: collections, error: collectionsError } = useData(user, "collections", false, false);
+  const { data: task, error: taskError } = useAdminData(user, "tasks", taskId, false);
+  const { data: collections, error: collectionsError } = useAdminData(user, "collections", false, false);
   
   const [errorMsg, setErrorMsg] = useState("");
-  var roles = ["none", "viewer", "collaborator", "contributor", "owner"]
-  var perms = 0;
-  if (user?.id === task?.owner) {
-    perms = 4;
-  } else {
-    for (var i=0; i<task?.collections.length; i++) {
-      if (roles.indexOf(task?.collections[i].role) > perms) {
-        perms = roles.indexOf(task?.collections[i].role)
-      }
-    }
-  }
-  const collectionTags = task?.collections.map((item, index) =>
-    <Link key={index} href={`/collections/${item._id}`}><span style={{fontSize: "18px", verticalAlign: "2px", backgroundColor: stringToColor(item.name), padding: "0.5px 4px", borderStyle: "solid", borderWidth: "2px", borderColor: "var(--inset-border-color)", borderRadius: "7px", color: "#111", marginRight: "6px", display: "inline-block", filter: "grayscale(0.4) brightness(1.5)" }}>{item.name}</span></Link>
-  );
     
-  if (!user || !user.isLoggedIn || user.permissions.banned) {
+  if (!user || !user.isLoggedIn || user.permissions.banned || !user.permissions.admin) {
     return (
       <Loading/>
     );
@@ -47,45 +33,17 @@ export default function Task() {
   
   return (
     <Layout>
-      <h2>{task ? <>{task.completion.completed > 0 ? <span title="Completed" style={{ color: "darkgreen", marginRight: "8px" }} className="material-symbols-outlined">task_alt</span> : null}{task.priority ? <span title="Priority" style={{ color: "red", marginRight: "8px" }} className="material-symbols-outlined">priority_high</span> : null}{collectionTags.length > 0 && collectionTags}{task.name}:</> : 'Loading...'}</h2>
-      <Link href="/dashboard">Back to dashboard</Link><br/>
+      <h2>{task ? <>{task.completion.completed > 0 ? <span title="Completed" style={{ color: "darkgreen", marginRight: "8px" }} className="material-symbols-outlined">task_alt</span> : null}{task.priority ? <span title="Priority" style={{ color: "red", marginRight: "8px" }} className="material-symbols-outlined">priority_high</span> : null}{task.name}:</> : 'Loading...'}</h2>
+      <Link href="/admin/tasks">Back to tasks</Link><br/>
+      <Link href="/admin">Back to admin dashboard</Link><br/>
       {task ?
         <><h3>General information</h3>
-        {user.id !== task.owner && <p>Owner: <User user={user} id={task.owner}/></p>}
+        <p>Owner: <User user={user} id={task.owner}/></p>
         <p>Description:</p>{' '}<div className="textarea" style={{ maxWidth: "90vw" }}><Linkify options={{target:'blank'}}>{task.description}</Linkify></div>
         <p title={task.dueDate > 0 ? moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a") : 'Never'}>Due date: {task.dueDate > 0 ? <>{moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}{' '}({moment.unix(task.dueDate).fromNow()})</> : 'never'}</p>
-        {task.completion.completed > 0 ? <p title={moment.unix(task.completion.completed).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Completed {moment.unix(task.completion.completed).fromNow()} by <User user={user} id={task.completion.completedBy}/></p>
-        :
-        <>{perms >= 2 && <><a href={`/api/tasks/${task._id}`}
-        onClick={async (e) => {
-          e.preventDefault();
-          document.getElementById("markCompleteBtn").disabled = true;
-          const body = {
-            completion: {
-              completed: Math.floor(Date.now()/1000),
-              completedBy: user.id,
-            },
-            priority: false,
-          };
-          try {
-            await fetchJson(`/api/tasks/${task._id}`, {
-              method: "PATCH",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(body),
-            });
-            router.reload();
-          } catch (error) {
-            if (error instanceof FetchError) {
-              setErrorMsg(error.data.message);
-            } else {
-              console.error("An unexpected error happened:", error);
-            }
-            document.getElementById("markCompleteBtn").disabled = false;
-          }
-        }}
-        ><button id="markCompleteBtn"><span style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">task_alt</span> Mark completed</button></a></>}</>}
+        {task.completion.completed > 0 && <p title={moment.unix(task.completion.completed).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Completed {moment.unix(task.completion.completed).fromNow()} by <User user={user} id={task.completion.completedBy}/></p>}
         <hr/>
-        {perms >= 4 && <><details>
+        {/*perms >= 4 && <><details>
           <summary>Edit task</summary>
           <br/><TaskEditForm
             errorMessage={errorMsg}
@@ -135,8 +93,8 @@ export default function Task() {
               }
             }}
         />
-        </details></>}
-        {perms >= 4 && <><br/><details>
+        </details></>*/}
+        {/*perms >= 4 && <><br/><details>
           <summary>Add/remove from collection</summary>
           <br/><AddRemoveCollectionForm
             errorMessage={errorMsg}
@@ -174,8 +132,32 @@ export default function Task() {
               }
             }}
           />
-        </details></>}
-        {perms < 4 && <ReportButton user={user} type="task" reported={task}/>}</>
+        </details></>*/}
+        <a href={`/api/admin/tasks/${task._id}`} style={{ marginRight: "8px" }}
+        onClick={async (e) => {
+          e.preventDefault();
+          document.getElementById("hideTaskBtn").disabled = true;
+          const body = {
+            hidden: true,
+          };
+          try {
+            await fetchJson(`/api/collections/${collection._id}`, {
+              method: "PATCH",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(body),
+            });
+            router.reload();
+          } catch (error) {
+            if (error instanceof FetchError) {
+              setErrorMsg(error.data.message);
+            } else {
+              console.error("An unexpected error happened:", error);
+            }
+            document.getElementById("hideTaskBtn").disabled = false;
+          }
+        }}
+        ><button id="hideTaskBtn"><span style={{ color: "darkgray" }} className="material-symbols-outlined icon-list">visibility_off</span> Hide task</button></a>
+        <ReportButton user={user} type="task" reported={task} flag={true}/></>
       :
         <>{taskError ? <p>{taskError.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading task...</p>}</>
       }

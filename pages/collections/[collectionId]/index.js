@@ -11,6 +11,7 @@ import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from 'next/router';
 import moment from "moment";
 import Link from "next/link";
+import Linkify from "linkify-react";
 
 export default function Collection() {
   const { user } = useUser({
@@ -64,9 +65,9 @@ export default function Collection() {
         <>{collection.pending ?
         <><h3>Preview information:</h3>
         <p>Shared by: <User user={user} id={collection.owner}/></p>
-        <p>Description:</p>{' '}<textarea value={collection.description} rows="4" cols="70" disabled /><br/>
+        <p>Description:</p>{' '}<div className="textarea" style={{ maxWidth: "90vw" }}><Linkify options={{target:'blank'}}>{collection.description}</Linkify></div>
         <p title={collection.created > 0 ? moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a") : 'Never'}>Created: {collection.created > 0 ? <>{moment.unix(collection.created).fromNow()}</> : 'never'}</p>
-        <a href={`/api/collections/${collection._id}`} style={{ marginRight: "10px" }}
+        <a href={`/api/collections/${collection._id}`} style={{ marginRight: "8px" }}
         onClick={async (e) => {
           e.preventDefault();
           document.getElementById("acceptRequestBtn").disabled = true;
@@ -89,31 +90,7 @@ export default function Collection() {
             document.getElementById("acceptRequestBtn").disabled = false;
           }
         }}
-        ><button id="acceptRequestBtn"><span style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">check_circle</span> Accept request</button></a>
-        <a href={`/api/collections/${collection._id}`} style={{ marginRight: "10px" }}
-        onClick={async (e) => {
-          e.preventDefault();
-          document.getElementById("rejectRequestBtn").disabled = true;
-          const body = {
-            action: "reject",
-          };
-          try {
-            await fetchJson(`/api/collections/${collection._id}`, {
-              method: "PUT",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(body),
-            });
-            router.reload();
-          } catch (error) {
-            if (error instanceof FetchError) {
-              setErrorMsg(error.data.message);
-            } else {
-              console.error("An unexpected error happened:", error);
-            }
-            document.getElementById("rejectRequestBtn").disabled = false;
-          }
-        }}
-        ><button id="rejectRequestBtn"><span style={{ color: "brown" }} className="material-symbols-outlined icon-list">cancel</span> Reject request</button></a></>
+        ><button id="acceptRequestBtn"><span style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">check_circle</span> Accept request</button></a></>
         :
         <><h3>General information</h3>
         <p>Description:</p>{' '}<textarea value={collection.description} rows="8" cols="70" style={{ maxWidth: "90vw" }} disabled /><br/>
@@ -170,7 +147,33 @@ export default function Collection() {
         />
         </details><br/></>}
         </>}
-        {collection.owner !== user.id && <ReportButton user={user} type={collection.pending ? "share" : "collection"} reported={collection}/>}
+        {collection.owner !== user.id && <><a href={`/api/collections/${collection._id}`} style={{ marginRight: "8px" }}
+        onClick={async (e) => {
+          e.preventDefault();
+          if (collection.pending || confirm("Are you sure? You will lose access to the tasks that are not yours in this collection!")) {
+            document.getElementById("removeShareBtn").disabled = true;
+            const body = {
+              action: "remove",
+            };
+            try {
+              await fetchJson(`/api/collections/${collection._id}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body),
+              });
+              window.location.replace("/");
+            } catch (error) {
+              if (error instanceof FetchError) {
+                setErrorMsg(error.data.message);
+              } else {
+                console.error("An unexpected error happened:", error);
+              }
+              document.getElementById("removeShareBtn").disabled = false;
+            }
+          }
+        }}
+        ><button id="removeShareBtn"><span style={{ color: "lightslategray" }} className="material-symbols-outlined icon-list">logout</span> Leave collection</button></a>
+        <ReportButton user={user} type={collection.pending ? "share" : "collection"} reported={collection}/></>}
         {collection.pending && <>{errorMsg && <p className="error">{errorMsg}</p>}</>}</>
       :
         <>{error ? <p>{error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading collection...</p>}</>

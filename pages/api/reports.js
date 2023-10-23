@@ -1,15 +1,13 @@
 import clientPromise from "lib/mongodb";
 import { ObjectId } from 'mongodb'
-import { hash } from 'bcryptjs';
 import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "lib/session";
-import fetchJson from "lib/fetchJson";
 
 export default withIronSessionApiRoute(reportsRoute, sessionOptions);
 
 async function reportsRoute(req, res) {
   const user = req.session.user;
-  if (!user || !user.isLoggedIn || user.permissions.banned ) {
+  if (!user || !user.isLoggedIn || user.permissions.banned) {
     res.status(401).json({ message: "Unauthorized" });
     return;
   }
@@ -54,7 +52,7 @@ async function reportsRoute(req, res) {
             },
           }
         };
-        const updatedCollection = await db.collection("collections").updateOne(query, updateDoc);
+        await db.collection("collections").updateOne(query, updateDoc);
       }
       res.json(createdReport);
     } catch (error) {
@@ -68,7 +66,7 @@ async function reportsRoute(req, res) {
       $set: {
         reviewed: Math.floor(Date.now()/1000),
       }
-    }
+    };
     const updatedReport = await db.collection("reports").updateOne(query, updateDoc);
     res.json(updatedReport);
   } else if (req.method === 'DELETE' && user.permissions.admin) {
