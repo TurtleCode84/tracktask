@@ -6,10 +6,10 @@ export default function UserShareForm({ errorMessage, onSubmit, share, collectio
     <form id={share.id + "-userShareForm"} autocomplete="off" onSubmit={onSubmit}><br/>
       <label style={{ marginBottom: "-5px" }}>
         <span>Role</span>
-        <select name="role" value={role[1] ? role[1] : role[0]} style={{ width: "max-content" }} required>
-            <option value="viewer">Viewer (can view the collection)</option>
-            <option value="collaborator">Collaborator (can complete tasks ඞ)</option>
-            <option value="contributor">Contributor (can add to the collection)</option>
+        <select name="role" defaultValue={role[1] ? role[1] : role[0]} style={{ width: "max-content" }} required>
+            <option defaultValue="viewer">Viewer (can view the collection)</option>
+            <option defaultValue="collaborator">Collaborator (can complete tasks ඞ)</option>
+            <option defaultValue="contributor">Contributor (can add to the collection)</option>
         </select>
       </label>
 
