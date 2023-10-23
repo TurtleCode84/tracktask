@@ -661,7 +661,8 @@ async function dataRoute(req, res) {
 
         const roles = ["viewer", "collaborator", "contributor"];
         if (!body.id || !body.role || !roles.includes(body.role)) {
-          res.status(422).json({ message: "Invalid data" });
+          //res.status(422).json({ message: "Invalid data" });
+          res.status(418).json({ message: JSON.stringify(body) });
           return;
         }
         const query = {
