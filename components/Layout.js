@@ -47,6 +47,7 @@ export default function Layout({ children }) {
           --icon-brightness: 1.3;
           --input-border-color: #ccc;
           --inset-border-color: var(--border-color);
+          --textarea-border-color: #303030;
         }
         
         /* Light mode */
@@ -62,6 +63,7 @@ export default function Layout({ children }) {
           --icon-brightness: 1;
           --input-border-color: #ccc;
           --inset-border-color: #777;
+          --textarea-border-color: #d4d4d4;
         }
 
         body {
@@ -151,6 +153,24 @@ export default function Layout({ children }) {
           font-family: inherit;
           font-size: 15px;
           letter-spacing: 0.1px;
+        }
+
+        /* Linkify textarea */
+        .textarea {
+          background-color: var(--element-background);
+          color: var(--text-color);
+          border: 1px solid;
+          border-color: var(--textarea-border-color);
+          border-radius: 4px;
+          width: 611px;
+          height: 150px;
+          padding: 2px;
+          font-family: inherit;
+          font-size: 15px;
+          letter-spacing: 0.1px;
+          white-space: pre-line;
+          word-wrap: break-word;
+          overflow-y: scroll;
         }
 
         input, select {

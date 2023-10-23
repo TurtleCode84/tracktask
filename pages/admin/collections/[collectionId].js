@@ -6,11 +6,12 @@ import User from "components/User";
 import ReportButton from "components/ReportButton";
 //import CollectionAdminForm from "components/CollectionEditForm";
 import useUser from "lib/useUser";
-import useAdminCollections from "lib/useAdminCollections";
+import useAdminData from "lib/useAdminData";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from 'next/router';
 import moment from "moment";
 import Link from "next/link";
+import Linkify from "linkify-react";
 
 export default function Collection() {
   const { user } = useUser({
@@ -19,22 +20,21 @@ export default function Collection() {
   });
   const router = useRouter();
   const { collectionId } = router.query;
-  const { collections, error } = useAdminCollections(user, collectionId);
+  const { data: collection, error } = useAdminData(user, "collections", collectionId, false);
   
   const [errorMsg, setErrorMsg] = useState("");
-  const collection = collections?.[0];
   const relTaskList = collection?.tasks?.filter(task => task.completion.completed === 0).map((task) =>
-    <Task task={task} key={task._id}/>
+    <Task task={task} key={task._id} admin={true}/>
   );
   const comTaskList = collection?.tasks?.filter(task => task.completion.completed > 0).map((task) =>
-    <Task task={task} key={task._id}/>
+    <Task task={task} key={task._id} admin={true}/>
   );
 
   const sharedWithList = collection?.sharing.sharedWith.map((item) =>
     <li key={item.id} style={{ paddingBottom: "5px" }}><User user={user} id={item.id} link={true}/> <span style={{ fontSize: "80%", fontStyle: "italic", color: "darkgray" }}>({item.role.split('-')[0]})</span></li>
   );
   
-  if (!user || !user.isLoggedIn || !user.permissions.admin) {
+  if (!user || !user.isLoggedIn || user.permissions.banned || !user.permissions.admin) {
     return (
       <Loading/>
     );
@@ -47,7 +47,7 @@ export default function Collection() {
       <Link href="/admin">Back to admin dashboard</Link><br/>
       {collection ?
         <><h3>General information</h3>
-        <p>Description:</p>{' '}<textarea value={collection.description} rows="4" cols="70" disabled /><br/>
+        <p>Description:</p>{' '}<div className="textarea" style={{ maxWidth: "90vw" }}><Linkify options={{target:'blank'}}>{collection.description}</Linkify></div>
         <p title={collection.created > 0 ? moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a") : 'Never'}>Created: {collection.created > 0 ? <>{moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a")}{' '}({moment.unix(collection.created).fromNow()})</> : 'never'}</p>
         <p>Owner: <User user={user} id={collection.owner} link={true}/></p>
         {collection.sharing.shared && <p>Shared with: <ul>{sharedWithList.length > 0 ? sharedWithList : <li>Nobody!</li>}</ul></p>}
@@ -102,11 +102,11 @@ export default function Collection() {
       :
         <>{error ? <p>{error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading collection...</p>}</>
       }
-      <br/><details>
+      <details>
         <summary>View raw JSON</summary>
         {error ? <pre>{JSON.stringify(error, null, 2)}</pre> : <pre>{JSON.stringify(collection, null, 2)}</pre>}
-      </details>
-      <br/><ReportButton user={user} type="collection" reported={collection} flag={true}/>
+      </details><br/>
+      <ReportButton user={user} type="collection" reported={collection} flag={true}/>
     </Layout>
   );
 }

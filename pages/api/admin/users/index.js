@@ -6,7 +6,7 @@ export default withIronSessionApiRoute(adminUsersRoute, sessionOptions);
 
 async function adminUsersRoute(req, res) {
   const user = req.session.user;
-  if (!user || !user.isLoggedIn || !user.permissions.admin ) {
+  if (!user || !user.isLoggedIn || user.permissions.banned || !user.permissions.admin) {
     res.status(401).json({ message: "Unauthorized" });
     return;
   }

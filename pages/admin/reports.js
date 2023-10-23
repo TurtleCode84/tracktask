@@ -1,5 +1,4 @@
 import React from "react";
-import moment from "moment";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
 import Report from "components/Report";
@@ -20,7 +19,7 @@ export default function ReportsAdmin() {
     <Report user={user} report={report} key={report._id}/>
   );
   
-  if (!user || !user.isLoggedIn || !user.permissions.admin) {
+  if (!user || !user.isLoggedIn || user.permissions.banned || !user.permissions.admin) {
     return (
       <Loading/>
     );

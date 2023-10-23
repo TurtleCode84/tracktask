@@ -1,9 +1,9 @@
-export default function LoginForm({ errorMessage, onSubmit, joinMessage }) {
+export default function LoginForm({ errorMessage, onSubmit, joinMessage, joinUsername }) {
   return (
     <form onSubmit={onSubmit}>
       <label>
         <span>Username</span>
-        <input type="text" name="username" required />
+        <input type="text" name="username" defaultValue={joinUsername?.trim()} autoFocus required />
       </label>
       <label>
         <span>Password</span>

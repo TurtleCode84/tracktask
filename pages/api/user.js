@@ -75,7 +75,7 @@ async function userRoute(req, res) {
             'history.lastEdit.by': new ObjectId(user.id),
           },
         };
-        const lastEditUpdate = await db.collection("users").updateOne(query, lastEditDoc);
+        await db.collection("users").updateOne(query, lastEditDoc);
         res.json(updatedWarn);
       } catch (error) {
         res.status(500).json({ "message": error.data.message });
@@ -141,7 +141,7 @@ async function userRoute(req, res) {
           updateUser.password = await hash(body.newPassword, 10);
         }
       }
-      if (body.profilePicture !== undefined) {updateUser.profilePicture = body.profilePicture}
+      if (body.profilePicture !== undefined) {updateUser.profilePicture = body.profilePicture;}
       const updateDoc = {
         $set: updateUser,
       };
@@ -152,7 +152,7 @@ async function userRoute(req, res) {
           'history.lastEdit.by': new ObjectId(user.id),
         },
       };
-      const lastEditUpdate = await db.collection("users").updateOne(query, lastEditDoc);
+      await db.collection("users").updateOne(query, lastEditDoc);
       res.json(updated);
     }
   } else if (req.method === 'DELETE') {
@@ -163,8 +163,8 @@ async function userRoute(req, res) {
     }
     const client = await clientPromise;
     const db = client.db("data");
-    const deletedTasks = await db.collection("tasks").deleteMany({ owner: new ObjectId(user.id) });
-    const deletedCollections = await db.collection("collections").deleteMany({ owner: new ObjectId(user.id) });
+    await db.collection("tasks").deleteMany({ owner: new ObjectId(user.id) });
+    await db.collection("collections").deleteMany({ owner: new ObjectId(user.id) });
     const deletedUser = await db.collection("users").deleteOne({ _id: new ObjectId(user.id) });
     res.json(deletedUser);
   } else {

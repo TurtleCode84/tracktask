@@ -6,7 +6,7 @@ export default function UserShareForm({ errorMessage, onSubmit, share, collectio
     <form id={share.id + "-userShareForm"} autocomplete="off" onSubmit={onSubmit}><br/>
       <label style={{ marginBottom: "-5px" }}>
         <span>Role</span>
-        <select name="role" value={role[1] ? role[1] : role[0]} style={{ width: "max-content" }} required>
+        <select name="role" defaultValue={role[1] ? role[1] : role[0]} style={{ width: "max-content" }} required>
             <option value="viewer">Viewer (can view the collection)</option>
             <option value="collaborator">Collaborator (can complete tasks ඞ)</option>
             <option value="contributor">Contributor (can add to the collection)</option>
@@ -20,7 +20,7 @@ export default function UserShareForm({ errorMessage, onSubmit, share, collectio
       <a href={`/api/collections/${collectionId}`}
         onClick={async (e) => {
           e.preventDefault();
-          if (confirm("Are you sure? This user will lose access to the tasks in this collection!")) {
+          if (confirm("Are you sure? This user will lose access to the tasks that are not theirs in this collection!")) {
             const body = {
               action: "remove",
               id: share.id,

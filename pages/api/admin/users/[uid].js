@@ -8,7 +8,7 @@ export default withIronSessionApiRoute(adminUserRoute, sessionOptions);
 
 async function adminUserRoute(req, res) {
   const user = req.session.user;
-  if (!user || !user.isLoggedIn || !user.permissions.admin ) {
+  if (!user || !user.isLoggedIn || user.permissions.banned || !user.permissions.admin) {
     res.status(401).json({ message: "Unauthorized" });
     return;
   }
@@ -57,12 +57,12 @@ async function adminUserRoute(req, res) {
         res.status(422).json({ message: "Username is already taken!" });
         return;
       } else {
-        updateUser.username = body.username.trim().toLowerCase()
+        updateUser.username = body.username.trim().toLowerCase();
       }
     }
-    if (body.email !== undefined) {updateUser.email = body.email.trim().toLowerCase()}
-    if (body.password) {updateUser.password = await hash(body.password, 10)}
-    if (body.profilePicture !== undefined) {updateUser.profilePicture = body.profilePicture}
+    if (body.email !== undefined) {updateUser.email = body.email.trim().toLowerCase();}
+    if (body.password) {updateUser.password = await hash(body.password, 10);}
+    if (body.profilePicture !== undefined) {updateUser.profilePicture = body.profilePicture;}
     const query = { _id: new ObjectId(uid) };
     const updateDoc = {
       $set: updateUser,
@@ -72,13 +72,13 @@ async function adminUserRoute(req, res) {
       const notesUpdateDoc = {
         $set: {'history.notes': body.notes},
       };
-      const updatedNotes = await db.collection("users").updateOne(query, notesUpdateDoc); // Does not catch errors, could be a problem if updated succeeds but updatedNotes does not?
+      await db.collection("users").updateOne(query, notesUpdateDoc); // Does not catch errors, could be a problem if updated succeeds but updatedNotes does not?
     }
     if (body.verify !== undefined) { // true or false
       const verifyUpdateDoc = {
         $set: {'permissions.verified': body.verify},
       };
-      const updatedVerify = await db.collection("users").updateOne(query, verifyUpdateDoc); // See above
+      await db.collection("users").updateOne(query, verifyUpdateDoc); // See above
     }
     if (body.admin !== undefined) { // true or false
       if (process.env.SUPERADMIN !== user.id || user.id === uid) {
@@ -88,7 +88,7 @@ async function adminUserRoute(req, res) {
       const adminUpdateDoc = {
         $set: {'permissions.admin': body.admin},
       };
-      const updatedAdmin = await db.collection("users").updateOne(query, adminUpdateDoc); // See above
+      await db.collection("users").updateOne(query, adminUpdateDoc); // See above
     }
     if (body.warn && body.warning && !body.clearWarnings) {
       const warningDoc = {
@@ -105,7 +105,7 @@ async function adminUserRoute(req, res) {
           },
         },
       };
-      const updatedWarn = await db.collection("users").updateOne(query, warnUpdateDoc); // See above
+      await db.collection("users").updateOne(query, warnUpdateDoc); // See above
     } else if (body.clearWarnings) {
       if (process.env.SUPERADMIN !== user.id) {
         res.status(403).json({ message: "You do not have permission to pardon users." });
@@ -117,23 +117,23 @@ async function adminUserRoute(req, res) {
           'history.warnings': [],
         },
       };
-      const updatedWarn = await db.collection("users").updateOne(query, warnUpdateDoc); // See above
+      await db.collection("users").updateOne(query, warnUpdateDoc); // See above
     }
     if (body.ban !== undefined && body.ban) { // true or false
       const banUpdateDoc = {
         $set: {'permissions.banned': body.ban, 'history.ban.reason': body.banReason, 'history.ban.timestamp': Math.floor(Date.now()/1000), 'history.ban.by': new ObjectId(user.id)},
       };
-      const updatedBan = await db.collection("users").updateOne(query, banUpdateDoc); // See above
+      await db.collection("users").updateOne(query, banUpdateDoc); // See above
     } else if (body.ban !== undefined && !body.ban) {
       const banUpdateDoc = {
         $set: {'permissions.banned': body.ban},
       };
-      const updatedBan = await db.collection("users").updateOne(query, banUpdateDoc); // See above
+      await db.collection("users").updateOne(query, banUpdateDoc); // See above
     } else if (body.ban === undefined && body.banReason) {
       const banReasonUpdateDoc = {
         $set: {'history.ban.reason': body.banReason, 'history.ban.timestamp': Math.floor(Date.now()/1000), 'history.ban.by': new ObjectId(user.id)},
       };
-      const updatedBanReason = await db.collection("users").updateOne(query, banReasonUpdateDoc); // See above
+      await db.collection("users").updateOne(query, banReasonUpdateDoc); // See above
     }
     const lastEditDoc = {
       $set: {
@@ -141,7 +141,7 @@ async function adminUserRoute(req, res) {
         'history.lastEdit.by': new ObjectId(user.id),
       },
     };
-    const lastEditUpdate = await db.collection("users").updateOne(query, lastEditDoc); // See above
+    await db.collection("users").updateOne(query, lastEditDoc); // See above
     res.json(updated);
   } else if (req.method === 'DELETE') {
     if (user.id === uid) {
@@ -154,8 +154,8 @@ async function adminUserRoute(req, res) {
     const client = await clientPromise;
     const db = client.db("data");
     const deletedUser = await db.collection("users").deleteOne({ _id: new ObjectId(uid) });
-    const deletedTasks = await db.collection("tasks").deleteMany({ owner: new ObjectId(uid) }); // See above
-    const deletedCollections = await db.collection("collections").deleteMany({ owner: new ObjectId(uid) }); // See above
+    await db.collection("tasks").deleteMany({ owner: new ObjectId(uid) }); // See above
+    await db.collection("collections").deleteMany({ owner: new ObjectId(uid) }); // See above
     res.json(deletedUser);
   } else {
     res.status(405).json({ message: "Method not allowed" });

@@ -19,7 +19,7 @@ export default function Admin() {
   const { deleted } = router.query;
   var dynamicMsg;
   if (deleted === "true") {
-    dynamicMsg = "User successfully deleted!"
+    dynamicMsg = "User successfully deleted!";
   }
   const { reports, error: reportsError } = useAdminReports(user, false);
   const reportList = reports?.slice(0,4).map((report) =>
@@ -38,7 +38,7 @@ export default function Admin() {
     </li>
   );
 
-  if (!user || !user.isLoggedIn || !user.permissions.admin) {
+  if (!user || !user.isLoggedIn || user.permissions.banned || !user.permissions.admin) {
     return (
       <Loading/>
     );
@@ -66,16 +66,13 @@ export default function Admin() {
       <p>Useful admin pages:</p>
       <ul style={{ listStyle: "revert", margin: "revert" }}>
         <li><Link href="/admin/users/search">Find a user</Link></li>
-        <li><Link href="/admin/collections">View shared collections</Link></li>
+        <li><Link href="/admin/tasks">View reported tasks</Link></li>
+        <li><Link href="/admin/collections">View reported collections</Link></li>
         <li><Link href="/admin/reports">Moderate reports</Link></li>
       </ul>
       <details>
         <summary>View my raw session info</summary>
-        {user && (
-          <>
-            <pre>{JSON.stringify(user, null, 2)}</pre>
-          </>
-        )}
+        {user && <pre>{JSON.stringify(user, null, 2)}</pre>}
       </details>
     </Layout>
   );

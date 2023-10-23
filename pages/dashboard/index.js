@@ -1,5 +1,4 @@
 import React from "react";
-import moment from "moment";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
 import Task from "components/Task";
@@ -19,11 +18,11 @@ export default function Dashboard() {
   const { reported, deleted } = router.query;
   var dynamicMsg;
   if (reported === "true") {
-    dynamicMsg = "Your report had been sent, an administrator will review it soon."
+    dynamicMsg = "Your report had been sent, an administrator will review it soon.";
   } else if (deleted === "t") {
-    dynamicMsg = "Task successfully deleted!"
+    dynamicMsg = "Task successfully deleted!";
   } else if (deleted === "c") {
-    dynamicMsg = "Collection successfully deleted!"
+    dynamicMsg = "Collection successfully deleted!";
   }
   const upcomingTaskList = upcomingTasks?.map((task) =>
     <Task task={task} key={task._id}/>

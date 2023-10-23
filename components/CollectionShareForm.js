@@ -1,5 +1,3 @@
-import fetchJson, { FetchError } from "lib/fetchJson";
-
 export default function CollectionShareForm({ errorMessage, onSubmit }) {
   return (
     <form id="collectionShareForm" autocomplete="off" onSubmit={onSubmit}>

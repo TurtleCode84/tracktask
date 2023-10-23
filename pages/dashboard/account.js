@@ -26,12 +26,12 @@ export default function Settings() {
     <Layout>
       <h1>Your account <span style={{ color: "dimgray" }} className="material-symbols-outlined">manage_accounts</span></h1>
       <Link href="/dashboard">Back to dashboard</Link><br/>
-      <h3>General information</h3>
+      <h3><hr/>General information<hr/></h3>
       <p>Username: {user.username}{' '}{user.permissions.verified ? <span title="Verified" style={{ color: "#006dbe" }} className="material-symbols-outlined icon-list">verified</span> : null}{user.permissions.admin ? <span title="Admin" style={{ color: "slategray" }} className="material-symbols-outlined icon-list">verified_user</span> : null}</p>
       <p>User ID: {user.id}</p>
       <p>Email: {user.email ? <><a href={`mailto:${user.email}`} target="_blank" rel="noreferrer">{user.email}</a></> : 'none'}</p>
       <p>Profile picture: <Image src={user.profilePicture ? user.profilePicture : "/default-pfp.jpg" } width={32} height={32} style={{ verticalAlign: "middle", borderRadius: "100%", overflow: "hidden" }} alt=""/> ({user.profilePicture ? <a href={user.profilePicture} target="_blank" rel="noreferrer">link</a> : 'default'})</p>
-      <h3>History</h3>
+      <h3><hr/>History<hr/></h3>
       <p title={moment.unix(user.history.joined).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Joined: {user.history.joined > 0 ? moment.unix(user.history.joined).fromNow() : 'never'}</p>
       <p>Created tasks: {user.stats.tasks}</p>
       <p>Created collections: {user.stats.collections}</p>

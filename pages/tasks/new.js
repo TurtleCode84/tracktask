@@ -53,7 +53,7 @@ export default function TasksCreate() {
             markPriority: event.currentTarget.markPriority.checked,
           };
 
-          if (addedCollectionsValues.length > 0) {body.addCollections = addedCollectionsValues};
+          if (addedCollectionsValues.length > 0) {body.addCollections = addedCollectionsValues;}
 
           try {
             const getUrl = await fetchJson("/api/tasks", {
