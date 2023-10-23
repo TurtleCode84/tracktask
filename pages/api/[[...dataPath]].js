@@ -659,9 +659,6 @@ async function dataRoute(req, res) {
 
       } else if (body.action === "modify") {
 
-        res.status(422).json({ message: "This feature is coming VERY soon!" });
-        return;
-
         const roles = ["viewer", "collaborator", "contributor"];
         if (!body.id || !body.role || !roles.includes(body.role)) {
           res.status(422).json({ message: "Invalid data" });
