@@ -8,7 +8,7 @@ export default withIronSessionApiRoute(notificationsRoute, sessionOptions);
 
 async function notificationsRoute(req, res) {
   if (req.method === 'GET') {
-    if (req.headers["honeybadger-token"] === process.env.NOTIFICATIONS_HONEYBADGER_TOKEN) {
+    if (req.headers["honeybadger-token"] === process.env.NOTIFICATIONS_AUTH_TOKEN) {
       var debug = {};
       const client = await clientPromise;
       const db = client.db("data");
