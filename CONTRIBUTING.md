@@ -29,9 +29,9 @@ Thank you for your interest in making TrackTask a better platform! Please review
 | `IPBAN`                  | A list of IPs, separated by commas, that can't be used to sign up or login. Can be blank.               | Abuse prevention     |
 | `MONGODB_URI`            | The complete MongoDB connection URI for your database, should begin with `mongodb+srv://`               | Database connections |
 | `NEXT_PUBLIC_ADVISORY`   | A optional message to show as a banner on all pages. Syntax: `color^message`. Can be blank, optional.   | Site-wide announcements |
-| `NEXT_PUBLIC_NOTIFICATIONS_PUBLIC_KEY` | A valid [VAPID](https://web.dev/articles/push-notifications-web-push-protocol) public key | Push notifications   |
+| `NEXT_PUBLIC_NOTIFICATIONS_PUBLIC_KEY` | A valid [VAPID](https://web.dev/articles/push-notifications-web-push-protocol) public key. Can be blank, but only if you do not plan on using push notifications. | Push notifications   |
 | `NOTIFICATIONS_AUTH_TOKEN` | A complex, random-generated string used as an authentication token for API requests to `/api/notifications`  | Push notifications   |
-| `NOTIFICATIONS_PRIVATE_KEY` | A valid [VAPID](https://web.dev/articles/push-notifications-web-push-protocol) private key, matched to the public key set in `NEXT_PUBLIC_NOTIFICATIONS_PUBLIC_KEY` | Push notifications |
+| `NOTIFICATIONS_PRIVATE_KEY` | A valid [VAPID](https://web.dev/articles/push-notifications-web-push-protocol) private key, matched to the public key set in `NEXT_PUBLIC_NOTIFICATIONS_PUBLIC_KEY`. Can be blank, but only if you do not plan on using push notifications. | Push notifications |
 | `RECAPTCHA_SECRET`       | The secret key for a v3 [Google reCAPTCHA](https://www.google.com/recaptcha/about/) instance                                                       | Abuse prevention     |
 | `SECRET_COOKIE_PASSWORD` | A complex, random-generated string, must be at least 32 characters long                                      | User authentication  |
 | `SUPERADMIN`             | The ID of the main admin user, grants this user additional privileges and immunity. Can be blank.       | Administration       |
