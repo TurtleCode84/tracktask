@@ -33,7 +33,7 @@ export default function TaskAdmin() {
   
   return (
     <Layout>
-      <h2>{task ? <>{task.completion.completed > 0 ? <span title="Completed" style={{ color: "darkgreen", marginRight: "8px" }} className="material-symbols-outlined">task_alt</span> : null}{task.priority ? <span title="Priority" style={{ color: "red", marginRight: "8px" }} className="material-symbols-outlined">priority_high</span> : null}{task.name}:</> : 'Loading...'}</h2>
+      <h2>{task ? <>{task.completion.completed > 0 ? <span title="Completed" style={{ color: "darkgreen", marginRight: "8px" }} className="material-symbols-outlined">task_alt</span> : null}{task.priority ? <span title="Priority" style={{ color: "red", marginRight: "8px" }} className="material-symbols-outlined">label_important</span> : null}{task.name}:</> : 'Loading...'}</h2>
       <Link href="/admin/tasks">Back to tasks</Link><br/>
       <Link href="/admin">Back to admin dashboard</Link><br/>
       {task ?
