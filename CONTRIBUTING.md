@@ -68,4 +68,4 @@ _After creating a user you should be able to change `permissions.admin` to `true
 
 #### Now that you've finished setup, you can delete the "foo" user and start developing locally! 🥳
 
-###### Last tested 10/18/22, screenshots coming soon
+###### Last tested 10-18-2022, screenshots coming soon
