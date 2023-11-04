@@ -5,8 +5,8 @@ import Link from "next/link";
 export default function Layout({ children }) {
   var advisory = process.env.NEXT_PUBLIC_ADVISORY;
   var advisoryColor = "#006dbe";
-  if (advisory?.split(',')[0] !== "default") {
-    advisoryColor = advisory?.split(',')[0];
+  if (advisory?.split('^')[0] !== "default") {
+    advisoryColor = advisory?.split('^')[0];
   }
 
   return (
@@ -253,7 +253,7 @@ export default function Layout({ children }) {
         }
       `}</style>
       {process.env.NEXT_PUBLIC_VERCEL_ENV !== "production" && <nav style={{backgroundColor: "orange", textAlign: "center", fontWeight: 600, marginTop: -20 + "px", height: "fit-content", paddingBottom: 0, marginBottom: -16 + "px"}}><p style={{paddingTop: 13 + "px", paddingBottom: 8 + "px"}}>You are viewing a TrackTask development release, some features may not work properly or may break your account.</p></nav>}
-      {advisory && <nav style={{backgroundColor: advisoryColor, textAlign: "center", fontWeight: 600, marginTop: -20 + "px", height: "fit-content", paddingBottom: 0, marginBottom: -16 + "px"}}><p style={{paddingTop: 13 + "px", paddingBottom: 8 + "px"}}>{advisory.split(',')[1]}</p></nav>}
+      {advisory && <nav style={{backgroundColor: advisoryColor, textAlign: "center", fontWeight: 600, marginTop: -20 + "px", height: "fit-content", paddingBottom: 0, marginBottom: -16 + "px"}}><p style={{paddingTop: 13 + "px", paddingBottom: 8 + "px"}}>{advisory.split('^')[1]}</p></nav>}
       <Header />
 
       <main>
