@@ -19,8 +19,9 @@ export default function Home() {
     <Layout>
       <h1 style={{ fontSize: 50, marginBottom: "-20px", marginTop: "-2px" }}>
         <span style={{ marginRight: "-0.6rem", verticalAlign: "middle" }}>
-          <Image src="/tracktask.png" width={305} height={110} quality={95} alt="TrackTask" priority={true} />
+          <Image src="/tracktask.png" width={305} height={110} quality={75} alt="TrackTask" priority={true} />
         </span>
+        - Shareable Task Management
       </h1>
 
       <h1>An open-source task management platform geared towards organized collaboration.</h1>
