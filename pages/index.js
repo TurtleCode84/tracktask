@@ -18,7 +18,7 @@ export default function Home() {
   return (
     <Layout>
       <h1 style={{ fontSize: 50, marginBottom: "-20px", marginTop: "-2px" }}>
-        <span style={{ marginRight: "-1.3rem", verticalAlign: "middle" }}>
+        <span style={{ marginRight: "-0.6rem", verticalAlign: "middle" }}>
           <Image src="/tracktask.png" width={305} height={110} quality={95} alt="TrackTask" priority={true} />
         </span>
         - Shareable Task Management
@@ -31,10 +31,10 @@ export default function Home() {
 
       <h2>What&apos;s inside?</h2>
       <ul style={{ listStyle: "revert", margin: "revert" }}>
-        <li>Tasks with priority and completion labels,</li>
-        <li>A sorted dashboard so you can prioritize what needs to get done,</li>
-        <li>Collections to group your tasks or share them with others,</li>
-        <li>Regular feature updates and bug fixes,</li>
+        <li>Tasks with relevant information, priority, and completion,</li>
+        <li>A sorted dashboard for quick review of what needs to get done,</li>
+        <li>Collections to group your tasks or collaborate on them with others,</li>
+        <li>Continuous feature updates and bug fixes,</li>
         <li>And even more!</li>
       </ul>
 
