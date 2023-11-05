@@ -16,9 +16,9 @@ export default function About() {
       <br/>Created by <a href="https://github.com/TurtleCode84" target="_blank" rel="noreferrer">TurtleCode84</a>, it is actively developed with help from the other members of the TrackTask team. But what exactly did this work produce? We can do our best to show you, but the best way to understand how TrackTask can help manage your endeavors is to <Link href="/join">make an account</Link> and try it for youself!
       </p>
       <h2>What&apos;s inside?</h2>
-      <Image src="/example1.png" width={300} quality={85} alt="Dashboard" />
-      <Image src="/example2.png" width={300} quality={85} alt="Task" />
-      <Image src="/example3.png" width={300} quality={85} alt="Collection" />
+      <Image src="/example1.png" height={175} quality={95} alt="Dashboard" />
+      <Image src="/example2.png" height={175} quality={95} alt="Task" />
+      <Image src="/example3.png" height={175} quality={95} alt="Collection" />
       <h2>Credits:</h2>
       <p>This project was made possible by the following people, groups, and projects...</p>
       <ul style={{ listStyle: "revert", margin: "revert" }}>
