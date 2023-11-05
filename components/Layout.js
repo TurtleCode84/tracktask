@@ -100,7 +100,7 @@ export default function Layout({ children }) {
             width: fit-content;
           }
           .welcome-text {
-            font-size: 24px;
+            font-size: 20px;
           }
           .dashboard .tasks ul {
             margin-left: -40px;
