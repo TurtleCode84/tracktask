@@ -12,7 +12,7 @@ export default function About() {
       <br/>Tasks? They can be grouped in collections, which can be shared with and collaborated on by other users.
       <br/>The website? In its final form, it allows individuals and teams to get work done in an organized way.<br/>
       <br/><b>This, is TrackTask.</b><br/>
-      <br/>Created by <a href="https://github.com/TurtleCode84" target="_blank" rel="noreferrer">TurtleCode84</a> it is actively developed with help from the other members of the TrackTask team. But what exactly did this work produce? We can do our best to show you, but the best way to understand how TrackTask
+      <br/>Created by <a href="https://github.com/TurtleCode84" target="_blank" rel="noreferrer">TurtleCode84</a>, it is actively developed with help from the other members of the TrackTask team. But what exactly did this work produce? We can do our best to show you, but the best way to understand how TrackTask
       </p>
       <h2>What&apos;s inside?</h2>
       <Image src="/example1.png" width={300} quality={85} alt="Dashboard" />
