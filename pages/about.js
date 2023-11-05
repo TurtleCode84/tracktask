@@ -7,12 +7,12 @@ export default function About() {
     <Layout>
       <h1>About TrackTask:</h1>
       <p>
-      TrackTask was created out of necessity by a single student in need of an academic planner. Rather than purchase one from a store, however, this developer was inspired to build their own website on which they could track and manage their tasks. The web app you see here is the culmination of more than a year's work towards the ultimate task management platform. Users? They can create tasks with relevant information, and keep track of their completion & priority.
+      TrackTask was created out of necessity by a single student in need of an academic planner. Rather than purchase one from a store, however, this developer was inspired to build their own website on which they could track and manage their tasks. The web app you see here is the culmination of more than a year&apos;s work towards the ultimate task management platform. Users? They can create tasks with relevant information, and keep track of their completion & priority.
       Tasks? They can be grouped in collections, which can be shared with other users. The website, in its final form, allows individuals and teams to get work done in an organized way.<br/>
       <br/>This, is TrackTask.<br/>
       <br/>Created by <a href="https://github.com/TurtleCode84" target="_blank" rel="noreferrer">TurtleCode84</a> it is actively developed with help from the other members of the TrackTask team. But what exactly did this work produce?
       </p>
-      <h2>What's inside?</h2>
+      <h2>What&apos;s inside?</h2>
       <Image src="/example1.png" width={300} quality={85} alt="Dashboard" />
       <Image src="/example2.png" width={300} quality={85} alt="Task" />
       <Image src="/example3.png" width={300} quality={85} alt="Collection" />
