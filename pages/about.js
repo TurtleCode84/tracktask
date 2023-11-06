@@ -1,15 +1,24 @@
 import React from "react";
 import Layout from "components/Layout";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function About() {
   return (
     <Layout>
       <h1>About TrackTask:</h1>
       <p>
-      TrackTask is a shareable task management platform. Users can create tasks with all relevant information and keep track of their completion & priority.
-      Additionally, tasks can be grouped in collections, which can be shared with other users to work in teams and get work done in an organized way!<br/>
-      <br/>The site was created by <a href="https://github.com/TurtleCode84" target="_blank" rel="noreferrer">TurtleCode84</a> and is actively developed with help from the other members of the TrackTask team.
+      TrackTask was created out of necessity by a single student in need of an academic planner. Rather than purchase one from a store, however, this developer was inspired to build their own website on which they could track and manage their tasks. The web app you see here is the culmination of more than a year&apos;s work towards the ultimate task management platform.<br/>
+      <br/>Users? They can create tasks with relevant information, and keep track of their completion & priority.
+      <br/>Tasks? They can be grouped in collections, which can be shared with and collaborated on by other users.
+      <br/>The website? In its final form, it allows individuals and teams to get work done in an organized way.<br/>
+      <br/><b>This, is TrackTask.</b><br/>
+      <br/>Created by <a href="https://github.com/TurtleCode84" target="_blank" rel="noreferrer">TurtleCode84</a>, it is actively developed with help from the other members of the TrackTask team. But what exactly did this work produce? We can do our best to show you, but the best way to understand how TrackTask can help manage your endeavors is to <Link href="/join">make an account</Link> and try it for youself!
       </p>
+      <h2>What&apos;s inside?</h2>
+      <Image src="/example1.png" height={175} quality={95} alt="Dashboard" />
+      <Image src="/example2.png" height={175} quality={95} alt="Task" />
+      <Image src="/example3.png" height={175} quality={95} alt="Collection" />
       <h2>Credits:</h2>
       <p>This project was made possible by the following people, groups, and projects...</p>
       <ul style={{ listStyle: "revert", margin: "revert" }}>
