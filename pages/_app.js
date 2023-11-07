@@ -4,6 +4,12 @@ import urlBase64ToUint8Array from "lib/urlBase64ToUint8Array";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import { useEffect } from "react";
 import ErrorBoundary from "components/ErrorBoundary";
+import { Roboto } from 'next/font/google'
+
+const roboto = Roboto({
+  weight: ['400', '700'],
+  subsets: ['latin'],
+})
 
 function MyApp({ Component, pageProps }) {
   useEffect(() => {
@@ -94,6 +100,11 @@ function MyApp({ Component, pageProps }) {
       }}
     >
       <ErrorBoundary>
+      <style jsx global>{`
+        html {
+          font-family: ${roboto.style.fontFamily};
+        }
+      `}</style>
       <Component {...pageProps} />
       </ErrorBoundary>
     </SWRConfig>
