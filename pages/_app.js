@@ -4,10 +4,14 @@ import urlBase64ToUint8Array from "lib/urlBase64ToUint8Array";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import { useEffect } from "react";
 import ErrorBoundary from "components/ErrorBoundary";
-import { Roboto_Flex } from "next/font/google";
+//import { Roboto_Flex } from "next/font/google";
+import { Josefin_Sans } from "next/font/google";
 
-const font = Roboto_Flex({
-  //weight: ['400', '700'],
+/*const font = Roboto_Flex({
+  subsets: ['latin'],
+})*/
+
+const font = Josefin_Sans({
   subsets: ['latin'],
 })
 
@@ -102,7 +106,7 @@ function MyApp({ Component, pageProps }) {
       <ErrorBoundary>
       <style jsx global>{`
         html {
-          font-family: ${font.style.fontFamily}, "Trebuchet MS", sans-serif;
+          font-family: ${font.style.fontFamily}, sans-serif;
         }
       `}</style>
       <Component {...pageProps} />
