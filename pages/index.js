@@ -17,7 +17,7 @@ export default function Home() {
   }
   return (
     <Layout>
-      <h1 style={{ fontSize: 50, marginBottom: "-20px", marginTop: "-2px" }}>
+      <h1 style={{ fontSize: 48, marginBottom: "-20px", marginTop: "-2px" }}>
         <span style={{ marginRight: "-0.6rem", verticalAlign: "middle" }}>
           <Image src="/tracktask.png" width={305} height={110} quality={75} alt="TrackTask" priority={true} />
         </span>

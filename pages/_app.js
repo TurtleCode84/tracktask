@@ -5,13 +5,13 @@ import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import { useEffect } from "react";
 import ErrorBoundary from "components/ErrorBoundary";
 //import { Roboto_Flex } from "next/font/google";
-import { Exo_2 } from "next/font/google";
+import { Expletus_Sans } from "next/font/google";
 
 /*const font = Roboto_Flex({
   subsets: ['latin'],
 })*/
 
-const font = Exo_2({
+const font = Expletus_Sans({
   subsets: ['latin'],
 })
 
