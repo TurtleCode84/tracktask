@@ -70,7 +70,6 @@ export default function Layout({ children }) {
           margin: 0;
           color: var(--text-color);
           background-color: var(--background-color);
-          /*font-family: Roboto, "Trebuchet MS", Times;*/
         }
         
         .container {

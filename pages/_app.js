@@ -4,9 +4,9 @@ import urlBase64ToUint8Array from "lib/urlBase64ToUint8Array";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import { useEffect } from "react";
 import ErrorBoundary from "components/ErrorBoundary";
-import { Space_Grotesk } from "next/font/google";
+import { Roboto } from "next/font/google";
 
-const space_grotesk = Space_Grotesk({
+const roboto = Roboto({
   weight: ['400', '700'],
   subsets: ['latin'],
 })
@@ -102,7 +102,7 @@ function MyApp({ Component, pageProps }) {
       <ErrorBoundary>
       <style jsx global>{`
         html {
-          font-family: ${space_grotesk.style.fontFamily};
+          font-family: ${roboto.style.fontFamily}, "Trebuchet MS", sans-serif;
         }
       `}</style>
       <Component {...pageProps} />
