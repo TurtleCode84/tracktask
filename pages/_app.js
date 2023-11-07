@@ -4,9 +4,9 @@ import urlBase64ToUint8Array from "lib/urlBase64ToUint8Array";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import { useEffect } from "react";
 import ErrorBoundary from "components/ErrorBoundary";
-import { Inter } from "next/font/google";
+import { Roboto } from "next/font/google";
 
-const font = Inter({
+const font = Roboto({
   weight: ['400', '700'],
   subsets: ['latin'],
 })
