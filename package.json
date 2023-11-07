@@ -1,6 +1,6 @@
 {
   "name": "tracktask",
-  "version": "2.2.7",
+  "version": "2.3.2",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -24,7 +24,7 @@
     "linkifyjs": "^4.1.1"
   },
   "devDependencies": {
-    "eslint": "8.52.0",
-    "eslint-config-next": "13.5.6"
+    "eslint": "8.53.0",
+    "eslint-config-next": "14.0.1"
   }
 }

@@ -26,7 +26,7 @@ export default function Terms() {
         <li>Failure to follow the above terms will lead to administrative action, including but not limited to an account warning, ban, or IP block, in no particular order.</li>
       </ul>
       <p>If you have any questions about the terms listed above, please contact us at <a href="mailto:tracktask@tracktask.eu.org">tracktask@tracktask.eu.org</a>.</p>
-      <p style={{ fontStyle: "italic" }}>This page was last updated 9/3/23.</p>
+      <p style={{ fontStyle: "italic" }}>This page was last updated 09-03-2023.</p>
 
       <style jsx>{`
         li {
