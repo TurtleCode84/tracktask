@@ -112,8 +112,7 @@ export default function Collection() {
           <li style={{ paddingBottom: "2px" }}>No tasks found!</li>}
         </ul>
         }
-        <hr/>
-        {user.id === collection.owner && <>{user.permissions.verified ? <Link href={`/collections/${collection._id}/share`}>Share this collection</Link> : <span style={{ fontStyle: "italic" }}><Link href="/dashboard/account">Verify your email</Link> to share this collection.</span>}</>}
+        {user.id === collection.owner && <><hr/>{user.permissions.verified ? <Link href={`/collections/${collection._id}/share`}>Share this collection</Link> : <span style={{ fontStyle: "italic" }}><Link href="/dashboard/account">Verify your email</Link> to share this collection.</span>}</>}
         <hr/>
         {currentUserRole === "editor" && <><details>
           <summary>Edit collection</summary>
