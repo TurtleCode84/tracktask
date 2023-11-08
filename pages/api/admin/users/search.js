@@ -33,7 +33,7 @@ async function adminUserSearchRoute(req, res) {
       dbQuery = {
         $or: [
           { 'history.joinedIp': keyword.trim().toLowerCase() },
-          //{ 'history.loginIpList': keyword.trim().toLowerCase() }, // Fix this?
+          { 'history.loginIpList': new RegExp(keyword.trim().toLowerCase(), "i") },
         ],
       };
     } else {

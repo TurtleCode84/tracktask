@@ -155,7 +155,7 @@ async function authRoute(req, res) {
         contains = true;
       }
     }
-    if (cleanEmail && !/(^.{1,}@.{1,}\..{1,}[^.]$)/i.test(cleanEmail)) {
+    if (cleanEmail && !/(^.+@.+\..+[^.]$)/i.test(cleanEmail)) {
       contains = true;
     }
     if (contains && blacklist) { // Figure out a way to do this when no blacklist is provided
