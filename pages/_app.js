@@ -4,9 +4,9 @@ import urlBase64ToUint8Array from "lib/urlBase64ToUint8Array";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import { useEffect } from "react";
 import ErrorBoundary from "components/ErrorBoundary";
-import { Exo_2 } from "next/font/google"; // Roboto_Flex
+import { Roboto_Flex } from "next/font/google"; // Exo_2
 
-const font = Exo_2({
+const font = Roboto_Flex({
   subsets: ['latin'],
 })
 
