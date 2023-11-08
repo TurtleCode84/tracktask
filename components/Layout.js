@@ -70,6 +70,7 @@ export default function Layout({ children }) {
           margin: 0;
           color: var(--text-color);
           background-color: var(--background-color);
+          overflow-wrap: anywhere;
         }
         
         .container {
