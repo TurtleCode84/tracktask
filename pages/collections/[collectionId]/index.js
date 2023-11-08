@@ -112,7 +112,8 @@ export default function Collection() {
           <li style={{ paddingBottom: "2px" }}>No tasks found!</li>}
         </ul>
         }
-        {user.permissions.verified && user.id === collection.owner && <><hr/><Link href={`/collections/${collection._id}/share`}>Share this collection</Link></>}
+        <hr/>
+        {user.id === collection.owner && <>{user.permissions.verified ? <Link href={`/collections/${collection._id}/share`}>Share this collection</Link> : <span style={{ fontStyle: "italic" }}><Link href="/dashboard/account">Verify your email</Link> to share this collection.</span>}</>}
         <hr/>
         {currentUserRole === "editor" && <><details>
           <summary>Edit collection</summary>

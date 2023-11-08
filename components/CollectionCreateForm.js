@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function CollectionCreateForm({ verified, errorMessage, onSubmit }) {
   return (
     <form id="collectionCreateForm" autocomplete="off" onSubmit={onSubmit}>
@@ -9,7 +11,7 @@ export default function CollectionCreateForm({ verified, errorMessage, onSubmit 
         <span>Description</span>
         <textarea name="description" rows="8" cols="30" maxlength="500" required />
       </label>
-      <p style={{ fontStyle: "italic" }}>{verified ? 'You will be able to share this collection after you create it.' : 'If you would like to share this collection, please verify your email.'}</p>
+      <p style={{ fontStyle: "italic" }}>{verified ? 'You will be able to share this collection after you create it.' : <>If you would like to share this collection, please <Link href="/dashboard/account">verify your email</Link>.</>}</p>
 
       <button type="submit" id="createCollectionBtn">Create collection</button>
 
