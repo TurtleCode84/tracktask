@@ -25,9 +25,7 @@ export default function TasksCreate() {
   }
   return (
     <Layout>
-      <h1>
-        Create a new task:
-      </h1>
+      <h1>Create a new task:</h1>
       <TaskCreateForm
         errorMessage={errorMsg}
         collections={collections}
