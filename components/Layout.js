@@ -217,12 +217,12 @@ export default function Layout({ children }) {
         
         a.footer {
           color: gray;
-          text-decoration-color: gray;
+          text-decoration: underline gray;
         }
 
         a.footer:visited {
           color: gray;
-          text-decoration-color: gray;
+          text-decoration: underline gray;
         }
 
         nav {
