@@ -125,6 +125,7 @@ async function userRoute(req, res) {
             return true;
           }
         });
+        contains = contains || !/(^.{1,}@.{1,}\..{1,}[^.]$)/i.test(cleanEmail);
         if (contains && blacklist) { // Figure out a way to do this when no blacklist is provided
           res.status(403).json({ message: "The email you provided is not allowed, please choose something else." });
           return;
