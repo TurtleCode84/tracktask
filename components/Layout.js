@@ -96,6 +96,9 @@ export default function Layout({ children }) {
             gap: 30px;
             width: fit-content;
           }
+          h1 {
+            font-size: 28px;
+          }
           .welcome-text {
             font-size: 20px;
             margin-bottom: 18px;
