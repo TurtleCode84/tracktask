@@ -636,11 +636,6 @@ async function dataRoute(req, res) {
         }
       } else if (body.action === "accept") {
         
-        if (!body.id) {
-          res.status(422).json({ message: "Invalid data" });
-          return;
-        }
-        
         const query = {
           'sharing.shared': true,
           'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user.id), role: /pending/i}},
