@@ -26,7 +26,7 @@ export default function UserSearchForm({ user, errorMessage, searchResults, onSu
 
       <br/><button type="submit" id="findUserBtn">Find user</button>
 
-      {!errorMessage && results && <ul><li className="success">Found {resultsList.length} matching users:</li>{resultsList}</ul>}
+      {!errorMessage && resultsList && <ul><li className="success">Found {resultsList.length} matching users:</li>{resultsList}</ul>}
       {errorMessage && <p className="error">{errorMessage}</p>}
 
       <style jsx>{`
