@@ -32,7 +32,7 @@ export default function UserSearch() {
       <UserSearchForm
           user={user}
           errorMessage={errorMsg}
-          results={results}
+          searchResults={results}
           onSubmit={async function handleSubmit(event) {
             event.preventDefault();
             document.getElementById("findUserBtn").disabled = true;
