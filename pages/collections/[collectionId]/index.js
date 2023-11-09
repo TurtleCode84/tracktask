@@ -147,7 +147,7 @@ export default function Collection() {
         />
         </details><br/></>}
         </>}
-        {collection.owner !== user.id && <><a href={`/api/collections/${collection._id}`} style={{ marginRight: "8px" }}
+        {user.id !== collection.owner && <><a href={`/api/collections/${collection._id}`} style={{ marginRight: "8px" }}
         onClick={async (e) => {
           e.preventDefault();
           if (collection.pending || confirm("Are you sure? You will lose access to the tasks that are not yours in this collection!")) {

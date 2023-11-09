@@ -135,8 +135,8 @@ export default function Task() {
               }
             }}
         />
-        </details></>}
-        {perms >= 4 && <><br/><details>
+        </details><br/></>}
+        {perms >= 4 && <><details>
           <summary>Add/remove from collection</summary>
           <br/><AddRemoveCollectionForm
             errorMessage={errorMsg}
@@ -174,7 +174,7 @@ export default function Task() {
               }
             }}
           />
-        </details></>}
+        </details><br/></>}
         {user.id !== task.owner && <ReportButton user={user} type="task" reported={task}/>}</>
       :
         <>{taskError ? <p>{taskError.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading task...</p>}</>
