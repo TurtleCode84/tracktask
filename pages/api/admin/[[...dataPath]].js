@@ -75,7 +75,7 @@ async function adminDataRoute(req, res) {
             data.forEach(item => taskIds.push(String(item._id)));*/
 
             // Get and append tasks from reported collections as well
-            const reportedCollections = await db.collection("reports").find({ $or: [ type: "collection", type: "share" ] }, { projection: { reported: 1 } }).toArray();
+            const reportedCollections = await db.collection("reports").find({ $or: [ { type: "collection" }, { type: "share" } ] }, { projection: { reported: 1 } }).toArray();
             var reportedCollectionIds = [];
             reportedCollections.forEach(collection => {
               const collectionReportedId = new ObjectId(collection.reported._id);
