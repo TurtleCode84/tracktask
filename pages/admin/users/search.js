@@ -14,6 +14,7 @@ export default function UserSearch() {
   });
   
   const [errorMsg, setErrorMsg] = useState("");
+  const [results, setResults] = useState("");
   const router = useRouter();
 
   if (!user || !user.isLoggedIn || user.permissions.banned || !user.permissions.admin) {
@@ -29,7 +30,9 @@ export default function UserSearch() {
         Search for user:
       </h2>
       <UserSearchForm
+          user={user}
           errorMessage={errorMsg}
+          results={results}
           onSubmit={async function handleSubmit(event) {
             event.preventDefault();
             document.getElementById("findUserBtn").disabled = true;
@@ -45,7 +48,11 @@ export default function UserSearch() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body),
               });
-              router.push(`/admin/users/${getUrl?._id}`);
+              if(getUrl?.length > 1) {
+                setResults(getUrl);
+              } else {
+                router.push(`/admin/users/${getUrl[0]?._id}`);
+              }
             } catch (error) {
               if (error instanceof FetchError) {
                 setErrorMsg(error.data.message);

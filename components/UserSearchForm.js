@@ -1,4 +1,12 @@
-export default function UserSearchForm({ errorMessage, onSubmit }) {
+import User from "components/User";
+
+export default function UserSearchForm({ user, errorMessage, results, onSubmit }) {
+  const resultsList = results?.map((result) =>
+    <li key={result._id} style={{ margin: "0.5em" }}>
+      <User user={user} id={result._id} link={true}/>
+    </li>
+  );
+  
   return (
     <form id="userSearchForm" autocomplete="off" onSubmit={onSubmit}>
       <label>
@@ -17,6 +25,7 @@ export default function UserSearchForm({ errorMessage, onSubmit }) {
 
       <br/><button type="submit" id="findUserBtn">Find user</button>
 
+      {!errorMessage && results && <ul><li className="success">Found {resultsList.length} matching users:</li>{resultsList}</ul>}
       {errorMessage && <p className="error">{errorMessage}</p>}
 
       <style jsx>{`

@@ -17,25 +17,23 @@ async function adminUserSearchRoute(req, res) {
     
     const client = await clientPromise;
     const db = client.db("data");
-    var dbQuery;
+    const dbQuery = {};
     if (query === "username") {
-      dbQuery = { username: keyword.trim().toLowerCase() };
+      dbQuery.username = keyword.trim().toLowerCase();
     } else if (query === "uid") { // No DB query needed
       if (!ObjectId.isValid(keyword)) {
         res.status(422).json({ message: "Invalid user ID" });
         return;
       }
       const searchUser = { _id: keyword.trim().toLowerCase() };
-      res.json(searchUser);
+      res.json([ searchUser ]);
     } else if (query === "email") {
-      dbQuery = { email: keyword.trim().toLowerCase() };
+      dbQuery.email = keyword.trim().toLowerCase();
     } else if (query === "ip") {
-      dbQuery = {
-        $or: [
-          { 'history.joinedIp': keyword.trim().toLowerCase() },
-          { 'history.loginIpList': new RegExp(keyword.trim().toLowerCase(), "i") },
-        ],
-      };
+      dbQuery.$or: [
+        { 'history.joinedIp': keyword.trim().toLowerCase() },
+        { 'history.loginIpList': new RegExp(keyword.trim().toLowerCase(), "i") },
+      ];
     } else {
       res.status(422).json({ message: "Invalid search query" });
       return;
@@ -43,14 +41,15 @@ async function adminUserSearchRoute(req, res) {
     const options = { projection: { _id : 1 } };
   
     try {
-      const searchUser = await db.collection("users").findOne(dbQuery, options);
+      const searchUser = await db.collection("users").find(dbQuery, options).toArray();
       if (searchUser) {
         res.json(searchUser);
       } else {
         res.status(404).json({ message: "User not found" });
       }
     } catch (error) {
-      res.status(200).json([]);
+      res.status(500).json({ message: error.message });
+      return;
     }
   } else {
     res.status(405).json({ message: "Method not allowed" });
