@@ -48,7 +48,7 @@ export default function UserSearch() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body),
               });
-              if(getUrl?.length > 1) {
+              if(getUrl[1]) {
                 setResults(getUrl);
               } else {
                 router.push(`/admin/users/${getUrl[0]?._id}`);

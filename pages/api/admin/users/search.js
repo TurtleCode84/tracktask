@@ -18,7 +18,7 @@ async function adminUserSearchRoute(req, res) {
     const client = await clientPromise;
     const db = client.db("data");
     const dbQuery = {};
-    if (query === "username") {
+    if (query === "username" && keyword) {
       dbQuery.username = keyword.trim().toLowerCase();
     } else if (query === "uid") { // No DB query needed
       if (!ObjectId.isValid(keyword)) {
@@ -29,13 +29,13 @@ async function adminUserSearchRoute(req, res) {
       res.json([ searchUser ]);
     } else if (query === "email") {
       dbQuery.email = keyword.trim().toLowerCase();
-    } else if (query === "ip") {
+    } else if (query === "ip" && keyword) {
       dbQuery.$or = [
         { 'history.joinedIp': keyword.trim().toLowerCase() },
         { 'history.loginIpList': new RegExp(keyword.trim().toLowerCase(), "i") },
       ];
     } else {
-      res.status(422).json({ message: "Invalid search query" });
+      res.status(422).json({ message: "Invalid search query or keyword" });
       return;
     }
     const options = { projection: { _id : 1 } };

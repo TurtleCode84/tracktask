@@ -1,7 +1,7 @@
 import User from "components/User";
 
 export default function UserSearchForm({ user, errorMessage, searchResults, onSubmit }) {
-  /*const resultsList = results?.map((result) =>
+  /*const resultsList = searchResults?.map((result) =>
     <li key={result._id} style={{ margin: "0.5em" }}>
       <User user={user} id={result._id} link={true}/>
     </li>
@@ -12,7 +12,7 @@ export default function UserSearchForm({ user, errorMessage, searchResults, onSu
     <form id="userSearchForm" autocomplete="off" onSubmit={onSubmit}>
       <label>
         <span>Keyword...</span>
-        <input type="text" name="keyword" autoFocus required />
+        <input type="text" name="keyword" autoFocus />
       </label>
       <label>
         <span>Search by...</span>
