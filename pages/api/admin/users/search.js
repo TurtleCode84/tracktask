@@ -42,7 +42,7 @@ async function adminUserSearchRoute(req, res) {
   
     try {
       const searchUser = await db.collection("users").find(dbQuery, options).toArray();
-      if (searchUser) {
+      if (searchUser.length > 0) {
         res.json(searchUser);
       } else {
         res.status(404).json({ message: "User not found" });

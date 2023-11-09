@@ -50,6 +50,8 @@ export default function UserSearch() {
               });
               if(getUrl.length > 1) {
                 setResults(getUrl);
+                console.log(JSON.stringify(getUrl));
+                document.getElementById("findUserBtn").disabled = false;
               } else {
                 router.push(`/admin/users/${getUrl[0]._id}`);
               }
