@@ -47,11 +47,11 @@ export default function Admin() {
     <Layout>
       <h1>TrackTask Admin Panel <span style={{ color: "slategray" }} className="material-symbols-outlined">verified_user</span></h1>
       {dynamicMsg && <p className="success">{dynamicMsg}{' '}<Link href="/admin">Ok</Link></p>}
-      <h2>Recent Reports</h2>
+      <h2><hr/>Recent Reports<hr/></h2>
       <ul style={{ display: "table" }}>
         {reportList?.length > 0 ? reportList : <li>No reports found!</li>}
       </ul>
-      <h2>User Statistics</h2>
+      <h2><hr/>User Statistics<hr/></h2>
       <h3>Recently active:</h3>
       <ul>
         {activeUsersList ? activeUsersList : 'Loading active users...'}
@@ -62,7 +62,7 @@ export default function Admin() {
         {newUsersList ? newUsersList : 'Loading new users...'}
         {newUsersList && newUsersList === null && <>No new users found</>}
       </ul>
-      <Link href="/admin/users">View all users</Link>
+      <Link href="/admin/users">View all users</Link><hr/>
       <p>Useful admin pages:</p>
       <ul style={{ listStyle: "revert", margin: "revert" }}>
         <li><Link href="/admin/users/search">Find a user</Link></li>
