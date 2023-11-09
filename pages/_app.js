@@ -98,12 +98,12 @@ function MyApp({ Component, pageProps }) {
         },
       }}
     >
-      <ErrorBoundary>
       <style jsx global>{`
         html {
           font-family: ${font.style.fontFamily}, sans-serif;
         }
       `}</style>
+      <ErrorBoundary>
       <Component {...pageProps} />
       </ErrorBoundary>
     </SWRConfig>

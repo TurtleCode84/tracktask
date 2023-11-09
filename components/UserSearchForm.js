@@ -1,6 +1,6 @@
 import User from "components/User";
 
-export default function UserSearchForm({ user, errorMessage, results, onSubmit }) {
+export default function UserSearchForm({ user, errorMessage, results=[], onSubmit }) {
   const resultsList = results?.map((result) =>
     <li key={result._id} style={{ margin: "0.5em" }}>
       <User user={user} id={result._id} link={true}/>
