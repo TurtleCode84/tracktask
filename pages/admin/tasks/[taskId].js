@@ -48,6 +48,7 @@ export default function TaskAdmin() {
           <br/><TaskEditForm
             errorMessage={errorMsg}
             task={task}
+            isTaskOwner={true}
             onSubmit={async function handleSubmit(event) {
               event.preventDefault();
               document.getElementById("editTaskBtn").disabled = true;
@@ -141,7 +142,7 @@ export default function TaskAdmin() {
             hidden: true,
           };
           try {
-            await fetchJson(`/api/collections/${collection._id}`, {
+            await fetchJson(`/api/admin/tasks/${task._id}`, {
               method: "PATCH",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(body),

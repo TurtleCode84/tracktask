@@ -90,6 +90,7 @@ export default function Task() {
           <br/><TaskEditForm
             errorMessage={errorMsg}
             task={task}
+            isTaskOwner={user.id == task.owner}
             onSubmit={async function handleSubmit(event) {
               event.preventDefault();
               document.getElementById("editTaskBtn").disabled = true;

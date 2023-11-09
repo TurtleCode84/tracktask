@@ -2,11 +2,11 @@ import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
 import moment from "moment";
 
-export default function TaskEditForm({ errorMessage, onSubmit, task }) {
+export default function TaskEditForm({ errorMessage, onSubmit, task, isTaskOwner }) {
   const router = useRouter();
   return (
     <form id="taskEditForm" autocomplete="off" onSubmit={onSubmit}>
-      <label>
+      {isTaskOwner && <><label>
         <span>Name</span>
         <input type="text" name="name" defaultValue={task.name} maxlength="55" />
       </label>
@@ -28,7 +28,7 @@ export default function TaskEditForm({ errorMessage, onSubmit, task }) {
       <label>
         <span>Priority <span style={{ color: "red" }} className="material-symbols-outlined icon-list">label_important</span></span>
         <input type="checkbox" name="priority" defaultChecked={task.priority} />
-      </label>
+      </label></>}
       <label>
         <span>Completed <span style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">task_alt</span></span>
         <input type="checkbox" name="complete" defaultChecked={task.completion.completed ? true : false} />
@@ -38,7 +38,7 @@ export default function TaskEditForm({ errorMessage, onSubmit, task }) {
 
       {errorMessage && <p className="error">{errorMessage}</p>}<hr/>
        
-      <a href={`/api/tasks/${task._id}`}
+      {isTaskOwner && <><a href={`/api/tasks/${task._id}`}
         onClick={async (e) => {
           e.preventDefault();
           if (confirm("Are you sure? Deleting a task is irreversable!")) {
@@ -51,7 +51,7 @@ export default function TaskEditForm({ errorMessage, onSubmit, task }) {
           }
         }}
       ><button><span style={{ color: "orange" }} className="material-symbols-outlined icon-list">warning</span> Delete task <span style={{ color: "orange" }} className="material-symbols-outlined icon-list">warning</span></button></a>
-      <p className="error" id="deleteTaskMessage"></p>
+      <p className="error" id="deleteTaskMessage"></p><>}
 
       <style jsx>{`
         form,
