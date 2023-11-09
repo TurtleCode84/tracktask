@@ -36,7 +36,8 @@ export default function Layout({ children }) {
 
         /* Dark mode (default) */
         :root {
-          --text-color: #fff;
+          --primary-text-color: #fff;
+          --secondary-text-color: gray;
           --border-color: #333;
           --background-color: #121212;
           --header-color: #1b2129;
@@ -52,7 +53,8 @@ export default function Layout({ children }) {
         
         /* Light mode */
         [data-theme="light"] {
-          --text-color: #333;
+          --primary-text-color: #333;
+          --secondary-text-color: #555;
           --border-color: darkgray;
           --background-color: #fff;
           --header-color: #333;
@@ -68,7 +70,7 @@ export default function Layout({ children }) {
 
         body {
           margin: 0;
-          color: var(--text-color);
+          color: var(--primary-text-color);
           background-color: var(--background-color);
           overflow-wrap: anywhere;
         }
@@ -121,7 +123,7 @@ export default function Layout({ children }) {
 
         button {
           background: var(--element-background);
-          color: var(--text-color);
+          color: var(--primary-text-color);
           font-weight: 550;
           padding: 5px;
           border-width: 1px;
@@ -149,7 +151,7 @@ export default function Layout({ children }) {
 
         textarea {
           background-color: var(--element-background);
-          color: var(--text-color);
+          color: var(--primary-text-color);
           border-radius: 4px;
           resize: none;
           font-family: inherit;
@@ -160,7 +162,7 @@ export default function Layout({ children }) {
         /* Linkify textarea */
         .textarea {
           background-color: var(--element-background);
-          color: var(--text-color);
+          color: var(--primary-text-color);
           border: 1px solid;
           border-color: var(--textarea-border-color);
           border-radius: 4px;
@@ -177,7 +179,7 @@ export default function Layout({ children }) {
 
         input, select {
           background-color: var(--element-background);
-          color: var(--text-color);
+          color: var(--primary-text-color);
           font-family: inherit;
           border-width: 1px;
           border-style: solid;
