@@ -14,7 +14,7 @@ export default function UserSearch() {
   });
   
   const [errorMsg, setErrorMsg] = useState("");
-  const [results, setResults] = useState("");
+  const [results, setResults] = useState([]);
   const router = useRouter();
 
   if (!user || !user.isLoggedIn || user.permissions.banned || !user.permissions.admin) {
@@ -48,7 +48,7 @@ export default function UserSearch() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body),
               });
-              console.log(typeof getUrl);
+              console.log(getUrl.isArray());
               console.log(JSON.stringify(getUrl));
               console.log(getUrl.length);
               if(getUrl.length > 1) {
