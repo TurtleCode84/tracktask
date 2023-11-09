@@ -70,9 +70,6 @@ async function adminDataRoute(req, res) {
           data = await db.collection("tasks").find(reportedTasksQuery, tasksOptions).toArray();
 
           if (data.length === 0 && dataPath[1]) {
-            
-            /*var taskIds = [];
-            data.forEach(item => taskIds.push(String(item._id)));*/
 
             // Get and append tasks from reported collections as well
             const reportedCollections = await db.collection("reports").find({ $or: [ { type: "collection" }, { type: "share" } ] }, { projection: { reported: 1 } }).toArray();
@@ -88,19 +85,9 @@ async function adminDataRoute(req, res) {
             if (inReportedCollections > 0) {
               data = data.concat(await db.collection("tasks").find({ _id: new ObjectId(dataPath[1]) }).toArray());
             }
-
-            //data.push({ debug: {irp: inReportedCollections, rci: reportedCollectionIds, rc: reportedCollections, dp: dataPath[1]} });
-
-            /*var reportedCollectionsTasks = [];
-            allCollections.forEach(allCollection => {
-              reportedCollectionsTasks.push(...allCollection.tasks.filter(task => !taskIds.includes(String(task))));
-            });
-            reportedCollectionsTasks = reportedCollectionsTasks.filter(sharedTask => String(sharedTask) === String(dataPath[1]));
-
-            data = data.concat(await db.collection("tasks").find({ _id: { $in: reportedCollectionsTasks } }).toArray());*/
           
           }
-          // data should now contain all owned and shared tasks
+          // data should now contain a task from a reported collection, if it exists
           
           // At this point we can tell if the task exists
           if (dataPath[1] && data.length < 1) {

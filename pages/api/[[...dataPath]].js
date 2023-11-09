@@ -207,7 +207,13 @@ async function dataRoute(req, res) {
               $nin: [new ObjectId(createdTask.insertedId)], // Safety validation in case of edit conflict
             },
             hidden: false,
-            owner: new ObjectId(user.id),
+            $or: [
+              { owner: new ObjectId(user.id) },
+              {
+                'sharing.shared': true,
+                'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user.id), role: "contributor"}}
+              },
+            ],
           };
           await db.collection("collections").updateMany(addCollectionsQuery, {$push: {tasks: new ObjectId(createdTask.insertedId)}});
         }
