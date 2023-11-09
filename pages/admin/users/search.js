@@ -48,10 +48,10 @@ export default function UserSearch() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body),
               });
-              if(getUrl[1]) {
+              if(getUrl.length > 1) {
                 setResults(getUrl);
               } else {
-                router.push(`/admin/users/${getUrl[0]?._id}`);
+                router.push(`/admin/users/${getUrl[0]._id}`);
               }
             } catch (error) {
               if (error instanceof FetchError) {
