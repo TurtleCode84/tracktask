@@ -78,7 +78,7 @@ async function adminDataRoute(req, res) {
             const reportedCollections = await db.collection("reports").find({ type: "collection" }, { projection: { reported: 1 } }).toArray();
             var reportedCollectionIds = [];
             reportedCollections.forEach(collection => reportedCollectionIds.push(new ObjectId(collection.reported._id)));
-            const inReportedCollections = await db.collection("collections").countDocuments({ _id: { $in: reportedCollectionIds }, tasks: new ObjectId(dataPath[1]) });
+            const inReportedCollections = await db.collection("collections").countDocuments({ _id: { $in: reportedCollectionIds }/*, tasks: new ObjectId(dataPath[1])*/ });
             
             if (inReportedCollections > 0) {
               data = data.concat(await db.collection("tasks").find({ _id: new ObjectId(dataPath[1]) }).toArray());
