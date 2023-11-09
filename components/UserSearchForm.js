@@ -6,7 +6,7 @@ export default function UserSearchForm({ user, errorMessage, searchResults, onSu
       <User user={user} id={result._id} link={true}/>
     </li>
   );*/
-  const resultsList = typeof searchResults;
+  const resultsList = JSON.stringify(searchResults);
 
   return (
     <form id="userSearchForm" autocomplete="off" onSubmit={onSubmit}>
