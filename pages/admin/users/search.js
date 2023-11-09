@@ -48,9 +48,11 @@ export default function UserSearch() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body),
               });
+              console.log(typeof getUrl);
+              console.log(JSON.stringify(getUrl));
+              console.log(getUrl.length);
               if(getUrl.length > 1) {
                 setResults(getUrl);
-                console.log(JSON.stringify(getUrl));
                 document.getElementById("findUserBtn").disabled = false;
               } else {
                 router.push(`/admin/users/${getUrl[0]._id}`);
