@@ -143,6 +143,7 @@ export default function Task() {
             errorMessage={errorMsg}
             taskId={task._id}
             collections={collections}
+            isTaskOwner={user.id == task.owner}
             onSubmit={async function handleSubmit(event) {
               event.preventDefault();
               document.getElementById("addRemoveCollectionBtn").disabled = true;

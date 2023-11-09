@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
 //import TaskEditForm from "components/TaskEditForm";
-//import AddRemoveCollectionForm from "components/AddRemoveCollectionForm";
 import User from "components/User";
 import ReportButton from "components/ReportButton";
 import useUser from "lib/useUser";
@@ -94,45 +93,6 @@ export default function TaskAdmin() {
               }
             }}
         />
-        </details></>*/}
-        {/*perms >= 4 && <><br/><details>
-          <summary>Add/remove from collection</summary>
-          <br/><AddRemoveCollectionForm
-            errorMessage={errorMsg}
-            taskId={task._id}
-            collections={collections}
-            onSubmit={async function handleSubmit(event) {
-              event.preventDefault();
-              document.getElementById("addRemoveCollectionBtn").disabled = true;
-                            
-              const addedCollections = event.currentTarget.addCollections.selectedOptions;
-              const addedCollectionsValues = Array.from(addedCollections)?.map((item) => item.value);
-              const removedCollections = event.currentTarget.removeCollections.selectedOptions;
-              const removedCollectionsValues = Array.from(removedCollections)?.map((item) => item.value);
-              
-              const body = {
-                taskId: task._id,
-              };
-              if (addedCollectionsValues.length > 0) {body.addCollections = addedCollectionsValues};
-              if (removedCollectionsValues.length > 0) {body.removeCollections = removedCollectionsValues};
-                            
-              try {
-                await fetchJson(`/api/collections`, {
-                  method: "PATCH",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify(body),
-                });
-                router.reload();
-              } catch (error) {
-                if (error instanceof FetchError) {
-                  setErrorMsg(error.data.message);
-                } else {
-                  console.error("An unexpected error happened:", error);
-                }
-                document.getElementById("addRemoveCollectionBtn").disabled = false;
-              }
-            }}
-          />
         </details></>*/}
         <a href={`/api/admin/tasks/${task._id}`} style={{ marginRight: "8px" }}
         onClick={async (e) => {
