@@ -30,7 +30,7 @@ async function adminUserSearchRoute(req, res) {
     } else if (query === "email") {
       dbQuery.email = keyword.trim().toLowerCase();
     } else if (query === "ip") {
-      dbQuery.$or: [
+      dbQuery.$or = [
         { 'history.joinedIp': keyword.trim().toLowerCase() },
         { 'history.loginIpList': new RegExp(keyword.trim().toLowerCase(), "i") },
       ];
