@@ -84,6 +84,8 @@ async function adminDataRoute(req, res) {
               data = data.concat(await db.collection("tasks").find({ _id: new ObjectId(dataPath[1]) }).toArray());
             }
 
+            data.push({ debug: {irp: inReportedCollections, rci: reportedCollectionIds, rc: reportedCollections, dp: dataPath[1]} });
+
             /*var reportedCollectionsTasks = [];
             allCollections.forEach(allCollection => {
               reportedCollectionsTasks.push(...allCollection.tasks.filter(task => !taskIds.includes(String(task))));
