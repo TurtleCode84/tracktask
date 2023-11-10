@@ -61,7 +61,7 @@ export default function UserSearch() {
               if (error instanceof FetchError) {
                 setErrorMsg(error.data.message);
               } else {
-                console.error("An unexpected error happened:", error);
+                console.log("An unexpected error happened:" + JSON.stringify(error));
               }
               document.getElementById("findUserBtn").disabled = false;
             }
