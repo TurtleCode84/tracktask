@@ -8,16 +8,16 @@ export default function UserSearchForm({ user, errorMessage, searchResults, auto
     </li>
   );
 
-  const form = useRef();
+  const submitButton = useRef();
 
   useEffect(()=>{
     if (autoKeyword && autoQuery) {
-      form.current.dispatchEvent(new Event("submit", { cancelable: true }));
+      submitButton.current.click();
     }
   },[]);
 
   return (
-    <form id="userSearchForm" ref={form} autocomplete="off" onSubmit={onSubmit}>
+    <form id="userSearchForm" autocomplete="off" onSubmit={onSubmit}>
       <label>
         <span>Keyword...</span>
         <input type="text" name="keyword" defaultValue={autoKeyword?.trim()} autoFocus />
@@ -32,7 +32,7 @@ export default function UserSearchForm({ user, errorMessage, searchResults, auto
         </select>
       </label>
 
-      <br/><button type="submit" id="findUserBtn">Find user</button>
+      <br/><button type="submit" ref={submitButton} id="findUserBtn">Find user</button>
 
       {resultsList.length > 0 && !errorMessage && <ul><li className="success">Found {resultsList.length} matching users:</li>{resultsList}</ul>}
       {errorMessage && <p className="error">{errorMessage}</p>}
