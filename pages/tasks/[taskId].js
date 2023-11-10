@@ -148,9 +148,12 @@ export default function Task() {
               event.preventDefault();
               document.getElementById("addRemoveCollectionBtn").disabled = true;
                             
-              const addedCollections = event.currentTarget.addCollections?.selectedOptions;
-              const addedCollectionsValues = Array.from(addedCollections)?.map((item) => item.value);
-              const removedCollections = event.currentTarget.removeCollections?.selectedOptions;
+              var addedCollectionsValues = [];
+              if (user.id == task.owner) {
+                const addedCollections = event.currentTarget.addCollections.selectedOptions;
+                addedCollectionsValues = Array.from(addedCollections)?.map((item) => item.value);
+              };
+              const removedCollections = event.currentTarget.removeCollections.selectedOptions;
               const removedCollectionsValues = Array.from(removedCollections)?.map((item) => item.value);
               
               const body = {
