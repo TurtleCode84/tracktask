@@ -305,10 +305,15 @@ async function dataRoute(req, res) {
 
       if (perms === "complete") {
 
-        if (body.completion) {
+        if (body.completed !== undefined) {
           updateDoc.completion = {};
-          updateDoc.completion.completed = body.completion.completed;
-          updateDoc.completion.completedBy = body.completion.completedBy;
+          if (body.completed) {
+            updateDoc.completion.completed = Math.floor(Date.now()/1000);
+            updateDoc.completion.completedBy = user.id;
+          } else {
+            updateDoc.completion.completed = 0;
+            updateDoc.completion.completedBy = "";
+          }
         }
 
       } else if (perms === "edit") {
@@ -324,10 +329,15 @@ async function dataRoute(req, res) {
           updateDoc.notified = false;
         }
         if (body.priority !== undefined) {updateDoc.priority = body.priority;}
-        if (body.completion) {
+        if (body.completed !== undefined) {
           updateDoc.completion = {};
-          updateDoc.completion.completed = body.completion.completed;
-          updateDoc.completion.completedBy = body.completion.completedBy;
+          if (body.completed) {
+            updateDoc.completion.completed = Math.floor(Date.now()/1000);
+            updateDoc.completion.completedBy = user.id;
+          } else {
+            updateDoc.completion.completed = 0;
+            updateDoc.completion.completedBy = "";
+          }
         }
 
       } else {
