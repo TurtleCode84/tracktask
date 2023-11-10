@@ -1,21 +1,30 @@
 import User from "components/User";
+import { useEffect, useRef } from "react";
 
-export default function UserSearchForm({ user, errorMessage, searchResults, onSubmit }) {
+export default function UserSearchForm({ user, errorMessage, searchResults, autoKeyword, autoQuery, onSubmit }) {
   const resultsList = searchResults.map((result) =>
     <li key={result._id} style={{ margin: "0.5em" }}>
       <User user={user} id={result._id} link={true}/>
     </li>
   );
 
+  const form = useRef();
+
+  useEffect(()=>{
+    if (autoKeyword && autoQuery) {
+      form.current.submit();
+    }
+  },[]);
+
   return (
-    <form id="userSearchForm" autocomplete="off" onSubmit={onSubmit}>
+    <form id="userSearchForm" ref={form} autocomplete="off" onSubmit={onSubmit}>
       <label>
         <span>Keyword...</span>
-        <input type="text" name="keyword" autoFocus />
+        <input type="text" name="keyword" defaultValue={autoKeyword?.trim()} autoFocus />
       </label>
       <label>
         <span>Search by...</span>
-        <select name="query" required>
+        <select name="query" defaultValue={autoQuery?.trim().toLowerCase()} required>
           <option value="username">Username</option>
           <option value="uid">User ID</option>
           <option value="email">Email</option>

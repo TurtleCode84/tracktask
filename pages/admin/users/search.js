@@ -16,6 +16,7 @@ export default function UserSearch() {
   const [errorMsg, setErrorMsg] = useState("");
   const [results, setResults] = useState([]);
   const router = useRouter();
+  const { keyword, query } = router.query;
 
   if (!user || !user.isLoggedIn || user.permissions.banned || !user.permissions.admin) {
     return (
@@ -33,6 +34,8 @@ export default function UserSearch() {
           user={user}
           errorMessage={errorMsg}
           searchResults={results}
+          autoKeyword={keyword}
+          autoQuery={query}
           onSubmit={async function handleSubmit(event) {
             event.preventDefault();
             document.getElementById("findUserBtn").disabled = true;
