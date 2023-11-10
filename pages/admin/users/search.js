@@ -48,7 +48,7 @@ export default function UserSearch() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body),
               });
-              console.log(getUrl.isArray());
+              console.log(typeof getUrl);
               console.log(JSON.stringify(getUrl));
               console.log(getUrl.length);
               if(getUrl.length > 1) {
