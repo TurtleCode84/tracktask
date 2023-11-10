@@ -1,12 +1,12 @@
 import User from "components/User";
 
 export default function UserSearchForm({ user, errorMessage, searchResults, onSubmit }) {
-  /*const resultsList = searchResults?.map((result) =>
+  const resultsList = searchResults.map((result) =>
     <li key={result._id} style={{ margin: "0.5em" }}>
       <User user={user} id={result._id} link={true}/>
     </li>
-  );*/
-  const resultsList = searchResults;
+  );
+  //const resultsList = searchResults;
 
   return (
     <form id="userSearchForm" autocomplete="off" onSubmit={onSubmit}>
