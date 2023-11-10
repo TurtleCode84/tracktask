@@ -48,10 +48,8 @@ export default function UserSearch() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body),
               });
-              console.log(Array.isArray(getUrl));
-              console.log(JSON.stringify(getUrl));
-              console.log(getUrl.length);
               if(getUrl.length > 1) {
+                setErrorMsg("");
                 setResults(getUrl);
                 document.getElementById("findUserBtn").disabled = false;
               } else {

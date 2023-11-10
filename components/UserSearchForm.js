@@ -6,7 +6,6 @@ export default function UserSearchForm({ user, errorMessage, searchResults, onSu
       <User user={user} id={result._id} link={true}/>
     </li>
   );
-  //const resultsList = searchResults;
 
   return (
     <form id="userSearchForm" autocomplete="off" onSubmit={onSubmit}>
@@ -26,7 +25,7 @@ export default function UserSearchForm({ user, errorMessage, searchResults, onSu
 
       <br/><button type="submit" id="findUserBtn">Find user</button>
 
-      {resultsList && <ul><li className="success">Found {resultsList.length} matching users:</li>{resultsList}</ul>}
+      {resultsList.length > 0 && <ul><li className="success">Found {resultsList.length} matching users:</li>{resultsList}</ul>}
       {errorMessage && <p className="error">{errorMessage}</p>}
 
       <style jsx>{`
