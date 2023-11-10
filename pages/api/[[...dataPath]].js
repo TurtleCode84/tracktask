@@ -320,7 +320,7 @@ async function dataRoute(req, res) {
 
         if (body.name) {updateDoc.name = body.name.trim().slice(0, 55);} // Enforce length limit
         if (body.description) {updateDoc.description = body.description.trim().slice(0, 500);}
-        if (body.dueDate !== undefined && (moment(body.dueDate, moment.ISO_8601, true).isValid() || body.dueDate === 0)) {
+        if (body.dueDate !== undefined && (moment(body.dueDate, moment.ISO_8601, true).isValid() || body.dueDate.length === 0)) {
           if (body.dueDate) {
             updateDoc.dueDate = moment(body.dueDate).unix();
           } else {
