@@ -19,13 +19,14 @@ export default function UserSearchForm({ user, errorMessage, searchResults, onSu
           <option value="username">Username</option>
           <option value="uid">User ID</option>
           <option value="email">Email</option>
-          <option value="ip">IP Address (beta)</option>
+          <option value="email-regex">Email (experimental)</option>
+          <option value="ip">IP Address</option>
         </select>
       </label>
 
       <br/><button type="submit" id="findUserBtn">Find user</button>
 
-      {resultsList.length > 0 && <ul><li className="success">Found {resultsList.length} matching users:</li>{resultsList}</ul>}
+      {resultsList.length > 0 && !errorMessage && <ul><li className="success">Found {resultsList.length} matching users:</li>{resultsList}</ul>}
       {errorMessage && <p className="error">{errorMessage}</p>}
 
       <style jsx>{`
