@@ -19,7 +19,7 @@ async function adminUserSearchRoute(req, res) {
     const db = client.db("data");
     const dbQuery = {};
     if (query === "username" && keyword) {
-      dbQuery.username = keyword.trim().toLowerCase();
+      dbQuery.username = new RegExp(keyword.trim().toLowerCase(), "i");
     } else if (query === "uid") { // No DB query needed
       if (!ObjectId.isValid(keyword)) {
         res.status(422).json({ message: "Invalid user ID" });
@@ -28,12 +28,10 @@ async function adminUserSearchRoute(req, res) {
       const searchUser = { _id: keyword.trim().toLowerCase() };
       res.json([ searchUser ]);
     } else if (query === "email") {
-      dbQuery.email = keyword.trim().toLowerCase();
-    } else if (query === "email-regex") {
       dbQuery.email = new RegExp(keyword.trim().toLowerCase(), "i");
     } else if (query === "ip" && keyword) {
       dbQuery.$or = [
-        { 'history.joinedIp': keyword.trim().toLowerCase() },
+        { 'history.joinedIp': new RegExp(keyword.trim().toLowerCase(), "i") },
         { 'history.loginIpList': new RegExp(keyword.trim().toLowerCase(), "i") },
       ];
     } else {

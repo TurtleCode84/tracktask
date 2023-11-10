@@ -19,7 +19,6 @@ export default function UserSearchForm({ user, errorMessage, searchResults, onSu
           <option value="username">Username</option>
           <option value="uid">User ID</option>
           <option value="email">Email</option>
-          <option value="email-regex">Email (experimental)</option>
           <option value="ip">IP Address</option>
         </select>
       </label>
