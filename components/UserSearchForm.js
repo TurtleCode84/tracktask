@@ -1,5 +1,5 @@
 import User from "components/User";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 export default function UserSearchForm({ user, errorMessage, searchResults, autoKeyword, autoQuery, onSubmit }) {
   const resultsList = searchResults.map((result) =>
@@ -8,14 +8,16 @@ export default function UserSearchForm({ user, errorMessage, searchResults, auto
     </li>
   );
 
+  const form = useRef();
+
   useEffect(()=>{
     if (autoKeyword && autoQuery) {
-      document.getElementById("userSearchForm").submit();
+      form.current.dispatchEvent(new Event("submit", { cancelable: true }));
     }
   },[]);
 
   return (
-    <form id="userSearchForm" autocomplete="off" onSubmit={onSubmit}>
+    <form id="userSearchForm" ref={form} autocomplete="off" onSubmit={onSubmit}>
       <label>
         <span>Keyword...</span>
         <input type="text" name="keyword" defaultValue={autoKeyword?.trim()} autoFocus />
