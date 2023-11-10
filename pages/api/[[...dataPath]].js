@@ -188,7 +188,7 @@ async function dataRoute(req, res) {
           priority: markPriority,
           notified: false,
         };
-        if (dueDate) {
+        if (dueDate && moment(dueDate, moment.HTML5_FMT.DATETIME_LOCAL, true).isValid()) {
           newTask.dueDate = moment(dueDate).unix();
         } else {
           newTask.dueDate = 0;
@@ -320,7 +320,7 @@ async function dataRoute(req, res) {
 
         if (body.name) {updateDoc.name = body.name.trim().slice(0, 55);} // Enforce length limit
         if (body.description) {updateDoc.description = body.description.trim().slice(0, 500);}
-        if (body.dueDate !== undefined) {
+        if (body.dueDate !== undefined && moment(body.dueDate, moment.HTML5_FMT.DATETIME_LOCAL, true).isValid()) {
           if (body.dueDate) {
             updateDoc.dueDate = moment(body.dueDate).unix();
           } else {
