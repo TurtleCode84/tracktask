@@ -14,7 +14,7 @@ export default function UserSearch() {
   });
   
   const [errorMsg, setErrorMsg] = useState("");
-  const [results, setResults] = useState("");
+  const [results, setResults] = useState([]);
   const router = useRouter();
 
   if (!user || !user.isLoggedIn || user.permissions.banned || !user.permissions.admin) {
@@ -61,7 +61,7 @@ export default function UserSearch() {
               if (error instanceof FetchError) {
                 setErrorMsg(error.data.message);
               } else {
-                console.log("An unexpected error happened:" + JSON.stringify(error));
+                console.error("An unexpected error happened:", error);
               }
               document.getElementById("findUserBtn").disabled = false;
             }
