@@ -61,10 +61,7 @@ export default function Task() {
           e.preventDefault();
           document.getElementById("markCompleteBtn").disabled = true;
           const body = {
-            completion: {
-              completed: Math.floor(Date.now()/1000),
-              completedBy: user.id,
-            },
+            completed: true,
             priority: false,
           };
           try {
