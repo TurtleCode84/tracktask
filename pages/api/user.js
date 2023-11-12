@@ -156,15 +156,6 @@ async function userRoute(req, res) {
       await db.collection("users").updateOne(query, lastEditDoc);
       res.json(updated);
     }
-  } else if (req.method === 'PUT') { // Verifies the email of the current user
-    const body = await req.body;
-    const user = req.session.user;
-    if (!user || !user.isLoggedIn || user.permissions.banned ) {
-      res.status(401).json({ message: "Authentication required" });
-      return;
-    }
-    res.status(503).json({ message: "Under construction" });
-    return;
   } else if (req.method === 'DELETE') { // Deletes the current user and their data
     const user = req.session.user;
     if (user.permissions.admin) {

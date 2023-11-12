@@ -14,6 +14,7 @@ export default function UserSearchForm({ user, errorMessage, searchResults, auto
     if (autoKeyword && autoQuery) {
       submitButton.current.click();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
 
   return (

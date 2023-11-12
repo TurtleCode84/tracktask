@@ -181,6 +181,10 @@ async function authRoute(req, res) {
         username: cleanUsername,
         password: await hash(password, 10),
         email: cleanEmail,
+        otp: {
+          key: "",
+          timestamp: 0,
+        },
         profilePicture: "",
         history: {
           joined: Math.floor(Date.now()/1000),
