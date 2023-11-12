@@ -17,8 +17,8 @@ async function emailRoute(req, res) {
   }
   const client = await clientPromise;
   const db = client.db("data");
-  if (req.method === 'PUT') { // Sends an email (verification, password reset)
-    const { type } = await body;
+  if (req.method === 'POST') { // Sends an email (verification, password reset)
+    const { type } = await req.body;
     if (!user.email) {
       res.status(422).json({ message: "You have not linked an email address to your account!" });
       return;
