@@ -54,8 +54,7 @@ export default function UserAdmin() {
       <h2>
         Viewing information for {lookup ? lookup.username : userId}{' '}{lookup?.permissions.verified ? <span title="Verified" style={{ color: "#006dbe" }} className="material-symbols-outlined">verified</span> : null}{lookup?.permissions.admin ? <span title="Admin" style={{ color: "slategray" }} className="material-symbols-outlined">verified_user</span> : null}{lookup?.permissions.banned ? <span title="Banned" style={{ color: "red" }} className="material-symbols-outlined">block</span> : null}:
       </h2>
-      <Link href="/admin/users/search">Back to user search</Link><br/>
-      <Link href="/admin">Back to admin dashboard</Link><br/>
+      <p>Back to <Link href="/admin/users/search">user search</Link> or <Link href="/admin">admin dashboard</Link></p>
       {lookup ?
       <><p>{lookup.permissions.banned && <b>This user is banned.</b>}{' '}{lookup.permissions.banned && lookup.history.ban.reason && <i>Reason: {lookup.history.ban.reason}</i> }</p>
       <h3><hr/>General information<hr/></h3>
