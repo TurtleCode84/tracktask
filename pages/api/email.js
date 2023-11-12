@@ -15,8 +15,8 @@ async function emailRoute(req, res) {
     res.status(401).json({ message: "Unauthorized" });
     return;
   }
-  const client = await clientPromise;
-  const db = client.db("data");
+  /*const client = await clientPromise;
+  const db = client.db("data");*/
   if (req.method === 'POST') { // Sends an email (verification, password reset)
     const { type } = await body;
     if (!user.email) {
