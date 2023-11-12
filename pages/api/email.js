@@ -26,10 +26,15 @@ async function emailRoute(req, res) {
     }
     var email;
     const uuid = uuidv1();
-    if (type === "verify") {
-      email = verifyEmail(user.username, uuid);
-    } else if (type === "password") {
+    if (type === "password") {
       email = passwordReset(user.username, uuid);
+    } else if (type === "verify") {
+      if (user.verified) {
+        res.status(403).json({ message: "Your email address is already verified!" });
+        return;
+      } else {
+        email = verifyEmail(user.username, uuid);
+      }
     } else {
       res.status(422).json({ message: "Invalid data" });
       return;
@@ -38,7 +43,19 @@ async function emailRoute(req, res) {
     const sentMail = await sendEmail(user.email, email.subject, email.html);
     res.json(sentMail);
   } else if (req.method === 'PATCH') { // Attempts to verify the current user
-    const body = await req.body;
+    const { key } = await req.body;
+    if (user.verified) {
+      res.status(422).json({ message: "Your email address is already verified!" });
+      return;
+    }
+    const userInfo = await db.collection("users").findOne({ _id: new ObjectId(user.id) }, { projection: { otp: 1 } });
+    if (key === userInfo.otp && (Date.now() - parseUuid(userInfo.otp)) < 3600000) {
+      const verifiedUser = await db.collection("users").updateOne({ _id: new ObjectId(user.id) }, { $set: { otp: "", 'permissions.verified': true } });
+      res.json(verifiedUser);
+    } else {
+      res.status(403).json({ message: "Invalid verification key" });
+      return;
+    }
     res.status(503).json({ message: "Under construction" });
     return;
   } else {

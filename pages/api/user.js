@@ -118,20 +118,6 @@ async function userRoute(req, res) {
         res.status(403).json({ message: "Only verified users can change their username!" });
         return;
       }
-      if (body.email !== undefined) {
-        const cleanEmail = body.email.trim().toLowerCase();
-        var contains = blacklist.some(element => { // Check for blacklisted elements
-          if (cleanEmail.includes(element.toLowerCase())) {
-            return true;
-          }
-        });
-        contains = contains || !/(^.+@.+\..+[^.]$)/i.test(cleanEmail);
-        if (contains && blacklist) { // Figure out a way to do this when no blacklist is provided
-          res.status(403).json({ message: "The email you provided is not allowed, please choose something else." });
-          return;
-        }
-        updateUser.email = cleanEmail;
-      }
       if (body.newPassword && body.oldPassword) {
         const currPass = await db.collection("users").findOne(query, { projection: { password: 1 } }); // current password hash
         const passwordMatch = await compare(body.oldPassword, currPass.password); // string vs hash
@@ -147,6 +133,21 @@ async function userRoute(req, res) {
         $set: updateUser,
       };
       const updated = await db.collection("users").updateOne(query, updateDoc);
+      if (body.email !== undefined) {
+        const cleanEmail = body.email.trim().toLowerCase();
+        var contains = blacklist.some(element => { // Check for blacklisted elements
+          if (cleanEmail.includes(element.toLowerCase())) {
+            return true;
+          }
+        });
+        contains = contains || !/(^.+@.+\..+[^.]$)/i.test(cleanEmail);
+        if (contains && blacklist) { // Figure out a way to do this when no blacklist is provided
+          res.status(403).json({ message: "The email you provided is not allowed, please choose something else." });
+          return;
+        }
+        const emailDoc = { $set: {email: cleanEmail, 'permissions.verified': false} };
+        await db.collection("users").updateOne(query, emailDoc);
+      }
       const lastEditDoc = {
         $set: {
           'history.lastEdit.timestamp': Math.floor(Date.now()/1000),
