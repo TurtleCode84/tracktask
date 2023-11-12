@@ -1,6 +1,7 @@
 import React from "react";
 import Layout from "components/Layout";
 import Link from "next/link";
+import passwordReset from "templates/passwordReset";
 
 export default function Terms() {
   return (
@@ -27,6 +28,8 @@ export default function Terms() {
       </ul>
       <p>If you have any questions about the terms listed above, please contact us at <a href="mailto:tracktask@tracktask.eu.org">tracktask@tracktask.eu.org</a>.</p>
       <p style={{ fontStyle: "italic" }}>This page was last updated 09-03-2023.</p>
+
+      <passwordReset username={'turtlecode84'}, key={'1234'}/>
 
       <style jsx>{`
         li {
