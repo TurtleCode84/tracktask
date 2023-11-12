@@ -8,7 +8,7 @@ import { allowedChars } from "lib/allowedChars";
 export default withIronSessionApiRoute(authRoute, sessionOptions);
 
 async function authRoute(req, res) {
-  if (req.method === 'POST') {
+  if (req.method === 'POST') { // login
     //const { username, password, gReCaptchaToken } = await req.body;
     const { username, password } = await req.body;
     
@@ -100,7 +100,7 @@ async function authRoute(req, res) {
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
-  } else if (req.method === 'PUT') {
+  } else if (req.method === 'PUT') { // signup
     const { username, password, email, gReCaptchaToken } = await req.body;
     
     //Check if robot
@@ -181,10 +181,7 @@ async function authRoute(req, res) {
         username: cleanUsername,
         password: await hash(password, 10),
         email: cleanEmail,
-        otp: {
-          key: "",
-          timestamp: 0,
-        },
+        otp: "",
         profilePicture: "",
         history: {
           joined: Math.floor(Date.now()/1000),
@@ -220,7 +217,11 @@ async function authRoute(req, res) {
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
-  } else if (req.method === 'DELETE') {
+  } else if (req.method === 'PATCH') { // password reset (WIP)
+    const body = await req.body;
+    res.status(503).json({ message: "Under construction" });
+    return;
+  } else if (req.method === 'DELETE') { // deletion
     await req.session.destroy();
     res.json({ isLoggedIn: false, id: "", username: "", permissions: {} });
   } else {
