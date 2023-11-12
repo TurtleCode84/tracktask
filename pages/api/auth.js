@@ -1,5 +1,5 @@
 import clientPromise from "lib/mongodb";
-import { compare, hash } from 'bcryptjs';
+import { compare, hash } from "bcryptjs";
 import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "lib/session";
 import fetchJson from "lib/fetchJson";

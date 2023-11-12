@@ -8,7 +8,7 @@ import CollectionEditForm from "components/CollectionEditForm";
 import useUser from "lib/useUser";
 import useData from "lib/useData";
 import fetchJson, { FetchError } from "lib/fetchJson";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 import moment from "moment";
 import Link from "next/link";
 import Linkify from "linkify-react";

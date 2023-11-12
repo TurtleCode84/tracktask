@@ -1,6 +1,6 @@
 import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "lib/session";
-import { ObjectId } from 'mongodb'
+import { ObjectId } from "mongodb";
 import clientPromise from "lib/mongodb";
 
 export default withIronSessionApiRoute(adminUserSearchRoute, sessionOptions);

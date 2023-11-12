@@ -6,7 +6,7 @@ import User from "components/User";
 import Link from "next/link";
 import useUser from "lib/useUser";
 import useAdminUsers from "lib/useAdminUsers";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 
 export default function UsersAdmin() {
   const { user } = useUser({

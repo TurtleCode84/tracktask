@@ -7,7 +7,7 @@ import ReportButton from "components/ReportButton";
 import useUser from "lib/useUser";
 import useAdminUser from "lib/useAdminUser";
 import fetchJson, { FetchError } from "lib/fetchJson";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 import moment from "moment";
 import Link from "next/link";
 import Image from "next/image";

@@ -7,7 +7,7 @@ import ReportButton from "components/ReportButton";
 import useUser from "lib/useUser";
 import useAdminData from "lib/useAdminData";
 import fetchJson, { FetchError } from "lib/fetchJson";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 import moment from "moment";
 import Link from "next/link";
 import Linkify from "linkify-react";

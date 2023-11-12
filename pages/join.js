@@ -5,7 +5,7 @@ import Layout from "components/Layout";
 import SignupForm from "components/SignupForm";
 import Link from "next/link";
 import fetchJson, { FetchError } from "lib/fetchJson";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 
 export default function Join() {
   // here we just check if user is already logged in and redirect to dashboard

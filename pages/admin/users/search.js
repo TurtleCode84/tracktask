@@ -5,7 +5,7 @@ import UserSearchForm from "components/UserSearchForm";
 import useUser from "lib/useUser";
 import Link from "next/link";
 import fetchJson, { FetchError } from "lib/fetchJson";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 
 export default function UserSearch() {
   const { user, mutateUser } = useUser({

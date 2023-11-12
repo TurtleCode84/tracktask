@@ -8,7 +8,7 @@ import useAdminUsers from "lib/useAdminUsers";
 import useAdminReports from "lib/useAdminReports";
 import moment from "moment";
 import Link from "next/link";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 
 export default function Admin() {
   const { user, mutateUser } = useUser({

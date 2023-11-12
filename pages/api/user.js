@@ -1,14 +1,14 @@
 import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "lib/session";
 import { allowedChars } from "lib/allowedChars";
-import { ObjectId } from 'mongodb'
+import { ObjectId } from "mongodb";
 import clientPromise from "lib/mongodb";
-import { compare, hash } from 'bcryptjs';
+import { compare, hash } from "bcryptjs";
 
 export default withIronSessionApiRoute(userRoute, sessionOptions);
 
 async function userRoute(req, res) {
-  if (req.method === 'GET') {
+  if (req.method === 'GET') { // Returns info for the current user
     if (req.session.user) {
       const client = await clientPromise;
       const db = client.db("data");
@@ -53,7 +53,7 @@ async function userRoute(req, res) {
         permissions: {},
       });
     }
-  } else if (req.method === 'POST') {
+  } else if (req.method === 'POST') { // Updates the current user
     const body = await req.body;
     const user = req.session.user;
     if (!user || !user.isLoggedIn || user.permissions.banned ) {
@@ -78,7 +78,7 @@ async function userRoute(req, res) {
         await db.collection("users").updateOne(query, lastEditDoc);
         res.json(updatedWarn);
       } catch (error) {
-        res.status(500).json({ "message": error.data.message });
+        res.status(500).json({ message: error.data.message });
       }
     } else {
       const blacklist = process.env.BLACKLIST.split(',');
@@ -156,7 +156,16 @@ async function userRoute(req, res) {
       await db.collection("users").updateOne(query, lastEditDoc);
       res.json(updated);
     }
-  } else if (req.method === 'DELETE') {
+  } else if (req.method === 'PUT') { // Verifies the email of the current user
+    const body = await req.body;
+    const user = req.session.user;
+    if (!user || !user.isLoggedIn || user.permissions.banned ) {
+      res.status(401).json({ message: "Authentication required" });
+      return;
+    }
+    res.status(503).json({ message: "Under construction" });
+    return;
+  } else if (req.method === 'DELETE') { // Deletes the current user and their data
     const user = req.session.user;
     if (user.permissions.admin) {
       res.status(403).json({ message: "For security reasons, admins cannot delete their own accounts. Please contact a developer for data deletion." });
