@@ -56,8 +56,6 @@ async function emailRoute(req, res) {
       res.status(403).json({ message: "Invalid verification key" });
       return;
     }
-    res.status(503).json({ message: "Under construction" });
-    return;
   } else {
     res.status(405).json({ message: "Method not allowed" });
     return;
