@@ -9,7 +9,7 @@ import Image from "next/image";
 import useUser from "lib/useUser";
 import { useRouter } from "next/router";
 
-export default function Settings() {
+export default function Account() {
   const { user } = useUser({
     redirectTo: "/login",
   });
