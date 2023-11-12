@@ -15,9 +15,9 @@ export default function passwordReset(username, key) {
                     <table cellpadding="0" cellspacing="0" border="0" width="600" bgcolor="#ffffff" style="border: 1px solid #dddddd; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);">
                         <tr>
                             <td style="padding: 20px;">
-                            <img alt="TrackTask" src="https://tracktask.eu.org/tracktask.png" />
+                            <img alt="TrackTask" src="https://tracktask.eu.org/tracktask.png" width="100%"/>
                                 <h1>Password Reset Requested</h1>
-                                <p>Dear ${username},</p>
+                                <p>Hello ${username},</p>
 
                                 <p>We&apos;ve received a request to reset your password for your account with TrackTask. Your account&apos;s security is our top priority, and we&apos;re here to help you regain access. If you didn&apos;t request this email, someone may be trying to compromise your account. Please delete this email if you didn&apos;t request it.</p>
 
@@ -30,7 +30,7 @@ export default function passwordReset(username, key) {
 
                                 <p>If you did not initiate this password reset request, please disregard this email. Your current password will remain unchanged.</p>
 
-                                <p>Please note that the password reset link is valid for 1 hour from the time of this email. If you don&apos;t complete the reset within this time frame, you may need to request another password reset.</p>
+                                <p>Please note that the password reset link is valid for 1 hour from the time of this email. If you don&apos;t complete the reset within this time frame, you may need to request another one.</p>
 
                                 <p>If you encounter any issues or have questions, please don&apos;t hesitate to contact our support team at <a href="mailto:tracktask@tracktask.eu.org">tracktask@tracktask.eu.org</a>.</p>
 

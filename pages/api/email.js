@@ -6,6 +6,7 @@ import parseUuid from "lib/parseUuid";
 import { v1 as uuidv1 } from "uuid";
 import sendEmail from "lib/sendEmail";
 import passwordReset from "templates/passwordReset";
+import verifyEmail from "templates/verifyEmail";
 
 export default withIronSessionApiRoute(emailRoute, sessionOptions);
 
@@ -23,17 +24,17 @@ async function emailRoute(req, res) {
       res.status(422).json({ message: "You have not linked an email address to your account!" });
       return;
     }
-    const uuid = uuidv1();
     var email;
+    const uuid = uuidv1();
     if (type === "verify") {
-      res.status(503).json({ message: "Under construction" });
-      return;
+      email = verifyEmail(user.username, uuid);
     } else if (type === "password") {
       email = passwordReset(user.username, uuid);
     } else {
       res.status(422).json({ message: "Invalid data" });
       return;
     }
+    await db.collection("users").updateOne({ _id: new ObjectId(user.id) }, { $set: { otp: uuid } });
     const sentMail = await sendEmail(user.email, email.subject, email.html);
     res.json(sentMail);
   } else if (req.method === 'PATCH') { // Attempts to verify the current user
