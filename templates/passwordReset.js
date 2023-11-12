@@ -1,6 +1,5 @@
 export default function passwordReset(username, key) {
   return (
-    <>
     <html>
     <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -44,6 +43,6 @@ export default function passwordReset(username, key) {
           </tr>
         </table>
     </body>
-    </html></>
+    </html>
   );
 }
