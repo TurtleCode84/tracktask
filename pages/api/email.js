@@ -49,11 +49,11 @@ async function emailRoute(req, res) {
       return;
     }
     const userInfo = await db.collection("users").findOne({ _id: new ObjectId(user.id) }, { projection: { otp: 1 } });
-    if (key === userInfo.otp && (Date.now() - parseUuid(userInfo.otp)) < 3600000) {
+    if (userInfo.otp && key === userInfo.otp && (Date.now() - parseUuid(userInfo.otp)) < 3600000) {
       const verifiedUser = await db.collection("users").updateOne({ _id: new ObjectId(user.id) }, { $set: { otp: "", 'permissions.verified': true } });
       res.json(verifiedUser);
     } else {
-      res.status(403).json({ message: "Invalid verification key" });
+      res.status(403).json({ message: "Invalid verification key, please generate a new one." });
       return;
     }
   } else {
