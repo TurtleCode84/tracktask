@@ -10,7 +10,7 @@ export default function passwordReset(username, key) {
                     <h1>Password Reset Requested</h1>
                     <p>Dear {username},</p>
         
-                    <p>We&apos;ve received a request to reset your password for your account with SparkShell. Your account&apos;s security is our top priority, and we&apos;re here to help you regain access. If you didn&apos;t request this email, someone may be trying to attack your account. Please delete this email if you didn&apos;t request it.</p>
+                    <p>We&apos;ve received a request to reset your password for your account with TrackTask. Your account&apos;s security is our top priority, and we&apos;re here to help you regain access. If you didn&apos;t request this email, someone may be trying to attack your account. Please delete this email if you didn&apos;t request it.</p>
 
                     <p>To reset your password, please follow the steps below:</p>
 
