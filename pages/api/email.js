@@ -44,7 +44,10 @@ async function emailRoute(req, res) {
     res.json(sentMail);
   } else if (req.method === 'PATCH') { // Attempts to verify the current user
     const { key } = await req.body;
-    if (user.permissions.verified) {
+    if (!user.email) {
+      res.status(422).json({ message: "You have not linked an email address to your account!" });
+      return;
+    } else if (user.permissions.verified) {
       res.status(422).json({ message: "Your email address is already verified!" });
       return;
     }
