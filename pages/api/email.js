@@ -29,7 +29,7 @@ async function emailRoute(req, res) {
     if (type === "password") {
       email = passwordReset(user.username, uuid);
     } else if (type === "verify") {
-      if (user.verified) {
+      if (user.permissions.verified) {
         res.status(403).json({ message: "Your email address is already verified!" });
         return;
       } else {
