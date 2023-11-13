@@ -25,7 +25,7 @@ export default function Verify() {
             <h1>Verify your email <span style={{ color: "#006dbe" }} className="material-symbols-outlined icon-list">verified</span></h1>
             <p>Back to <Link href="/dashboard/account">account</Link> or <Link href="/dashboard">dashboard</Link></p>
             {user.permissions.verified ? <>
-                <h3>{key.length > 0 ? "Almost there! Click the button below to verify your email address." : "Click the button below to send a verification request to your email. To keep your account secure, we need to confirm that you have access to your linked email address."}</h3>
+                <h3>{key?.length > 0 ? "Almost there! Click the button below to verify your email address." : "Click the button below to send a verification request to your email. To keep your account secure, we need to confirm that you have access to your linked email address."}</h3>
                 <p>{user.email ? `You have linked the email address ${user.email} to your account.` : "You have not linked an email address to your account, please add one before requesting verification."}</p>
                 {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
                 <a href="/api/email"
@@ -33,18 +33,18 @@ export default function Verify() {
                     e.preventDefault();
                     document.getElementById("verifyEmailBtn").disabled = true;
                     const body = {};
-                    if (key.length > 0) {
+                    if (key?.length > 0) {
                         body.key = key[0];
                     } else {
                         body.type = "verify";
                     }
                     try {
                         await fetchJson("/api/email", {
-                            method: key.length > 0 ? "PATCH" : "POST",
+                            method: key?.length > 0 ? "PATCH" : "POST",
                             headers: { "Content-Type": "application/json" },
                             body: JSON.stringify(body),
                         });
-                        router.push(`/?verify=${key.length > 0 ? "done" : "pending"}`);
+                        router.push(`/?verify=${key?.length > 0 ? "done" : "pending"}`);
                     } catch (error) {
                         if (error instanceof FetchError) {
                             setErrorMsg(error.data.message);
@@ -54,7 +54,7 @@ export default function Verify() {
                         document.getElementById("verifyEmailBtn").disabled = false;
                     }
                 }}
-                ><button id="verifyEmailBtn" disabled={user.email ? false : true}><span style={{ color: key.length > 0 ? "darkgreen" : "lightslategray" }} className="material-symbols-outlined icon-list">{key.length > 0 ? "outgoing_mail" : "mark_email_read"}</span> {key.length > 0 ? "Verify email" : "Send verification request"}</button></a>
+                ><button id="verifyEmailBtn" disabled={user.email ? false : true}><span style={{ color: key?.length > 0 ? "darkgreen" : "lightslategray" }} className="material-symbols-outlined icon-list">{key?.length > 0 ? "outgoing_mail" : "mark_email_read"}</span> {key?.length > 0 ? "Verify email" : "Send verification request"}</button></a>
                 {errorMsg && <p className="error">{errorMsg}</p>}
             </> : <h3>Your email is already verified!</h3>}
         </Layout>
