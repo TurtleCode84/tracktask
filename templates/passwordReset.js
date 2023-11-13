@@ -23,7 +23,7 @@ export default function passwordReset(username, key) {
 
                                 <p>To reset your password, please follow the steps below:</p>
 
-                                &bull; Click on the following link to open the password reset page: <a href="https://tracktask.eu.org/account/reset-password/${key}">Reset Your Password</a><br><br>
+                                &bull; Click on the following link to open the password reset page: <a href="https://tracktask.eu.org/dashboard/account/reset-password/${key}">Reset Your Password</a><br><br>
                                 &bull; Once the page loads, you will be prompted to enter a new password. Please choose a strong, unique password that includes a combination of upper and lower-case letters, numbers, and symbols for added security.<br><br>
                                 &bull; After entering your new password, confirm it by typing it again in the provided field.<br><br>
                                 &bull; Click the "Reset Password" button.

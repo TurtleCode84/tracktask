@@ -23,7 +23,7 @@ export default function verifyEmail(username, key) {
 
                                 <p>To verify your email, please follow the steps below:</p>
 
-                                &bull; Click on the following link to open the email verification page: <a href="https://tracktask.eu.org/account/verify/${key}">Verify Your Email</a><br><br>
+                                &bull; Click on the following link to open the email verification page: <a href="https://tracktask.eu.org/dashboard/account/verify/${key}">Verify Your Email</a><br><br>
                                 &bull; Once the page loads, you will be prompted to click a "Verify Email" button.
 
                                 <p>If you did not initiate this email verification request, please disregard this email. Your verification status will remain unchanged.</p>
