@@ -134,15 +134,22 @@ async function userRoute(req, res) {
       };
       const updated = await db.collection("users").updateOne(query, updateDoc);
       if (body.email !== undefined) {
+        const debug = {};//
         const cleanEmail = body.email.trim().toLowerCase();
+        debug.cleanEmail = cleanEmail;//
+        debug.bde = body.email;//
         var contains = blacklist.some(element => { // Check for blacklisted elements
           if (cleanEmail.includes(element.toLowerCase())) {
+            debug.ceietlc = true;//
             return true;
           }
         });
         contains = contains || !/(^.+@.+\..+[^.]$)/i.test(cleanEmail);
+        debug.crgx = contains;//
+        debug.blk = blacklist;//
         if (contains && blacklist) { // Figure out a way to do this when no blacklist is provided
-          res.status(403).json({ message: "The email you provided is not allowed, please choose something else." });
+          res.status(403).json({ message: JSON.stringify(debug) });//
+          //res.status(403).json({ message: "The email you provided is not allowed, please choose something else." });
           return;
         }
         const emailDoc = { $set: {email: cleanEmail, 'permissions.verified': false} };
