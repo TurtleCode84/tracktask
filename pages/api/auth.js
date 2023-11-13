@@ -155,9 +155,7 @@ async function authRoute(req, res) {
         contains = true;
       }
     }
-    if (cleanEmail && !/(^.+@.+\..+[^.]$)/i.test(cleanEmail)) {
-      contains = true;
-    }
+    contains = contains || (cleanEmail && !/(^.+@.+\..+[^.]$)/i.test(cleanEmail));
     if (contains && blacklist) { // Figure out a way to do this when no blacklist is provided
       res.status(403).json({ message: "The username or email you provided is not allowed, please choose something else." });
       return;
