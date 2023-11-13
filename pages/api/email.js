@@ -44,7 +44,7 @@ async function emailRoute(req, res) {
     res.json(sentMail);
   } else if (req.method === 'PATCH') { // Attempts to verify the current user
     const { key } = await req.body;
-    if (user.verified) {
+    if (user.permissions.verified) {
       res.status(422).json({ message: "Your email address is already verified!" });
       return;
     }
