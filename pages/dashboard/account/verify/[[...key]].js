@@ -25,7 +25,7 @@ export default function Verify() {
             <h1>Verify your email <span style={{ color: "#006dbe" }} className="material-symbols-outlined">verified</span></h1>
             <p>Back to <Link href="/dashboard/account">account</Link> or <Link href="/dashboard">dashboard</Link></p>
             {!user.permissions.verified ? <>
-                <h3>{key?.length > 0 ? "Almost there! Click the button below to verify your email address." : "Click the button below to send a verification request to your email. To keep your account secure, we need to confirm that you have access to your linked email address."}</h3>
+                <h3>{key?.length > 0 ? "Almost there! Click the button below to verify your email address." : "To keep your account secure, we need to confirm that you have access to your linked email address. Click the button below to send a verification request to your email."}</h3>
                 <p>{user.email ? `You have linked the email address "${user.email}" to your account.` : "You have not linked an email address to your account, please add one before requesting verification."}</p>
                 {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
                 <a href="/api/email"
@@ -56,7 +56,10 @@ export default function Verify() {
                 }}
                 ><button id="verifyEmailBtn" disabled={user.email ? false : true}><span style={{ color: key?.length > 0 ? "darkgreen" : "lightslategray" }} className="material-symbols-outlined icon-list">{key?.length > 0 ? "mark_email_read" : "outgoing_mail"}</span> {key?.length > 0 ? "Verify email" : "Send verification request"}</button></a>
                 {errorMsg && <p className="error">{errorMsg}</p>}
-            </> : <h3>Your email is already verified!</h3>}
+            </> : <>
+                <h3>Your email is already verified!</h3>
+                <p>This page won&apos;t be useful to you unless you change your email address and need to reverify.</p>
+            </>}
         </Layout>
     );
 }
