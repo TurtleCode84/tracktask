@@ -68,7 +68,7 @@ async function adminUserRoute(req, res) {
     };
     const updated = await db.collection("users").updateOne(query, updateDoc);
     if (body.email !== undefined) {
-      const emailUpdateDoc = { $set: {email: body.email.trim().toLowerCase(), 'permissions.verified': false} };
+      const emailUpdateDoc = { $set: {email: body.email.trim().toLowerCase(), 'permissions.verified': false, otp: ""} };
       await db.collection("users").updateOne(query, emailUpdateDoc); // Does not catch errors, could be a problem if updated succeeds but updatedNotes does not?
     }
     if (body.notes !== undefined) {

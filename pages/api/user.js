@@ -145,7 +145,7 @@ async function userRoute(req, res) {
           res.status(403).json({ message: "The email you provided is not allowed, please choose something else." });
           return;
         }
-        const emailDoc = { $set: {email: cleanEmail, 'permissions.verified': false} };
+        const emailDoc = { $set: {email: cleanEmail, 'permissions.verified': false, otp: ""} };
         await db.collection("users").updateOne(query, emailDoc);
       }
       const lastEditDoc = {
