@@ -3,7 +3,7 @@
     "short_name": "TrackTask",
     "start_url": "/",
     "display": "standalone",
-    "background_color": "#7a7a7a",
+    "background_color": "#444",
     "theme_color": "#121212",
     "description": "An open-source task management platform geared towards organized collaboration.",
     "prefer_related_applications": false,
@@ -18,15 +18,36 @@
         {
           "name": "Dashboard",
           "url": "/dashboard",
-          "description": "An overview of your tasks and collections"
+          "description": "An overview of your tasks and collections",
+          "icons": [
+            {
+              "src": "/tracktaskmini.png",
+              "sizes": "any",
+              "type": "image/png"
+            }
+          ]
         },
         {
           "name": "New task",
-          "url": "/tasks/new"
+          "url": "/tasks/new",
+          "icons": [
+            {
+              "src": "/tracktaskmini.png",
+              "sizes": "any",
+              "type": "image/png"
+            }
+          ]
         },
         {
           "name": "New collection",
-          "url": "/collections/new"
+          "url": "/collections/new",
+          "icons": [
+            {
+              "src": "/tracktaskmini.png",
+              "sizes": "any",
+              "type": "image/png"
+            }
+          ]
         }
     ]
   }  
