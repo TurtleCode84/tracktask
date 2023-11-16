@@ -1,31 +1,15 @@
 {
-    "name": "TrackTask - Shareable Task Management",
-    "short_name": "TrackTask",
-    "start_url": "/",
-    "display": "standalone",
     "background_color": "#7a7a7a",
     "theme_color": "#121212",
-    "description": "An open-source task management platform geared towards organized collaboration.",
+    "name": "TrackTask",
+    "short_name": "TrackTask",
+    "display": "minimal-ui",
+    "start_url": "/",
     "icons": [
       {
-        "src": "/tracktaskmini.png",
+        "src": "tracktaskmini.png",
         "sizes": "any",
         "type": "image/png"
       }
-    ],
-    "shortcuts" : [
-        {
-          "name": "Dashboard",
-          "url": "/dashboard",
-          "description": "An overview of your tasks and collections"
-        },
-        {
-          "name": "New task",
-          "url": "/tasks/new"
-        },
-        {
-          "name": "New collection",
-          "url": "/collections/new"
-        }
     ]
-  }  
+  }
