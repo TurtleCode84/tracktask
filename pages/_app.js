@@ -8,7 +8,8 @@ import { Roboto_Flex } from "next/font/google"; // Exo_2
 
 const font = Roboto_Flex({
   subsets: ['latin'],
-})
+  display: 'swap',
+});
 
 function MyApp({ Component, pageProps }) {
   useEffect(() => {
@@ -84,7 +85,7 @@ function MyApp({ Component, pageProps }) {
     <GoogleReCaptchaProvider
       reCaptchaKey="6LdBzhUiAAAAAGnjMtWaqrFmFAG6gE_yM_LQq_tZ"
       scriptProps={{
-        async: true,
+        async: false,
         defer: true,
         appendTo: "head",
         nonce: undefined,
