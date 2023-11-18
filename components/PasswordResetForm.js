@@ -5,7 +5,7 @@ export default function PasswordResetForm({ errorMessage, onSubmit, confirmed })
       <p>Almost there! Set a new, secure password below.</p>
       <label>
         <span>New password</span>
-        <input type="password" name="password" required />
+        <input type="password" name="password" autoFocus required />
       </label>
       <label>
         <span>Confirm new password</span>
@@ -15,7 +15,7 @@ export default function PasswordResetForm({ errorMessage, onSubmit, confirmed })
       <p>Enter a verified account email address to send a password reset request.</p>
       <label>
         <span>Email address</span>
-        <input type="email" name="email" required />
+        <input type="email" name="email" autoFocus required />
       </label>
       </>}
 
