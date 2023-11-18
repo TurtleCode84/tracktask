@@ -84,8 +84,8 @@ function MyApp({ Component, pageProps }) {
     <GoogleReCaptchaProvider
       reCaptchaKey="6LdBzhUiAAAAAGnjMtWaqrFmFAG6gE_yM_LQq_tZ"
       scriptProps={{
-        async: false,
-        defer: false,
+        async: true,
+        defer: true,
         appendTo: "head",
         nonce: undefined,
       }}
