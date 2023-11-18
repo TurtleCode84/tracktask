@@ -64,7 +64,7 @@ export default function ResetPassword() {
                 }}
                 />
                 {!key &&
-                <p style={{ textAlign: "center", marginTop: "8px", marginBottom: "10px", fontSize: "95%" }}>
+                <p style={{ textAlign: "center", marginTop: "7px", marginBottom: "10px", fontSize: "95%" }}>
                   <Link href="/login">Back to login</Link>
                 </p>}
             </div>
