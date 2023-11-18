@@ -8,7 +8,7 @@ import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
 
 export default function UserSearch() {
-  const { user, mutateUser } = useUser({
+  const { user } = useUser({
     redirectTo: "/dashboard",
     adminOnly: true,
   });

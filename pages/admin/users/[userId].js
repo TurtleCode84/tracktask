@@ -14,7 +14,7 @@ import Image from "next/image";
 import Linkify from "linkify-react";
 
 export default function UserAdmin() {
-  const { user, mutateUser } = useUser({
+  const { user } = useUser({
     redirectTo: "/dashboard",
     adminOnly: true,
   });
