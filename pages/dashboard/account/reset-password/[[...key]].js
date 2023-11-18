@@ -20,7 +20,7 @@ export default function ResetPassword() {
     return (
         <Layout>
             <div className="reset-password">
-            <h2>Reset your password:</h1>
+            <h2>Reset your password:</h2>
             <Link href="/login">Back to login</Link>
             <hr/><br/>
             <PasswordResetForm
