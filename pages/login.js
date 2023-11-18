@@ -72,8 +72,8 @@ export default function Login() {
         />
         <p style={{ textAlign: "center", marginTop: "25px", marginBottom: "10px", fontSize: "95%" }}>
           <Link href="/join">Sign up</Link>
-          {' '}-{' '}
-          <Link href="/account/reset-password">Forgot password</Link>
+          {' '}&bull;{' '}
+          <Link href="/dashboard/account/reset-password">Forgot password</Link>
         </p>
       </div>
       <style jsx>{`

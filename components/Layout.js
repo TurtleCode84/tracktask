@@ -12,16 +12,16 @@ export default function Layout({ children }) {
   return (
     <>
       <Head>
-        <title>TrackTask - Shareable Task Management</title>
-        <meta name="title" content="TrackTask - Shareable Task Management" />
+        <title>TrackTask &bull; Shareable Task Management</title>
+        <meta name="title" content="TrackTask &bull; Shareable Task Management" />
         <meta name="description" content="An open-source task management platform geared towards organized collaboration." />
         <meta name="image" content="https://tracktask.eu.org/tracktaskmini.png" />
         <meta name="author" content="TurtleCode84" />
         <meta property="og:site_name" content="TrackTask" />
-        <meta property="og:title" content="TrackTask - Shareable Task Management" />
+        <meta property="og:title" content="TrackTask &bull; Shareable Task Management" />
         <meta property="og:description" content="An open-source task management platform geared towards organized collaboration." />
         <meta property="og:image" content="https://tracktask.eu.org/tracktaskmini.png" />
-        <meta name="twitter:title" content="TrackTask - Shareable Task Management" />
+        <meta name="twitter:title" content="TrackTask &bull; Shareable Task Management" />
         <meta name="twitter:description" content="An open-source task management platform geared towards organized collaboration." />
         <meta name="twitter:image" content="https://tracktask.eu.org/tracktaskmini.png" />
         <link rel="manifest" href="pwa.webmanifest" />
@@ -267,7 +267,7 @@ export default function Layout({ children }) {
         <div className="container">{children}</div>
       </main>
 
-      <span style={{ fontSize: "90%", textAlign: "center", color: "gray", display: "table", margin: "4rem" + " auto", padding: "0 0.5rem 20px 0.5rem" }}>Copyright &#169; 2022-2023 TrackTask STM, All Rights Reserved - <Link href="/privacy"><a className="footer">Privacy</a></Link> - <Link href="/terms"><a className="footer">Terms of Use</a></Link> - <a className="footer" href="https://discord.gg/Hh3fw2xesP" target="_blank" rel="noopener noreferrer">Discord</a></span>
+      <span style={{ fontSize: "90%", textAlign: "center", color: "gray", display: "table", margin: "4rem" + " auto", padding: "0 0.5rem 20px 0.5rem" }}>Copyright &#169; 2022-2023 TrackTask STM, All Rights Reserved &bull; <Link href="/privacy"><a className="footer">Privacy</a></Link> &bull; <Link href="/terms"><a className="footer">Terms of Use</a></Link> &bull; <a className="footer" href="https://discord.gg/Hh3fw2xesP" target="_blank" rel="noopener noreferrer">Discord</a></span>
     </>
   );
 }
