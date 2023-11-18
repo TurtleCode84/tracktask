@@ -17,10 +17,14 @@ export default function Login() {
   const [errorMsg, setErrorMsg] = useState("");
   //const { executeRecaptcha } = useGoogleReCaptcha();
   const router = useRouter();
-  const { joined, username } = router.query;
+  const { joined, reset, username } = router.query;
   var joinMsg;
   if (joined === "true") {
-    joinMsg = "Account created! You can log in now."
+    joinMsg = "Account created! You can log in now.";
+  } else if (reset === "pending") {
+    joinMsg = "Password reset request sent, please check your email.";
+  } else if (reset === "done") {
+    joinMsg = "Password successfully reset, you may login now.";
   }
 
   return (
@@ -66,10 +70,10 @@ export default function Login() {
             }
           }}
         />
-        <p>Don&apos;t have an account?{' '}
-        <Link href="/join">
-          <a>Sign up!</a>
-        </Link>
+        <p style={{ textAlign: "center", marginTop: "25px", marginBottom: "10px", fontSize: "95%" }}>
+          <Link href="/join">Sign up</Link>
+          {' '}-{' '}
+          <Link href="/account/reset-password">Forgot password</Link>
         </p>
       </div>
       <style jsx>{`

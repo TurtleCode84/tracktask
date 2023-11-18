@@ -24,7 +24,7 @@ export default function Layout({ children }) {
         <meta name="twitter:title" content="TrackTask - Shareable Task Management" />
         <meta name="twitter:description" content="An open-source task management platform geared towards organized collaboration." />
         <meta name="twitter:image" content="https://tracktask.eu.org/tracktaskmini.png" />
-        <link rel="manifest" href="manifest.json" crossOrigin="use-credentials"/>
+        <link rel="manifest" href="pwa.webmanifest" />
         {/* eslint-disable-next-line @next/next/no-page-custom-font */}
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" />
       </Head>
