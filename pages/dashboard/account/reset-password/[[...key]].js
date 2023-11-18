@@ -21,8 +21,7 @@ export default function ResetPassword() {
         <Layout>
             <div className="reset-password">
             <h2>Reset your password:</h2>
-            <hr/>
-            {!key && <Link href="/login">Back to login</Link>}
+            <hr/><br/>
             <PasswordResetForm
                 errorMessage={errorMsg}
                 confirmed={key?.length > 0 ? true : false}
@@ -64,6 +63,10 @@ export default function ResetPassword() {
                     }
                 }}
                 />
+                {!key &&
+                <p style={{ textAlign: "center", marginTop: "25px", marginBottom: "10px", fontSize: "95%" }}>
+                  <Link href="/login">Back to login</Link>
+                </p>}
             </div>
             <style jsx>{`
               .reset-password {
