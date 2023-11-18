@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 
 export default function Join() {
   // Check if user is already logged in and redirect to dashboard
-  const { user } = useUser({
+  useUser({
     redirectTo: "/dashboard",
     redirectIfFound: true,
   });

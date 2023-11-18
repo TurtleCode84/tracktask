@@ -1,14 +1,13 @@
 import { useState } from "react";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import Layout from "components/Layout";
-import Loading from "components/Loading";
 import PasswordResetForm from "components/PasswordResetForm";
 import useUser from "lib/useUser";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
 export default function ResetPassword() {
-    const { user } = useUser({
+    useUser({
       redirectTo: "/dashboard",
       redirectIfFound: true,
     });
@@ -43,7 +42,7 @@ export default function ResetPassword() {
                     }
 
                     try {
-                      const res = await fetchJson("/api/auth", {
+                      await fetchJson("/api/auth", {
                         method: "PATCH",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify(body),
