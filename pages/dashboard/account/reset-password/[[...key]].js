@@ -21,7 +21,7 @@ export default function ResetPassword() {
         <Layout>
             <div className="reset-password">
             <h2>Reset your password:</h2>
-            <hr/><br/>
+            <hr/>
             <PasswordResetForm
                 errorMessage={errorMsg}
                 confirmed={key?.length > 0 ? true : false}

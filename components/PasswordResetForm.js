@@ -18,7 +18,6 @@ export default function PasswordResetForm({ errorMessage, onSubmit, confirmed })
         <input type="email" name="email" required />
       </label>
       </>}
-      <hr/>
 
       <button type="submit" id="resetPasswordBtn">Reset password</button>
 
