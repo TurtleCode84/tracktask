@@ -102,7 +102,6 @@ function MyApp({ Component, pageProps }) {
       <style jsx global>{`
         html {
           font-family: ${font.style.fontFamily}, sans-serif;
-          font-display: swap;
         }
       `}</style>
       <ErrorBoundary>
