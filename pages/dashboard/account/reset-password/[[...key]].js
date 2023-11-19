@@ -53,11 +53,7 @@ export default function ResetPassword() {
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify(body),
                       });
-                      if (key?.length > 0) {
-                        router.push("/login?reset=done");
-                      } else {
-                        router.push("/login?reset=pending");
-                      }
+                      router.push(`/login?reset=${key?.length > 0 ? "done" : "pending"}`);
                     } catch (error) {
                       if (error instanceof FetchError) {
                         setErrorMsg(error.data.message);
