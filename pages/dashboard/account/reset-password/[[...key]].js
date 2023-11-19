@@ -40,9 +40,9 @@ export default function ResetPassword() {
                       return;
                     }
 
-                    console.log(JSON.stringify(event.currentTarget));
-                    console.log(JSON.stringify(event.currentTarget.email));
-                    console.log(JSON.stringify(event.currentTarget.email.value));
+                    console.log(event.currentTarget);
+                    console.log(event.currentTarget.email);
+                    console.log(event.currentTarget.email.value);
                     const body = {
                       gReCaptchaToken: await executeRecaptcha("passwordResetFormSubmit"),
                       email: confirmed && event.currentTarget.email ? undefined : event.currentTarget.email.value,
