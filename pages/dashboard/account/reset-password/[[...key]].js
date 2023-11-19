@@ -29,7 +29,7 @@ export default function ResetPassword() {
                 confirmed={confirmed}
                 onSubmit={async function handleSubmit(event) {
                     event.preventDefault();
-                    event.persist();
+                    //event.persist();
                     document.getElementById("resetPasswordBtn").disabled = true;
                     if (!executeRecaptcha) {
                       setErrorMsg("reCAPTCHA not available, please try again.");
@@ -41,15 +41,12 @@ export default function ResetPassword() {
                       return;
                     }
 
-                    console.log(event);
-                    console.log(event.currentTarget);
                     const body = {
                       email: confirmed ? undefined : event.currentTarget.email.value,
                       password: confirmed ? event.currentTarget.password.value : undefined,
                       key: confirmed ? key : undefined,
                       gReCaptchaToken: await executeRecaptcha("passwordResetFormSubmit"),
                     };
-                    console.log(body);
 
                     try {
                       await fetchJson(confirmed ? "/api/auth" : "/api/email", {
