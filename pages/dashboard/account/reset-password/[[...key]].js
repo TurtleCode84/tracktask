@@ -29,7 +29,6 @@ export default function ResetPassword() {
                 confirmed={confirmed}
                 onSubmit={async function handleSubmit(event) {
                     event.preventDefault();
-                    //event.persist();
                     document.getElementById("resetPasswordBtn").disabled = true;
                     if (!executeRecaptcha) {
                       setErrorMsg("reCAPTCHA not available, please try again.");
