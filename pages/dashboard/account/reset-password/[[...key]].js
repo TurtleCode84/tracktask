@@ -45,6 +45,7 @@ export default function ResetPassword() {
                       password: key?.length > 0 ? event.currentTarget.password.value : undefined,
                       key: key?.length > 0 ? key : undefined,
                     };
+                    console.log(JSON.stringify(body));
 
                     try {
                       await fetchJson(key?.length > 0 ? "/api/auth" : "/api/email", {
