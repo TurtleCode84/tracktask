@@ -17,6 +17,7 @@ export default function ResetPassword() {
     const router = useRouter();
     const { executeRecaptcha } = useGoogleReCaptcha();
     const { key } = router.query;
+    const confirmed = key?.length > 0;
 
     return (
         <Layout>
@@ -25,7 +26,7 @@ export default function ResetPassword() {
             <hr/>
             <PasswordResetForm
                 errorMessage={errorMsg}
-                confirmed={key?.length > 0 ? true : false}
+                confirmed={confirmed}
                 onSubmit={async function handleSubmit(event) {
                     event.preventDefault();
                     document.getElementById("resetPasswordBtn").disabled = true;
@@ -33,27 +34,30 @@ export default function ResetPassword() {
                       setErrorMsg("reCAPTCHA not available, please try again.");
                       document.getElementById("resetPasswordBtn").disabled = false;
                       return;
-                    } else if (key?.length > 0 && event.currentTarget.password.value !== event.currentTarget.cpassword.value) {
+                    } else if (confirmed && event.currentTarget.password.value !== event.currentTarget.cpassword.value) {
                       setErrorMsg("Passwords do not match!");
                       document.getElementById("resetPasswordBtn").disabled = false;
                       return;
-                    }    
+                    }
 
                     const body = {
                       gReCaptchaToken: await executeRecaptcha("passwordResetFormSubmit"),
-                      email: key?.length > 0 ? undefined : event.currentTarget.email.value,
-                      password: key?.length > 0 ? event.currentTarget.password.value : undefined,
-                      key: key?.length > 0 ? key : undefined,
+                      email: confirmed && event.currentTarget.email ? undefined : event.currentTarget.email.value,
+                      password: confirmed && event.currentTarget.password ? event.currentTarget.password.value : undefined,
+                      key: confirmed ? key : undefined,
                     };
                     console.log(JSON.stringify(body));
+                    console.log(JSON.stringify(event.currentTarget));
+                    console.log(JSON.stringify(event.currentTarget.email));
+                    console.log(JSON.stringify(event.currentTarget.email.value));
 
                     try {
-                      await fetchJson(key?.length > 0 ? "/api/auth" : "/api/email", {
-                        method: key?.length > 0 ? "PATCH" : "PUT",
+                      await fetchJson(confirmed ? "/api/auth" : "/api/email", {
+                        method: confirmed ? "PATCH" : "PUT",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify(body),
                       });
-                      router.push(`/login?reset=${key?.length > 0 ? "done" : "pending"}`);
+                      router.push(`/login?reset=${confirmed ? "done" : "pending"}`);
                     } catch (error) {
                       if (error instanceof FetchError) {
                         setErrorMsg(error.data.message);
