@@ -39,15 +39,12 @@ export default function ResetPassword() {
                       return;
                     }    
 
-                    console.log(event.currentTarget.email.value);
-                    const body = { gReCaptchaToken: await executeRecaptcha("passwordResetFormSubmit") };
-                    if (key?.length > 0) {
-                      body.password = event.currentTarget.password.value;
-                      body.key = key;
-                    } else {
-                      console.log(event.currentTarget.email.value);
-                      body.email = event.currentTarget.email.value;
-                    }
+                    const body = {
+                      gReCaptchaToken: await executeRecaptcha("passwordResetFormSubmit"),
+                      email: key?.length > 0 ? undefined : event.currentTarget.email.value,
+                      password: key?.length > 0 ? event.currentTarget.password.value : undefined,
+                      key: key?.length > 0 ? key : undefined,
+                    };
 
                     try {
                       await fetchJson(key?.length > 0 ? "/api/auth" : "/api/email", {
