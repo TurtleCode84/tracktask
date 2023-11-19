@@ -68,8 +68,14 @@ async function adminUserRoute(req, res) {
     };
     const updated = await db.collection("users").updateOne(query, updateDoc);
     if (body.email !== undefined) {
-      const emailUpdateDoc = { $set: {email: body.email.trim().toLowerCase(), 'permissions.verified': false, otp: ""} };
-      await db.collection("users").updateOne(query, emailUpdateDoc); // Does not catch errors, could be a problem if updated succeeds but updatedNotes does not?
+      const taken = await db.collection("users").countDocuments({ email: body.email.trim().toLowerCase(), 'permissions.verified': true });
+      if (taken > 0) {
+        res.status(403).json({ message: "Email is already linked to an account!" });
+        return;
+      } else {
+        const emailUpdateDoc = { $set: {email: body.email.trim().toLowerCase(), 'permissions.verified': false, verificationKey: "", otp: ""} };
+        await db.collection("users").updateOne(query, emailUpdateDoc); // Does not catch errors, could be a problem if updated succeeds but this does not?
+      }
     }
     if (body.notes !== undefined) {
       const notesUpdateDoc = {

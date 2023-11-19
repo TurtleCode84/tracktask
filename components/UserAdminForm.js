@@ -39,6 +39,10 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
         <input type="checkbox" name="clearWarnings" />
       </label>
       <label>
+        <span>Generate new verification key</span>
+        <input type="checkbox" name="generateVerificationKey" disabled />
+      </label>
+      <label>
         <span>Generate new OTP</span>
         <input type="checkbox" name="generateOtp" disabled />
       </label>

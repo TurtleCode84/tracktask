@@ -109,7 +109,7 @@ async function userRoute(req, res) {
         }
         const taken = await db.collection("users").countDocuments({ username: cleanUsername });
         if (taken > 0) {
-          res.status(422).json({ message: "Username is already taken!" });
+          res.status(403).json({ message: "Username is already taken!" });
           return;
         } else {
           updateUser.username = cleanUsername;
@@ -145,8 +145,14 @@ async function userRoute(req, res) {
           res.status(403).json({ message: "The email you provided is not allowed, please choose something else." });
           return;
         }
-        const emailDoc = { $set: {email: cleanEmail, 'permissions.verified': false, otp: ""} };
-        await db.collection("users").updateOne(query, emailDoc);
+        const taken = await db.collection("users").countDocuments({ email: cleanEmail, 'permissions.verified': true });
+        if (taken > 0) {
+          res.status(403).json({ message: "Email is already linked to an account!" });
+          return;
+        } else {
+          const emailDoc = { $set: {email: cleanEmail, 'permissions.verified': false, verificationKey: "", otp: ""} };
+          await db.collection("users").updateOne(query, emailDoc);
+        }
       }
       const lastEditDoc = {
         $set: {

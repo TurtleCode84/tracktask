@@ -20,9 +20,27 @@ async function emailRoute(req, res) {
   const client = await clientPromise;
   const db = client.db("data");
   if (req.method === 'PUT') { // Sends a password reset email (there may or may not be a logged in user)
-    const body = await req.body;
-    res.status(503).json({ message: "Under construction" });
-    return;
+    const { email, gReCaptchaToken } = await req.body;
+    const captchaResponse = await fetchJson("https://www.google.com/recaptcha/api/siteverify", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded", },
+      body: `secret=${process.env.RECAPTCHA_SECRET}&response=${gReCaptchaToken}`,
+    });
+    if (process.env.VERCEL_ENV !== "preview") {
+      if (!captchaResponse || !captchaResponse.success || captchaResponse.action !== "passwordResetFormSubmit" || captchaResponse.score <= 0.5) {
+        res.status(403).json({ message: "reCAPTCHA verification failed, please try again." });
+        return;
+      }
+    }
+    // warning: this whole system relies on emails being unique
+    const matchUser = await db.collection("users").findOne({ email: email.trim().toLowerCase(), 'permissions.verified': true }, { projection: { username: 1, email: 1 } });
+    if (matchUser) {
+      const uuid = uuidv1();
+      const email = passwordReset(matchUser.username, uuid);
+      await db.collection("users").updateOne({ _id: new ObjectId(matchUser._id) }, { $set: { otp: uuid } });
+      await sendEmail(matchUser.email, email.subject, email.html);
+    }
+    res.json({ message: "Password reset request sent!" }); // fail silently if necessary
   } else if (req.method === 'POST') { // Sends a verification email
     const { gReCaptchaToken } = await req.body;
     const captchaResponse = await fetchJson("https://www.google.com/recaptcha/api/siteverify", {
@@ -45,7 +63,7 @@ async function emailRoute(req, res) {
     }
     const uuid = uuidv1();
     const email = verifyEmail(user.username, uuid);
-    await db.collection("users").updateOne({ _id: new ObjectId(user.id) }, { $set: { otp: uuid } });
+    await db.collection("users").updateOne({ _id: new ObjectId(user.id) }, { $set: { verificationKey: uuid } });
     const sentMail = await sendEmail(user.email, email.subject, email.html);
     res.json(sentMail);
   } else if (req.method === 'PATCH') { // Attempts to verify the current user
@@ -68,9 +86,11 @@ async function emailRoute(req, res) {
       res.status(422).json({ message: "Your email address is already verified!" });
       return;
     }
-    const userInfo = await db.collection("users").findOne({ _id: new ObjectId(user.id) }, { projection: { otp: 1 } });
-    if (userInfo.otp && key === userInfo.otp && (Date.now() - parseUuid(userInfo.otp)) < 3600000) {
-      const verifiedUser = await db.collection("users").updateOne({ _id: new ObjectId(user.id) }, { $set: { otp: "", 'permissions.verified': true, 'history.lastEdit.timestamp': Math.floor(Date.now()/1000), 'history.lastEdit.by': new ObjectId(user.id) } });
+    const userInfo = await db.collection("users").findOne({ _id: new ObjectId(user.id) }, { projection: { verificationKey: 1, email: 1 } });
+    if (userInfo.verificationKey && key === userInfo.verificationKey && (Date.now() - parseUuid(userInfo.verificationKey)) < 3600000) {
+      const verifiedUser = await db.collection("users").updateOne({ _id: new ObjectId(user.id) }, { $set: { verificationKey: "", 'permissions.verified': true, 'history.lastEdit.timestamp': Math.floor(Date.now()/1000), 'history.lastEdit.by': new ObjectId(user.id) } });
+      // If anyone else has the newly verified email, we need to get rid of it
+      await db.collection("users").updateMany({ _id: { $ne: user.id }, email: userInfo.email }, { $set: { email: "", verificationKey: "", otp: "", 'permissions.verified': false } });
       res.json(verifiedUser);
     } else {
       res.status(403).json({ message: "Invalid verification key, please generate a new one." });

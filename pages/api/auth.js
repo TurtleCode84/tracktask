@@ -169,7 +169,13 @@ async function authRoute(req, res) {
     const query = { username: username.toLowerCase() };
     const userExists = await db.collection("users").countDocuments(query);
     if (userExists > 0) {
-      res.status(401).json({ message: "Username is not available, please choose something different." }); // user already exists
+      res.status(403).json({ message: "Username is not available, please choose something different." }); // user already exists
+      return;
+    }
+    const emailQuery = { email: cleanEmail, 'permissions.verified': true }; // prevents an unverified user from squatting on an unowned email
+    const emailExists = await db.collection("users").countDocuments(emailQuery);
+    if (emailExists > 0) {
+      res.status(403).json({ message: "Email is already linked to an account, please use a different one." }); // email already in use
       return;
     }
     
@@ -179,6 +185,7 @@ async function authRoute(req, res) {
         username: cleanUsername,
         password: await hash(password, 10),
         email: cleanEmail,
+        verificationKey: "",
         otp: "",
         profilePicture: "",
         history: {
@@ -216,7 +223,7 @@ async function authRoute(req, res) {
       res.status(500).json({ message: error.message });
     }
   } else if (req.method === 'PATCH') { // password reset (WIP)
-    const body = await req.body;
+    const { key, password } = await req.body;
     res.status(503).json({ message: "Under construction" });
     return;
   } else if (req.method === 'DELETE') { // deletion
