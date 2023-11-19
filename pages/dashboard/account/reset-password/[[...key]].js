@@ -39,11 +39,13 @@ export default function ResetPassword() {
                       return;
                     }    
 
+                    console.log(event.currentTarget.email.value);
                     const body = { gReCaptchaToken: await executeRecaptcha("passwordResetFormSubmit") };
                     if (key?.length > 0) {
                       body.password = event.currentTarget.password.value;
                       body.key = key;
                     } else {
+                      console.log(event.currentTarget.email.value);
                       body.email = event.currentTarget.email.value;
                     }
 

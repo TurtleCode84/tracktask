@@ -42,8 +42,6 @@ export default function Verify() {
                     const body = { gReCaptchaToken: await executeRecaptcha("verifyEmailFormSubmit") };
                     if (key?.length > 0) {
                         body.key = key[0];
-                    } else {
-                        body.type = "verify";
                     }
                     try {
                         await fetchJson("/api/email", {
