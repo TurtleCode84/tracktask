@@ -1,5 +1,6 @@
 import { useState } from "react";
 import fetchJson, { FetchError } from "lib/fetchJson";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import Layout from "components/Layout";
 import PasswordResetForm from "components/PasswordResetForm";
 import useUser from "lib/useUser";
@@ -14,6 +15,7 @@ export default function ResetPassword() {
 
     const [errorMsg, setErrorMsg] = useState("");
     const router = useRouter();
+    const { executeRecaptcha } = useGoogleReCaptcha();
     const { key } = router.query;
 
     return (
@@ -27,13 +29,17 @@ export default function ResetPassword() {
                 onSubmit={async function handleSubmit(event) {
                     event.preventDefault();
                     document.getElementById("resetPasswordBtn").disabled = true;
-                    if (key?.length > 0 && event.currentTarget.password.value !== event.currentTarget.cpassword.value) {
+                    if (!executeRecaptcha) {
+                      setErrorMsg("reCAPTCHA not available, please try again.");
+                      document.getElementById("resetPasswordBtn").disabled = false;
+                      return;
+                    } else if (key?.length > 0 && event.currentTarget.password.value !== event.currentTarget.cpassword.value) {
                       setErrorMsg("Passwords do not match!");
                       document.getElementById("resetPasswordBtn").disabled = false;
                       return;
                     }    
 
-                    const body = {};
+                    const body = { gReCaptchaToken: await executeRecaptcha("passwordResetFormSubmit") };
                     if (key?.length > 0) {
                       body.password = event.currentTarget.password.value;
                       body.key = key;
@@ -42,8 +48,8 @@ export default function ResetPassword() {
                     }
 
                     try {
-                      await fetchJson("/api/auth", {
-                        method: "PATCH",
+                      await fetchJson(key?.length > 0 ? "/api/auth" : "/api/email", {
+                        method: key?.length > 0 ? "PATCH" : "PUT",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify(body),
                       });

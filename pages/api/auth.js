@@ -20,7 +20,7 @@ async function authRoute(req, res) {
     })
     if (process.env.VERCEL_ENV !== "preview") {
       if (!captchaResponse || !captchaResponse.success || captchaResponse.action !== "loginFormSubmit" || captchaResponse.score <= 0.5) {
-        res.status(401).json({ message: "reCAPTCHA verification failed, please try again." });
+        res.status(403).json({ message: "reCAPTCHA verification failed, please try again." });
         return;
       }
     }*/
@@ -111,7 +111,7 @@ async function authRoute(req, res) {
     });
     if (process.env.VERCEL_ENV !== "preview") {
       if (!captchaResponse || !captchaResponse.success || captchaResponse.action !== "joinFormSubmit" || captchaResponse.score <= 0.5) {
-        res.status(401).json({ message: "reCAPTCHA verification failed, please try again." });
+        res.status(403).json({ message: "reCAPTCHA verification failed, please try again." });
         return;
       }
     }

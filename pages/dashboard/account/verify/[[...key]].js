@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import fetchJson, { FetchError } from "lib/fetchJson";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
 import useUser from "lib/useUser";
@@ -13,6 +14,7 @@ export default function Verify() {
 
     const [errorMsg, setErrorMsg] = useState("");
     const router = useRouter();
+    const { executeRecaptcha } = useGoogleReCaptcha();
     const { key } = router.query;
     
     if (!user || !user.isLoggedIn || user.permissions.banned) {
@@ -32,7 +34,12 @@ export default function Verify() {
                 onClick={async (e) => {
                     e.preventDefault();
                     document.getElementById("verifyEmailBtn").disabled = true;
-                    const body = {};
+                    if (!executeRecaptcha) {
+                      setErrorMsg("reCAPTCHA not available, please try again.");
+                      document.getElementById("verifyEmailBtn").disabled = false;
+                      return;
+                    } 
+                    const body = { gReCaptchaToken: await executeRecaptcha("verifyEmailFormSubmit") };
                     if (key?.length > 0) {
                         body.key = key[0];
                     } else {
