@@ -2,6 +2,7 @@ import clientPromise from "lib/mongodb";
 import { compare, hash } from "bcryptjs";
 import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "lib/session";
+import { ObjectId } from "mongodb";
 import fetchJson from "lib/fetchJson";
 import parseUuid from "lib/parseUuid";
 import { allowedChars } from "lib/allowedChars";
