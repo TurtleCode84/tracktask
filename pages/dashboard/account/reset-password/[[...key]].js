@@ -43,7 +43,7 @@ export default function ResetPassword() {
                     const body = {
                       email: confirmed ? undefined : event.currentTarget.email.value,
                       password: confirmed ? event.currentTarget.password.value : undefined,
-                      key: confirmed ? key : undefined,
+                      key: confirmed ? key[0] : undefined,
                       gReCaptchaToken: await executeRecaptcha("passwordResetFormSubmit"),
                     };
 
