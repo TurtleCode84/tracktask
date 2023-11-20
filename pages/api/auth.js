@@ -248,7 +248,7 @@ async function authRoute(req, res) {
 
     const matchUser = await db.collection("users").findOne({ $and: [ {otp: key}, {otp: {$ne: ""}} ] }, { projection: { otp: 1 } });
     if (key && matchUser && (Date.now() - parseUuid(matchUser.otp)) < 3600000) {
-      const resetPassword = await db.collection("users").updateOne({ _id: new ObjectId(matchUser._id) }, { $set: { password: await hash(password, 10), 'history.lastEdit.timestamp': Math.floor(Date.now()/1000), 'history.lastEdit.by': new ObjectId(matchUser._id) } });
+      const resetPassword = await db.collection("users").updateOne({ _id: new ObjectId(matchUser._id) }, { $set: { password: await hash(password, 10), otp: "", 'history.lastEdit.timestamp': Math.floor(Date.now()/1000), 'history.lastEdit.by': new ObjectId(matchUser._id) } });
       res.json(resetPassword);
     } else {
       res.status(403).json({ message: "Invalid password reset key, please generate a new one." });
