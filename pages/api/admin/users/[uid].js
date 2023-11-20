@@ -90,7 +90,7 @@ async function adminUserRoute(req, res) {
       await db.collection("users").updateOne(query, verifyUpdateDoc); // See above
       // If anyone else has the same email as newly verified user, we need to get rid of it
       const verifiedUser = await db.collection("users").findOne(query, { projection: { email: 1 } });
-      await db.collection("users").updateMany({ _id: { $ne: verifiedUser._id }, email: verifiedUser.email }, { $set: { email: "", verificationKey: "", otp: "", 'permissions.verified': false } });
+      await db.collection("users").updateMany({ _id: { $ne: verifiedUser._id }, $and: [ {email: verifiedUser.email}, {email: {$ne: ""}} ]}, { $set: { email: "", verificationKey: "", otp: "", 'permissions.verified': false } });
     }
     if (body.admin !== undefined) { // true or false
       if (process.env.SUPERADMIN !== user.id || user.id === uid) {
