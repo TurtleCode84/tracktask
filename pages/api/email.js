@@ -32,6 +32,10 @@ async function emailRoute(req, res) {
         return;
       }
     }
+    if (!email) {
+      res.status(422).json({ message: "Invalid data" });
+      return;
+    }
     // warning: this whole system relies on emails being unique
     const matchUser = await db.collection("users").findOne({ email: email.trim().toLowerCase(), 'permissions.verified': true }, { projection: { username: 1, email: 1 } });
     if (matchUser) {
