@@ -5,25 +5,27 @@ import Link from "next/link";
 export default function Layout({ children }) {
   var advisory = process.env.NEXT_PUBLIC_ADVISORY;
   var advisoryColor = "#006dbe";
-  if (advisory?.split(',')[0] !== "default") {
-    advisoryColor = advisory?.split(',')[0];
+  if (advisory?.split('^')[0] !== "default") {
+    advisoryColor = advisory?.split('^')[0];
   }
 
   return (
     <>
       <Head>
-        <title>TrackTask - Shareable Task Management</title>
-        <meta name="title" content="TrackTask - Shareable Task Management" />
-        <meta name="description" content="Create, share, and keep track of tasks in a collaboratively organized way." />
+        <title>TrackTask &bull; Shareable Task Management</title>
+        <meta name="title" content="TrackTask &bull; Shareable Task Management" />
+        <meta name="description" content="An open-source task management platform geared towards organized collaboration." />
         <meta name="image" content="https://tracktask.eu.org/tracktaskmini.png" />
         <meta name="author" content="TurtleCode84" />
         <meta property="og:site_name" content="TrackTask" />
-        <meta property="og:title" content="TrackTask - Shareable Task Management" />
-        <meta property="og:description" content="Create, share, and keep track of tasks in a collaboratively organized way." />
+        <meta property="og:title" content="TrackTask &bull; Shareable Task Management" />
+        <meta property="og:description" content="An open-source task management platform geared towards organized collaboration." />
         <meta property="og:image" content="https://tracktask.eu.org/tracktaskmini.png" />
-        <meta name="twitter:title" content="TrackTask - Shareable Task Management" />
-        <meta name="twitter:description" content="Create, share, and keep track of tasks in a collaboratively organized way." />
+        <meta name="twitter:title" content="TrackTask &bull; Shareable Task Management" />
+        <meta name="twitter:description" content="An open-source task management platform geared towards organized collaboration." />
         <meta name="twitter:image" content="https://tracktask.eu.org/tracktaskmini.png" />
+        <meta name="theme-color" content="#121212" />
+        <link rel="manifest" href="/manifest.json" />
         {/* eslint-disable-next-line @next/next/no-page-custom-font */}
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" />
       </Head>
@@ -36,7 +38,8 @@ export default function Layout({ children }) {
 
         /* Dark mode (default) */
         :root {
-          --text-color: #fff;
+          --primary-text-color: #fff;
+          --secondary-text-color: gray;
           --border-color: #333;
           --background-color: #121212;
           --header-color: #1b2129;
@@ -52,7 +55,8 @@ export default function Layout({ children }) {
         
         /* Light mode */
         [data-theme="light"] {
-          --text-color: #333;
+          --primary-text-color: #333;
+          --secondary-text-color: #555;
           --border-color: darkgray;
           --background-color: #fff;
           --header-color: #333;
@@ -68,11 +72,9 @@ export default function Layout({ children }) {
 
         body {
           margin: 0;
-          color: var(--text-color);
+          color: var(--primary-text-color);
           background-color: var(--background-color);
-          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-          "Helvetica Neue", Arial, Noto Sans, sans-serif, "Apple Color Emoji",
-          "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+          overflow-wrap: anywhere;
         }
         
         .container {
@@ -99,8 +101,12 @@ export default function Layout({ children }) {
             gap: 30px;
             width: fit-content;
           }
+          h1 {
+            font-size: 28px;
+          }
           .welcome-text {
-            font-size: 24px;
+            font-size: 20px;
+            margin-bottom: 18px;
           }
           .dashboard .tasks ul {
             margin-left: -40px;
@@ -119,7 +125,7 @@ export default function Layout({ children }) {
 
         button {
           background: var(--element-background);
-          color: var(--text-color);
+          color: var(--primary-text-color);
           font-weight: 550;
           padding: 5px;
           border-width: 1px;
@@ -147,7 +153,7 @@ export default function Layout({ children }) {
 
         textarea {
           background-color: var(--element-background);
-          color: var(--text-color);
+          color: var(--primary-text-color);
           border-radius: 4px;
           resize: none;
           font-family: inherit;
@@ -158,7 +164,7 @@ export default function Layout({ children }) {
         /* Linkify textarea */
         .textarea {
           background-color: var(--element-background);
-          color: var(--text-color);
+          color: var(--primary-text-color);
           border: 1px solid;
           border-color: var(--textarea-border-color);
           border-radius: 4px;
@@ -175,7 +181,7 @@ export default function Layout({ children }) {
 
         input, select {
           background-color: var(--element-background);
-          color: var(--text-color);
+          color: var(--primary-text-color);
           font-family: inherit;
           border-width: 1px;
           border-style: solid;
@@ -215,10 +221,12 @@ export default function Layout({ children }) {
         
         a.footer {
           color: gray;
+          text-decoration: underline gray;
         }
 
         a.footer:visited {
           color: gray;
+          text-decoration: underline gray;
         }
 
         nav {
@@ -253,14 +261,14 @@ export default function Layout({ children }) {
         }
       `}</style>
       {process.env.NEXT_PUBLIC_VERCEL_ENV !== "production" && <nav style={{backgroundColor: "orange", textAlign: "center", fontWeight: 600, marginTop: -20 + "px", height: "fit-content", paddingBottom: 0, marginBottom: -16 + "px"}}><p style={{paddingTop: 13 + "px", paddingBottom: 8 + "px"}}>You are viewing a TrackTask development release, some features may not work properly or may break your account.</p></nav>}
-      {advisory && <nav style={{backgroundColor: advisoryColor, textAlign: "center", fontWeight: 600, marginTop: -20 + "px", height: "fit-content", paddingBottom: 0, marginBottom: -16 + "px"}}><p style={{paddingTop: 13 + "px", paddingBottom: 8 + "px"}}>{advisory.split(',')[1]}</p></nav>}
+      {advisory && <nav style={{backgroundColor: advisoryColor, textAlign: "center", fontWeight: 600, marginTop: -20 + "px", height: "fit-content", paddingBottom: 0, marginBottom: -16 + "px"}}><p style={{paddingTop: 13 + "px", paddingBottom: 8 + "px"}}>{advisory.split('^')[1]}</p></nav>}
       <Header />
 
       <main>
         <div className="container">{children}</div>
       </main>
 
-      <span style={{ fontSize: "90%", textAlign: "center", color: "gray", display: "table", margin: "4rem" + " auto", padding: "0 0.5rem 20px 0.5rem" }}>Copyright &#169; 2022-2023 TrackTask STM, All Rights Reserved - <Link href="/privacy"><a className="footer">Privacy</a></Link> - <Link href="/terms"><a className="footer">Terms of Use</a></Link> - <a className="footer" href="https://discord.gg/Hh3fw2xesP" target="_blank" rel="noopener noreferrer">Discord</a></span>
+      <span style={{ fontSize: "90%", textAlign: "center", color: "gray", display: "table", margin: "4rem" + " auto", padding: "0 0.5rem 20px 0.5rem" }}>Copyright &#169; 2022-2023 TrackTask STM, All Rights Reserved &bull; <Link href="/privacy"><a className="footer">Privacy</a></Link> &bull; <Link href="/terms"><a className="footer">Terms of Use</a></Link> &bull; <a className="footer" href="https://discord.gg/Hh3fw2xesP" target="_blank" rel="noopener noreferrer">Discord</a></span>
     </>
   );
 }

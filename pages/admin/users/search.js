@@ -5,16 +5,18 @@ import UserSearchForm from "components/UserSearchForm";
 import useUser from "lib/useUser";
 import Link from "next/link";
 import fetchJson, { FetchError } from "lib/fetchJson";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 
 export default function UserSearch() {
-  const { user, mutateUser } = useUser({
+  const { user } = useUser({
     redirectTo: "/dashboard",
     adminOnly: true,
   });
   
   const [errorMsg, setErrorMsg] = useState("");
+  const [results, setResults] = useState([]);
   const router = useRouter();
+  const { keyword, query } = router.query;
 
   if (!user || !user.isLoggedIn || user.permissions.banned || !user.permissions.admin) {
     return (
@@ -29,7 +31,11 @@ export default function UserSearch() {
         Search for user:
       </h2>
       <UserSearchForm
+          user={user}
           errorMessage={errorMsg}
+          searchResults={results}
+          autoKeyword={keyword}
+          autoQuery={query}
           onSubmit={async function handleSubmit(event) {
             event.preventDefault();
             document.getElementById("findUserBtn").disabled = true;
@@ -45,7 +51,13 @@ export default function UserSearch() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body),
               });
-              router.push(`/admin/users/${getUrl?._id}`);
+              if(getUrl.length > 1) {
+                setErrorMsg("");
+                setResults(getUrl);
+                document.getElementById("findUserBtn").disabled = false;
+              } else {
+                router.push(`/admin/users/${getUrl[0]._id}`);
+              }
             } catch (error) {
               if (error instanceof FetchError) {
                 setErrorMsg(error.data.message);

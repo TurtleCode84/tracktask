@@ -1,22 +1,41 @@
-export default function UserSearchForm({ errorMessage, onSubmit }) {
+import User from "components/User";
+import { useEffect, useRef } from "react";
+
+export default function UserSearchForm({ user, errorMessage, searchResults, autoKeyword, autoQuery, onSubmit }) {
+  const resultsList = searchResults.map((result) =>
+    <li key={result._id} style={{ margin: "0.5em" }}>
+      <User user={user} id={result._id} link={true}/>
+    </li>
+  );
+
+  const submitButton = useRef();
+
+  useEffect(()=>{
+    if (autoKeyword && autoQuery) {
+      submitButton.current.click();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[]);
+
   return (
     <form id="userSearchForm" autocomplete="off" onSubmit={onSubmit}>
       <label>
         <span>Keyword...</span>
-        <input type="text" name="keyword" autoFocus required />
+        <input type="text" name="keyword" defaultValue={autoKeyword?.trim()} autoFocus />
       </label>
       <label>
         <span>Search by...</span>
-        <select name="query" required>
+        <select name="query" defaultValue={autoQuery?.trim().toLowerCase()} required>
           <option value="username">Username</option>
           <option value="uid">User ID</option>
           <option value="email">Email</option>
-          <option value="ip">IP Address (beta)</option>
+          <option value="ip">IP Address</option>
         </select>
       </label>
 
-      <br/><button type="submit" id="findUserBtn">Find user</button>
+      <br/><button type="submit" ref={submitButton} id="findUserBtn">Find user</button>
 
+      {resultsList.length > 0 && !errorMessage && <ul><li className="success">Found {resultsList.length} matching users:</li>{resultsList}</ul>}
       {errorMessage && <p className="error">{errorMessage}</p>}
 
       <style jsx>{`

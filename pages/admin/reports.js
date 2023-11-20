@@ -5,7 +5,7 @@ import Report from "components/Report";
 import Link from "next/link";
 import useUser from "lib/useUser";
 import useAdminReports from "lib/useAdminReports";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 
 export default function ReportsAdmin() {
   const { user } = useUser({

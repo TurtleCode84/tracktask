@@ -1,6 +1,6 @@
 import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "lib/session";
-import { ObjectId } from 'mongodb'
+import { ObjectId } from "mongodb";
 import clientPromise from "lib/mongodb";
 import moment from "moment";
 
@@ -188,7 +188,7 @@ async function dataRoute(req, res) {
           priority: markPriority,
           notified: false,
         };
-        if (dueDate) {
+        if (dueDate && moment(dueDate, moment.ISO_8601, true).isValid()) {
           newTask.dueDate = moment(dueDate).unix();
         } else {
           newTask.dueDate = 0;
@@ -207,7 +207,13 @@ async function dataRoute(req, res) {
               $nin: [new ObjectId(createdTask.insertedId)], // Safety validation in case of edit conflict
             },
             hidden: false,
-            owner: new ObjectId(user.id),
+            $or: [
+              { owner: new ObjectId(user.id) },
+              {
+                'sharing.shared': true,
+                'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user.id), role: "contributor"}}
+              },
+            ],
           };
           await db.collection("collections").updateMany(addCollectionsQuery, {$push: {tasks: new ObjectId(createdTask.insertedId)}});
         }
@@ -299,17 +305,22 @@ async function dataRoute(req, res) {
 
       if (perms === "complete") {
 
-        if (body.completion) {
+        if (body.completed !== undefined) {
           updateDoc.completion = {};
-          updateDoc.completion.completed = body.completion.completed;
-          updateDoc.completion.completedBy = body.completion.completedBy;
+          if (body.completed) {
+            updateDoc.completion.completed = Math.floor(Date.now()/1000);
+            updateDoc.completion.completedBy = user.id;
+          } else {
+            updateDoc.completion.completed = 0;
+            updateDoc.completion.completedBy = "";
+          }
         }
 
       } else if (perms === "edit") {
 
         if (body.name) {updateDoc.name = body.name.trim().slice(0, 55);} // Enforce length limit
         if (body.description) {updateDoc.description = body.description.trim().slice(0, 500);}
-        if (body.dueDate !== undefined) {
+        if (body.dueDate !== undefined && (moment(body.dueDate, moment.ISO_8601, true).isValid() || body.dueDate.length === 0)) {
           if (body.dueDate) {
             updateDoc.dueDate = moment(body.dueDate).unix();
           } else {
@@ -318,10 +329,15 @@ async function dataRoute(req, res) {
           updateDoc.notified = false;
         }
         if (body.priority !== undefined) {updateDoc.priority = body.priority;}
-        if (body.completion) {
+        if (body.completed !== undefined) {
           updateDoc.completion = {};
-          updateDoc.completion.completed = body.completion.completed;
-          updateDoc.completion.completedBy = body.completion.completedBy;
+          if (body.completed) {
+            updateDoc.completion.completed = Math.floor(Date.now()/1000);
+            updateDoc.completion.completedBy = user.id;
+          } else {
+            updateDoc.completion.completed = 0;
+            updateDoc.completion.completedBy = "";
+          }
         }
 
       } else {
@@ -635,11 +651,6 @@ async function dataRoute(req, res) {
           return;
         }
       } else if (body.action === "accept") {
-        
-        if (!body.id) {
-          res.status(422).json({ message: "Invalid data" });
-          return;
-        }
         
         const query = {
           'sharing.shared': true,

@@ -8,7 +8,7 @@ import CollectionEditForm from "components/CollectionEditForm";
 import useUser from "lib/useUser";
 import useData from "lib/useData";
 import fetchJson, { FetchError } from "lib/fetchJson";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 import moment from "moment";
 import Link from "next/link";
 import Linkify from "linkify-react";
@@ -112,7 +112,7 @@ export default function Collection() {
           <li style={{ paddingBottom: "2px" }}>No tasks found!</li>}
         </ul>
         }
-        {user.permissions.verified && user.id === collection.owner && <><hr/><Link href={`/collections/${collection._id}/share`}>Share this collection</Link></>}
+        {user.id === collection.owner && <><hr/>{user.permissions.verified ? <Link href={`/collections/${collection._id}/share`}>Share this collection</Link> : <span style={{ fontStyle: "italic" }}><Link href="/dashboard/account/verify">Verify your email</Link> to share this collection.</span>}</>}
         <hr/>
         {currentUserRole === "editor" && <><details>
           <summary>Edit collection</summary>
@@ -147,7 +147,7 @@ export default function Collection() {
         />
         </details><br/></>}
         </>}
-        {collection.owner !== user.id && <><a href={`/api/collections/${collection._id}`} style={{ marginRight: "8px" }}
+        {user.id !== collection.owner && <><a href={`/api/collections/${collection._id}`} style={{ marginRight: "8px" }}
         onClick={async (e) => {
           e.preventDefault();
           if (collection.pending || confirm("Are you sure? You will lose access to the tasks that are not yours in this collection!")) {

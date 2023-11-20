@@ -1,14 +1,14 @@
 import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "lib/session";
 import { allowedChars } from "lib/allowedChars";
-import { ObjectId } from 'mongodb'
+import { ObjectId } from "mongodb";
 import clientPromise from "lib/mongodb";
-import { compare, hash } from 'bcryptjs';
+import { compare, hash } from "bcryptjs";
 
 export default withIronSessionApiRoute(userRoute, sessionOptions);
 
 async function userRoute(req, res) {
-  if (req.method === 'GET') {
+  if (req.method === 'GET') { // Returns info for the current user
     if (req.session.user) {
       const client = await clientPromise;
       const db = client.db("data");
@@ -53,7 +53,7 @@ async function userRoute(req, res) {
         permissions: {},
       });
     }
-  } else if (req.method === 'POST') {
+  } else if (req.method === 'POST') { // Updates the current user
     const body = await req.body;
     const user = req.session.user;
     if (!user || !user.isLoggedIn || user.permissions.banned ) {
@@ -78,7 +78,7 @@ async function userRoute(req, res) {
         await db.collection("users").updateOne(query, lastEditDoc);
         res.json(updatedWarn);
       } catch (error) {
-        res.status(500).json({ "message": error.data.message });
+        res.status(500).json({ message: error.data.message });
       }
     } else {
       const blacklist = process.env.BLACKLIST.split(',');
@@ -109,7 +109,7 @@ async function userRoute(req, res) {
         }
         const taken = await db.collection("users").countDocuments({ username: cleanUsername });
         if (taken > 0) {
-          res.status(422).json({ message: "Username is already taken!" });
+          res.status(403).json({ message: "Username is already taken!" });
           return;
         } else {
           updateUser.username = cleanUsername;
@@ -117,20 +117,6 @@ async function userRoute(req, res) {
       } else if (body.username) {
         res.status(403).json({ message: "Only verified users can change their username!" });
         return;
-      }
-      if (body.email !== undefined) {
-        const cleanEmail = body.email.trim().toLowerCase();
-        var contains = blacklist.some(element => { // Check for blacklisted elements
-          if (cleanEmail.includes(element.toLowerCase())) {
-            return true;
-          }
-        });
-        contains = contains || !/(^.{1,}@.{1,}\..{1,}[^.]$)/i.test(cleanEmail);
-        if (contains && blacklist) { // Figure out a way to do this when no blacklist is provided
-          res.status(403).json({ message: "The email you provided is not allowed, please choose something else." });
-          return;
-        }
-        updateUser.email = cleanEmail;
       }
       if (body.newPassword && body.oldPassword) {
         const currPass = await db.collection("users").findOne(query, { projection: { password: 1 } }); // current password hash
@@ -147,6 +133,27 @@ async function userRoute(req, res) {
         $set: updateUser,
       };
       const updated = await db.collection("users").updateOne(query, updateDoc);
+      if (body.email !== undefined) {
+        const cleanEmail = body.email.trim().toLowerCase();
+        var contains = blacklist.some(element => { // Check for blacklisted elements
+          if (cleanEmail.includes(element.toLowerCase())) {
+            return true;
+          }
+        });
+        contains = contains || (cleanEmail && !/(^.+@.+\..+[^.]$)/i.test(cleanEmail));
+        if (contains && blacklist) { // Figure out a way to do this when no blacklist is provided
+          res.status(403).json({ message: "The email you provided is not allowed, please choose something else." });
+          return;
+        }
+        const taken = await db.collection("users").countDocuments({ email: cleanEmail, 'permissions.verified': true });
+        if (taken > 0) {
+          res.status(403).json({ message: "Email is already linked to an account!" });
+          return;
+        } else {
+          const emailDoc = { $set: {email: cleanEmail, 'permissions.verified': false, verificationKey: "", otp: ""} };
+          await db.collection("users").updateOne(query, emailDoc);
+        }
+      }
       const lastEditDoc = {
         $set: {
           'history.lastEdit.timestamp': Math.floor(Date.now()/1000),
@@ -156,7 +163,7 @@ async function userRoute(req, res) {
       await db.collection("users").updateOne(query, lastEditDoc);
       res.json(updated);
     }
-  } else if (req.method === 'DELETE') {
+  } else if (req.method === 'DELETE') { // Deletes the current user and their data
     const user = req.session.user;
     if (user.permissions.admin) {
       res.status(403).json({ message: "For security reasons, admins cannot delete their own accounts. Please contact a developer for data deletion." });

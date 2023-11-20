@@ -9,7 +9,7 @@ import useUser from "lib/useUser";
 import useData from "lib/useData";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import stringToColor from "lib/stringToColor";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 import moment from "moment";
 import Link from "next/link";
 import Linkify from "linkify-react";
@@ -61,10 +61,7 @@ export default function Task() {
           e.preventDefault();
           document.getElementById("markCompleteBtn").disabled = true;
           const body = {
-            completion: {
-              completed: Math.floor(Date.now()/1000),
-              completedBy: user.id,
-            },
+            completed: true,
             priority: false,
           };
           try {
@@ -90,6 +87,7 @@ export default function Task() {
           <br/><TaskEditForm
             errorMessage={errorMsg}
             task={task}
+            isTaskOwner={user.id == task.owner}
             onSubmit={async function handleSubmit(event) {
               event.preventDefault();
               document.getElementById("editTaskBtn").disabled = true;
@@ -110,11 +108,9 @@ export default function Task() {
               if (event.currentTarget.complete.checked !== event.currentTarget.complete.defaultChecked) {
                 body.completion = {};
                 if (event.currentTarget.complete.checked) {
-                  body.completion.completed = Math.floor(Date.now()/1000);
-                  body.completion.completedBy = user.id;
+                  body.completed = true;
                 } else {
-                  body.completion.completed = 0;
-                  body.completion.completedBy = "";
+                  body.completed = false;
                 }
               }
 
@@ -135,19 +131,23 @@ export default function Task() {
               }
             }}
         />
-        </details></>}
-        {perms >= 4 && <><br/><details>
+        </details><br/></>}
+        {perms >= 4 && <><details>
           <summary>Add/remove from collection</summary>
           <br/><AddRemoveCollectionForm
             errorMessage={errorMsg}
             taskId={task._id}
             collections={collections}
+            isTaskOwner={user.id == task.owner}
             onSubmit={async function handleSubmit(event) {
               event.preventDefault();
               document.getElementById("addRemoveCollectionBtn").disabled = true;
                             
-              const addedCollections = event.currentTarget.addCollections.selectedOptions;
-              const addedCollectionsValues = Array.from(addedCollections)?.map((item) => item.value);
+              var addedCollectionsValues = [];
+              if (user.id == task.owner) {
+                const addedCollections = event.currentTarget.addCollections.selectedOptions;
+                addedCollectionsValues = Array.from(addedCollections)?.map((item) => item.value);
+              };
               const removedCollections = event.currentTarget.removeCollections.selectedOptions;
               const removedCollectionsValues = Array.from(removedCollections)?.map((item) => item.value);
               
@@ -174,8 +174,8 @@ export default function Task() {
               }
             }}
           />
-        </details></>}
-        {perms < 4 && <ReportButton user={user} type="task" reported={task}/>}</>
+        </details><br/></>}
+        {user.id !== task.owner && <ReportButton user={user} type="task" reported={task}/>}</>
       :
         <>{taskError ? <p>{taskError.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading task...</p>}</>
       }

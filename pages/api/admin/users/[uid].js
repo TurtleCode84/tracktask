@@ -60,7 +60,6 @@ async function adminUserRoute(req, res) {
         updateUser.username = body.username.trim().toLowerCase();
       }
     }
-    if (body.email !== undefined) {updateUser.email = body.email.trim().toLowerCase();}
     if (body.password) {updateUser.password = await hash(body.password, 10);}
     if (body.profilePicture !== undefined) {updateUser.profilePicture = body.profilePicture;}
     const query = { _id: new ObjectId(uid) };
@@ -68,17 +67,32 @@ async function adminUserRoute(req, res) {
       $set: updateUser,
     };
     const updated = await db.collection("users").updateOne(query, updateDoc);
+    if (body.email !== undefined) {
+      const taken = await db.collection("users").countDocuments({ email: body.email.trim().toLowerCase(), 'permissions.verified': true });
+      if (taken > 0) {
+        res.status(403).json({ message: "Email is already linked to an account!" });
+        return;
+      } else {
+        const emailUpdateDoc = { $set: {email: body.email.trim().toLowerCase(), 'permissions.verified': false, verificationKey: "", otp: ""} };
+        await db.collection("users").updateOne(query, emailUpdateDoc); // Does not catch errors, could be a problem if updated succeeds but this does not?
+      }
+    }
     if (body.notes !== undefined) {
       const notesUpdateDoc = {
         $set: {'history.notes': body.notes},
       };
-      await db.collection("users").updateOne(query, notesUpdateDoc); // Does not catch errors, could be a problem if updated succeeds but updatedNotes does not?
+      await db.collection("users").updateOne(query, notesUpdateDoc); // See above
     }
     if (body.verify !== undefined) { // true or false
       const verifyUpdateDoc = {
         $set: {'permissions.verified': body.verify},
       };
       await db.collection("users").updateOne(query, verifyUpdateDoc); // See above
+      if (body.verify) {
+        // If anyone else has the same email as a newly verified user, we need to get rid of it
+        const verifiedUser = await db.collection("users").findOne(query, { projection: { email: 1 } });
+        await db.collection("users").updateMany({ _id: { $ne: new ObjectId(verifiedUser._id) }, $and: [ {email: verifiedUser.email}, {email: {$ne: ""}} ]}, { $set: { email: "", verificationKey: "", otp: "", 'permissions.verified': false } });
+      }
     }
     if (body.admin !== undefined) { // true or false
       if (process.env.SUPERADMIN !== user.id || user.id === uid) {

@@ -8,7 +8,7 @@ import useAdminUsers from "lib/useAdminUsers";
 import useAdminReports from "lib/useAdminReports";
 import moment from "moment";
 import Link from "next/link";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 
 export default function Admin() {
   const { user, mutateUser } = useUser({
@@ -28,13 +28,13 @@ export default function Admin() {
   const { users: recentlyActive } = useAdminUsers(user, "login", 5);
   const activeUsersList = recentlyActive?.map((activeUser) =>
     <li key={activeUser._id} style={{ margin: "0.5em" }}>
-      <User user={user} id={activeUser._id} link={true}/>{activeUser.permissions.admin && <span title="Admin" style={{ color: "slategray" }} className="material-symbols-outlined icon-list">verified_user</span>}{activeUser.permissions.banned && <span title="Banned" style={{ color: "red" }} className="material-symbols-outlined icon-list">block</span>} - Last login {activeUser.history.lastLogin > 0 ? moment.unix(activeUser.history.lastLogin).fromNow() : 'never'}
+      <User user={user} id={activeUser._id} link={true}/>{activeUser.permissions.admin && <span title="Admin" style={{ color: "slategray" }} className="material-symbols-outlined icon-list">verified_user</span>}{activeUser.permissions.banned && <span title="Banned" style={{ color: "red" }} className="material-symbols-outlined icon-list">block</span>} &bull; Last login {activeUser.history.lastLogin > 0 ? moment.unix(activeUser.history.lastLogin).fromNow() : 'never'}
     </li>
   );
   const { users: recentlyJoined } = useAdminUsers(user, "joined", 5);
   const newUsersList = recentlyJoined?.map((newUser) =>
     <li key={newUser._id} style={{ margin: "0.5em" }}>
-      <User user={user} id={newUser._id} link={true}/>{newUser.permissions.admin && <span title="Admin" style={{ color: "slategray" }} className="material-symbols-outlined icon-list">verified_user</span>}{newUser.permissions.banned && <span title="Banned" style={{ color: "red" }} className="material-symbols-outlined icon-list">block</span>} - Joined {newUser.history.joined > 0 ? moment.unix(newUser.history.joined).fromNow() : 'never'}
+      <User user={user} id={newUser._id} link={true}/>{newUser.permissions.admin && <span title="Admin" style={{ color: "slategray" }} className="material-symbols-outlined icon-list">verified_user</span>}{newUser.permissions.banned && <span title="Banned" style={{ color: "red" }} className="material-symbols-outlined icon-list">block</span>} &bull; Joined {newUser.history.joined > 0 ? moment.unix(newUser.history.joined).fromNow() : 'never'}
     </li>
   );
 
@@ -47,11 +47,11 @@ export default function Admin() {
     <Layout>
       <h1>TrackTask Admin Panel <span style={{ color: "slategray" }} className="material-symbols-outlined">verified_user</span></h1>
       {dynamicMsg && <p className="success">{dynamicMsg}{' '}<Link href="/admin">Ok</Link></p>}
-      <h2>Recent Reports</h2>
+      <h2><hr/>Recent Reports<hr/></h2>
       <ul style={{ display: "table" }}>
         {reportList?.length > 0 ? reportList : <li>No reports found!</li>}
       </ul>
-      <h2>User Statistics</h2>
+      <h2><hr/>User Statistics<hr/></h2>
       <h3>Recently active:</h3>
       <ul>
         {activeUsersList ? activeUsersList : 'Loading active users...'}
@@ -62,7 +62,7 @@ export default function Admin() {
         {newUsersList ? newUsersList : 'Loading new users...'}
         {newUsersList && newUsersList === null && <>No new users found</>}
       </ul>
-      <Link href="/admin/users">View all users</Link>
+      <Link href="/admin/users">View all users</Link><hr/>
       <p>Useful admin pages:</p>
       <ul style={{ listStyle: "revert", margin: "revert" }}>
         <li><Link href="/admin/users/search">Find a user</Link></li>

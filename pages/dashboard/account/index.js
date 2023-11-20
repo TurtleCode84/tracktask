@@ -9,7 +9,7 @@ import Image from "next/image";
 import useUser from "lib/useUser";
 import { useRouter } from "next/router";
 
-export default function Settings() {
+export default function Account() {
   const { user } = useUser({
     redirectTo: "/login",
   });
@@ -30,6 +30,7 @@ export default function Settings() {
       <p>Username: {user.username}{' '}{user.permissions.verified ? <span title="Verified" style={{ color: "#006dbe" }} className="material-symbols-outlined icon-list">verified</span> : null}{user.permissions.admin ? <span title="Admin" style={{ color: "slategray" }} className="material-symbols-outlined icon-list">verified_user</span> : null}</p>
       <p>User ID: {user.id}</p>
       <p>Email: {user.email ? <><a href={`mailto:${user.email}`} target="_blank" rel="noreferrer">{user.email}</a></> : 'none'}</p>
+      {user.email && !user.permissions.verified && <p style={{ fontStyle: "italic", color: "var(--secondary-text-color)" }}>Your email is not verified, <Link href="/dashboard/account/verify">click here to verify</Link>.</p>}
       <p>Profile picture: <Image src={user.profilePicture ? user.profilePicture : "/default-pfp.jpg" } width={32} height={32} style={{ verticalAlign: "middle", borderRadius: "100%", overflow: "hidden" }} alt=""/> ({user.profilePicture ? <a href={user.profilePicture} target="_blank" rel="noreferrer">link</a> : 'default'})</p>
       <h3><hr/>History<hr/></h3>
       <p title={moment.unix(user.history.joined).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Joined: {user.history.joined > 0 ? moment.unix(user.history.joined).fromNow() : 'never'}</p>

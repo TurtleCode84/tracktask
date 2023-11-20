@@ -38,6 +38,14 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
         <span>Clear all warnings</span>
         <input type="checkbox" name="clearWarnings" />
       </label>
+      <label>
+        <span>Generate new verification key</span>
+        <input type="checkbox" name="generateVerificationKey" disabled />
+      </label>
+      <label>
+        <span>Generate new OTP</span>
+        <input type="checkbox" name="generateOtp" disabled />
+      </label>
       <h2>Permissions:</h2>
       <label>
         <span>Verified <span style={{ color: "#006dbe" }} className="material-symbols-outlined icon-list">verified</span></span>

@@ -1,14 +1,16 @@
 import clientPromise from "lib/mongodb";
-import { compare, hash } from 'bcryptjs';
+import { compare, hash } from "bcryptjs";
 import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "lib/session";
+import { ObjectId } from "mongodb";
 import fetchJson from "lib/fetchJson";
+import parseUuid from "lib/parseUuid";
 import { allowedChars } from "lib/allowedChars";
 
 export default withIronSessionApiRoute(authRoute, sessionOptions);
 
 async function authRoute(req, res) {
-  if (req.method === 'POST') {
+  if (req.method === 'POST') { // login
     //const { username, password, gReCaptchaToken } = await req.body;
     const { username, password } = await req.body;
     
@@ -20,7 +22,7 @@ async function authRoute(req, res) {
     })
     if (process.env.VERCEL_ENV !== "preview") {
       if (!captchaResponse || !captchaResponse.success || captchaResponse.action !== "loginFormSubmit" || captchaResponse.score <= 0.5) {
-        res.status(401).json({ message: "reCAPTCHA verification failed, please try again." });
+        res.status(403).json({ message: "reCAPTCHA verification failed, please try again." });
         return;
       }
     }*/
@@ -100,7 +102,7 @@ async function authRoute(req, res) {
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
-  } else if (req.method === 'PUT') {
+  } else if (req.method === 'PUT') { // signup
     const { username, password, email, gReCaptchaToken } = await req.body;
     
     //Check if robot
@@ -111,7 +113,7 @@ async function authRoute(req, res) {
     });
     if (process.env.VERCEL_ENV !== "preview") {
       if (!captchaResponse || !captchaResponse.success || captchaResponse.action !== "joinFormSubmit" || captchaResponse.score <= 0.5) {
-        res.status(401).json({ message: "reCAPTCHA verification failed, please try again." });
+        res.status(403).json({ message: "reCAPTCHA verification failed, please try again." });
         return;
       }
     }
@@ -155,9 +157,7 @@ async function authRoute(req, res) {
         contains = true;
       }
     }
-    if (cleanEmail && !/(^.{1,}@.{1,}\..{1,}[^.]$)/i.test(cleanEmail)) {
-      contains = true;
-    }
+    contains = contains || (cleanEmail && !/(^.+@.+\..+[^.]$)/i.test(cleanEmail));
     if (contains && blacklist) { // Figure out a way to do this when no blacklist is provided
       res.status(403).json({ message: "The username or email you provided is not allowed, please choose something else." });
       return;
@@ -171,7 +171,13 @@ async function authRoute(req, res) {
     const query = { username: username.toLowerCase() };
     const userExists = await db.collection("users").countDocuments(query);
     if (userExists > 0) {
-      res.status(401).json({ message: "Username is not available, please choose something different." }); // user already exists
+      res.status(403).json({ message: "Username is not available, please choose something different." }); // user already exists
+      return;
+    }
+    const emailQuery = { email: cleanEmail, 'permissions.verified': true }; // prevents an unverified user from squatting on an unowned email
+    const emailExists = await db.collection("users").countDocuments(emailQuery);
+    if (emailExists > 0) {
+      res.status(403).json({ message: "Email is already linked to an account, please use a different one." }); // email already in use
       return;
     }
     
@@ -181,6 +187,8 @@ async function authRoute(req, res) {
         username: cleanUsername,
         password: await hash(password, 10),
         email: cleanEmail,
+        verificationKey: "",
+        otp: "",
         profilePicture: "",
         history: {
           joined: Math.floor(Date.now()/1000),
@@ -216,7 +224,37 @@ async function authRoute(req, res) {
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
-  } else if (req.method === 'DELETE') {
+  } else if (req.method === 'PATCH') { // password reset
+    const { key, password, gReCaptchaToken } = await req.body;
+    const captchaResponse = await fetchJson("https://www.google.com/recaptcha/api/siteverify", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded", },
+      body: `secret=${process.env.RECAPTCHA_SECRET}&response=${gReCaptchaToken}`,
+    });
+    if (process.env.VERCEL_ENV !== "preview") {
+      if (!captchaResponse || !captchaResponse.success || captchaResponse.action !== "passwordResetFormSubmit" || captchaResponse.score <= 0.5) {
+        res.status(403).json({ message: "reCAPTCHA verification failed, please try again." });
+        return;
+      }
+    }
+    if (!password) {
+      res.status(422).json({ message: "Invalid data" });
+      return;
+    }
+
+    //Connect with database
+    const client = await clientPromise;
+    const db = client.db("data");
+
+    const matchUser = await db.collection("users").findOne({ $and: [ {otp: key}, {otp: {$ne: ""}} ] }, { projection: { otp: 1 } });
+    if (key && matchUser && (Date.now() - parseUuid(matchUser.otp)) < 3600000) {
+      const resetPassword = await db.collection("users").updateOne({ _id: new ObjectId(matchUser._id) }, { $set: { password: await hash(password, 10), otp: "", 'history.lastEdit.timestamp': Math.floor(Date.now()/1000), 'history.lastEdit.by': new ObjectId(matchUser._id) } });
+      res.json(resetPassword);
+    } else {
+      res.status(403).json({ message: "Invalid password reset key, please generate a new one." });
+      return;
+    }
+  } else if (req.method === 'DELETE') { // deletion
     await req.session.destroy();
     res.json({ isLoggedIn: false, id: "", username: "", permissions: {} });
   } else {

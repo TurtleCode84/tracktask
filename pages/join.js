@@ -5,11 +5,11 @@ import Layout from "components/Layout";
 import SignupForm from "components/SignupForm";
 import Link from "next/link";
 import fetchJson, { FetchError } from "lib/fetchJson";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 
 export default function Join() {
-  // here we just check if user is already logged in and redirect to dashboard
-  const { user, mutateUser } = useUser({
+  // Check if user is already logged in and redirect to dashboard
+  useUser({
     redirectTo: "/dashboard",
     redirectIfFound: true,
   });
@@ -61,11 +61,7 @@ export default function Join() {
             }
           }}
         />
-        <p>Already have an account?{' '}
-        <Link href="/login">
-          <a>Login!</a>
-        </Link>
-        </p>
+        <p style={{ textAlign: "center", marginTop: "25px", marginBottom: "10px", fontSize: "95%" }}>Already have an account? <Link href="/login">Login!</Link></p>
       </div>
       <style jsx>{`
         .signup {

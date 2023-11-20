@@ -4,6 +4,12 @@ import urlBase64ToUint8Array from "lib/urlBase64ToUint8Array";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import { useEffect } from "react";
 import ErrorBoundary from "components/ErrorBoundary";
+import { Roboto_Flex } from "next/font/google"; // Exo_2
+
+const font = Roboto_Flex({
+  subsets: ['latin'],
+  display: 'swap',
+});
 
 function MyApp({ Component, pageProps }) {
   useEffect(() => {
@@ -80,7 +86,7 @@ function MyApp({ Component, pageProps }) {
       reCaptchaKey="6LdBzhUiAAAAAGnjMtWaqrFmFAG6gE_yM_LQq_tZ"
       scriptProps={{
         async: false,
-        defer: false,
+        defer: true,
         appendTo: "head",
         nonce: undefined,
       }}
@@ -93,6 +99,11 @@ function MyApp({ Component, pageProps }) {
         },
       }}
     >
+      <style jsx global>{`
+        html {
+          font-family: ${font.style.fontFamily}, sans-serif;
+        }
+      `}</style>
       <ErrorBoundary>
       <Component {...pageProps} />
       </ErrorBoundary>

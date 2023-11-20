@@ -22,9 +22,7 @@ export default function CollectionsCreate() {
   }
   return (
     <Layout>
-      <h1>
-        Create a new collection:
-      </h1>
+      <h1>Create a new collection:</h1>
       <CollectionCreateForm
         verified={user.permissions.verified}
         errorMessage={errorMsg}

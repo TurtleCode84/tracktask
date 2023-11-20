@@ -1,5 +1,5 @@
 import clientPromise from "lib/mongodb";
-import { ObjectId } from 'mongodb'
+import { ObjectId } from "mongodb";
 import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "lib/session";
 

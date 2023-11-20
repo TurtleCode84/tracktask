@@ -15,7 +15,7 @@ export default function Dashboard() {
   
   const { data: upcomingTasks, error: upcomingTasksError } = useData(user, "tasks", false, "upcoming");
   const router = useRouter();
-  const { reported, deleted } = router.query;
+  const { reported, deleted, verify } = router.query;
   var dynamicMsg;
   if (reported === "true") {
     dynamicMsg = "Your report had been sent, an administrator will review it soon.";
@@ -23,6 +23,10 @@ export default function Dashboard() {
     dynamicMsg = "Task successfully deleted!";
   } else if (deleted === "c") {
     dynamicMsg = "Collection successfully deleted!";
+  } else if (verify === "pending") {
+    dynamicMsg = "Email verification request sent, please check your email.";
+  } else if (verify === "done") {
+    dynamicMsg = "Email address successfully verified!";
   }
   const upcomingTaskList = upcomingTasks?.map((task) =>
     <Task task={task} key={task._id}/>

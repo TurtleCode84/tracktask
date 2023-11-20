@@ -1,6 +1,6 @@
 import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "lib/session";
-import { ObjectId } from 'mongodb'
+import { ObjectId } from "mongodb";
 import clientPromise from "lib/mongodb";
 import moment from "moment";
 
@@ -69,27 +69,25 @@ async function adminDataRoute(req, res) {
 
           data = await db.collection("tasks").find(reportedTasksQuery, tasksOptions).toArray();
 
-          /*var taskIds = [];
-          data.forEach(item => taskIds.push(String(item._id)));
+          if (data.length === 0 && dataPath[1]) {
 
-          // Get and append tasks from reported collections as well
-          const allCollections = await db.collection("collections").find(inCollectionsQuery).toArray();
-          var sharedTasks = [];
-          allCollections.forEach(allCollection => {
-            sharedTasks.push(...allCollection.tasks.filter(task => !taskIds.includes(String(task))));
-          });
-          if (dataPath[1]) {
-            sharedTasks = sharedTasks.filter(sharedTask => String(sharedTask) === String(dataPath[1]));
+            // Get and append tasks from reported collections as well
+            const reportedCollections = await db.collection("reports").find({ $or: [ { type: "collection" }, { type: "share" } ] }, { projection: { reported: 1 } }).toArray();
+            var reportedCollectionIds = [];
+            reportedCollections.forEach(collection => {
+              const collectionReportedId = new ObjectId(collection.reported._id);
+              if (!reportedCollectionIds.includes(collectionReportedId)) {
+                reportedCollectionIds.push(collectionReportedId);
+              }
+            });
+            const inReportedCollections = await db.collection("collections").countDocuments({ _id: { $in: reportedCollectionIds }, tasks: new ObjectId(dataPath[1]) });
+            
+            if (inReportedCollections > 0) {
+              data = data.concat(await db.collection("tasks").find({ _id: new ObjectId(dataPath[1]) }).toArray());
+            }
+          
           }
-          const sharedTasksQuery = {
-            ...ownTasksQuery,
-            _id: {
-              $in: sharedTasks,
-            },
-          }
-          delete sharedTasksQuery.owner;
-          data = data.concat(await db.collection("tasks").find(sharedTasksQuery, tasksOptions).toArray());
-          // data should now contain all owned and shared tasks*/
+          // data should now contain a task from a reported collection, if it exists
           
           // At this point we can tell if the task exists
           if (dataPath[1] && data.length < 1) {
