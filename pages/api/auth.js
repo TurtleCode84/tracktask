@@ -240,6 +240,11 @@ async function authRoute(req, res) {
       res.status(422).json({ message: "Invalid data" });
       return;
     }
+
+    //Connect with database
+    const client = await clientPromise;
+    const db = client.db("data");
+
     const matchUser = await db.collection("users").findOne({ $and: [ {otp: key}, {otp: {$ne: ""}} ] }, { projection: { otp: 1 } });
     if (key && matchUser && (Date.now() - parseUuid(matchUser.otp)) < 3600000) {
       const resetPassword = await db.collection("users").updateOne({ _id: new ObjectId(matchUser._id) }, { $set: { password: await hash(password, 10), 'history.lastEdit.timestamp': Math.floor(Date.now()/1000), 'history.lastEdit.by': new ObjectId(matchUser._id) } });
