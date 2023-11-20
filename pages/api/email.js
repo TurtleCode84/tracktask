@@ -90,7 +90,7 @@ async function emailRoute(req, res) {
     if (userInfo.verificationKey && key === userInfo.verificationKey && (Date.now() - parseUuid(userInfo.verificationKey)) < 3600000) {
       const verifiedUser = await db.collection("users").updateOne({ _id: new ObjectId(user.id) }, { $set: { verificationKey: "", 'permissions.verified': true, 'history.lastEdit.timestamp': Math.floor(Date.now()/1000), 'history.lastEdit.by': new ObjectId(user.id) } });
       // If anyone else has the newly verified email, we need to get rid of it
-      await db.collection("users").updateMany({ _id: { $ne: user.id }, email: userInfo.email }, { $set: { email: "", verificationKey: "", otp: "", 'permissions.verified': false } });
+      await db.collection("users").updateMany({ _id: { $ne: new ObjectId(user.id) }, email: userInfo.email }, { $set: { email: "", verificationKey: "", otp: "", 'permissions.verified': false } });
       res.json(verifiedUser);
     } else {
       res.status(403).json({ message: "Invalid verification key, please generate a new one." });
