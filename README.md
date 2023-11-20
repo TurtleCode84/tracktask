@@ -43,7 +43,7 @@ These are the current official developers of the project:
   - [@micahlt](https://github.com/micahlt) (consultant)
 
 ## Things to consider:
-> This project is **still in development**, some things may be incomplete or not work as expected. We're working on adding features and improving existing infrastructure, but most of us have other commitments such as school, so we can't always devote our attention to this project.
+> This project is **still in development**, some things may be incomplete or not work as expected. We're working on adding features and improving existing infrastructure, but most of us have other commitments and a life outside of TrackTask, so we can't always devote our attention to issues/improvements.
 
 > If you find something that you dislike and/or think could be better, **please don't just complain** about it. Sometimes we miss things, but most times we'd like to know _how_ we can improve things, so complaining about them won't always get you (or us) anywhere.
 
