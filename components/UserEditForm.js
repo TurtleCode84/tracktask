@@ -4,7 +4,6 @@ import { useEffect } from "react";
 
 export default function UserEditForm({ errorMessage, onSubmit, user }) {
   const router = useRouter();
-  var currentDisplayName;
   useEffect(() => {
     const themeDropdown = document.getElementById("theme-dropdown");
     const currentTheme = localStorage.getItem("theme");
@@ -26,8 +25,8 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
       notificationsDropdown.addEventListener("change", toggleNotifications, false);
     }
 
-    currentDisplayName = localStorage.getItem("displayName");
     const displayNameInput = document.getElementById("displayNameInput");
+    displayNameInput.value = localStorage.getItem("displayName");
     displayNameInput.addEventListener("input", changeDisplayName, false);
   
     function switchTheme(e) {
@@ -90,7 +89,7 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
       </label>}
       <label>
         <span>Display name (stored locally)</span>
-        <input type="text" id="displayNameInput" name="displayName" defaultValue={currentDisplayName} />
+        <input type="text" id="displayNameInput" name="displayName" />
       </label><hr/>
 
       <button type="submit" id="editUserBtn">Save account details</button>
