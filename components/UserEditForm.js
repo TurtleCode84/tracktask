@@ -38,7 +38,7 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
       router.reload();
     }
     function changeDisplayName(e) {
-      localStorage.setItem("displayName", e.currentTarget.value);
+      localStorage.setItem("displayName", e.currentTarget.value.trim());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
