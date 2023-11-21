@@ -28,7 +28,7 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
 
     currentDisplayName = localStorage.getItem("displayName");
     const displayNameInput = document.getElementById("displayNameInput");
-    displayNameInput.addEventListener("change", changeDisplayName, false);
+    displayNameInput.addEventListener("input", changeDisplayName, false);
   
     function switchTheme(e) {
       document.documentElement.setAttribute("data-theme", e.currentTarget.value);
