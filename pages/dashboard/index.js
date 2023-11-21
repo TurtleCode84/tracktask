@@ -53,10 +53,10 @@ export default function Dashboard() {
   ];
   const welcome = {};
   const hour = new Date().getHours();
-  for (var i = 0; i < welcomeMessages.length; i++) {
-    if (hour >= welcomeMessages[i][0]) {
-      welcome.message = welcomeMessages[i][1];
-      welcome.punctuation = welcomeMessages[i][2];
+  for (var i = 0; i < welcomeTimes.length; i++) {
+    if (hour >= welcomeTimes[i][0]) {
+      welcome.message = welcomeTimes[i][1];
+      welcome.punctuation = welcomeTimes[i][2];
       break;
     }
   }
