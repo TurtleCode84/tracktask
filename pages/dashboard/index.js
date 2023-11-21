@@ -49,7 +49,7 @@ export default function Dashboard() {
     [17, "Good evening", "!"],
     [12, "Good afternoon", "!"],
     [5, "Good morning", "!"],
-    [0, "Working late", "?"]
+    [0, "Up early", "?"]
   ];
   const welcome = {};
   const hour = new Date().getHours();
