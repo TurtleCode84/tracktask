@@ -60,9 +60,10 @@ export default function Dashboard() {
       break;
     }
   }
+  var displayName;
 
   useEffect(() => {
-    const displayName = localStorage.getItem("displayName");
+    displayName = localStorage.getItem("displayName");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   

@@ -4,6 +4,7 @@ import { useEffect } from "react";
 
 export default function UserEditForm({ errorMessage, onSubmit, user }) {
   const router = useRouter();
+  var currentDisplayName;
   useEffect(() => {
     const themeDropdown = document.getElementById("theme-dropdown");
     const currentTheme = localStorage.getItem("theme");
@@ -25,7 +26,7 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
       notificationsDropdown.addEventListener("change", toggleNotifications, false);
     }
 
-    const currentDisplayName = localStorage.getItem("displayName");
+    currentDisplayName = localStorage.getItem("displayName");
     const displayNameInput = document.getElementById("displayName");
     displayNameInput.addEventListener("change", changeDisplayName, false);
   
