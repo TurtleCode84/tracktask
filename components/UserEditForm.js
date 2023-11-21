@@ -24,6 +24,10 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
       }
       notificationsDropdown.addEventListener("change", toggleNotifications, false);
     }
+
+    const currentDisplayName = localStorage.getItem("displayName");
+    const displayNameInput = document.getElementById("displayName");
+    displayNameInput.addEventListener("change", changeDisplayName, false);
   
     function switchTheme(e) {
       document.documentElement.setAttribute("data-theme", e.currentTarget.value);
@@ -32,6 +36,9 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
     function toggleNotifications(e) {
       localStorage.setItem("notifications", e.currentTarget.value);
       router.reload();
+    }
+    function changeDisplayName(e) {
+      localStorage.setItem("displayName", e.currentTarget.value);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -80,7 +87,10 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
           <option value="enable">Enabled</option>
         </select>
       </label>}
-      <p style={{ fontStyle: "italic" }}>More preferences coming soon...</p><hr/>
+      <label>
+        <span>Display name (stored locally)</span>
+        <input type="text" name="displayName" defaultValue={currentDisplayName} />
+      </label><hr/>
 
       <button type="submit" id="editUserBtn">Save account details</button>
 
