@@ -27,7 +27,7 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
     }
 
     currentDisplayName = localStorage.getItem("displayName");
-    const displayNameInput = document.getElementById("displayName");
+    const displayNameInput = document.getElementById("displayNameInput");
     displayNameInput.addEventListener("change", changeDisplayName, false);
   
     function switchTheme(e) {
@@ -90,7 +90,7 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
       </label>}
       <label>
         <span>Display name (stored locally)</span>
-        <input type="text" name="displayName" defaultValue={currentDisplayName} />
+        <input type="text" id="displayNameInput" name="displayName" defaultValue={currentDisplayName} />
       </label><hr/>
 
       <button type="submit" id="editUserBtn">Save account details</button>

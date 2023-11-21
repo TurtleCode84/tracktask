@@ -64,7 +64,6 @@ export default function Dashboard() {
 
   useEffect(() => {
     displayName = localStorage.getItem("displayName");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   
   if (!user || !user.isLoggedIn || user.permissions.banned) {
