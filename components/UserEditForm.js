@@ -88,7 +88,7 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
         </select>
       </label>}
       <label>
-        <span>Display name (stored locally)</span>
+        <span>Display name (beta, stored locally)</span>
         <input type="text" id="displayNameInput" name="displayName" />
       </label><hr/>
 
