@@ -20,7 +20,7 @@ export default function SignupForm({ errorMessage, onSubmit }) {
         <input type="password" name="cpassword" required />
       </label>
 
-      <p>By creating an account, you agree to our <Link href="/privacy">Privacy Policy</Link> and <Link href="/terms">Terms of Use</Link>.</p>
+      <p style={{ marginTop: "0" }}>By creating an account, you agree to our <Link href="/privacy">Privacy Policy</Link> and <Link href="/terms">Terms of Use</Link>.</p>
 
       <button type="submit" id="signupBtn">Sign up</button>
 
