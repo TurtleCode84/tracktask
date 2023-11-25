@@ -64,7 +64,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     displayName.current = localStorage.getItem("displayName");
-  }, [])
+  }, []);
   
   if (!user || !user.isLoggedIn || user.permissions.banned) {
     return (

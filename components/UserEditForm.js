@@ -41,7 +41,7 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
       localStorage.setItem("displayName", e.currentTarget.value.trim());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, []);
 
   return (
     <form id="userEditForm" autocomplete="off" onSubmit={onSubmit}>

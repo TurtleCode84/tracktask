@@ -112,6 +112,9 @@ export default function Layout({ children }) {
             margin-left: -40px;
           }
         }
+        .grecaptcha-badge {
+          visibility: hidden;
+        }
         
         @media only screen and (min-width: 600px) {
           .container {
