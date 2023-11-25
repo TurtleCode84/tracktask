@@ -112,7 +112,7 @@ export default function Layout({ children }) {
             margin-left: -40px;
           }
           .grecaptcha-badge {
-            opacity: 0.25;
+            visibility: hidden;
           }
         }
         
