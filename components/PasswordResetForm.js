@@ -43,9 +43,6 @@ export default function PasswordResetForm({ errorMessage, onSubmit, confirmed })
           width: 15px !important;
           margin-bottom: 10px;
         }
-        .grecaptcha-badge {
-          visibility: visible;
-        }
       `}</style>
     </form>
   );
