@@ -194,7 +194,7 @@ async function authRoute(req, res) {
           joined: Math.floor(Date.now()/1000),
           lastLogin: 0,
           lastEdit: {
-            timestamp: "",
+            timestamp: 0,
             by: "",
           },
           joinedIp: ip,
