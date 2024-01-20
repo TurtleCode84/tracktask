@@ -111,6 +111,9 @@ export default function Layout({ children }) {
           .dashboard .tasks ul {
             margin-left: -40px;
           }
+          .grecaptcha-badge {
+            visibility: hidden;
+          }
         }
         
         @media only screen and (min-width: 600px) {
