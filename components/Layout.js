@@ -111,6 +111,9 @@ export default function Layout({ children }) {
           .dashboard .tasks ul {
             margin-left: -40px;
           }
+          .grecaptcha-badge {
+            visibility: hidden;
+          }
         }
         
         @media only screen and (min-width: 600px) {
@@ -268,7 +271,7 @@ export default function Layout({ children }) {
         <div className="container">{children}</div>
       </main>
 
-      <span style={{ fontSize: "90%", textAlign: "center", color: "gray", display: "table", margin: "4rem" + " auto", padding: "0 0.5rem 20px 0.5rem" }}>Copyright &#169; 2022-2023 TrackTask STM, All Rights Reserved &bull; <Link href="/privacy"><a className="footer">Privacy</a></Link> &bull; <Link href="/terms"><a className="footer">Terms of Use</a></Link> &bull; <a className="footer" href="https://discord.gg/Hh3fw2xesP" target="_blank" rel="noopener noreferrer">Discord</a></span>
+      <span style={{ fontSize: "90%", textAlign: "center", color: "gray", display: "table", margin: "4rem" + " auto", padding: "0 0.5rem 20px 0.5rem" }}>Copyright &#169; 2022-2024 TrackTask STM, All Rights Reserved &bull; <Link href="/privacy"><a className="footer">Privacy</a></Link> &bull; <Link href="/terms"><a className="footer">Terms of Use</a></Link> &bull; <a className="footer" href="https://discord.gg/Hh3fw2xesP" target="_blank" rel="noopener noreferrer">Discord</a></span>
     </>
   );
 }
