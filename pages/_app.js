@@ -20,7 +20,7 @@ function MyApp({ Component, pageProps }) {
       document.documentElement.setAttribute("data-theme", "dark");
       localStorage.setItem("theme", "dark");
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     const vapidKey = urlBase64ToUint8Array(process.env.NEXT_PUBLIC_NOTIFICATIONS_PUBLIC_KEY);
@@ -79,7 +79,7 @@ function MyApp({ Component, pageProps }) {
     } else if (!pushNotifications) {
       localStorage.setItem("notifications", "disabled");
     }
-  }, [])
+  }, []);
 
   return (
     <GoogleReCaptchaProvider

@@ -7,6 +7,7 @@ import Link from "next/link";
 import useUser from "lib/useUser";
 import useData from "lib/useData";
 import { useRouter } from "next/router";
+import { useEffect, useRef } from "react";
 
 export default function Dashboard() {
   const { user } = useUser({
@@ -43,6 +44,27 @@ export default function Dashboard() {
   const collectionList = collections?.map((collection) =>
     <Collection user={user} collection={collection} key={collection._id}/>
   );
+  const welcomeTimes = [
+    [20, "Working late", "?"],
+    [17, "Good evening", "!"],
+    [12, "Good afternoon", "!"],
+    [5, "Good morning", "!"],
+    [0, "Up early", "?"]
+  ];
+  const welcome = {};
+  const hour = new Date().getHours();
+  for (var i = 0; i < welcomeTimes.length; i++) {
+    if (hour >= welcomeTimes[i][0]) {
+      welcome.message = welcomeTimes[i][1];
+      welcome.punctuation = welcomeTimes[i][2];
+      break;
+    }
+  }
+  const displayName = useRef();
+
+  useEffect(() => {
+    displayName.current = localStorage.getItem("displayName");
+  }, []);
   
   if (!user || !user.isLoggedIn || user.permissions.banned) {
     return (
@@ -51,17 +73,7 @@ export default function Dashboard() {
   }
   return (
     <Layout>
-      <h1 className="welcome-text">
-        {user ? 
-        <>
-        Welcome back, {user.username}!{user.permissions.verified ? <>{' '}<span title="Verified" style={{ color: "#006dbe" }} className="material-symbols-outlined">verified</span></> : null}{user.permissions.admin ? <>{' '}<span title="Admin" style={{ color: "slategray" }} className="material-symbols-outlined">verified_user</span></> : null}
-        </>
-        :
-        <>
-        Welcome back!
-        </>
-        }
-      </h1>
+      <h1 className="welcome-text">{welcome.message}{user && <>, {displayName.current ? displayName.current : user.username}</>}{welcome.punctuation}{user && <>{user.permissions.verified ? <>{' '}<span title="Verified" style={{ color: "#006dbe" }} className="material-symbols-outlined">verified</span></> : null}{user.permissions.admin ? <>{' '}<span title="Admin" style={{ color: "slategray" }} className="material-symbols-outlined">verified_user</span></> : null}</>}</h1>
 
       {dynamicMsg && <p className="success" style={{ marginBottom: "1rem", marginTop: "-0.5rem" }}>{dynamicMsg}{' '}<Link href="/dashboard">Ok</Link></p>}
 
