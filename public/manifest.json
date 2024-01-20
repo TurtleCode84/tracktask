@@ -1,7 +1,7 @@
 {
   "name": "TrackTask - Shareable Task Management",
   "short_name": "TrackTask",
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#444",
   "description": "An open-source task management platform geared towards organized collaboration.",
