@@ -241,7 +241,7 @@ export default function Layout({ children }) {
           filter: brightness(var(--icon-brightness));
           vertical-align: -5px;
           font-size: inherit;
-          max-width: min-content;
+          max-width: 25px;
           overflow: hidden;
           font-variation-settings:
             'FILL' 1,
