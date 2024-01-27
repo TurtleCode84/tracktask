@@ -27,7 +27,7 @@ export default function Layout({ children }) {
         <meta name="theme-color" content="#121212" />
         <link rel="manifest" href="/manifest.json" />
         {/* eslint-disable-next-line @next/next/no-page-custom-font */}
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block" />
       </Head>
       <style jsx global>{`
         *,
@@ -241,6 +241,8 @@ export default function Layout({ children }) {
           filter: brightness(var(--icon-brightness));
           vertical-align: -5px;
           font-size: inherit;
+          max-width: 32px;
+          overflow: hidden;
           font-variation-settings:
             'FILL' 1,
             'wght' 550,
