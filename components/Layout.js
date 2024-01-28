@@ -12,16 +12,16 @@ export default function Layout({ children }) {
   return (
     <>
       <Head>
-        <title>TrackTask &bull; Collaborative Task Management</title>
-        <meta name="title" content="TrackTask &bull; Collaborative Task Management" />
+        <title>TrackTask &bull; Shareable Task Management</title>
+        <meta name="title" content="TrackTask &bull; Shareable Task Management" />
         <meta name="description" content="An open-source task management platform geared towards organized collaboration." />
         <meta name="image" content="https://tracktask.eu.org/tracktaskmini.png" />
         <meta name="author" content="TurtleCode84" />
         <meta property="og:site_name" content="TrackTask" />
-        <meta property="og:title" content="TrackTask &bull; Collaborative Task Management" />
+        <meta property="og:title" content="TrackTask &bull; Shareable Task Management" />
         <meta property="og:description" content="An open-source task management platform geared towards organized collaboration." />
         <meta property="og:image" content="https://tracktask.eu.org/tracktaskmini.png" />
-        <meta name="twitter:title" content="TrackTask &bull; Collaborative Task Management" />
+        <meta name="twitter:title" content="TrackTask &bull; Shareable Task Management" />
         <meta name="twitter:description" content="An open-source task management platform geared towards organized collaboration." />
         <meta name="twitter:image" content="https://tracktask.eu.org/tracktaskmini.png" />
         <meta name="theme-color" content="#121212" />
