@@ -1,5 +1,5 @@
 <img src="/public/tracktask.png" width="1000"></img>
-# TrackTask &bull; Shareable Task Management
+# TrackTask &bull; Collaborative Task Management
 ### An open-source task management platform geared towards organized collaboration.
 This repository contains our source code as well as our development roadmap for features and updates. Found an issue or want to make an improvement? Leave us an issue or pull request!
 
@@ -10,7 +10,7 @@ This repository contains our source code as well as our development roadmap for 
 <hr>
 
 ## What is TrackTask?
-TrackTask is a shareable task management platform. Users can create tasks with names, descriptions, due dates, etc. and keep track of their completion & priority.
+TrackTask is a collaborative task management platform. Users can create tasks with names, descriptions, due dates, etc. and keep track of their completion & priority.
 Additionally, tasks can be grouped in collections, which can be shared with other users and modified by them if they have the right permissions. [Learn more](https://tracktask.eu.org/about)
 
 ## Where is it?
