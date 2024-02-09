@@ -6,6 +6,7 @@
   "background_color": "#444",
   "theme_color": "#121212",
   "description": "An open-source task management platform geared towards organized collaboration.",
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "tracktaskmini.png",
