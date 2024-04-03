@@ -60,7 +60,7 @@ export default function Collection() {
   return (
     <Layout>
       <h2>{collection ? <><span title={titleInfo.hover} style={{ color: sharedColor }} className="material-symbols-outlined">{titleInfo.icon}</span>{' '}{collection.pending ? <>Share request for &quot;{collection.name}&quot;</> : collection.name}:</> : 'Loading...'}</h2>
-      <Link href="/dashboard">Back to dashboard</Link><br/>
+      <Link href={`/dashboard${collection ? "#collection-" + collection._id : ""}`}>Back to dashboard</Link><br/>
       {collection ?
         <>{collection.pending ?
         <><h3>Preview information:</h3>
