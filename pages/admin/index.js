@@ -28,13 +28,13 @@ export default function Admin() {
   const { users: recentlyActive } = useAdminUsers(user, "login", 5);
   const activeUsersList = recentlyActive?.map((activeUser) =>
     <li key={activeUser._id} style={{ margin: "0.5em" }}>
-      <User user={user} id={activeUser._id} link={true}/>{activeUser.permissions.admin && <span title="Admin" style={{ color: "slategray" }} className="material-symbols-outlined icon-list">verified_user</span>}{activeUser.permissions.banned && <span title="Banned" style={{ color: "red" }} className="material-symbols-outlined icon-list">block</span>} &raquo; Last login {activeUser.history.lastLogin > 0 ? moment.unix(activeUser.history.lastLogin).fromNow() : 'never'}
+      <User user={user} id={activeUser._id} link={true}/>{activeUser.permissions.admin && <span title="Admin" style={{ color: "slategray" }} className="material-symbols-outlined icon-list">verified_user</span>}{activeUser.permissions.banned && <span title="Banned" style={{ color: "red" }} className="material-symbols-outlined icon-list">block</span>} &bull; Last login {activeUser.history.lastLogin > 0 ? moment.unix(activeUser.history.lastLogin).fromNow() : 'never'}
     </li>
   );
   const { users: recentlyJoined } = useAdminUsers(user, "joined", 5);
   const newUsersList = recentlyJoined?.map((newUser) =>
     <li key={newUser._id} style={{ margin: "0.5em" }}>
-      <User user={user} id={newUser._id} link={true}/>{newUser.permissions.admin && <span title="Admin" style={{ color: "slategray" }} className="material-symbols-outlined icon-list">verified_user</span>}{newUser.permissions.banned && <span title="Banned" style={{ color: "red" }} className="material-symbols-outlined icon-list">block</span>} &raquo; Joined {newUser.history.joined > 0 ? moment.unix(newUser.history.joined).fromNow() : 'never'}
+      <User user={user} id={newUser._id} link={true}/>{newUser.permissions.admin && <span title="Admin" style={{ color: "slategray" }} className="material-symbols-outlined icon-list">verified_user</span>}{newUser.permissions.banned && <span title="Banned" style={{ color: "red" }} className="material-symbols-outlined icon-list">block</span>} &bull; Joined {newUser.history.joined > 0 ? moment.unix(newUser.history.joined).fromNow() : 'never'}
     </li>
   );
 
