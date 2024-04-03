@@ -266,13 +266,12 @@ export default function Layout({ children }) {
         }
 
         .user {
-          margin: 0.5em;
           background: var(--element-background);
           padding: 8px;
-          borderWidth: 2px;
-          borderStyle: solid;
-          borderColor: var(--inset-border-color);
-          borderRadius: 10px;
+          border-width: 2px;
+          border-style: solid;
+          border-color: var(--inset-border-color);
+          border-radius: 10px;
           width: auto;
         }
       `}</style>
