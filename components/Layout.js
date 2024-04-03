@@ -264,16 +264,6 @@ export default function Layout({ children }) {
           color: brown;
           margin: 1rem 0 0;
         }
-
-        .user {
-          background: var(--element-background);
-          padding: 10px 5px;
-          border-width: 2px;
-          border-style: solid;
-          border-color: var(--border-color);
-          border-radius: 10px;
-          width: auto;
-        }
       `}</style>
       {process.env.NEXT_PUBLIC_VERCEL_ENV !== "production" && <nav style={{backgroundColor: "orange", textAlign: "center", fontWeight: 600, marginTop: -20 + "px", height: "fit-content", paddingBottom: 0, marginBottom: -16 + "px"}}><p style={{paddingTop: 13 + "px", paddingBottom: 8 + "px"}}>You are viewing a TrackTask development release, some features may not work properly or may break your account.</p></nav>}
       {advisory && <nav style={{backgroundColor: advisoryColor, textAlign: "center", fontWeight: 600, marginTop: -20 + "px", height: "fit-content", paddingBottom: 0, marginBottom: -16 + "px"}}><p style={{paddingTop: 13 + "px", paddingBottom: 8 + "px"}}>{advisory.split('^')[1]}</p></nav>}
