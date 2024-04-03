@@ -1,5 +1,5 @@
 <img src="/public/tracktask.png" width="1000"></img>
-# TrackTask &bull; Shareable Task Management
+# TrackTask &raquo; Shareable Task Management
 ### An open-source task management platform geared towards organized collaboration.
 This repository contains our source code as well as our development roadmap for features and updates. Found an issue or want to make an improvement? Leave us an issue or pull request!
 
@@ -54,9 +54,9 @@ Please see our [CONTRIBUTING.md](/CONTRIBUTING.md) for contributing guidelines a
 <hr>
 
 ### Contact Us
->Email &bull; `tracktask@tracktask.eu.org`
-<br>Github &bull; [Discussions](https://github.com/TurtleCode84/tracktask/discussions)
-<br>Discord &bull; [Community Server](https://discord.gg/Hh3fw2xesP)
-<br>Security &bull; [SECURITY.md](/SECURITY.md)
+>Email &raquo; `tracktask@tracktask.eu.org`
+<br>Github &raquo; [Discussions](https://github.com/TurtleCode84/tracktask/discussions)
+<br>Discord &raquo; [Community Server](https://discord.gg/Hh3fw2xesP)
+<br>Security &raquo; [SECURITY.md](/SECURITY.md)
 
 (response within 7 days for non-urgent communications)

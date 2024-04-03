@@ -25,7 +25,7 @@ export default function UsersAdmin() {
   const { users: allUsers, error: allUsersError } = useAdminUsers(user, "joined", count);
   const allUsersList = allUsers?.map((item) =>
     <li key={item._id} style={{ margin: "0.5em" }}>
-      <User user={user} id={item._id} link={true}/>{item.permissions.admin && <span title="Admin" style={{ color: "slategray" }} className="material-symbols-outlined icon-list">verified_user</span>}{item.permissions.banned && <span title="Banned" style={{ color: "red" }} className="material-symbols-outlined icon-list">block</span>} &bull; Last login {item.history.lastLogin > 0 ? moment.unix(item.history.lastLogin).fromNow() : 'never'}
+      <User user={user} id={item._id} link={true}/>{item.permissions.admin && <span title="Admin" style={{ color: "slategray" }} className="material-symbols-outlined icon-list">verified_user</span>}{item.permissions.banned && <span title="Banned" style={{ color: "red" }} className="material-symbols-outlined icon-list">block</span>} &raquo; Last login {item.history.lastLogin > 0 ? moment.unix(item.history.lastLogin).fromNow() : 'never'}
     </li>
   );
   
@@ -46,7 +46,7 @@ export default function UsersAdmin() {
       <><ul style={{ display: "table" }}>
         {allUsersList}
       </ul>
-      <p>Show more users &bull; <Link href="/admin/users">25</Link> | <Link href="/admin/users?c=50">50</Link> | <Link href="/admin/users?c=100">100</Link> | <Link href="/admin/users?c=500">500</Link></p></>
+      <p>Show more users &raquo; <Link href="/admin/users">25</Link> | <Link href="/admin/users?c=50">50</Link> | <Link href="/admin/users?c=100">100</Link> | <Link href="/admin/users?c=500">500</Link></p></>
       }
     </Layout>    
   );
