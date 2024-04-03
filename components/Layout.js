@@ -141,7 +141,7 @@ export default function Layout({ children }) {
 
         button[type=submit] {
           padding-top: 8px;
-          padding-top: 8px;
+          padding-bottom: 8px;
         }
         
         button:hover {
