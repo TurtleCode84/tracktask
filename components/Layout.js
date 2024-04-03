@@ -139,7 +139,7 @@ export default function Layout({ children }) {
           transition: filter 0.3s;
         }
 
-        button[type=submit] {
+        button[type="submit"] {
           padding-top: 8px;
           padding-bottom: 8px;
         }

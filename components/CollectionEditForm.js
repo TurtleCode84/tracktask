@@ -14,7 +14,7 @@ export default function CollectionEditForm({ verified, errorMessage, onSubmit, c
         <textarea name="description" rows="4" cols="30" defaultValue={collection.description} maxlength="500" />
       </label><hr/>
 
-      <button type="submit" id="editCollectionBtn">Save collection data</button>
+      <button type="submit" id="editCollectionBtn">Save collection details</button>
 
       {errorMessage && <p className="error">{errorMessage}</p>}<hr/>
        
