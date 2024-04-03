@@ -138,6 +138,11 @@ export default function Layout({ children }) {
           width: auto;
           transition: filter 0.3s;
         }
+
+        button[type=submit] {
+          padding-top: 8px;
+          padding-top: 8px;
+        }
         
         button:hover {
           filter: brightness(0.9);
