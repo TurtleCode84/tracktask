@@ -155,7 +155,7 @@ export default function Layout({ children }) {
         
         button:disabled {
           filter: brightness(0.95) !important;
-          cursor: wait !important;
+          cursor: not-allowed !important;
           color: #757575;
         }
 

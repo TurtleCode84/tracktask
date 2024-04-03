@@ -77,9 +77,6 @@ export default function ResetPassword() {
                 border: 1px solid #ccc;
                 border-radius: 4px;
               }
-              button:disabled {
-                cursor: not-allowed !important;
-              }
       `}</style>
         </Layout>
     );
