@@ -267,10 +267,10 @@ export default function Layout({ children }) {
 
         .user {
           background: var(--element-background);
-          padding: 8px;
+          padding: 10px 5px;
           border-width: 2px;
           border-style: solid;
-          border-color: var(--inset-border-color);
+          border-color: var(--border-color);
           border-radius: 10px;
           width: auto;
         }

@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 export default function UserSearchForm({ user, errorMessage, searchResults, autoKeyword, autoQuery, onSubmit }) {
   const resultsList = searchResults.map((result) =>
     <li key={result._id} style={{ margin: "0.5em" }}>
-      <User user={user} id={result._id} link={true}/>
+      <span className="user"><User user={user} id={result._id} link={true}/></span>
     </li>
   );
 
