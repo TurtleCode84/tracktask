@@ -7,7 +7,6 @@ import Link from "next/link";
 import useUser from "lib/useUser";
 import useData from "lib/useData";
 import { useRouter } from "next/router";
-import { useEffect, useRef } from "react";
 
 export default function Dashboard() {
   const { user } = useUser({
@@ -60,11 +59,6 @@ export default function Dashboard() {
       break;
     }
   }
-  const displayName = useRef();
-
-  useEffect(() => {
-    displayName.current = localStorage.getItem("displayName");
-  }, []);
   
   if (!user || !user.isLoggedIn || user.permissions.banned) {
     return (
