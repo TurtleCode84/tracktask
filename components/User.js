@@ -6,6 +6,6 @@ export default function User({ user, id, link }) {
   const router = useRouter();
   const { info, error } = useTool(user, "userInfo", id);
   return (
-    <span style={{ margin: "0.5em", background: "var(--element-background)", padding: "8px", borderWidth: "2px", borderStyle: "solid", borderColor: "var(--border-color)", borderRadius: "10px", width: "auto" }}><Image src={info?.profilePicture ? info.profilePicture : "/default-pfp.jpg" } width={32} height={32} style={{ borderRadius: "100%", overflow: "hidden", marginRight: ".3em", verticalAlign: "middle" }} quality={85} alt=""/>{link ? <a href={`/admin/users/${info?._id}`} onClick={(e) => {e.preventDefault();router.push(`/admin/users/${info?._id}`);}}>{info?.username}</a> : info?.username}{' '}{info?.permissions.verified && <span title="Verified" style={{ color: "#006dbe" }} className="material-symbols-outlined icon-list">verified</span>}</span>
+    <><Image src={info?.profilePicture ? info.profilePicture : "/default-pfp.jpg" } width={32} height={32} style={{ borderRadius: "100%", overflow: "hidden", marginRight: ".3em", verticalAlign: "middle" }} quality={85} alt=""/>{link ? <a href={`/admin/users/${info?._id}`} onClick={(e) => {e.preventDefault();router.push(`/admin/users/${info?._id}`);}}>{info?.username}</a> : info?.username}{' '}{info?.permissions.verified && <span title="Verified" style={{ color: "#006dbe" }} className="material-symbols-outlined icon-list">verified</span>}</>
   );
 }
