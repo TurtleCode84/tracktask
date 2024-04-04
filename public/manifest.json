@@ -9,7 +9,7 @@
   "background_color": "#444",
   "icons": [
     {
-      "src": "tracktaskmini.png",
+      "src": "../tracktaskmini.png",
       "sizes": "any",
       "type": "image/png"
     }
