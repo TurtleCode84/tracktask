@@ -3,10 +3,10 @@
   "short_name": "TrackTask",
   "start_url": "../dashboard",
   "display": "standalone",
-  "background_color": "#444",
   "theme_color": "#121212",
   "description": "An open-source task management platform geared towards organized collaboration.",
   "prefer_related_applications": false,
+  "background_color": "#444",
   "icons": [
     {
       "src": "tracktaskmini.png",
