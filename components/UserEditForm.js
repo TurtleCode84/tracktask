@@ -80,14 +80,14 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
           <option value="light">Light</option>
         </select>
       </label>
-      {user.permissions.verified && <label>
+      {user.permissions.verified && <><label>
         <span>Push notifications (beta)</span>
         <select id="notifications-dropdown" name="notifications" >
           <option value="disable">Disabled (default)</option>
           <option value="enable">Enabled</option>
         </select>
       </label>
-      <p style={{ fontSize: "80%", color: "gray" }}>Push notifications can only be enabled on one device per account, enabling on a new device will stop notifications on the previous.</p>}
+      <p style={{ fontSize: "80%", color: "gray" }}>Push notifications can only be enabled on one device per account, enabling on a new device will stop notifications on the previous.</p></>}
       <label>
         <span>Display name (stored locally)</span>
         <input type="text" id="displayNameInput" name="displayName" />
