@@ -86,7 +86,7 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
           <option value="disable">Disabled (default)</option>
           <option value="enable">Enabled</option>
         </select>
-        <p style={{ fontSize: "80%", color: "gray" }}>Push notifications can only be enabled on one device per account,<br/>enabling on a new device will stop notifications on the previous.</p>
+        <div style={{ fontSize: "80%", color: "gray", marginBottom: "16px" }}>Push notifications can only be enabled on one device per account,<br/>enabling on a new device will stop notifications on the previous.</div>
       </label>}
       <label>
         <span>Display name (stored locally)</span>
