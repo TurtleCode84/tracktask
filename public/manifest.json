@@ -1,7 +1,7 @@
 {
   "name": "TrackTask » Shareable Task Management",
   "short_name": "TrackTask",
-  "start_url": "/",
+  "start_url": "../dashboard",
   "display": "standalone",
   "background_color": "#444",
   "theme_color": "#121212",
