@@ -23,9 +23,10 @@ export default function UserAdmin() {
   const router = useRouter();
   const { userId } = router.query;
   const { lookup, error } = useAdminUser(user, userId);
+  var editSection;
 
   useEffect(() => {
-    const editSection = document.getElementById("edit");
+    editSection = document.getElementById("edit");
     editSection?.addEventListener("toggle", handleScroll);
     
     function handleScroll() {
