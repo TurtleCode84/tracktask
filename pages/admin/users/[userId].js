@@ -84,9 +84,9 @@ export default function UserAdmin() {
       <details id="edit">
         <summary onClick={(e) => {
           e.preventDefault();
-          const editSection = document.getElementById("edit");
-          editSection.open = editSection.open ? false : true;
-          editSection.scrollIntoView({ behavior: "smooth", block: editSection.open ? "start" : "end", inline: "nearest" });
+          const section = document.getElementById("edit");
+          section.open = section.open ? false : true;
+          section.scrollIntoView({ behavior: "smooth", block: section.open ? "start" : "end", inline: "nearest" });
         }}>Edit user info</summary>
         <br/><UserAdminForm
             errorMessage={errorMsg}
@@ -141,8 +141,13 @@ export default function UserAdmin() {
       :
       <>{error ? <p>{error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading user info...</p>}</>
       }
-      <br/><details>
-        <summary>View raw JSON</summary>
+      <br/><details id="raw">
+        <summary onClick={(e) => {
+          e.preventDefault();
+          const section = document.getElementById("raw");
+          section.open = section.open ? false : true;
+          section.scrollIntoView({ behavior: "smooth", block: section.open ? "start" : "end", inline: "nearest" });
+        }}>View raw JSON</summary>
         {error ? <pre>{JSON.stringify(error, null, 2)}</pre> : <pre>{JSON.stringify(lookup, null, 2)}</pre>}
       </details><br/>
       <ReportButton user={user} type="user" reported={lookup} flag={true}/>
