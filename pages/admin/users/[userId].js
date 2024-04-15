@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
 import UserAdminForm from "components/UserAdminForm";
@@ -23,21 +23,6 @@ export default function UserAdmin() {
   const router = useRouter();
   const { userId } = router.query;
   const { lookup, error } = useAdminUser(user, userId);
-
-
-  /*useEffect(() => {
-    const editSection = document.getElementById("edit");
-    editSection.addEventListener("toggle", handleScroll);
-    
-    function handleScroll() {
-      if (editSection.open) {
-        //window.scroll({ top: 0, left: 0, behavior: "smooth" });         
-        editSection.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });    
-      } else {
-        editSection.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
-      }
-    }
-  }, []);*/
   
   if (!user || !user.isLoggedIn || user.permissions.banned || !user.permissions.admin) {
     return (
@@ -99,17 +84,15 @@ export default function UserAdmin() {
       <details id="edit">
         <summary onClick={(e) => {
           e.preventDefault();
-          //const editSection = document.getElementById("edit");
-          //editSection.addEventListener("toggle", handleScroll);
-          alert("ok it worked");
+          const editSection = document.getElementById("edit");
           
-          function handleScroll() {
-            if (editSection.open) {
-              //window.scroll({ top: 0, left: 0, behavior: "smooth" });         
-              editSection.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });    
-            } else {
-              editSection.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
-            }
+          if (editSection.open) {
+            //window.scroll({ top: 0, left: 0, behavior: "smooth" });  
+            editSection.open = false;
+            editSection.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });    
+          } else {
+            editSection.open = true;
+            editSection.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
           }
         }}>Edit user info</summary>
         <br/><UserAdminForm
