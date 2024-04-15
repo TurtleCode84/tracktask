@@ -82,9 +82,9 @@ export default function Task() {
         }}
         ><button id="markCompleteBtn"><span style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">task_alt</span> Mark completed</button></a></>}</>}
         <hr/>
-        {perms >= 4 && <><details>
+        {perms >= 4 && <details>
           <summary>Edit task</summary>
-          <br/><TaskEditForm
+          {/*<br/>*/}<TaskEditForm
             errorMessage={errorMsg}
             task={task}
             isTaskOwner={user.id == task.owner}
@@ -131,10 +131,10 @@ export default function Task() {
               }
             }}
         />
-        </details><br/></>}
-        {perms >= 4 && <><details>
+        </details>}
+        {perms >= 4 && <details>
           <summary>Add/remove from collection</summary>
-          <br/><AddRemoveCollectionForm
+          {/*<br/>*/}<AddRemoveCollectionForm
             errorMessage={errorMsg}
             taskId={task._id}
             collections={collections}
@@ -174,8 +174,8 @@ export default function Task() {
               }
             }}
           />
-        </details><br/></>}
-        {user.id !== task.owner && <ReportButton user={user} type="task" reported={task}/>}</>
+        </details>}
+        {user.id !== task.owner && <><br/><ReportButton user={user} type="task" reported={task}/></>}</>
       :
         <>{taskError ? <p>{taskError.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading task...</p>}</>
       }
