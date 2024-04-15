@@ -27,7 +27,7 @@ export default function UserAdmin() {
   const editSection = useRef();
 
   useEffect(() => {
-    editSection.addEventListener("toggle", handleScroll);
+    editSection?.addEventListener("toggle", handleScroll);
     
     function handleScroll() {
       if (editSection.open) {
@@ -37,7 +37,7 @@ export default function UserAdmin() {
         editSection.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
       }
     }
-  }, []);
+  }, [editSection]);
   
   if (!user || !user.isLoggedIn || user.permissions.banned || !user.permissions.admin) {
     return (
