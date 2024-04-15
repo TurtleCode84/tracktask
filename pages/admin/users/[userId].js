@@ -85,15 +85,8 @@ export default function UserAdmin() {
         <summary onClick={(e) => {
           e.preventDefault();
           const editSection = document.getElementById("edit");
-          
-          if (editSection.open) {
-            //window.scroll({ top: 0, left: 0, behavior: "smooth" });  
-            editSection.open = false;
-            editSection.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });    
-          } else {
-            editSection.open = true;
-            editSection.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
-          }
+          editSection.open = editSection.open ? false : true;
+          editSection.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
         }}>Edit user info</summary>
         <br/><UserAdminForm
             errorMessage={errorMsg}
