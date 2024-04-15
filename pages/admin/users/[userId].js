@@ -81,8 +81,15 @@ export default function UserAdmin() {
       <p>Collections created: {lookup?.stats.collections}</p>
       <p>Collections shared: {lookup?.stats.shared}</p>
       <hr/>
-      <details>
-        <summary onClick={() => {document.getElementById("userAdminForm").scrollIntoView(true, {behavior: "smooth"})}}>Edit user info</summary>
+      <details id="edit">
+        <summary onClick={() => {
+          const editSection = document.getElementById("edit");
+          if (editSection.open) {
+            router.push("#");
+          } else {
+            editSection.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
+          }
+        }}>Edit user info</summary>
         <br/><UserAdminForm
             errorMessage={errorMsg}
             lookup={lookup}
