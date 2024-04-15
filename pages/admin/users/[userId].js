@@ -24,7 +24,7 @@ export default function UserAdmin() {
   const { userId } = router.query;
   const { lookup, error } = useAdminUser(user, userId);
 
-  /*useEffect(() => {
+  useEffect(() => {
     const editSection = document.getElementById("edit");
     editSection?.addEventListener("toggle", handleScroll);
     
@@ -36,7 +36,7 @@ export default function UserAdmin() {
         editSection.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
       }
     }
-  }, []);*/
+  }, []);
   
   if (!user || !user.isLoggedIn || user.permissions.banned || !user.permissions.admin) {
     return (
@@ -95,7 +95,7 @@ export default function UserAdmin() {
       <p>Collections created: {lookup?.stats.collections}</p>
       <p>Collections shared: {lookup?.stats.shared}</p>
       <hr/>
-      <details id="edit" onLoad={() => {alert("test")}}>
+      <details id="edit">
         <summary>Edit user info</summary>
         <br/><UserAdminForm
             errorMessage={errorMsg}
