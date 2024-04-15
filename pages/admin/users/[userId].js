@@ -86,7 +86,7 @@ export default function UserAdmin() {
           e.preventDefault();
           const editSection = document.getElementById("edit");
           editSection.open = editSection.open ? false : true;
-          editSection.scrollIntoView({ behavior: "smooth", block: editSection.open ? "center" : "start", inline: "nearest" });
+          editSection.scrollIntoView({ behavior: "smooth", block: editSection.open ? "start" : "end", inline: "nearest" });
         }}>Edit user info</summary>
         <br/><UserAdminForm
             errorMessage={errorMsg}
