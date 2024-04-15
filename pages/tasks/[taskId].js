@@ -84,7 +84,7 @@ export default function Task() {
         <hr/>
         {perms >= 4 && <details>
           <summary>Edit task</summary>
-          {/*<br/>*/}<TaskEditForm
+          <TaskEditForm
             errorMessage={errorMsg}
             task={task}
             isTaskOwner={user.id == task.owner}
@@ -134,7 +134,7 @@ export default function Task() {
         </details>}
         {perms >= 4 && <details>
           <summary>Add/remove from collection</summary>
-          {/*<br/>*/}<AddRemoveCollectionForm
+          <AddRemoveCollectionForm
             errorMessage={errorMsg}
             taskId={task._id}
             collections={collections}

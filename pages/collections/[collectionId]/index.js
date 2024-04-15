@@ -107,7 +107,7 @@ export default function Collection() {
         <ul style={{ display: "table" }}>
           {relTaskList.length > 0 || comTaskList.length > 0 ?
           <>{relTaskList.length > 0 && relTaskList}
-          {comTaskList.length > 0 && <details><summary style={{ fontSize: "90%", color: "gray", paddingTop: "8px" }}>View more</summary>{comTaskList}</details>}</>
+          {comTaskList.length > 0 && <details><summary style={{ fontSize: "90%", color: "gray" }}>View more</summary>{comTaskList}</details>}</>
           :
           <li style={{ paddingBottom: "2px" }}>No tasks found!</li>}
         </ul>
@@ -116,7 +116,7 @@ export default function Collection() {
         <hr/>
         {currentUserRole === "editor" && <><details>
           <summary>Edit collection</summary>
-          <br/><CollectionEditForm
+          <CollectionEditForm
             verified={user.permissions.verified}
             errorMessage={errorMsg}
             collection={collection}

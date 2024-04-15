@@ -39,7 +39,7 @@ export default function Account() {
       <hr/>
       <details>
         <summary>Edit account details</summary>
-        <br/><UserEditForm
+        <UserEditForm
             errorMessage={errorMsg}
             user={user}
             onSubmit={async function handleSubmit(event) {

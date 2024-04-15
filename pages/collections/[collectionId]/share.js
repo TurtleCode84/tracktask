@@ -120,7 +120,7 @@ export default function CollectionShare() {
         }}
         ><button id="enableSharingBtn"><span style={{ color: "lightslategray" }} className="material-symbols-outlined icon-list">group</span> Enable sharing</button></a><hr/></>
       }
-      <details><summary>Add a new user</summary><br/>
+      <details><summary>Add a new user</summary>
       <CollectionShareForm
         errorMessage={errorMsg}
         onSubmit={async function handleSubmit(event) {
