@@ -82,7 +82,7 @@ export default function UserAdmin() {
       <p>Collections shared: {lookup?.stats.shared}</p>
       <hr/>
       <details>
-        <summary>Edit user info</summary>
+        <summary onClick={() => {document.getElementById("userAdminForm").scrollIntoView(true, {behavior: "smooth"})}}>Edit user info</summary>
         <br/><UserAdminForm
             errorMessage={errorMsg}
             lookup={lookup}
