@@ -241,6 +241,10 @@ export default function Layout({ children }) {
         nav {
           color: var(--nav-text-color);
         }
+
+        pre {
+          overflow-x: scroll;
+        }
         
         .material-symbols-outlined {
           display: inline-block;
