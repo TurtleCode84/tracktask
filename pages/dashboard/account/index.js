@@ -37,8 +37,13 @@ export default function Account() {
       <p>Created tasks: {user.stats?.tasks}</p>
       <p>Created collections: {user.stats?.collections}</p>
       <hr/>
-      <details>
-        <summary>Edit account details</summary>
+      <details id="edit">
+        <summary onClick={(e) => {
+          e.preventDefault();
+          const section = document.getElementById("edit");
+          section.open = section.open ? false : true;
+          section.scrollIntoView({ behavior: "smooth", block: section.open ? "start" : "end", inline: "nearest" });
+        }}>Edit account details</summary>
         <UserEditForm
             errorMessage={errorMsg}
             user={user}
