@@ -81,6 +81,7 @@ export default function UserAdmin() {
       <p>Collections created: {lookup?.stats.collections}</p>
       <p>Collections shared: {lookup?.stats.shared}</p>
       <hr/>
+      <ReportButton user={user} type="user" reported={lookup} flag={true}/><br/>
       <details id="edit">
         <summary onClick={(e) => {
           e.preventDefault();
@@ -149,8 +150,7 @@ export default function UserAdmin() {
           section.scrollIntoView({ behavior: "smooth", block: section.open ? "start" : "end", inline: "nearest" });
         }}>View raw JSON</summary>
         {error ? <pre>{JSON.stringify(error, null, 2)}</pre> : <pre>{JSON.stringify(lookup, null, 2)}</pre>}
-      </details><br/>
-      <ReportButton user={user} type="user" reported={lookup} flag={true}/>
+      </details>
     </Layout>
   );
 }
