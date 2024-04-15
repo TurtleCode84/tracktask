@@ -36,7 +36,7 @@ export default function UserAdmin() {
         editSection.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
       }
     }
-  }, []);
+  }, [editSection]);
   
   if (!user || !user.isLoggedIn || user.permissions.banned || !user.permissions.admin) {
     return (
