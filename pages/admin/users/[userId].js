@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
 import UserAdminForm from "components/UserAdminForm";
@@ -47,6 +47,20 @@ export default function UserAdmin() {
       </li>
     );
   }
+
+  useEffect(() => {
+    const editSection = document.getElementById("edit");
+    editSection.addEventListener("toggle", handleScroll);
+
+    function handleScroll() {
+      if (editSection.open) {
+        //window.scroll({ top: 0, left: 0, behavior: "smooth" });         
+        editSection.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });    
+      } else {
+        editSection.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
+      }
+    }
+  }, []);
   
   return (
     <Layout>
@@ -82,14 +96,7 @@ export default function UserAdmin() {
       <p>Collections shared: {lookup?.stats.shared}</p>
       <hr/>
       <details id="edit">
-        <summary onClick={() => {
-          const editSection = document.getElementById("edit");
-          if (editSection.open) {
-            window.scroll({ top: 0, left: 0, behavior: "smooth" });             
-          } else {
-            editSection.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
-          }
-        }}>Edit user info</summary>
+        <summary>Edit user info</summary>
         <br/><UserAdminForm
             errorMessage={errorMsg}
             lookup={lookup}
