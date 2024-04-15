@@ -24,11 +24,10 @@ export default function UserAdmin() {
   const { userId } = router.query;
   const { lookup, error } = useAdminUser(user, userId);
 
-  const [editSection, setEditSection] = useState("");
 
   useEffect(() => {
-    setEditSection(document.getElementById("edit"));
-    editSection?.addEventListener("toggle", handleScroll);
+    const editSection = document.getElementById("edit");
+    editSection.addEventListener("toggle", handleScroll);
     
     function handleScroll() {
       if (editSection.open) {
@@ -98,7 +97,21 @@ export default function UserAdmin() {
       <p>Collections shared: {lookup?.stats.shared}</p>
       <hr/>
       <details id="edit">
-        <summary>Edit user info</summary>
+        <summary onClick={(e) => {
+          e.preventDefault();
+          //const editSection = document.getElementById("edit");
+          //editSection.addEventListener("toggle", handleScroll);
+          alert("ok it worked");
+          
+          function handleScroll() {
+            if (editSection.open) {
+              //window.scroll({ top: 0, left: 0, behavior: "smooth" });         
+              editSection.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });    
+            } else {
+              editSection.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
+            }
+          }
+        }}>Edit user info</summary>
         <br/><UserAdminForm
             errorMessage={errorMsg}
             lookup={lookup}
