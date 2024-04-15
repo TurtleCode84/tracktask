@@ -25,7 +25,17 @@ export default function UserAdmin() {
   const { lookup, error } = useAdminUser(user, userId);
 
   /*useEffect(() => {
+    const editSection = document.getElementById("edit");
+    editSection?.addEventListener("toggle", handleScroll);
     
+    function handleScroll() {
+      if (editSection.open) {
+        //window.scroll({ top: 0, left: 0, behavior: "smooth" });         
+        editSection.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });    
+      } else {
+        editSection.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
+      }
+    }
   }, []);*/
   
   if (!user || !user.isLoggedIn || user.permissions.banned || !user.permissions.admin) {
@@ -85,19 +95,7 @@ export default function UserAdmin() {
       <p>Collections created: {lookup?.stats.collections}</p>
       <p>Collections shared: {lookup?.stats.shared}</p>
       <hr/>
-      <details id="edit" onLoad={() => {
-        const editSection = document.getElementById("edit");
-        editSection.addEventListener("toggle", handleScroll);
-    
-        function handleScroll() {
-          if (editSection.open) {
-            //window.scroll({ top: 0, left: 0, behavior: "smooth" });         
-            editSection.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });    
-          } else {
-            editSection.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
-          }
-        }
-      }}>
+      <details id="edit" onLoad={() => {alert("test")}}>
         <summary>Edit user info</summary>
         <br/><UserAdminForm
             errorMessage={errorMsg}
