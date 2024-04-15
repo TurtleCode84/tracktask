@@ -94,6 +94,15 @@ export default function TaskAdmin() {
             }}
         />
         </details></>*/}
+        <details id="raw">
+          <summary onClick={(e) => {
+            e.preventDefault();
+            const section = document.getElementById("raw");
+            section.open = section.open ? false : true;
+            section.scrollIntoView({ behavior: "smooth", block: section.open ? "start" : "end", inline: "nearest" });
+          }}>View raw JSON</summary>
+          {taskError ? <pre>{JSON.stringify(taskError, null, 2)}</pre> : <pre>{JSON.stringify(task, null, 2)}</pre>}
+        </details><br/>
         <a href={`/api/admin/tasks/${task._id}`} style={{ marginRight: "8px" }}
         onClick={async (e) => {
           e.preventDefault();
