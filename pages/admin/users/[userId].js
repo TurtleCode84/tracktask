@@ -81,7 +81,7 @@ export default function UserAdmin() {
       <p>Collections created: {lookup?.stats.collections}</p>
       <p>Collections shared: {lookup?.stats.shared}</p>
       <hr/>
-      <ReportButton user={user} type="user" reported={lookup} flag={true}/><br/>
+      <ReportButton user={user} type="user" reported={lookup} flag={true}/>
       <details id="edit">
         <summary onClick={(e) => {
           e.preventDefault();
