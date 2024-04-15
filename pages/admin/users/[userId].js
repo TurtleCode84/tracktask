@@ -82,7 +82,7 @@ export default function UserAdmin() {
       <p>Collections shared: {lookup?.stats.shared}</p>
       <hr/>
       <details id="edit">
-        <summary onClick={(e) => {
+        <summary style={{ padding: "10px 0" }} onClick={(e) => {
           e.preventDefault();
           const section = document.getElementById("edit");
           section.open = section.open ? false : true;
@@ -141,8 +141,8 @@ export default function UserAdmin() {
       :
       <>{error ? <p>{error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading user info...</p>}</>
       }
-      <br/><details id="raw">
-        <summary onClick={(e) => {
+      {/*<br/>*/}<details id="raw">
+        <summary style={{ padding: "10px 0" }} onClick={(e) => {
           e.preventDefault();
           const section = document.getElementById("raw");
           section.open = section.open ? false : true;
