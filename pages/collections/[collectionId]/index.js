@@ -107,15 +107,25 @@ export default function Collection() {
         <ul style={{ display: "table" }}>
           {relTaskList.length > 0 || comTaskList.length > 0 ?
           <>{relTaskList.length > 0 && relTaskList}
-          {comTaskList.length > 0 && <details><summary style={{ fontSize: "90%", color: "gray" }}>View more</summary>{comTaskList}</details>}</>
+          {comTaskList.length > 0 && <details id="more"><summary style={{ fontSize: "90%", color: "gray" }} onClick={(e) => {
+            e.preventDefault();
+            const section = document.getElementById("more");
+            section.open = section.open ? false : true;
+            section.scrollIntoView({ behavior: "smooth", block: section.open ? "start" : "end", inline: "nearest" });
+          }}>View more</summary>{comTaskList}</details>}</>
           :
           <li style={{ paddingBottom: "2px" }}>No tasks found!</li>}
         </ul>
         }
         {user.id === collection.owner && <><hr/>{user.permissions.verified ? <Link href={`/collections/${collection._id}/share`}>Share this collection</Link> : <span style={{ fontStyle: "italic" }}><Link href="/dashboard/account/verify">Verify your email</Link> to share this collection.</span>}</>}
         <hr/>
-        {currentUserRole === "editor" && <><details>
-          <summary>Edit collection</summary>
+        {currentUserRole === "editor" && <><details id="edit">
+          <summary onClick={(e) => {
+            e.preventDefault();
+            const section = document.getElementById("edit");
+            section.open = section.open ? false : true;
+            section.scrollIntoView({ behavior: "smooth", block: section.open ? "start" : "end", inline: "nearest" });
+          }}>Edit collection</summary>
           <CollectionEditForm
             verified={user.permissions.verified}
             errorMessage={errorMsg}

@@ -65,14 +65,24 @@ export default function UserAdmin() {
       <h3><hr/>History<hr/></h3>
       <p title={moment.unix(lookup.history.joined).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Joined: {lookup.history.joined > 0 ? moment.unix(lookup.history.joined).fromNow() : 'never'} from {lookup.history.joinedIp ? <a href={`https://whatismyipaddress.com/ip/${lookup.history.joinedIp}`} target="_blank" rel="noreferrer">{lookup.history.joinedIp}</a> : 'nowhere'}</p>
       <p title={moment.unix(lookup.history.lastLogin).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Last login: {lookup.history.lastLogin > 0 ? moment.unix(lookup.history.lastLogin).fromNow() : 'never'}</p>
-      <details>
-        <summary>Last 5 logins</summary>
+      <details id="logins">
+        <summary onClick={(e) => {
+          e.preventDefault();
+          const section = document.getElementById("logins");
+          section.open = section.open ? false : true;
+          section.scrollIntoView({ behavior: "smooth", block: section.open ? "start" : "center", inline: "nearest" });
+        }}>Last 5 logins</summary>
         <ul style={{ listStyle: "revert", margin: "revert" }}>{ipList?.length > 0 ? ipList : 'No logins found'}</ul>
       </details>
       <p title={moment.unix(lookup.history.lastEdit.timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Last modified: {lookup.history.lastEdit?.timestamp > 0 ? <span title={moment.unix(lookup.history.lastEdit.timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")}>{moment.unix(lookup.history.lastEdit.timestamp).fromNow()} by <User user={user} id={lookup.history.lastEdit.by} link={true}/></span> : 'never'}</p>
       {!lookup.permissions.banned && <p title={moment.unix(lookup.history.ban.timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Last banned: {lookup.history.ban.timestamp > 0 ? <>{moment.unix(lookup.history.ban.timestamp).fromNow()} by <User user={user} id={lookup.history.ban.by} link={true}/>{lookup.history.ban.reason && ' for \"' + lookup.history.ban.reason + '\"'}</> : 'never'}</p>}
-      <details>
-        <summary>Warnings</summary>
+      <details id="warnings">
+        <summary onClick={(e) => {
+          e.preventDefault();
+          const section = document.getElementById("warnings");
+          section.open = section.open ? false : true;
+          section.scrollIntoView({ behavior: "smooth", block: section.open ? "start" : "center", inline: "nearest" });
+        }}>Warnings</summary>
         <ul style={{ listStyle: "revert", margin: "revert" }}>{warningList?.length > 0 ? warningList : 'No warnings found'}</ul>
       </details>
       <p>Acknowledged last warning: {lookup.history.warnings.length > 0 ? <>{lookup.permissions.warned ? <span style={{ color: "red" }} className="material-symbols-outlined icon-list">close</span> : <span style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">done</span>}</> : 'N\/A'}</p>
@@ -88,7 +98,7 @@ export default function UserAdmin() {
           section.open = section.open ? false : true;
           section.scrollIntoView({ behavior: "smooth", block: section.open ? "start" : "end", inline: "nearest" });
         }}>Edit user info</summary>
-        <br/><UserAdminForm
+        <UserAdminForm
             errorMessage={errorMsg}
             lookup={lookup}
             onSubmit={async function handleSubmit(event) {
@@ -150,7 +160,7 @@ export default function UserAdmin() {
         }}>View raw JSON</summary>
         {error ? <pre>{JSON.stringify(error, null, 2)}</pre> : <pre>{JSON.stringify(lookup, null, 2)}</pre>}
       </details><br/>
-      
+      <ReportButton user={user} type="user" reported={lookup} flag={true}/>
     </Layout>
   );
 }
