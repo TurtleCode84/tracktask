@@ -81,8 +81,8 @@ export default function UserAdmin() {
       <p>Collections created: {lookup?.stats.collections}</p>
       <p>Collections shared: {lookup?.stats.shared}</p>
       <hr/>
-      <details>
-        <summary><a href="#userAdminForm">Edit user info</a></summary>
+      <details id="edit">
+        <a href="#edit"><summary>Edit user info</summary></a>
         <br/><UserAdminForm
             errorMessage={errorMsg}
             lookup={lookup}
