@@ -85,7 +85,7 @@ export default function UserAdmin() {
         <summary onClick={() => {
           const editSection = document.getElementById("edit");
           if (editSection.open) {
-            router.push("#");
+            window.scroll({ top: 0, left: 0, behavior: "smooth" });             
           } else {
             editSection.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
           }
