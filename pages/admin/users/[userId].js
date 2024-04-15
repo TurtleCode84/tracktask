@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
 import UserAdminForm from "components/UserAdminForm";
@@ -24,9 +24,10 @@ export default function UserAdmin() {
   const { userId } = router.query;
   const { lookup, error } = useAdminUser(user, userId);
 
-  const editSection = useRef();
+  const [editSection, setEditSection] = useState("");
 
   useEffect(() => {
+    setEditSection(document.getElementById("edit"));
     editSection?.addEventListener("toggle", handleScroll);
     
     function handleScroll() {
@@ -37,7 +38,7 @@ export default function UserAdmin() {
         editSection.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
       }
     }
-  }, [editSection]);
+  }, []);
   
   if (!user || !user.isLoggedIn || user.permissions.banned || !user.permissions.admin) {
     return (
@@ -96,7 +97,7 @@ export default function UserAdmin() {
       <p>Collections created: {lookup?.stats.collections}</p>
       <p>Collections shared: {lookup?.stats.shared}</p>
       <hr/>
-      <details id="edit" ref={editSection}>
+      <details id="edit">
         <summary>Edit user info</summary>
         <br/><UserAdminForm
             errorMessage={errorMsg}
