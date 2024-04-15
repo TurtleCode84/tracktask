@@ -82,7 +82,7 @@ export default function UserAdmin() {
       <p>Collections shared: {lookup?.stats.shared}</p>
       <hr/>
       <details id="edit">
-        <summary style={{ padding: "10px 0" }} onClick={(e) => {
+        <summary onClick={(e) => {
           e.preventDefault();
           const section = document.getElementById("edit");
           section.open = section.open ? false : true;
@@ -142,14 +142,14 @@ export default function UserAdmin() {
       <>{error ? <p>{error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading user info...</p>}</>
       }
       {/*<br/>*/}<details id="raw">
-        <summary style={{ padding: "10px 0" }} onClick={(e) => {
+        <summary onClick={(e) => {
           e.preventDefault();
           const section = document.getElementById("raw");
           section.open = section.open ? false : true;
           section.scrollIntoView({ behavior: "smooth", block: section.open ? "start" : "end", inline: "nearest" });
         }}>View raw JSON</summary>
         {error ? <pre>{JSON.stringify(error, null, 2)}</pre> : <pre>{JSON.stringify(lookup, null, 2)}</pre>}
-      </details><br/>
+      </details>{/*<br/>*/}
       <ReportButton user={user} type="user" reported={lookup} flag={true}/>
     </Layout>
   );

@@ -204,6 +204,7 @@ export default function Layout({ children }) {
 
         summary {
           user-select: none;
+          padding: 10px 0;
         }
 
         summary:hover {
