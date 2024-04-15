@@ -23,6 +23,20 @@ export default function UserAdmin() {
   const router = useRouter();
   const { userId } = router.query;
   const { lookup, error } = useAdminUser(user, userId);
+
+  useEffect(() => {
+    const editSection = document.getElementById("edit");
+    editSection.addEventListener("toggle", handleScroll);
+
+    function handleScroll() {
+      if (editSection.open) {
+        //window.scroll({ top: 0, left: 0, behavior: "smooth" });         
+        editSection.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });    
+      } else {
+        editSection.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
+      }
+    }
+  }, []);
   
   if (!user || !user.isLoggedIn || user.permissions.banned || !user.permissions.admin) {
     return (
@@ -47,20 +61,6 @@ export default function UserAdmin() {
       </li>
     );
   }
-
-  useEffect(() => {
-    const editSection = document.getElementById("edit");
-    editSection.addEventListener("toggle", handleScroll);
-
-    function handleScroll() {
-      if (editSection.open) {
-        //window.scroll({ top: 0, left: 0, behavior: "smooth" });         
-        editSection.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });    
-      } else {
-        editSection.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
-      }
-    }
-  }, []);
   
   return (
     <Layout>
