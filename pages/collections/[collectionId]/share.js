@@ -6,6 +6,7 @@ import UserShareForm from "components/UserShareForm";
 import User from "components/User";
 import useUser from "lib/useUser";
 import useData from "lib/useData";
+import dynamicToggle from "lib/dynamicToggle";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -21,12 +22,7 @@ export default function CollectionShare() {
   const [errorMsg, setErrorMsg] = useState("");
   const [userErrorMsg, setUserErrorMsg] = useState("");
   const sharedWithList = collection?.sharing.sharedWith.map((item) =>
-    <details key={item.id} id={item.id} style={{ paddingBottom: "10px", marginLeft: "23px" }}><summary onClick={(e) => {
-      e.preventDefault();
-      const section = document.getElementById(item.id);
-      section.open = section.open ? false : true;
-      section.scrollIntoView({ behavior: "smooth", block: section.open ? "center" : "end", inline: "nearest" });
-    }}><User user={user} id={item.id}/> <span style={{ fontSize: "80%", fontStyle: "italic", color: "darkgray" }}>({item.role.split('-')[1] ? "pending " + item.role.split('-')[1] : item.role.split('-')[0]})</span></summary>
+    <details key={item.id} id={`share-${item.id}`} style={{ paddingBottom: "10px", marginLeft: "23px" }}><summary onClick={(e) => { dynamicToggle(e, `share-${item.id}`, ["center", "end"]) }}><User user={user} id={item.id}/> <span style={{ fontSize: "80%", fontStyle: "italic", color: "darkgray" }}>({item.role.split('-')[1] ? "pending " + item.role.split('-')[1] : item.role.split('-')[0]})</span></summary>
     <UserShareForm
       collectionId={collectionId}
       errorMessage={userErrorMsg}
@@ -125,12 +121,7 @@ export default function CollectionShare() {
         }}
         ><button id="enableSharingBtn"><span style={{ color: "lightslategray" }} className="material-symbols-outlined icon-list">group</span> Enable sharing</button></a><hr/></>
       }
-      <details id="new"><summary onClick={(e) => {
-        e.preventDefault();
-        const section = document.getElementById("new");
-        section.open = section.open ? false : true;
-        section.scrollIntoView({ behavior: "smooth", block: section.open ? "start" : "end", inline: "nearest" });
-      }}>Add a new user</summary>
+      <details id="new"><summary onClick={(e) => { dynamicToggle(e, "new") }}>Add a new user</summary>
       <CollectionShareForm
         errorMessage={errorMsg}
         onSubmit={async function handleSubmit(event) {

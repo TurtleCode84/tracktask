@@ -9,6 +9,7 @@ import useUser from "lib/useUser";
 import useData from "lib/useData";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import stringToColor from "lib/stringToColor";
+import dynamicToggle from "lib/dynamicToggle";
 import { useRouter } from "next/router";
 import moment from "moment";
 import Link from "next/link";
@@ -83,12 +84,7 @@ export default function Task() {
         ><button id="markCompleteBtn"><span style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">task_alt</span> Mark completed</button></a></>}</>}
         <hr/>
         {perms >= 4 && <details id="edit">
-          <summary onClick={(e) => {
-            e.preventDefault();
-            const section = document.getElementById("edit");
-            section.open = section.open ? false : true;
-            section.scrollIntoView({ behavior: "smooth", block: section.open ? "start" : "end", inline: "nearest" });
-          }}>Edit task</summary>
+          <summary onClick={(e) => { dynamicToggle(e, "edit") }}>Edit task</summary>
           <TaskEditForm
             errorMessage={errorMsg}
             task={task}
@@ -138,12 +134,7 @@ export default function Task() {
         />
         </details>}
         {perms >= 4 && <details id="arm">
-          <summary onClick={(e) => {
-            e.preventDefault();
-            const section = document.getElementById("arm");
-            section.open = section.open ? false : true;
-            section.scrollIntoView({ behavior: "smooth", block: section.open ? "start" : "end", inline: "nearest" });
-          }}>Add/remove from collection</summary>
+          <summary onClick={(e) => { dynamicToggle(e, "arm") }}>Add/remove from collection</summary>
           <AddRemoveCollectionForm
             errorMessage={errorMsg}
             taskId={task._id}

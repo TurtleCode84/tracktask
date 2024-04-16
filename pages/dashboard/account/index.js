@@ -7,6 +7,7 @@ import UserEditForm from "components/UserEditForm";
 import Link from "next/link";
 import Image from "next/image";
 import useUser from "lib/useUser";
+import dynamicToggle from "lib/dynamicToggle";
 import { useRouter } from "next/router";
 
 export default function Account() {
@@ -38,12 +39,7 @@ export default function Account() {
       <p>Created collections: {user.stats?.collections}</p>
       <hr/>
       <details id="edit">
-        <summary onClick={(e) => {
-          e.preventDefault();
-          const section = document.getElementById("edit");
-          section.open = section.open ? false : true;
-          section.scrollIntoView({ behavior: "smooth", block: section.open ? "start" : "end", inline: "nearest" });
-        }}>Edit account details</summary>
+        <summary onClick={(e) => { dynamicToggle(e, "edit") }}>Edit account details</summary>
         <UserEditForm
             errorMessage={errorMsg}
             user={user}
