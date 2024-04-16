@@ -27,6 +27,7 @@ class ErrorBoundary extends React.Component {
               e.preventDefault();
               window.location.replace("/");
             }}>a page that does work</a>?</p>
+            {/* This details element does not need dynamic toggling */}
             <details style={{ fontSize: "90%", color: "darkgray" }}>
               <summary>More details</summary>
               <textarea disabled>{this.state.errorMsg}</textarea>
