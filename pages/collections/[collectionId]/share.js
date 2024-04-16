@@ -22,7 +22,7 @@ export default function CollectionShare() {
   const [errorMsg, setErrorMsg] = useState("");
   const [userErrorMsg, setUserErrorMsg] = useState("");
   const sharedWithList = collection?.sharing.sharedWith.map((item) =>
-    <details key={item.id} id={`share-${item.id}`} style={{ paddingBottom: "10px", marginLeft: "23px" }}><summary onClick={(e) => { dynamicToggle(e, `share-${item.id}`, ["center", "center"]) }}><User user={user} id={item.id}/> <span style={{ fontSize: "80%", fontStyle: "italic", color: "darkgray" }}>({item.role.split('-')[1] ? "pending " + item.role.split('-')[1] : item.role.split('-')[0]})</span></summary>
+    <details key={item.id} id={`share-${item.id}`} style={{ paddingBottom: "10px", marginLeft: "23px" }}><summary onClick={(e) => { dynamicToggle(e, `share-${item.id}`, ["center", "end"]) }}><User user={user} id={item.id}/> <span style={{ fontSize: "80%", fontStyle: "italic", color: "darkgray" }}>({item.role.split('-')[1] ? "pending " + item.role.split('-')[1] : item.role.split('-')[0]})</span></summary>
     <UserShareForm
       collectionId={collectionId}
       errorMessage={userErrorMsg}
