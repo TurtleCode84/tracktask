@@ -62,8 +62,13 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
       <label>
         <span>Profile picture (URL)</span>
         <input type="text" title="Must be a valid absolute or relative URL." pattern="(^https?:\/\/.*?\..{2,}?|^\/.*?)" name="profilePicture" defaultValue={user.profilePicture} />
-        <details style={{ fontSize: "80%", color: "gray" }}>
-        <summary>Allowed image hosts</summary>
+        <details id="hosts" style={{ fontSize: "80%", color: "gray" }}>
+        <summary onClick={(e) => {
+          e.preventDefault();
+          const section = document.getElementById("hosts");
+          section.open = section.open ? false : true;
+          section.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
+        }}>Allowed image hosts</summary>
           <ul style={{ listStyle: "revert", margin: "revert" }}>
             <li>tracktask.eu.org</li>
             <li>avatars.githubusercontent.com</li>

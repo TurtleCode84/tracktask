@@ -70,8 +70,13 @@ export default function Admin() {
         <li><Link href="/admin/collections">View reported collections</Link></li>
         <li><Link href="/admin/reports">Moderate reports</Link></li>
       </ul>
-      <details>
-        <summary>View my raw session info</summary>
+      <details id="raw">
+        <summary onClick={(e) => {
+          e.preventDefault();
+          const section = document.getElementById("raw");
+          section.open = section.open ? false : true;
+          section.scrollIntoView({ behavior: "smooth", block: section.open ? "start" : "end", inline: "nearest" });
+        }}>View my raw session info</summary>
         {user && <pre>{JSON.stringify(user, null, 2)}</pre>}
       </details>
     </Layout>
