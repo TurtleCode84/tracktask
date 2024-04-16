@@ -1,4 +1,4 @@
-import fetchJson, { FetchError } from "lib/fetchJson";
+import fetchJson from "lib/fetchJson";
 import { useRouter } from "next/router";
 
 export default function CollectionEditForm({ verified, errorMessage, onSubmit, collection }) {

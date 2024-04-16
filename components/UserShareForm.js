@@ -1,4 +1,4 @@
-import fetchJson, { FetchError } from "lib/fetchJson";
+import fetchJson from "lib/fetchJson";
 
 export default function UserShareForm({ errorMessage, onSubmit, share, collectionId }) {
   const role = share.role.split("-");
