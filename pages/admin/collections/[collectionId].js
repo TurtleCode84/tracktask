@@ -7,6 +7,7 @@ import ReportButton from "components/ReportButton";
 //import CollectionAdminForm from "components/CollectionEditForm";
 import useUser from "lib/useUser";
 import useAdminData from "lib/useAdminData";
+import dynamicToggle from "lib/dynamicToggle";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
 import moment from "moment";
@@ -61,12 +62,7 @@ export default function Collection() {
         <ul style={{ display: "table" }}>
           {relTaskList.length > 0 || comTaskList.length > 0 ?
           <>{relTaskList.length > 0 && relTaskList}
-          {comTaskList.length > 0 && <details id="more"><summary style={{ fontSize: "90%", color: "gray" }} onClick={(e) => {
-            e.preventDefault();
-            const section = document.getElementById("more");
-            section.open = section.open ? false : true;
-            section.scrollIntoView({ behavior: "smooth", block: section.open ? "start" : "end", inline: "nearest" });
-          }}>View more</summary>{comTaskList}</details>}</>
+          {comTaskList.length > 0 && <details id="more"><summary style={{ fontSize: "90%", color: "gray" }} onClick={(e) => { dynamicToggle(e, "more") }}>View more</summary>{comTaskList}</details>}</>
           :
           <li style={{ paddingBottom: "2px" }}>No tasks found!</li>}
         </ul>
@@ -108,12 +104,7 @@ export default function Collection() {
         <>{error ? <p>{error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading collection...</p>}</>
       }
       <details id="raw">
-        <summary onClick={(e) => {
-          e.preventDefault();
-          const section = document.getElementById("raw");
-          section.open = section.open ? false : true;
-          section.scrollIntoView({ behavior: "smooth", block: section.open ? "start" : "end", inline: "nearest" });
-        }}>View raw JSON</summary>
+        <summary onClick={(e) => { dynamicToggle(e, "raw") }}>View raw JSON</summary>
         {error ? <pre>{JSON.stringify(error, null, 2)}</pre> : <pre>{JSON.stringify(collection, null, 2)}</pre>}
       </details><br/>
       <ReportButton user={user} type="collection" reported={collection} flag={true}/>
