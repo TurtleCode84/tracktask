@@ -6,7 +6,7 @@ export default function passwordReset(username, key) {
     <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>TrackTask &bull; Password Reset Requested</title>
+        <title>TrackTask &raquo; Password Reset Requested</title>
     </head>
     <body>
         <table cellpadding="0" cellspacing="0" border="0" width="100%" bgcolor="#f4f4f4">

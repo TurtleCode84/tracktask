@@ -1,4 +1,4 @@
-import fetchJson, { FetchError } from "lib/fetchJson";
+import fetchJson from "lib/fetchJson";
 import { useRouter } from "next/router";
 
 export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
@@ -69,7 +69,7 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
         }
       </label><hr/>
 
-      <button type="submit" id="editUserBtn">Save user data</button>
+      <button type="submit" id="editUserBtn">Save account data</button>
 
       {errorMessage && <p className="error">{errorMessage}</p>}<hr/>
        

@@ -1,4 +1,5 @@
-import fetchJson, { FetchError } from "lib/fetchJson";
+import fetchJson from "lib/fetchJson";
+import dynamicToggle from "lib/dynamicToggle";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
@@ -62,8 +63,8 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
       <label>
         <span>Profile picture (URL)</span>
         <input type="text" title="Must be a valid absolute or relative URL." pattern="(^https?:\/\/.*?\..{2,}?|^\/.*?)" name="profilePicture" defaultValue={user.profilePicture} />
-        <details style={{ fontSize: "80%", color: "gray" }}>
-        <summary>Allowed image hosts</summary>
+        <details id="hosts" style={{ fontSize: "80%", color: "gray" }}>
+        <summary onClick={(e) => { dynamicToggle(e, "hosts", ["center", "center"]) }}>Allowed image hosts</summary>
           <ul style={{ listStyle: "revert", margin: "revert" }}>
             <li>tracktask.eu.org</li>
             <li>avatars.githubusercontent.com</li>
@@ -81,14 +82,15 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
         </select>
       </label>
       {user.permissions.verified && <label>
-        <span>Push Notifications (beta)</span>
+        <span>Push notifications (beta)</span>
         <select id="notifications-dropdown" name="notifications" >
           <option value="disable">Disabled (default)</option>
           <option value="enable">Enabled</option>
         </select>
+        <div style={{ fontSize: "80%", color: "gray", marginBottom: "16px" }}>Push notifications can only be enabled on one device per account,<br/>enabling on a new device will stop notifications on the previous.</div>
       </label>}
       <label>
-        <span>Display name (beta, stored locally)</span>
+        <span>Display name (stored locally)</span>
         <input type="text" id="displayNameInput" name="displayName" />
       </label><hr/>
 

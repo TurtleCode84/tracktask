@@ -9,6 +9,7 @@ import useUser from "lib/useUser";
 import useData from "lib/useData";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import stringToColor from "lib/stringToColor";
+import dynamicToggle from "lib/dynamicToggle";
 import { useRouter } from "next/router";
 import moment from "moment";
 import Link from "next/link";
@@ -48,7 +49,7 @@ export default function Task() {
   return (
     <Layout>
       <h2>{task ? <>{task.completion.completed > 0 ? <span title="Completed" style={{ color: "darkgreen", marginRight: "8px" }} className="material-symbols-outlined">task_alt</span> : null}{task.priority ? <span title="Priority" style={{ color: "red", marginRight: "8px" }} className="material-symbols-outlined">label_important</span> : null}{collectionTags.length > 0 && collectionTags}{task.name}:</> : 'Loading...'}</h2>
-      <Link href="/dashboard">Back to dashboard</Link><br/>
+      <Link href={`/dashboard${task ? "#task-" + task._id : ""}`}>Back to dashboard</Link><br/>
       {task ?
         <><h3>General information</h3>
         {user.id !== task.owner && <p>Owner: <User user={user} id={task.owner}/></p>}
@@ -82,9 +83,9 @@ export default function Task() {
         }}
         ><button id="markCompleteBtn"><span style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">task_alt</span> Mark completed</button></a></>}</>}
         <hr/>
-        {perms >= 4 && <><details>
-          <summary>Edit task</summary>
-          <br/><TaskEditForm
+        {perms >= 4 && <details id="edit">
+          <summary onClick={(e) => { dynamicToggle(e, "edit") }}>Edit task</summary>
+          <TaskEditForm
             errorMessage={errorMsg}
             task={task}
             isTaskOwner={user.id == task.owner}
@@ -131,10 +132,10 @@ export default function Task() {
               }
             }}
         />
-        </details><br/></>}
-        {perms >= 4 && <><details>
-          <summary>Add/remove from collection</summary>
-          <br/><AddRemoveCollectionForm
+        </details>}
+        {perms >= 4 && <details id="arm">
+          <summary onClick={(e) => { dynamicToggle(e, "arm") }}>Add/remove from collection</summary>
+          <AddRemoveCollectionForm
             errorMessage={errorMsg}
             taskId={task._id}
             collections={collections}
@@ -174,7 +175,8 @@ export default function Task() {
               }
             }}
           />
-        </details><br/></>}
+        </details>}
+        {perms >= 4 && <br/>}
         {user.id !== task.owner && <ReportButton user={user} type="task" reported={task}/>}</>
       :
         <>{taskError ? <p>{taskError.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading task...</p>}</>

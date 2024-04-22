@@ -21,7 +21,7 @@ export default function Home() {
         <span style={{ marginRight: "-0.6rem", verticalAlign: "-35px" }}>
           <Image src="/tracktask.png" width={305} height={110} quality={75} alt="TrackTask" priority={true} />
         </span>
-        &bull; Shareable Task Management
+        &raquo; Shareable Task Management
       </h1>
 
       <h1>An open-source task management platform geared towards organized collaboration.</h1>

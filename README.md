@@ -1,5 +1,5 @@
 <img src="/public/tracktask.png" width="1000"></img>
-# TrackTask &bull; Shareable Task Management
+# TrackTask &raquo; Shareable Task Management
 ### An open-source task management platform geared towards organized collaboration.
 This repository contains our source code as well as our development roadmap for features and updates. Found an issue or want to make an improvement? Leave us an issue or pull request!
 

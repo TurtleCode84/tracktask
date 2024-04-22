@@ -7,7 +7,6 @@ import Link from "next/link";
 import useUser from "lib/useUser";
 import useData from "lib/useData";
 import { useRouter } from "next/router";
-import { useEffect, useRef } from "react";
 
 export default function Dashboard() {
   const { user } = useUser({
@@ -60,11 +59,6 @@ export default function Dashboard() {
       break;
     }
   }
-  const displayName = useRef();
-
-  useEffect(() => {
-    displayName.current = localStorage.getItem("displayName");
-  }, []);
   
   if (!user || !user.isLoggedIn || user.permissions.banned) {
     return (
@@ -73,7 +67,7 @@ export default function Dashboard() {
   }
   return (
     <Layout>
-      <h1 className="welcome-text">{welcome.message}{user && <>, {displayName.current ? displayName.current : user.username}</>}{welcome.punctuation}{user && <>{user.permissions.verified ? <>{' '}<span title="Verified" style={{ color: "#006dbe" }} className="material-symbols-outlined">verified</span></> : null}{user.permissions.admin ? <>{' '}<span title="Admin" style={{ color: "slategray" }} className="material-symbols-outlined">verified_user</span></> : null}</>}</h1>
+      <h1 className="welcome-text">{welcome.message}{user && <>, {localStorage.getItem("displayName") ? localStorage.getItem("displayName") : user.username}</>}{welcome.punctuation}{user && <>{user.permissions.verified ? <>{' '}<span title="Verified" style={{ color: "#006dbe" }} className="material-symbols-outlined">verified</span></> : null}{user.permissions.admin ? <>{' '}<span title="Admin" style={{ color: "slategray" }} className="material-symbols-outlined">verified_user</span></> : null}</>}</h1>
 
       {dynamicMsg && <p className="success" style={{ marginBottom: "1rem", marginTop: "-0.5rem" }}>{dynamicMsg}{' '}<Link href="/dashboard">Ok</Link></p>}
 

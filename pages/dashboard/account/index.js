@@ -7,6 +7,7 @@ import UserEditForm from "components/UserEditForm";
 import Link from "next/link";
 import Image from "next/image";
 import useUser from "lib/useUser";
+import dynamicToggle from "lib/dynamicToggle";
 import { useRouter } from "next/router";
 
 export default function Account() {
@@ -34,12 +35,12 @@ export default function Account() {
       <p>Profile picture: <Image src={user.profilePicture ? user.profilePicture : "/default-pfp.jpg" } width={32} height={32} style={{ verticalAlign: "middle", borderRadius: "100%", overflow: "hidden" }} alt=""/> ({user.profilePicture ? <a href={user.profilePicture} target="_blank" rel="noreferrer">link</a> : 'default'})</p>
       <h3><hr/>History<hr/></h3>
       <p title={moment.unix(user.history.joined).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Joined: {user.history.joined > 0 ? moment.unix(user.history.joined).fromNow() : 'never'}</p>
-      <p>Created tasks: {user.stats.tasks}</p>
-      <p>Created collections: {user.stats.collections}</p>
+      <p>Created tasks: {user.stats?.tasks}</p>
+      <p>Created collections: {user.stats?.collections}</p>
       <hr/>
-      <details>
-        <summary>Edit account details</summary>
-        <br/><UserEditForm
+      <details id="edit">
+        <summary onClick={(e) => { dynamicToggle(e, "edit") }}>Edit account details</summary>
+        <UserEditForm
             errorMessage={errorMsg}
             user={user}
             onSubmit={async function handleSubmit(event) {

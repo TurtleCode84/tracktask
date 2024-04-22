@@ -5,6 +5,7 @@ import Task from "components/Task";
 import Link from "next/link";
 import useUser from "lib/useUser";
 import useAdminData from "lib/useAdminData";
+import dynamicToggle from "lib/dynamicToggle";
 
 export default function TasksAdmin() {
   const { user } = useUser({
@@ -37,7 +38,7 @@ export default function TasksAdmin() {
       <ul style={{ display: "table" }}>
         {relTaskList.length > 0 || comTaskList.length > 0 ?
         <>{relTaskList.length > 0 && relTaskList}
-        {comTaskList.length > 0 && <details><summary style={{ fontSize: "90%", color: "gray", paddingTop: "8px" }}>View more</summary>{comTaskList}</details>}</>
+        {comTaskList.length > 0 && <details id="more"><summary style={{ fontSize: "90%", color: "gray" }} onClick={(e) => { dynamicToggle(e, "more") }}>View more</summary>{comTaskList}</details>}</>
         :
         <li style={{ paddingBottom: "2px" }}>No tasks found!</li>}
       </ul>

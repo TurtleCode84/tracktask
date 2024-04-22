@@ -6,6 +6,7 @@ import User from "components/User";
 import ReportButton from "components/ReportButton";
 import useUser from "lib/useUser";
 import useAdminData from "lib/useAdminData";
+import dynamicToggle from "lib/dynamicToggle";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
 import moment from "moment";
@@ -94,6 +95,10 @@ export default function TaskAdmin() {
             }}
         />
         </details></>*/}
+        <details id="raw">
+          <summary onClick={(e) => { dynamicToggle(e, "raw") }}>View raw JSON</summary>
+          {taskError ? <pre>{JSON.stringify(taskError, null, 2)}</pre> : <pre>{JSON.stringify(task, null, 2)}</pre>}
+        </details><br/>
         <a href={`/api/admin/tasks/${task._id}`} style={{ marginRight: "8px" }}
         onClick={async (e) => {
           e.preventDefault();

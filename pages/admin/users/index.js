@@ -46,7 +46,7 @@ export default function UsersAdmin() {
       <><ul style={{ display: "table" }}>
         {allUsersList}
       </ul>
-      <p>Show more users &bull; <Link href="/admin/users">25</Link> | <Link href="/admin/users?c=50">50</Link> | <Link href="/admin/users?c=100">100</Link> | <Link href="/admin/users?c=500">500</Link></p></>
+      <p>Show more users &raquo; <Link href="/admin/users">25</Link> | <Link href="/admin/users?c=50">50</Link> | <Link href="/admin/users?c=100">100</Link> | <Link href="/admin/users?c=500">500</Link></p></>
       }
     </Layout>    
   );

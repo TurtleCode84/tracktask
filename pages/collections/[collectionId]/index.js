@@ -7,6 +7,7 @@ import ReportButton from "components/ReportButton";
 import CollectionEditForm from "components/CollectionEditForm";
 import useUser from "lib/useUser";
 import useData from "lib/useData";
+import dynamicToggle from "lib/dynamicToggle";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
 import moment from "moment";
@@ -60,7 +61,7 @@ export default function Collection() {
   return (
     <Layout>
       <h2>{collection ? <><span title={titleInfo.hover} style={{ color: sharedColor }} className="material-symbols-outlined">{titleInfo.icon}</span>{' '}{collection.pending ? <>Share request for &quot;{collection.name}&quot;</> : collection.name}:</> : 'Loading...'}</h2>
-      <Link href="/dashboard">Back to dashboard</Link><br/>
+      <Link href={`/dashboard${collection ? "#collection-" + collection._id : ""}`}>Back to dashboard</Link><br/>
       {collection ?
         <>{collection.pending ?
         <><h3>Preview information:</h3>
@@ -107,16 +108,16 @@ export default function Collection() {
         <ul style={{ display: "table" }}>
           {relTaskList.length > 0 || comTaskList.length > 0 ?
           <>{relTaskList.length > 0 && relTaskList}
-          {comTaskList.length > 0 && <details><summary style={{ fontSize: "90%", color: "gray", paddingTop: "8px" }}>View more</summary>{comTaskList}</details>}</>
+          {comTaskList.length > 0 && <details id="more"><summary style={{ fontSize: "90%", color: "gray" }} onClick={(e) => { dynamicToggle(e, "more") }}>View more</summary>{comTaskList}</details>}</>
           :
           <li style={{ paddingBottom: "2px" }}>No tasks found!</li>}
         </ul>
         }
         {user.id === collection.owner && <><hr/>{user.permissions.verified ? <Link href={`/collections/${collection._id}/share`}>Share this collection</Link> : <span style={{ fontStyle: "italic" }}><Link href="/dashboard/account/verify">Verify your email</Link> to share this collection.</span>}</>}
         <hr/>
-        {currentUserRole === "editor" && <><details>
-          <summary>Edit collection</summary>
-          <br/><CollectionEditForm
+        {currentUserRole === "editor" && <><details id="edit">
+          <summary onClick={(e) => { dynamicToggle(e, "edit") }}>Edit collection</summary>
+          <CollectionEditForm
             verified={user.permissions.verified}
             errorMessage={errorMsg}
             collection={collection}

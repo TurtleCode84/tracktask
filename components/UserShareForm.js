@@ -1,4 +1,4 @@
-import fetchJson, { FetchError } from "lib/fetchJson";
+import fetchJson from "lib/fetchJson";
 
 export default function UserShareForm({ errorMessage, onSubmit, share, collectionId }) {
   const role = share.role.split("-");
@@ -13,7 +13,7 @@ export default function UserShareForm({ errorMessage, onSubmit, share, collectio
         </select>
       </label>
 
-      <button type="submit" id="modifyUserShareBtn" style={{ width: "max-content" }}><span style={{ color: "darkslategray" }} className="material-symbols-outlined icon-list">save</span> Save role changes</button>
+      <button type="submit" id="modifyUserShareBtn" style={{ width: "max-content", padding: "5px" }}><span style={{ color: "darkslategray" }} className="material-symbols-outlined icon-list">save</span> Save role changes</button>
 
       {errorMessage && errorMessage.id === share.id && <p className="error">{errorMessage.message}</p>}<br/>
       

@@ -6,6 +6,7 @@ import Report from "components/Report";
 import useUser from "lib/useUser";
 import useAdminUsers from "lib/useAdminUsers";
 import useAdminReports from "lib/useAdminReports";
+import dynamicToggle from "lib/dynamicToggle";
 import moment from "moment";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -70,8 +71,8 @@ export default function Admin() {
         <li><Link href="/admin/collections">View reported collections</Link></li>
         <li><Link href="/admin/reports">Moderate reports</Link></li>
       </ul>
-      <details>
-        <summary>View my raw session info</summary>
+      <details id="raw">
+        <summary onClick={(e) => { dynamicToggle(e, "raw") }}>View my raw session info</summary>
         {user && <pre>{JSON.stringify(user, null, 2)}</pre>}
       </details>
     </Layout>

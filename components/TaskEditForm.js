@@ -1,4 +1,4 @@
-import fetchJson, { FetchError } from "lib/fetchJson";
+import fetchJson from "lib/fetchJson";
 import { useRouter } from "next/router";
 import moment from "moment";
 
@@ -34,7 +34,7 @@ export default function TaskEditForm({ errorMessage, onSubmit, task, isTaskOwner
         <input type="checkbox" name="complete" defaultChecked={task.completion.completed ? true : false} />
       </label><hr/>
 
-      <button type="submit" id="editTaskBtn">Save task data</button>
+      <button type="submit" id="editTaskBtn">Save task details</button>
 
       {errorMessage && <p className="error">{errorMessage}</p>}<hr/>
        

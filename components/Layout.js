@@ -12,16 +12,16 @@ export default function Layout({ children }) {
   return (
     <>
       <Head>
-        <title>TrackTask &bull; Shareable Task Management</title>
-        <meta name="title" content="TrackTask &bull; Shareable Task Management" />
+        <title>TrackTask &raquo; Shareable Task Management</title>
+        <meta name="title" content="TrackTask &raquo; Shareable Task Management" />
         <meta name="description" content="An open-source task management platform geared towards organized collaboration." />
         <meta name="image" content="https://tracktask.eu.org/tracktaskmini.png" />
         <meta name="author" content="TurtleCode84" />
         <meta property="og:site_name" content="TrackTask" />
-        <meta property="og:title" content="TrackTask &bull; Shareable Task Management" />
+        <meta property="og:title" content="TrackTask &raquo; Shareable Task Management" />
         <meta property="og:description" content="An open-source task management platform geared towards organized collaboration." />
         <meta property="og:image" content="https://tracktask.eu.org/tracktaskmini.png" />
-        <meta name="twitter:title" content="TrackTask &bull; Shareable Task Management" />
+        <meta name="twitter:title" content="TrackTask &raquo; Shareable Task Management" />
         <meta name="twitter:description" content="An open-source task management platform geared towards organized collaboration." />
         <meta name="twitter:image" content="https://tracktask.eu.org/tracktaskmini.png" />
         <meta name="theme-color" content="#121212" />
@@ -138,6 +138,11 @@ export default function Layout({ children }) {
           width: auto;
           transition: filter 0.3s;
         }
+
+        button[type="submit"] {
+          padding-top: 8px;
+          padding-bottom: 8px;
+        }
         
         button:hover {
           filter: brightness(0.9);
@@ -150,7 +155,7 @@ export default function Layout({ children }) {
         
         button:disabled {
           filter: brightness(0.95) !important;
-          cursor: wait !important;
+          cursor: not-allowed !important;
           color: #757575;
         }
 
@@ -199,6 +204,7 @@ export default function Layout({ children }) {
 
         summary {
           user-select: none;
+          padding: 10px 0;
         }
 
         summary:hover {
@@ -234,6 +240,10 @@ export default function Layout({ children }) {
 
         nav {
           color: var(--nav-text-color);
+        }
+
+        pre {
+          overflow-x: scroll;
         }
         
         .material-symbols-outlined {
