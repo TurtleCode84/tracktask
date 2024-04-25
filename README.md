@@ -56,7 +56,6 @@ Please see our [CONTRIBUTING.md](/CONTRIBUTING.md) for contributing guidelines a
 ### Contact Us
 >Email &bull; `tracktask@tracktask.eu.org`
 <br>Github &bull; [Discussions](https://github.com/TurtleCode84/tracktask/discussions)
-<br>Discord &bull; [Community Server](https://discord.gg/Hh3fw2xesP)
 <br>Security &bull; [SECURITY.md](/SECURITY.md)
 
 (response within 7 days for non-urgent communications)
