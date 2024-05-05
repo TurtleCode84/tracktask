@@ -14,7 +14,7 @@ TrackTask is a shareable task management platform. Users can create tasks with n
 Additionally, tasks can be grouped in collections, which can be shared with other users and modified by them if they have the right permissions. [Learn more](https://tracktask.eu.org/about)
 
 ## Where is it?
-TrackTask is a browser-based web app that can be accessed at https://tracktask.eu.org. We've done our best to ensure support for all major web browsers, including ease of use on mobile devices.
+TrackTask is a browser-based web app that can be accessed at https://tracktask.eu.org. We've done our best to ensure support for all major web browsers, including ease of use and PWA installability on mobile devices.
 
 ## What's been made so far?
 Glad you asked! Here's a running features list:
@@ -33,17 +33,19 @@ Glad you asked! Here's a running features list:
 <br>... and more to come!
 
 ## Who are the developers?
-These are the current official developers of the project:
-- Lead developer: [@TurtleCode84](https://github.com/TurtleCode84)
-- Logo creator: [@daily_meme](https://wasteof.money/users/daily_meme)
-- Developers:
-  - [@silly](https://wasteof.money/users/silly) (testing)
-  - [@radi8](https://github.com/radeeyate) (testing/development, site admin)
-  - [@ankit_anmol](https://github.com/Quantum-Codes) (testing/development)
+Over the course of this project's development, several people have been involved as members of TrackTask's development team:
+
+- Past developers:
+  - [@radi8](https://github.com/radeeyate) (testing/development)
+  - [@Quantum-Codes](https://github.com/Quantum-Codes) (testing/development)
   - [@micahlt](https://github.com/micahlt) (consultant)
+- Logo creator: [@daily_meme](https://wasteof.money/users/daily_meme)
+
+Currently, as the project's main development cycle has concluded, only one official developer remains an active contributor:
+- Lead developer: [@TurtleCode84](https://github.com/TurtleCode84)
 
 ## Things to consider:
-> This project is **still in development**, some things may be incomplete or not work as expected. We're working on adding features and improving existing infrastructure, but most of us have other commitments and a life outside of TrackTask, so we can't always devote our attention to issues/improvements.
+> This project, while feature-complete, is **still in development**, some things may not work as expected. We're working on adding new features and improving existing infrastructure, but most of our development team has other commitments and a life outside of TrackTask, so we can't always devote our attention to issues/improvements.
 
 > If you find something that you dislike and/or think could be better, **please don't just complain** about it. Sometimes we miss things, but most times we'd like to know _how_ we can improve things, so complaining about them won't always get you (or us) anywhere.
 
