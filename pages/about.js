@@ -31,10 +31,9 @@ export default function About() {
       <ul style={{ listStyle: "revert", margin: "revert" }}>
         <li><a href="https://wasteof.money/users/daily_meme" target="_blank" rel="noreferrer">@daily_meme</a>, logo designer</li>
         <li><a href="https://github.com/radeeyate" target="_blank" rel="noreferrer">@radi8</a>, tester & developer</li>
-        <li><a href="https://github.com/Quantum-Codes" target="_blank" rel="noreferrer">@ankit_anmol</a>, tester & developer</li>
-        <li><a href="https://wasteof.money/users/silly" target="_blank" rel="noreferrer">@silly</a>, tester</li>
+        <li><a href="https://github.com/Quantum-Codes" target="_blank" rel="noreferrer">@Quantum-Codes</a>, tester & developer</li>
         <li><a href="https://github.com/micahlt" target="_blank" rel="noreferrer">@micahlt</a>, consultant</li>
-        <li><a href="https://github.com/TurtleCode84" target="_blank" rel="noreferrer">@turtlecode84</a>, lead developer</li>
+        <li><a href="https://github.com/TurtleCode84" target="_blank" rel="noreferrer">@TurtleCode84</a>, lead developer</li>
         <li>Anyone else who gave suggestions or feedback!</li>
       </ul>
       <h2>Found a bug or have feedback?</h2>
