@@ -22,7 +22,7 @@
     "linkify-react": "^4.1.1",
     "linkifyjs": "^4.1.1",
     "nodemailer": "^6.9.7",
-    "uuid": "^9.0.1"
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "eslint": "8.56.0",
