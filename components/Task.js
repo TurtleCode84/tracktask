@@ -4,6 +4,8 @@ import stringToColor from "lib/stringToColor";
 
 export default function Task({ task, key, admin, blank }) {
 
+  const router = useRouter();
+
   if (blank === true) {
     return (
       <li id="noTasks" className="list-hover" style={{ margin: "0.5em", background: "var(--element-background)", padding: "8px", borderWidth: "2px", borderStyle: "solid", borderColor: "var(--border-color)", borderRadius: "10px", width: "auto" }}>
@@ -12,7 +14,6 @@ export default function Task({ task, key, admin, blank }) {
     )
   }
 
-  const router = useRouter();
   const collectionTags = task.collections?.map((item, index) =>
     <span key={index} style={{backgroundColor: stringToColor(item.name), padding: "0.5px 4px", borderStyle: "solid", borderWidth: "2px", borderColor: "var(--inset-border-color)", borderRadius: "7px", color: "#111", marginRight: "5px", display: "inline-block", filter: "grayscale(0.4) brightness(1.5)" }} onClick={(e) => {e.stopPropagation(); router.push(`/${admin === true ? 'admin/' : ''}collections/${item._id}`);}}>{item.name}</span>
   );
