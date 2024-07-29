@@ -25,8 +25,8 @@ export default function TaskAdmin() {
   
   const [errorMsg, setErrorMsg] = useState("");
 
-  const filteredCollections = collections?.filter((collection) => {collection?.tasks.some((e) => {e._id === task?._id})});
-  const collectionTags = filteredCollections?.map((item, index) =>
+  const filteredCollections = collections.filter((collection) => {collection.tasks.some((e) => {e._id === task._id})});
+  const collectionTags = filteredCollections.map((item, index) =>
     <Link key={index} href={`/admin/collections/${item._id}`}><span style={{fontSize: "18px", verticalAlign: "2px", backgroundColor: stringToColor(item._id), padding: "0.5px 4px", borderStyle: "solid", borderWidth: "2px", borderColor: "var(--inset-border-color)", borderRadius: "7px", color: "#111", marginRight: "6px", display: "inline-block", filter: "grayscale(0.4) brightness(1.5)" }}>{item.name}</span></Link>
   );
     
