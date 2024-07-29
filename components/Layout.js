@@ -103,7 +103,7 @@ export default function Layout({ children }) {
           }
           .collection {
             grid-template-columns: 1fr;
-            gap: 10px;
+            gap: 0px;
             width: 100%;
           }
           h1 {
@@ -112,6 +112,9 @@ export default function Layout({ children }) {
           .welcome-text {
             font-size: 20px;
             margin-bottom: 18px;
+          }
+          .collection .tasks {
+            margin-top: -20px;
           }
           .dashboard .tasks ul, .collection .tasks ul {
             margin-left: -40px;
