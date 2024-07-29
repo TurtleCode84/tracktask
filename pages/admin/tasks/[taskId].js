@@ -105,7 +105,7 @@ export default function TaskAdmin() {
         </details></>*/}
         <details id="raw">
           <summary onClick={(e) => { dynamicToggle(e, "raw") }}>View raw JSON</summary>
-          {taskError ? <pre>{JSON.stringify(taskError, null, 2)}</pre> : <pre>{JSON.stringify(task, null, 2)}</pre>}<pre>{JSON.stringify(collections?.filter((collection) => {collection.tasks.some((e) => {e._id === task._id})}), null, 2)}</pre>
+          {taskError ? <pre>{JSON.stringify(taskError, null, 2)}</pre> : <pre>{JSON.stringify(task, null, 2)}</pre>}<pre>{JSON.stringify(collections?.filter((collection) => {collection.tasks.some((e) => {e._id == task._id})}), null, 2)}</pre><pre>{JSON.stringify(collections)}</pre>
         </details><br/>
         <a href={`/api/admin/tasks/${task._id}`} style={{ marginRight: "8px" }}
         onClick={async (e) => {
