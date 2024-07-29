@@ -110,7 +110,9 @@ export default function Collection() {
           <>{relTaskList.length > 0 && relTaskList}
           {comTaskList.length > 0 && <details id="more"><summary style={{ fontSize: "90%", color: "gray" }} onClick={(e) => { dynamicToggle(e, "more") }}>View more</summary>{comTaskList}</details>}</>
           :
-          <li style={{ paddingBottom: "2px" }}>No tasks found!</li>}
+          <>
+          <Task blank={true} />
+          {/*<li style={{ paddingBottom: "2px" }}>No tasks found!</li>*/}</>}
         </ul>
         }</div></div>
         {user.id === collection.owner && <><hr/>{user.permissions.verified ? <Link href={`/collections/${collection._id}/share`}>Share this collection</Link> : <span style={{ fontStyle: "italic" }}><Link href="/dashboard/account/verify">Verify your email</Link> to share this collection.</span>}</>}
