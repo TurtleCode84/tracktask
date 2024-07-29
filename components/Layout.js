@@ -85,7 +85,7 @@ export default function Layout({ children }) {
 
         .dashboard {
           display: grid;
-          minHeight: 300px;
+          min-height: 330px;
         }
         
         @media only screen and (max-width: 600px) {
@@ -99,7 +99,12 @@ export default function Layout({ children }) {
           .dashboard {
             grid-template-columns: 1fr;
             gap: 30px;
-            width: fit-content;
+            width: 100%;
+          }
+          .collection {
+            grid-template-columns: 1fr;
+            gap: 10px;
+            width: 100%;
           }
           h1 {
             font-size: 28px;
@@ -108,7 +113,7 @@ export default function Layout({ children }) {
             font-size: 20px;
             margin-bottom: 18px;
           }
-          .dashboard .tasks ul {
+          .dashboard .tasks ul, .dashboard .tasks ul {
             margin-left: -40px;
           }
           .grecaptcha-badge {
@@ -123,6 +128,13 @@ export default function Layout({ children }) {
           .dashboard {
             grid-template-columns: 3fr 2fr;
             gap: 40px;
+          }
+          .collection {
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+          }
+          .collection .tasks {
+            margin-top: -5px;
           }
         }
 

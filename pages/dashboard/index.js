@@ -76,7 +76,7 @@ export default function Dashboard() {
       {(upcomingTasksError || overdueTasksError || notdueTasksError) && <p style={{ fontStyle: "italic" }}>An error occurred while loading your tasks.</p>}
       {(upcomingTaskList && upcomingTaskList.length === 0) && (overdueTaskList && overdueTaskList.length === 0) && (notdueTaskList && notdueTaskList.length === 0) &&
       <><h2 style={{ marginTop: 0 }}>Your tasks:</h2>
-      <p style={{ fontStyle: "italic" }}>You have no relevant tasks!</p></>
+      <p style={{ fontStyle: "italic" }}>You have no incomplete tasks!</p></>
       }
 
       {upcomingTaskList && upcomingTaskList.length > 0 &&

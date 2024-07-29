@@ -93,9 +93,8 @@ export default function Collection() {
         }}
         ><button id="acceptRequestBtn"><span style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">check_circle</span> Accept request</button></a></>
         :
-        <><div className="dashboard"><div>
-        {/*<h3>General information</h3>
-        <p>Description:</p>{' '}*/}<textarea value={collection.description} rows="8" cols="70" style={{ maxWidth: "90vw" }} disabled /><br/>
+        <><div className="collection"><div>
+        <br/><textarea value={collection.description} rows="8" cols="70" style={{ maxWidth: "90vw" }} disabled /><br/>
         <p title={collection.created > 0 ? moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a") : 'Never'}>Created: {collection.created > 0 ? <>{moment.unix(collection.created).fromNow()}</> : 'never'}</p>
         {user.id !== collection.owner && <p>Owner: <User user={user} id={collection.owner}/></p>}
         {collection.sharing.shared && <p>Shared with: <ul>{sharedWithList.length > 0 ? sharedWithList : <li>Nobody!</li>}</ul></p>}
