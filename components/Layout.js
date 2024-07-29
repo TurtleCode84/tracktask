@@ -202,12 +202,7 @@ export default function Layout({ children }) {
           letter-spacing: 0.1px;
           white-space: pre-line;
           word-wrap: break-word;
-          overflow-y: scroll;
-        }
-
-        /* Hide scrollbar on Linkify textarea */
-        .textarea::-webkit-scrollbar, pre::-webkit-scrollbar {
-          width: 0;
+          overflow-y: auto;
         }
 
         input, select {
@@ -266,7 +261,7 @@ export default function Layout({ children }) {
         }
 
         pre {
-          overflow-x: scroll;
+          overflow-x: auto;
         }
         
         .material-symbols-outlined {
