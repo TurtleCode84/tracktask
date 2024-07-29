@@ -26,8 +26,7 @@ export default function TaskAdmin() {
   
   const [errorMsg, setErrorMsg] = useState("");
 
-  //const filteredCollections = collections?.filter((collection) => {collection.tasks.some((e) => {e._id === task._id})});
-  const collectionTags = collections?.map((item, index) =>
+  const collectionTags = collections?.filter((collection) => {collection.tasks.some((e) => {e._id === task._id})}).map((item, index) =>
     <Link key={index} href={`/admin/collections/${item._id}`}><span style={{fontSize: "18px", verticalAlign: "2px", backgroundColor: stringToColor(item._id), padding: "0.5px 4px", borderStyle: "solid", borderWidth: "2px", borderColor: "var(--inset-border-color)", borderRadius: "7px", color: "#111", marginRight: "6px", display: "inline-block", filter: "grayscale(0.4) brightness(1.5)" }}>{item.name}</span></Link>
   );
     
@@ -39,7 +38,7 @@ export default function TaskAdmin() {
   
   return (
     <Layout>
-      <h2>{task ? <>{task.completion.completed > 0 ? <span title="Completed" style={{ color: "darkgreen", marginRight: "8px" }} className="material-symbols-outlined">task_alt</span> : null}{task.priority ? <span title="Priority" style={{ color: "red", marginRight: "8px" }} className="material-symbols-outlined">label_important</span> : null}{collectionTags?.length > 0 && collectionTags}{task.name}:</> : 'Loading...'}</h2>
+      <h2>{task ? <>{task.completion.completed > 0 ? <span title="Completed" style={{ color: "darkgreen", marginRight: "8px" }} className="material-symbols-outlined">task_alt</span> : null}{task.priority ? <span title="Priority" style={{ color: "red", marginRight: "8px" }} className="material-symbols-outlined">label_important</span> : null}{collectionTags.length > 0 && collectionTags}{task.name}:</> : 'Loading...'}</h2>
       <Link href="/admin/tasks">Back to tasks</Link><br/>
       <Link href="/admin">Back to admin dashboard</Link><br/>
       {task ?
