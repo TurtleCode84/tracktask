@@ -7,6 +7,7 @@ import ReportButton from "components/ReportButton";
 import useUser from "lib/useUser";
 import useAdminData from "lib/useAdminData";
 import dynamicToggle from "lib/dynamicToggle";
+import stringToColor from "lib/stringToColor";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
 import moment from "moment";
