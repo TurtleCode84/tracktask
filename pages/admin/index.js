@@ -50,7 +50,7 @@ export default function Admin() {
       {dynamicMsg && <p className="success">{dynamicMsg}{' '}<Link href="/admin">Ok</Link></p>}
       <h2><hr/>Recent Reports<hr/></h2>
       <ul style={{ display: "table" }}>
-        {reportList?.length > 0 ? reportList : <li>No reports found!</li>}
+        {reportList?.length > 0 ? reportList : <li style={{ fontStyle: "italic" }}>No reports found!</li>}
       </ul>
       <h2><hr/>User Statistics<hr/></h2>
       <h3>Recently active:</h3>
