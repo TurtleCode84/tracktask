@@ -8,6 +8,7 @@ import CollectionEditForm from "components/CollectionEditForm";
 import useUser from "lib/useUser";
 import useData from "lib/useData";
 import dynamicToggle from "lib/dynamicToggle";
+import stringToColor from "lib/stringToColor";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
 import moment from "moment";
@@ -60,7 +61,7 @@ export default function Collection() {
   
   return (
     <Layout>
-      <h2>{collection ? <><span title={titleInfo.hover} style={{ color: sharedColor }} className="material-symbols-outlined">{titleInfo.icon}</span>{' '}{collection.pending ? <>Share request for &quot;{collection.name}&quot;</> : collection.name}:</> : 'Loading...'}</h2>
+      <h2>{collection ? <><span title={titleInfo.hover} style={{ color: sharedColor }} className="material-symbols-outlined">{titleInfo.icon}</span><span style={{ color: stringToColor(collection?._id), filter: "grayscale(0.4) brightness(1.5)" }} className="material-symbols-outlined">fiber_manual_record</span>{' '}{collection.pending ? <>Share request for &quot;{collection.name}&quot;</> : collection.name}:</> : 'Loading...'}</h2>
       <Link href={`/dashboard${collection ? "#collection-" + collection._id : ""}`}>Back to dashboard</Link><br/>
       {collection ?
         <>{collection.pending ?
@@ -110,9 +111,7 @@ export default function Collection() {
           <>{relTaskList.length > 0 && relTaskList}
           {comTaskList.length > 0 && <details id="more"><summary style={{ fontSize: "90%", color: "gray" }} onClick={(e) => { dynamicToggle(e, "more") }}>View more</summary>{comTaskList}</details>}</>
           :
-          <>
-          <Task text="No tasks found!" />
-          {/*<li style={{ paddingBottom: "2px" }}>No tasks found!</li>*/}</>}
+          <Task text="No tasks found!" />}
         </ul>
         }</div></div>
         {user.id === collection.owner && <><hr/>{user.permissions.verified ? <Link href={`/collections/${collection._id}/share`}>Share this collection</Link> : <span style={{ fontStyle: "italic" }}><Link href="/dashboard/account/verify">Verify your email</Link> to share this collection.</span>}</>}
