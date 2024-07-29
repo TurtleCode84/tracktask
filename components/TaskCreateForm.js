@@ -8,6 +8,8 @@ export default function TaskCreateForm({ collections, errorMessage, onSubmit }) 
         <span>Name</span>
         <input type="text" name="name" maxlength="55" autoFocus required />
       </label>
+      <details>
+      <summary>Additional details</summary>
       <label>
         <span>Description (optional)</span>
         <textarea name="description" rows="8" cols="30" maxlength="500" />
@@ -26,6 +28,7 @@ export default function TaskCreateForm({ collections, errorMessage, onSubmit }) 
         <span>Mark as priority</span>
         <input type="checkbox" name="markPriority" />
       </label>
+      </details>
 
       <button type="submit" id="createTaskBtn">Create task</button>
 
