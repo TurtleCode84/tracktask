@@ -111,7 +111,7 @@ export default function Collection() {
           {comTaskList.length > 0 && <details id="more"><summary style={{ fontSize: "90%", color: "gray" }} onClick={(e) => { dynamicToggle(e, "more") }}>View more</summary>{comTaskList}</details>}</>
           :
           <>
-          <Task blank={true} />
+          <Task text="No tasks found!" />
           {/*<li style={{ paddingBottom: "2px" }}>No tasks found!</li>*/}</>}
         </ul>
         }</div></div>

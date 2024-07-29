@@ -2,14 +2,14 @@ import moment from "moment";
 import { useRouter } from "next/router";
 import stringToColor from "lib/stringToColor";
 
-export default function Task({ task, key, admin, blank }) {
+export default function Task({ task, key, admin, text }) {
 
   const router = useRouter();
 
-  if (blank === true) {
+  if (text) {
     return (
-      <li id="noTasks" className="list-hover" style={{ margin: "0.5em", background: "var(--element-background)", padding: "8px", borderWidth: "2px", borderStyle: "solid", borderColor: "var(--border-color)", borderRadius: "10px", width: "auto" }}>
-        <span style={{ fontStyle: "italic" }}>No tasks found!</span>
+      <li className="list-hover" style={{ margin: "0.5em", background: "var(--element-background)", padding: "8px", borderWidth: "2px", borderStyle: "solid", borderColor: "var(--border-color)", borderRadius: "10px", width: "auto" }}>
+        <span style={{ fontStyle: "italic" }}>{text}</span>
       </li>
     )
   }
