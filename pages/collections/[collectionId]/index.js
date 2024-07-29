@@ -61,7 +61,7 @@ export default function Collection() {
   
   return (
     <Layout>
-      <h2>{collection ? <><span title={titleInfo.hover} style={{ color: sharedColor }} className="material-symbols-outlined">{titleInfo.icon}</span><span style={{ color: stringToColor(collection?._id), filter: "grayscale(0.4) brightness(1.5)" }} className="material-symbols-outlined">fiber_manual_record</span>{' '}{collection.pending ? <>Share request for &quot;{collection.name}&quot;</> : collection.name}:</> : 'Loading...'}</h2>
+      <h2>{collection ? <><span title={titleInfo.hover} style={{ color: sharedColor }} className="material-symbols-outlined">{titleInfo.icon}</span><span style={{ color: stringToColor(collection._id), filter: "grayscale(0.4) brightness(1.5)" }} className="material-symbols-outlined">fiber_manual_record</span>{' '}{collection.pending ? <>Share request for &quot;{collection.name}&quot;</> : collection.name}:</> : 'Loading...'}</h2>
       <Link href={`/dashboard${collection ? "#collection-" + collection._id : ""}`}>Back to dashboard</Link><br/>
       {collection ?
         <>{collection.pending ?
@@ -108,7 +108,7 @@ export default function Collection() {
         :
         <ul style={{ display: "table" }}>
           {relTaskList.length > 0 || comTaskList.length > 0 ?
-          <>{relTaskList.length > 0 && relTaskList}
+          <>{relTaskList.length > 0 ? relTaskList : <Task text="No incomplete tasks found!" />}
           {comTaskList.length > 0 && <details id="more"><summary style={{ fontSize: "90%", color: "gray" }} onClick={(e) => { dynamicToggle(e, "more") }}>View more</summary>{comTaskList}</details>}</>
           :
           <Task text="No tasks found!" />}
