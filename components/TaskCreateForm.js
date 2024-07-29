@@ -10,8 +10,8 @@ export default function TaskCreateForm({ collections, errorMessage, onSubmit }) 
         <span>Name</span>
         <input type="text" name="name" maxlength="55" autoFocus required />
       </label>
-      <details id="adetails" onClick={(e) => { dynamicToggle(e, "adetails") }}>
-      <summary>Additional details</summary><br/>
+      <details id="adetails">
+      <summary onClick={(e) => { dynamicToggle(e, "adetails") }}>Additional details</summary><br/>
       <label>
         <span>Description (optional)</span>
         <textarea name="description" rows="8" cols="30" maxlength="500" />
