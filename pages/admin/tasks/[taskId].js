@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
 //import TaskEditForm from "components/TaskEditForm";
@@ -22,17 +22,13 @@ export default function TaskAdmin() {
   const { taskId } = router.query;
   const { data: task, error: taskError } = useAdminData(user, "tasks", taskId, false);
   const { data: collections, error: collectionsError } = useAdminData(user, "collections", false, false);
-  var collectionTags = [];
   
   const [errorMsg, setErrorMsg] = useState("");
 
-  useEffect(() => {
-    const filteredCollections = collections?.filter((collection) => {collection.tasks.some((e) => {e._id === task._id})});
-    collectionTags = filteredCollections?.map((item, index) =>
-      <Link key={index} href={`/admin/collections/${item._id}`}><span style={{fontSize: "18px", verticalAlign: "2px", backgroundColor: stringToColor(item._id), padding: "0.5px 4px", borderStyle: "solid", borderWidth: "2px", borderColor: "var(--inset-border-color)", borderRadius: "7px", color: "#111", marginRight: "6px", display: "inline-block", filter: "grayscale(0.4) brightness(1.5)" }}>{item.name}</span></Link>
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  //const filteredCollections = collections?.filter((collection) => {collection.tasks.some((e) => {e._id === task._id})});
+  const collectionTags = collections?.map((item, index) =>
+    <Link key={index} href={`/admin/collections/${item._id}`}><span style={{fontSize: "18px", verticalAlign: "2px", backgroundColor: stringToColor(item._id), padding: "0.5px 4px", borderStyle: "solid", borderWidth: "2px", borderColor: "var(--inset-border-color)", borderRadius: "7px", color: "#111", marginRight: "6px", display: "inline-block", filter: "grayscale(0.4) brightness(1.5)" }}>{item.name}</span></Link>
+  );
     
   if (!user || !user.isLoggedIn || user.permissions.banned || !user.permissions.admin) {
     return (
@@ -105,7 +101,7 @@ export default function TaskAdmin() {
         </details></>*/}
         <details id="raw">
           <summary onClick={(e) => { dynamicToggle(e, "raw") }}>View raw JSON</summary>
-          {taskError ? <pre>{JSON.stringify(taskError, null, 2)}</pre> : <pre>{JSON.stringify(task, null, 2)}</pre>}<pre>{JSON.stringify(collections.filter((c) => {c.tasks.some((e) => {e._id === task._id})}), null, 2)}</pre><pre>{JSON.stringify(collections)}</pre>
+          {taskError ? <pre>{JSON.stringify(taskError, null, 2)}</pre> : <pre>{JSON.stringify(task, null, 2)}</pre>}
         </details><br/>
         <a href={`/api/admin/tasks/${task._id}`} style={{ marginRight: "8px" }}
         onClick={async (e) => {
