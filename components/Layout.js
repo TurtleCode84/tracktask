@@ -205,6 +205,11 @@ export default function Layout({ children }) {
           overflow-y: scroll;
         }
 
+        /* Hide scrollbar on Linkify textarea */
+        .textarea::-webkit-scrollbar {
+          width: 0;
+        }
+
         input, select {
           background-color: var(--element-background);
           color: var(--primary-text-color);

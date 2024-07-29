@@ -164,7 +164,7 @@ async function dataRoute(req, res) {
     } else if (req.method === 'POST') { // Creates a new task
 
       const { name, description, dueDate, addCollections, markPriority } = await req.body;
-      if (!name || !description) {
+      if (!name) {
         res.status(422).json({ message: "Invalid data" });
         return;
       } else if (name.trim().length > 55 || description.trim().length > 500) {

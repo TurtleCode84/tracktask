@@ -9,8 +9,8 @@ export default function TaskCreateForm({ collections, errorMessage, onSubmit }) 
         <input type="text" name="name" maxlength="55" autoFocus required />
       </label>
       <label>
-        <span>Description</span>
-        <textarea name="description" rows="8" cols="30" maxlength="500" required />
+        <span>Description (optional)</span>
+        <textarea name="description" rows="8" cols="30" maxlength="500" />
       </label><br/>
       <label>
         <span>Due Date (optional)</span>
