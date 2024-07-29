@@ -136,6 +136,9 @@ export default function Layout({ children }) {
           .collection .tasks {
             margin-top: -5px;
           }
+          .collection .tasks ul {
+            margin-left: -40px;
+          }
         }
 
         button {
