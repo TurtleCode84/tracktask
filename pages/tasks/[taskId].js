@@ -37,7 +37,7 @@ export default function Task() {
     }
   }
   const collectionTags = task?.collections.map((item, index) =>
-    <Link key={index} href={`/collections/${item._id}`}><span style={{fontSize: "18px", verticalAlign: "2px", backgroundColor: stringToColor(item.name), padding: "0.5px 4px", borderStyle: "solid", borderWidth: "2px", borderColor: "var(--inset-border-color)", borderRadius: "7px", color: "#111", marginRight: "6px", display: "inline-block", filter: "grayscale(0.4) brightness(1.5)" }}>{item.name}</span></Link>
+    <Link key={index} href={`/collections/${item._id}`}><span style={{fontSize: "18px", verticalAlign: "2px", backgroundColor: stringToColor(item._id), padding: "0.5px 4px", borderStyle: "solid", borderWidth: "2px", borderColor: "var(--inset-border-color)", borderRadius: "7px", color: "#111", marginRight: "6px", display: "inline-block", filter: "grayscale(0.4) brightness(1.5)" }}>{item.name}</span></Link>
   );
     
   if (!user || !user.isLoggedIn || user.permissions.banned) {

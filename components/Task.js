@@ -15,7 +15,7 @@ export default function Task({ task, key, admin, text }) {
   }
 
   const collectionTags = task.collections?.map((item, index) =>
-    <span key={index} style={{backgroundColor: stringToColor(item.name), padding: "0.5px 4px", borderStyle: "solid", borderWidth: "2px", borderColor: "var(--inset-border-color)", borderRadius: "7px", color: "#111", marginRight: "5px", display: "inline-block", filter: "grayscale(0.4) brightness(1.5)" }} onClick={(e) => {e.stopPropagation(); router.push(`/${admin === true ? 'admin/' : ''}collections/${item._id}`);}}>{item.name}</span>
+    <span key={index} style={{backgroundColor: stringToColor(item._id), padding: "0.5px 4px", borderStyle: "solid", borderWidth: "2px", borderColor: "var(--inset-border-color)", borderRadius: "7px", color: "#111", marginRight: "5px", display: "inline-block", filter: "grayscale(0.4) brightness(1.5)" }} onClick={(e) => {e.stopPropagation(); router.push(`/${admin === true ? 'admin/' : ''}collections/${item._id}`);}}>{item.name}</span>
   );
   const urlState = {"url":"/dashboard","as":`/dashboard#task-${task._id}`,"options":{"locale":"en","scroll":true,"_shouldResolveHref":true},"__N":true,"key":key};
   
