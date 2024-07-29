@@ -59,7 +59,7 @@ export default function UserAdmin() {
       {lookup ?
       <><p>{lookup.permissions.banned && <b>This user is banned.</b>}{' '}{lookup.permissions.banned && lookup.history.ban.reason && <i>Reason: {lookup.history.ban.reason}</i> }</p>
       <h3><hr/>General information<hr/></h3>
-      <p>User ID: {lookup._id}</p>
+      <p>User ID: <code>{lookup._id}</code></p>
       <p>Email: {lookup.email ? <><a href={`mailto:${lookup.email}`} target="_blank" rel="noreferrer">{lookup.email}</a></> : 'none'}</p>
       <p>Profile picture: <Image src={lookup.profilePicture ? lookup.profilePicture : "/default-pfp.jpg" } width={32} height={32} style={{ verticalAlign: "middle", borderRadius: "100%", overflow: "hidden" }} quality={85} alt=""/> ({lookup.profilePicture ? <a href={lookup.profilePicture} target="_blank" rel="noreferrer">{lookup.profilePicture}</a> : 'default'})</p>
       <p>Admin notes:</p>{' '}<div className="textarea" style={{ maxWidth: "90vw" }}><Linkify options={{target:'blank'}}>{lookup.history.notes ? lookup.history.notes : 'None found!'}</Linkify></div>
