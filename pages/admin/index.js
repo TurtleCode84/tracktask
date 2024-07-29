@@ -55,13 +55,13 @@ export default function Admin() {
       <h2><hr/>User Statistics<hr/></h2>
       <h3>Recently active:</h3>
       <ul>
-        {activeUsersList ? activeUsersList : 'Loading active users...'}
-        {activeUsersList && activeUsersList === null && <>No active users found</>}
+        {activeUsersList ? activeUsersList : <li style={{ fontStyle: "italic" }}>Loading active users...</li>}
+        {activeUsersList && activeUsersList === null && <li style={{ fontStyle: "italic" }}>No active users found</li>}
       </ul>
       <h3>Recently joined:</h3>
       <ul>
-        {newUsersList ? newUsersList : 'Loading new users...'}
-        {newUsersList && newUsersList === null && <>No new users found</>}
+        {newUsersList ? newUsersList : <li style={{ fontStyle: "italic" }}>Loading new users...</li>}
+        {newUsersList && newUsersList === null && <li style={{ fontStyle: "italic" }}>No new users found</li>}
       </ul>
       <Link href="/admin/users">View all users</Link><hr/>
       <p>Useful admin pages:</p>
