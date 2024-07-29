@@ -37,7 +37,7 @@ export default function TasksAdmin() {
       :
       <ul style={{ display: "table" }}>
         {relTaskList.length > 0 || comTaskList.length > 0 ?
-        <>{relTaskList.length > 0 && relTaskList}
+        <>{relTaskList.length > 0 ? relTaskList : <Task text="No incomplete tasks found!" />}
         {comTaskList.length > 0 && <details id="more"><summary style={{ fontSize: "90%", color: "gray", marginLeft: "15px" }} onClick={(e) => { dynamicToggle(e, "more") }}>View more</summary>{comTaskList}</details>}</>
         :
         <li style={{ fontStyle: "italic" }}>No tasks found!</li>}

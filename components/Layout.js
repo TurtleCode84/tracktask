@@ -206,7 +206,7 @@ export default function Layout({ children }) {
         }
 
         /* Hide scrollbar on Linkify textarea */
-        .textarea::-webkit-scrollbar {
+        .textarea::-webkit-scrollbar, pre::-webkit-scrollbar {
           width: 0;
         }
 
