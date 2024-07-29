@@ -8,6 +8,7 @@ import ReportButton from "components/ReportButton";
 import useUser from "lib/useUser";
 import useAdminData from "lib/useAdminData";
 import dynamicToggle from "lib/dynamicToggle";
+import stringToColor from "lib/stringToColor";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
 import moment from "moment";
@@ -43,7 +44,8 @@ export default function Collection() {
   
   return (
     <Layout>
-      <h2>{collection?.hidden ? <span title="Hidden" style={{ color: "red" }} className="material-symbols-outlined">disabled_visible</span> : null}{collection?.sharing.shared ? <span title="Shared" style={{ color: "lightslategray" }} className="material-symbols-outlined">group</span> : <span title="Private" style={{ color: "lightslategray" }} className="material-symbols-outlined">lock</span>}{' '}{collection ? <>{collection.name}:</> : 'Loading...'}</h2>
+      {/* Redo header logic to be similar to the regular collection page */}
+      <h2>{collection?.hidden ? <span title="Hidden" style={{ color: "red" }} className="material-symbols-outlined">disabled_visible</span> : null}{collection?.sharing.shared ? <span title="Shared" style={{ color: "lightslategray" }} className="material-symbols-outlined">group</span> : <span title="Private" style={{ color: "lightslategray" }} className="material-symbols-outlined">lock</span>}<span style={{ color: stringToColor(collection?._id), filter: "grayscale(0.4) brightness(1.5)" }} className="material-symbols-outlined">fiber_manual_record</span>{' '}{collection ? <>{collection.name}:</> : 'Loading...'}</h2>
       <Link href="/admin/collections">Back to collections</Link><br/>
       <Link href="/admin">Back to admin dashboard</Link><br/>
       {collection ?
