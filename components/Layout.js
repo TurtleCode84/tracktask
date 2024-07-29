@@ -83,7 +83,7 @@ export default function Layout({ children }) {
           padding-right: 1rem;
         }
 
-        .dashboard {
+        .dashboard, .collection {
           display: grid;
           min-height: 330px;
         }
