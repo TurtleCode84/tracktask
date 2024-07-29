@@ -93,12 +93,14 @@ export default function Collection() {
         }}
         ><button id="acceptRequestBtn"><span style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">check_circle</span> Accept request</button></a></>
         :
-        <><h3>General information</h3>
+        <><div className="dashboard"><div id="information">
+        <h3>General information</h3>
         <p>Description:</p>{' '}<textarea value={collection.description} rows="8" cols="70" style={{ maxWidth: "90vw" }} disabled /><br/>
         <p title={collection.created > 0 ? moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a") : 'Never'}>Created: {collection.created > 0 ? <>{moment.unix(collection.created).fromNow()}</> : 'never'}</p>
         {user.id !== collection.owner && <p>Owner: <User user={user} id={collection.owner}/></p>}
         {collection.sharing.shared && <p>Shared with: <ul>{sharedWithList.length > 0 ? sharedWithList : <li>Nobody!</li>}</ul></p>}
-        <p>Number of tasks: {collection.tasks.length}</p>
+        <p>Number of tasks: {collection.tasks.length}</p></div>
+        <div id="actualTasks">
         <p>Tasks in collection:</p>
         {relTaskList === undefined || comTaskList === undefined || error ?
         <>
@@ -112,7 +114,7 @@ export default function Collection() {
           :
           <li style={{ paddingBottom: "2px" }}>No tasks found!</li>}
         </ul>
-        }
+        }</div></div>
         {user.id === collection.owner && <><hr/>{user.permissions.verified ? <Link href={`/collections/${collection._id}/share`}>Share this collection</Link> : <span style={{ fontStyle: "italic" }}><Link href="/dashboard/account/verify">Verify your email</Link> to share this collection.</span>}</>}
         <hr/>
         {currentUserRole === "editor" && <><details id="edit">
