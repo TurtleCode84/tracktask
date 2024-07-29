@@ -437,7 +437,7 @@ async function dataRoute(req, res) {
     } else if (req.method === 'POST') { // Creates a new collection
 
       const { name, description } = await req.body;
-      if (!name || !description) {
+      if (!name) {
         res.status(422).json({ message: "Invalid data" });
         return;
       } else if (name.trim().length > 55 || description.trim().length > 500) {
@@ -509,7 +509,7 @@ async function dataRoute(req, res) {
           owner: new ObjectId(user.id),
         };
         if (body.name) {updateDoc.name = body.name.trim().slice(0, 55);} // Enforce length limit
-        if (body.description) {updateDoc.description = body.description.trim().slice(0, 500);}
+        if (body.description !== undefined) {updateDoc.description = body.description.trim().slice(0, 500);}
         if (body.shared !== undefined && user.permissions.verified) {
           updateDoc = {
             $set: {

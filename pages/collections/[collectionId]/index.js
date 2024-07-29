@@ -91,7 +91,7 @@ export default function Collection() {
             document.getElementById("acceptRequestBtn").disabled = false;
           }
         }}
-        ><button id="acceptRequestBtn"><span style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">check_circle</span> Accept request</button></a></>
+        ><button id="acceptRequestBtn" style={{ marginBottom: "8px" }}><span style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">check_circle</span> Accept request</button></a></>
         :
         <><div className="collection"><div>
         <br/><textarea value={collection.description} rows="8" cols="70" style={{ maxWidth: "90vw" }} disabled /><br/>
@@ -175,7 +175,7 @@ export default function Collection() {
             }
           }
         }}
-        ><button id="removeShareBtn"><span style={{ color: "lightslategray" }} className="material-symbols-outlined icon-list">logout</span> Leave collection</button></a>
+        ><button id="removeShareBtn" style={{ marginBottom: "8px" }}><span style={{ color: "lightslategray" }} className="material-symbols-outlined icon-list">logout</span> Leave collection</button></a>
         <ReportButton user={user} type={collection.pending ? "share" : "collection"} reported={collection}/></>}
         {collection.pending && <>{errorMsg && <p className="error">{errorMsg}</p>}</>}</>
       :

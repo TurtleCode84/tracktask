@@ -8,8 +8,8 @@ export default function CollectionCreateForm({ verified, errorMessage, onSubmit 
         <input type="text" name="name" maxlength="55" autoFocus required />
       </label>
       <label>
-        <span>Description</span>
-        <textarea name="description" rows="8" cols="30" maxlength="500" required />
+        <span>Description (optional)</span>
+        <textarea name="description" rows="8" cols="30" maxlength="500" />
       </label>
       <p style={{ fontStyle: "italic" }}>{verified ? 'You will be able to share this collection after you create it.' : <>If you would like to share this collection, please <Link href="/dashboard/account/verify">verify your email</Link>.</>}</p>
 
