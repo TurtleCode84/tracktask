@@ -113,7 +113,7 @@ export default function Layout({ children }) {
             font-size: 20px;
             margin-bottom: 18px;
           }
-          .dashboard .tasks ul, .dashboard .tasks ul {
+          .dashboard .tasks ul, .collection .tasks ul {
             margin-left: -40px;
           }
           .grecaptcha-badge {
