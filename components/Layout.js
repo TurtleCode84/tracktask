@@ -194,7 +194,7 @@ export default function Layout({ children }) {
           border: 1px solid;
           border-color: var(--textarea-border-color);
           border-radius: 4px;
-          width: 611px;
+          width: auto;
           height: 150px;
           padding: 2px;
           font-family: inherit;
