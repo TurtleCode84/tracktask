@@ -103,7 +103,7 @@ export default function TaskAdmin() {
           <summary onClick={(e) => { dynamicToggle(e, "raw") }}>View raw JSON</summary>
           {taskError ? <pre>{JSON.stringify(taskError, null, 2)}</pre> : <pre>{JSON.stringify(task, null, 2)}</pre>}
         </details><br/>
-        <a href={`/api/admin/tasks/${task._id}`} style={{ marginRight: "8px" }}
+        <a href={`/api/admin/tasks/${task?._id}`} style={{ marginRight: "8px" }}
         onClick={async (e) => {
           e.preventDefault();
           document.getElementById("hideTaskBtn").disabled = true;
@@ -111,7 +111,7 @@ export default function TaskAdmin() {
             hidden: true,
           };
           try {
-            await fetchJson(`/api/admin/tasks/${task._id}`, {
+            await fetchJson(`/api/admin/tasks/${task?._id}`, {
               method: "PATCH",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(body),
