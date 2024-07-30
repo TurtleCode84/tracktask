@@ -195,6 +195,7 @@ export default function Layout({ children }) {
           border-color: var(--textarea-border-color);
           border-radius: 4px;
           width: auto;
+          max-width: 611px;
           height: 150px;
           padding: 2px;
           font-family: inherit;

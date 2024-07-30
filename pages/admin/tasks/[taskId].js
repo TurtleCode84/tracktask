@@ -26,7 +26,7 @@ export default function TaskAdmin() {
   
   const [errorMsg, setErrorMsg] = useState("");
 
-  const collectionTags = collections?.filter((collection) => collection.tasks.some((e) => e._id === task._id)).map((item, index) =>
+  const collectionTags = collections?.filter((collection) => collection.tasks.some((e) => e._id === task?._id)).map((item, index) =>
     <Link key={index} href={`/admin/collections/${item?._id}`}><span style={{fontSize: "18px", verticalAlign: "2px", backgroundColor: stringToColor(item?._id), padding: "0.5px 4px", borderStyle: "solid", borderWidth: "2px", borderColor: "var(--inset-border-color)", borderRadius: "7px", color: "#111", marginRight: "6px", display: "inline-block", filter: "grayscale(0.4) brightness(1.5)" }}>{item?.name}</span></Link>
   );
     
@@ -43,7 +43,7 @@ export default function TaskAdmin() {
       <Link href="/admin">Back to admin dashboard</Link><br/>
       {task ?
         <><p>Owner: <User user={user} id={task.owner}/></p>
-        <div className="textarea" style={{ maxWidth: "90vw" }}><Linkify options={{target:'blank'}}>{task.description}</Linkify></div>
+        <div className="textarea"><Linkify options={{target:'blank'}}>{task.description}</Linkify></div>
         <p title={task.dueDate > 0 ? moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a") : 'Never'}>Due date: {task.dueDate > 0 ? <>{moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}{' '}({moment.unix(task.dueDate).fromNow()})</> : 'never'}</p>
         {task.completion.completed > 0 && <p title={moment.unix(task.completion.completed).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Completed {moment.unix(task.completion.completed).fromNow()} by <User user={user} id={task.completion.completedBy}/></p>}
         <hr/>
@@ -103,7 +103,7 @@ export default function TaskAdmin() {
           <summary onClick={(e) => { dynamicToggle(e, "raw") }}>View raw JSON</summary>
           {taskError ? <pre>{JSON.stringify(taskError, null, 2)}</pre> : <pre>{JSON.stringify(task, null, 2)}</pre>}
         </details><br/>
-        <a href={`/api/admin/tasks/${task._id}`} style={{ marginRight: "8px" }}
+        <a href={`/api/admin/tasks/${task?._id}`} style={{ marginRight: "8px" }}
         onClick={async (e) => {
           e.preventDefault();
           document.getElementById("hideTaskBtn").disabled = true;
@@ -111,7 +111,7 @@ export default function TaskAdmin() {
             hidden: true,
           };
           try {
-            await fetchJson(`/api/admin/tasks/${task._id}`, {
+            await fetchJson(`/api/admin/tasks/${task?._id}`, {
               method: "PATCH",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(body),

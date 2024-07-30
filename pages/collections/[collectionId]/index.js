@@ -67,7 +67,7 @@ export default function Collection() {
         <>{collection.pending ?
         <><h3>Preview information:</h3>
         <p>Shared by: <User user={user} id={collection.owner}/></p>
-        <p>Description:</p>{' '}<div className="textarea" style={{ maxWidth: "90vw" }}><Linkify options={{target:'blank'}}>{collection.description}</Linkify></div>
+        <p>Description:</p>{' '}<div className="textarea"><Linkify options={{target:'blank'}}>{collection.description}</Linkify></div>
         <p title={collection.created > 0 ? moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a") : 'Never'}>Created: {collection.created > 0 ? <>{moment.unix(collection.created).fromNow()}</> : 'never'}</p>
         <a href={`/api/collections/${collection._id}`} style={{ marginRight: "8px" }}
         onClick={async (e) => {
@@ -95,7 +95,7 @@ export default function Collection() {
         ><button id="acceptRequestBtn" style={{ marginBottom: "8px" }}><span style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">check_circle</span> Accept request</button></a></>
         :
         <><div className="collection"><div>
-        <br/><div className="textarea" style={{ maxWidth: "90vw" }}><Linkify options={{target:'blank'}}>{collection.description}</Linkify></div>
+        <br/><div className="textarea"><Linkify options={{target:'blank'}}>{collection.description}</Linkify></div>
         <p title={collection.created > 0 ? moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a") : 'Never'}>Created: {collection.created > 0 ? <>{moment.unix(collection.created).fromNow()}</> : 'never'}</p>
         {user.id !== collection.owner && <p>Owner: <User user={user} id={collection.owner}/></p>}
         {collection.sharing.shared && <p>Shared with: <ul>{sharedWithList.length > 0 ? sharedWithList : <li>Nobody!</li>}</ul></p>}
