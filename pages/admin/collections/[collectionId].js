@@ -100,15 +100,12 @@ export default function Collection() {
               }
             }}
         />
-        </details>*/}</>
-      :
-        <>{error ? <p>{error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading collection...</p>}</>
-      }
-      <details id="raw">
-        <summary onClick={(e) => { dynamicToggle(e, "raw") }}>View raw JSON</summary>
-        {error ? <pre>{JSON.stringify(error, null, 2)}</pre> : <pre>{JSON.stringify(collection, null, 2)}</pre>}
-      </details><br/>
-      <a href={`/api/admin/collections/${collection?._id}`} style={{ marginRight: "8px" }}
+        </details>*/}
+        <details id="raw">
+          <summary onClick={(e) => { dynamicToggle(e, "raw") }}>View raw JSON</summary>
+          {error ? <pre>{JSON.stringify(error, null, 2)}</pre> : <pre>{JSON.stringify(collection, null, 2)}</pre>}
+        </details><br/>
+        <a href={`/api/admin/collections/${collection?._id}`} style={{ marginRight: "8px" }}
         onClick={async (e) => {
           e.preventDefault();
           document.getElementById("hideCollectionBtn").disabled = true;
@@ -132,7 +129,10 @@ export default function Collection() {
           }
         }}
         ><button id="hideCollectionBtn"><span style={{ color: "darkgray" }} className="material-symbols-outlined icon-list">visibility_off</span> Hide collection</button></a>
-      <ReportButton user={user} type="collection" reported={collection} flag={true}/>
+        <ReportButton user={user} type="collection" reported={collection} flag={true}/></>
+      :
+        <p style={{ fontStyle: "italic" }}>{error ? error.data.message : 'Loading collection...'}</p>
+      }
     </Layout>
   );
 }

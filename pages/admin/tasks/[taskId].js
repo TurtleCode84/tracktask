@@ -27,7 +27,7 @@ export default function TaskAdmin() {
   const [errorMsg, setErrorMsg] = useState("");
 
   const collectionTags = collections?.filter((collection) => collection.tasks.some((e) => e._id === task?._id)).map((item, index) =>
-    <Link key={index} href={`/admin/collections/${item?._id}`}><span style={{fontSize: "18px", verticalAlign: "2px", backgroundColor: stringToColor(item?._id), padding: "0.5px 4px", borderStyle: "solid", borderWidth: "2px", borderColor: "var(--inset-border-color)", borderRadius: "7px", color: "#111", marginRight: "6px", display: "inline-block", filter: "grayscale(0.4) brightness(1.5)" }}>{item?.name}</span></Link>
+    <Link key={index} href={`/admin/collections/${item._id}`}><span style={{fontSize: "18px", verticalAlign: "2px", backgroundColor: stringToColor(item._id), padding: "0.5px 4px", borderStyle: "solid", borderWidth: "2px", borderColor: "var(--inset-border-color)", borderRadius: "7px", color: "#111", marginRight: "6px", display: "inline-block", filter: "grayscale(0.4) brightness(1.5)" }}>{item.name}</span></Link>
   );
     
   if (!user || !user.isLoggedIn || user.permissions.banned || !user.permissions.admin) {
@@ -42,10 +42,10 @@ export default function TaskAdmin() {
       <Link href="/admin/tasks">Back to tasks</Link><br/>
       <Link href="/admin">Back to admin dashboard</Link><br/>
       {task ?
-        <><p>Owner: <User user={user} id={task.owner}/></p>
+        <><p>Owner: <User user={user} id={task.owner} link={true}/></p>
         <div className="textarea"><Linkify options={{target:'blank'}}>{task.description}</Linkify></div>
         <p title={task.dueDate > 0 ? moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a") : 'Never'}>Due date: {task.dueDate > 0 ? <>{moment.unix(task.dueDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}{' '}({moment.unix(task.dueDate).fromNow()})</> : 'never'}</p>
-        {task.completion.completed > 0 && <p title={moment.unix(task.completion.completed).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Completed {moment.unix(task.completion.completed).fromNow()} by <User user={user} id={task.completion.completedBy}/></p>}
+        {task.completion.completed > 0 && <p title={moment.unix(task.completion.completed).format("dddd, MMMM Do YYYY, h:mm:ss a")}>Completed {moment.unix(task.completion.completed).fromNow()} by <User user={user} id={task.completion.completedBy} link={true}/></p>}
         <hr/>
         {/*perms >= 4 && <><details>
           <summary>Edit task</summary>
