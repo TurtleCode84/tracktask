@@ -44,7 +44,7 @@ export default function Collection() {
   
   return (
     <Layout>
-      <h2>{collection ? <>{collection.hidden && <span title="Hidden" style={{ color: "red" }} className="material-symbols-outlined">disabled_visible</span>}{collection.sharing.shared ? <span title="Shared" style={{ color: "lightslategray" }} className="material-symbols-outlined">group</span> : <span title="Private" style={{ color: "lightslategray" }} className="material-symbols-outlined">lock</span>}<span style={{ color: stringToColor(collection?._id), filter: "grayscale(0.4) brightness(1.5)" }} className="material-symbols-outlined">fiber_manual_record</span>{' '}{collection.name}:</> : 'Loading...'}</h2>
+      <h2>{collection ? <>{collection.hidden && <span title="Hidden" style={{ color: "red" }} className="material-symbols-outlined">disabled_visible</span>}{collection.sharing.shared ? <span title="Shared" style={{ color: "lightslategray" }} className="material-symbols-outlined">group</span> : <span title="Private" style={{ color: "lightslategray" }} className="material-symbols-outlined">lock</span>}<span style={{ color: stringToColor(collection._id), filter: "grayscale(0.4) brightness(1.5)" }} className="material-symbols-outlined">fiber_manual_record</span>{' '}{collection.name}:</> : 'Loading...'}</h2>
       <Link href="/admin/collections">Back to collections</Link><br/>
       <Link href="/admin">Back to admin dashboard</Link><br/>
       {collection ?
@@ -108,7 +108,7 @@ export default function Collection() {
         <summary onClick={(e) => { dynamicToggle(e, "raw") }}>View raw JSON</summary>
         {error ? <pre>{JSON.stringify(error, null, 2)}</pre> : <pre>{JSON.stringify(collection, null, 2)}</pre>}
       </details><br/>
-      <a href={`/api/admin/collections/${collection._id}`} style={{ marginRight: "8px" }}
+      <a href={`/api/admin/collections/${collection?._id}`} style={{ marginRight: "8px" }}
         onClick={async (e) => {
           e.preventDefault();
           document.getElementById("hideCollectionBtn").disabled = true;
@@ -116,7 +116,7 @@ export default function Collection() {
             hidden: true,
           };
           try {
-            await fetchJson(`/api/admin/collections/${collection._id}`, {
+            await fetchJson(`/api/admin/collections/${collection?._id}`, {
               method: "PATCH",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(body),
