@@ -48,13 +48,13 @@ export default function Collection() {
       <Link href="/admin/collections">Back to collections</Link><br/>
       <Link href="/admin">Back to admin dashboard</Link><br/>
       {collection ?
-        <><h3>General information</h3>
-        <p>Description:</p>{' '}<div className="textarea" style={{ maxWidth: "90vw" }}><Linkify options={{target:'blank'}}>{collection.description}</Linkify></div>
+        <><div className="collection"><div>
+        <br/><div className="textarea" style={{ maxWidth: "90vw" }}><Linkify options={{target:'blank'}}>{collection.description}</Linkify></div>
         <p title={collection.created > 0 ? moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a") : 'Never'}>Created: {collection.created > 0 ? <>{moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a")}{' '}({moment.unix(collection.created).fromNow()})</> : 'never'}</p>
         <p>Owner: <User user={user} id={collection.owner} link={true}/></p>
         {collection.sharing.shared && <p>Shared with: <ul>{sharedWithList.length > 0 ? sharedWithList : <li>Nobody!</li>}</ul></p>}
-        <p>Number of tasks: {collection.tasks.length}</p>
-        <p>Tasks in collection:</p>
+        <p>Number of tasks: {collection.tasks.length}</p></div>
+        <div className="tasks">
         {relTaskList === undefined || comTaskList === undefined || error ?
         <>
         {error ? <p style={{ fontStyle: "italic" }}>{error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
@@ -65,9 +65,9 @@ export default function Collection() {
           <>{relTaskList.length > 0 ? relTaskList : <Task text="No incomplete tasks found!" />}
           {comTaskList.length > 0 && <details id="more"><summary style={{ fontSize: "90%", color: "gray", marginLeft: "15px" }} onClick={(e) => { dynamicToggle(e, "more") }}>View more</summary>{comTaskList}</details>}</>
           :
-          <li style={{ paddingBottom: "2px" }}>No tasks found!</li>}
+          <Task text="No tasks found!" />}
         </ul>
-        }
+        }</div></div>
         <hr/>
         {/*<details>
           <summary>Edit collection</summary>
@@ -108,6 +108,30 @@ export default function Collection() {
         <summary onClick={(e) => { dynamicToggle(e, "raw") }}>View raw JSON</summary>
         {error ? <pre>{JSON.stringify(error, null, 2)}</pre> : <pre>{JSON.stringify(collection, null, 2)}</pre>}
       </details><br/>
+      <a href={`/api/admin/collections/${collection._id}`} style={{ marginRight: "8px" }}
+        onClick={async (e) => {
+          e.preventDefault();
+          document.getElementById("hideCollectionBtn").disabled = true;
+          const body = {
+            hidden: true,
+          };
+          try {
+            await fetchJson(`/api/admin/collections/${collection._id}`, {
+              method: "PATCH",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(body),
+            });
+            router.reload();
+          } catch (error) {
+            if (error instanceof FetchError) {
+              setErrorMsg(error.data.message);
+            } else {
+              console.error("An unexpected error happened:", error);
+            }
+            document.getElementById("hideCollectionBtn").disabled = false;
+          }
+        }}
+        ><button id="hideCollectionBtn"><span style={{ color: "darkgray" }} className="material-symbols-outlined icon-list">visibility_off</span> Hide collection</button></a>
       <ReportButton user={user} type="collection" reported={collection} flag={true}/>
     </Layout>
   );
