@@ -7,6 +7,9 @@ import moment from "moment";
 export default withIronSessionApiRoute(dataRoute, sessionOptions);
 
 async function dataRoute(req, res) {
+  const { dataPath, filter } = req.query;
+  const allowedPaths = ["tasks", "collections"];
+  
   if (!dataPath) {
     res.status(200).json({ message: "TrackTask API", isOnline: { frontend: true, backend: true, notifications: true }, maintenance: false });
     return;
@@ -20,9 +23,6 @@ async function dataRoute(req, res) {
 
   const sessionUser = req.session.user;
   const user = await db.collection("users").findOne({ _id: new ObjectId(sessionUser.id) });
-  const { dataPath, filter } = req.query;
-  const allowedPaths = ["tasks", "collections"];
-
   if (!sessionUser || !sessionUser.isLoggedIn || user.permissions.banned) {
     res.status(401).json({ message: "Authentication required" });
     return;
