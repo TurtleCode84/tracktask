@@ -95,7 +95,7 @@ async function adminUserRoute(req, res) {
       }
     }
     if (body.admin !== undefined) { // true or false
-      if (process.env.SUPERADMIN !== user._id || user._id === uid) {
+      if (process.env.SUPERADMIN !== user._id.toString() || user._id === uid) {
         res.status(403).json({ message: "You do not have permission to edit this user\'s admin status." });
         return;
       }
@@ -121,7 +121,7 @@ async function adminUserRoute(req, res) {
       };
       await db.collection("users").updateOne(query, warnUpdateDoc); // See above
     } else if (body.clearWarnings) {
-      if (process.env.SUPERADMIN !== user._id) {
+      if (process.env.SUPERADMIN !== user._id.toString()) {
         res.status(403).json({ message: "You do not have permission to pardon users." });
         return;
       }
@@ -161,7 +161,7 @@ async function adminUserRoute(req, res) {
     if (user._id === uid) {
       res.status(401).json({ message: "You can\'t delete your own account from the admin panel." });
       return;
-    } else if (process.env.SUPERADMIN !== user._id) {
+    } else if (process.env.SUPERADMIN !== user._id.toString()) {
       res.status(403).json({ message: "You do not have permission to delete users." });
       return;
     }

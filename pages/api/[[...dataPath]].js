@@ -127,9 +127,9 @@ async function dataRoute(req, res) {
                 if (allCollections[j].owner == user._id) {
                   collectionRole = "owner";
                 } else {
-                  collectionRole = allCollections[j].sharing.sharedWith.find(element => element.id == user._id)?.role;
+                  collectionRole = allCollections[j].sharing.sharedWith.find(element => element.id == user._id.toString())?.role;
                   if (!collectionRole) {
-                    res.status(500).json({ debug: allCollections[j], ownerTest: user._id == allCollections[j].owner, eval: user._id, eval2: allCollections[j].sharing.sharedWith[0].id });
+                    res.status(500).json({ debug: allCollections[j], ownerTest: user._id == allCollections[j].owner });
                     return;
                   }
                 }
