@@ -414,7 +414,7 @@ async function dataRoute(req, res) {
         }
         
         for (var i=0; i<data.length; i++) {
-          if (data[i].sharing.sharedWith.some((element) => element.id == user._id && element.role.split('-')[0] === "pending")) {
+          if (data[i].sharing.sharedWith.some((element) => element.id.equals(user._id) && element.role.split('-')[0] === "pending")) {
             delete data[i].tasks;
             delete data[i].sharing;
             data[i].pending = true;
@@ -422,7 +422,7 @@ async function dataRoute(req, res) {
             if (data[i].owner.equals(user._id)) {
               data[i].sharing.role = "owner";
             } else {
-              data[i].sharing.role = data[i].sharing.sharedWith.filter(element => element.id == user._id)[0]?.role;
+              data[i].sharing.role = data[i].sharing.sharedWith.filter(element => element.id.equals(user._id))[0]?.role;
             }
               data[i].tasks = await db.collection("tasks").find({ _id: {$in: data[i].tasks}, hidden: false }, sortedTasksOptions).toArray();
           }
@@ -663,7 +663,7 @@ async function dataRoute(req, res) {
           hidden: false,
         };
         const userRoleInfo = await db.collection("collections").findOne(query, { projection: {'sharing.sharedWith': 1} });
-        const acceptedUserRole = userRoleInfo.sharing.sharedWith.filter(share => share.id == user._id)[0].role.split("-")[1];
+        const acceptedUserRole = userRoleInfo.sharing.sharedWith.filter(share => share.id.equals(user._id))[0].role.split("-")[1];
         const updateDoc = {
           $set: {
             'sharing.sharedWith.$.role': acceptedUserRole,
