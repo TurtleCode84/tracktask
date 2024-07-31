@@ -39,7 +39,7 @@ async function emailRoute(req, res) {
       return;
     }
     // warning: this whole system relies on emails being unique
-    const matchUser = await db.collection("users").findOne({ email: email.trim().toLowerCase(), 'permissions.verified': true }, { projection: { username: 1, email: 1 } });
+    const matchUser = await db.collection("users").findOne({ email: email.trim().toLowerCase(), 'permissions.verified': true, 'permissions.banned': false }, { projection: { username: 1, email: 1 } });
     if (matchUser) {
       const uuid = uuidv1();
       const email = passwordReset(matchUser.username, uuid);
