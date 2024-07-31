@@ -36,7 +36,7 @@ async function dataRoute(req, res) {
 
       const ownTasksQuery = {
         hidden: false,
-        owner: new ObjectId(user._id),
+        owner: user._id,
       };
       const tasksOptions = {
         projection: { name: 1, description: 1, dueDate: 1, created: 1, owner: 1, completion: 1, priority: 1 },
@@ -44,8 +44,8 @@ async function dataRoute(req, res) {
       const inCollectionsQuery = {
         hidden: false,
         $or: [
-          { owner: new ObjectId(user._id) },
-          { 'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user._id), role: {$not: /pending/i}}} },
+          { owner: user._id },
+          { 'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: user._id, role: {$not: /pending/i}}} },
         ],
       };
 
@@ -124,12 +124,12 @@ async function dataRoute(req, res) {
               if (allFilteredCollections.length > 0) {
 
                 var collectionRole;
-                if (allCollections[j].owner == user._id) {
+                if (allCollections[j].owner.equals(user._id)) {
                   collectionRole = "owner";
                 } else {
                   collectionRole = allCollections[j].sharing.sharedWith.find(element => element.id == user._id.toString())?.role;
                   if (!collectionRole) {
-                    res.status(500).json({ debug: allCollections[j], ownerTest: user._id == allCollections[j].owner });
+                    res.status(500).json({ debug: allCollections[j], ownerTest: allCollections[j].owner.equals(user._id) });
                     return;
                   }
                 }
@@ -166,7 +166,7 @@ async function dataRoute(req, res) {
     } else if (req.method === 'POST') { // Creates a new task
 
       const { name, description, dueDate, addCollections, markPriority } = await req.body;
-      const countUserTasks = await db.collection("tasks").countDocuments({ owner: new ObjectId(user._id) });
+      const countUserTasks = await db.collection("tasks").countDocuments({ owner: user._id });
       if (!name) {
         res.status(422).json({ message: "Invalid data" });
         return;
@@ -182,7 +182,7 @@ async function dataRoute(req, res) {
           name: name.trim(),
           description: description.trim(),
           hidden: false,
-          owner: new ObjectId(user._id),
+          owner: user._id,
           created: Math.floor(Date.now()/1000),
           completion: {
             completed: 0,
@@ -211,10 +211,10 @@ async function dataRoute(req, res) {
             },
             hidden: false,
             $or: [
-              { owner: new ObjectId(user._id) },
+              { owner: user._id },
               {
                 'sharing.shared': true,
-                'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user._id), role: "contributor"}}
+                'sharing.sharedWith': {$elemMatch: {id: user._id, role: "contributor"}}
               },
             ],
           };
@@ -237,7 +237,7 @@ async function dataRoute(req, res) {
       const query = {
         hidden: false, // Cannot be hidden
         _id: new ObjectId(dataPath[1]), // Matches the specified task ID
-        owner: new ObjectId(user._id), // Can only be deleted by the owner of the task
+        owner: user._id, // Can only be deleted by the owner of the task
       };
 
       // Attempt to delete the task and return acknowledgement
@@ -261,12 +261,12 @@ async function dataRoute(req, res) {
       const taskInCollabCollectionQuery = {
         hidden: false,
         $or: [
-          { owner: new ObjectId(user._id) },
+          { owner: user._id },
           {
             'sharing.shared': true,
             'sharing.sharedWith': {
               $elemMatch: {
-                id: new ObjectId(user._id),
+                id: user._id,
                 $and: [
                   {role: {$not: /pending/i}},
                   {$or: [
@@ -283,7 +283,7 @@ async function dataRoute(req, res) {
       const ownTaskQuery = {
         _id: new ObjectId(dataPath[1]),
         hidden: false,
-        owner: new ObjectId(user._id),
+        owner: user._id,
       };
       const taskQuery = { // Dangerous!
         _id: new ObjectId(dataPath[1]),
@@ -312,7 +312,7 @@ async function dataRoute(req, res) {
           updateDoc.completion = {};
           if (body.completed) {
             updateDoc.completion.completed = Math.floor(Date.now()/1000);
-            updateDoc.completion.completedBy = user._id;
+            updateDoc.completion.completedBy = user._id.toString();
           } else {
             updateDoc.completion.completed = 0;
             updateDoc.completion.completedBy = "";
@@ -336,7 +336,7 @@ async function dataRoute(req, res) {
           updateDoc.completion = {};
           if (body.completed) {
             updateDoc.completion.completed = Math.floor(Date.now()/1000);
-            updateDoc.completion.completedBy = user._id;
+            updateDoc.completion.completedBy = user._id.toString();
           } else {
             updateDoc.completion.completed = 0;
             updateDoc.completion.completedBy = "";
@@ -375,8 +375,8 @@ async function dataRoute(req, res) {
       const collectionsQuery = {
         hidden: false,
         $or: [
-          { owner: new ObjectId(user._id) },
-          { 'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user._id)}} },
+          { owner: user._id },
+          { 'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: user._id}} },
         ],
       };
       const collectionsOptions = {
@@ -419,7 +419,7 @@ async function dataRoute(req, res) {
             delete data[i].sharing;
             data[i].pending = true;
           } else {
-            if (data[i].owner == user._id) {
+            if (data[i].owner.equals(user._id)) {
               data[i].sharing.role = "owner";
             } else {
               data[i].sharing.role = data[i].sharing.sharedWith.filter(element => element.id == user._id)[0]?.role;
@@ -440,7 +440,7 @@ async function dataRoute(req, res) {
     } else if (req.method === 'POST') { // Creates a new collection
 
       const { name, description } = await req.body;
-      const countUserCollections = await db.collection("collections").countDocuments({ owner: new ObjectId(user._id) });
+      const countUserCollections = await db.collection("collections").countDocuments({ owner: user._id });
       if (!name) {
         res.status(422).json({ message: "Invalid data" });
         return;
@@ -460,7 +460,7 @@ async function dataRoute(req, res) {
             sharedWith: [],
           },
           hidden: false,
-          owner: new ObjectId(user._id),
+          owner: user._id,
           created: Math.floor(Date.now()/1000),
           tasks: [],
         };
@@ -482,7 +482,7 @@ async function dataRoute(req, res) {
       const query = {
         hidden: false, // Cannot be hidden
         _id: new ObjectId(dataPath[1]), // Matches the specified collection ID
-        owner: new ObjectId(user._id), // Can only be deleted by the owner of the collection
+        owner: user._id, // Can only be deleted by the owner of the collection
       };
 
       // Attempt to delete the collection and return acknowledgement
@@ -510,7 +510,7 @@ async function dataRoute(req, res) {
         const query = {
           _id: new ObjectId(dataPath[1]),
           hidden: false,
-          owner: new ObjectId(user._id),
+          owner: user._id,
         };
         if (body.name) {updateDoc.name = body.name.trim().slice(0, 55);} // Enforce length limit
         if (body.description !== undefined) {updateDoc.description = body.description.trim().slice(0, 500);}
@@ -535,7 +535,7 @@ async function dataRoute(req, res) {
         }
       } else { // Adding a task to collections
         // The following query will return null if the user does not own the task
-        const taskInfo = await db.collection("tasks").findOne({_id: new ObjectId(body.taskId), owner: new ObjectId(user._id), hidden: false}, { projection: { owner: 1 } });
+        const taskInfo = await db.collection("tasks").findOne({_id: new ObjectId(body.taskId), owner: user._id, hidden: false}, { projection: { owner: 1 } });
 
         var addCollectionsId = [];
         if (body.addCollections) {
@@ -565,10 +565,10 @@ async function dataRoute(req, res) {
               },
               hidden: false,
               $or: [
-                { owner: new ObjectId(user._id) },
+                { owner: user._id },
                 {
                   'sharing.shared': true,
-                  'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user._id), role: "contributor"}}
+                  'sharing.sharedWith': {$elemMatch: {id: user._id, role: "contributor"}}
                 },
               ],
               // Anyone can only add their own tasks
@@ -585,10 +585,10 @@ async function dataRoute(req, res) {
               },
               hidden: false,
               $or: [
-                { owner: new ObjectId(user._id) },
+                { owner: user._id },
                 {
                   'sharing.shared': true,
-                  'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user._id), role: "contributor"}},
+                  'sharing.sharedWith': {$elemMatch: {id: user._id, role: "contributor"}},
                   tasks: {$in: [new ObjectId(taskInfo?._id)]}
                 },
               ],
@@ -634,9 +634,9 @@ async function dataRoute(req, res) {
         const query = {
           _id: new ObjectId(dataPath[1]),
           hidden: false,
-          owner: new ObjectId(user._id),
+          owner: user._id,
         };
-        const validateCollection = await db.collection("collections").findOne({...query, 'sharing.sharedWith': {$elemMatch: {id: new ObjectId(validateUser._id)}} });
+        const validateCollection = await db.collection("collections").findOne({...query, 'sharing.sharedWith': {$elemMatch: {id: validateUser._id}} });
         if (validateCollection) {
           res.status(403).json({ message: "Collection is already shared with this user!" });
           return;
@@ -658,7 +658,7 @@ async function dataRoute(req, res) {
         
         const query = {
           'sharing.shared': true,
-          'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user._id), role: /pending/i}},
+          'sharing.sharedWith': {$elemMatch: {id: user._id, role: /pending/i}},
           _id: new ObjectId(dataPath[1]),
           hidden: false,
         };
@@ -683,7 +683,7 @@ async function dataRoute(req, res) {
           'sharing.shared': true,
           'sharing.sharedWith': {$elemMatch: {id: new ObjectId(body.id)}},
           _id: new ObjectId(dataPath[1]),
-          owner: new ObjectId(user._id),
+          owner: user._id,
           hidden: false,
         };
         const userRoleInfo = await db.collection("collections").findOne(query, { projection: {'sharing.sharedWith': 1} });
@@ -712,7 +712,7 @@ async function dataRoute(req, res) {
           const query = {
             'sharing.shared': true,
             'sharing.sharedWith': {$elemMatch: {id: new ObjectId(body.id)}},
-            owner: new ObjectId(user._id),
+            owner: user._id,
             _id: new ObjectId(dataPath[1]),
             hidden: false,
           };
@@ -742,14 +742,14 @@ async function dataRoute(req, res) {
 
           const query = {
             'sharing.shared': true,
-            'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user._id)}},
+            'sharing.sharedWith': {$elemMatch: {id: user._id}},
             _id: new ObjectId(dataPath[1]),
             hidden: false,
           };
           const updateDoc = {
             $pull: {
               'sharing.sharedWith': {
-                id: new ObjectId(user._id),
+                id: user._id,
               },
             }
           };
@@ -760,7 +760,7 @@ async function dataRoute(req, res) {
 
           var taskIds = [];
           updatedCollectionTasks.forEach(task => {
-            if (task.owner == user._id) {
+            if (task.owner.equals(user._id)) {
               taskIds.push(new ObjectId(task._id));
             }
           });
