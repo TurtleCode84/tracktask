@@ -65,7 +65,7 @@ async function userRoute(req, res) {
       res.status(401).json({ message: "Authentication required" });
       return;
     }
-    const query = { _id: new ObjectId(user._id) };
+    const query = { _id: user._id };
     if (body.acknowledgedWarning) {
       try {
         const warnUpdateDoc = {
@@ -75,7 +75,7 @@ async function userRoute(req, res) {
         const lastEditDoc = {
           $set: {
             'history.lastEdit.timestamp': Math.floor(Date.now()/1000),
-            'history.lastEdit.by': new ObjectId(user._id),
+            'history.lastEdit.by': user._id,
           },
         };
         await db.collection("users").updateOne(query, lastEditDoc);
@@ -160,7 +160,7 @@ async function userRoute(req, res) {
       const lastEditDoc = {
         $set: {
           'history.lastEdit.timestamp': Math.floor(Date.now()/1000),
-          'history.lastEdit.by': new ObjectId(user._id),
+          'history.lastEdit.by': user._id,
         },
       };
       await db.collection("users").updateOne(query, lastEditDoc);
@@ -176,9 +176,9 @@ async function userRoute(req, res) {
       res.status(403).json({ message: "For security reasons, admins cannot delete their own accounts. Please contact a developer for data deletion." });
       return;
     }
-    await db.collection("tasks").deleteMany({ owner: new ObjectId(user._id) });
-    await db.collection("collections").deleteMany({ owner: new ObjectId(user._id) });
-    const deletedUser = await db.collection("users").deleteOne({ _id: new ObjectId(user._id) });
+    await db.collection("tasks").deleteMany({ owner: user._id });
+    await db.collection("collections").deleteMany({ owner: user._id });
+    const deletedUser = await db.collection("users").deleteOne({ _id: user._id });
     res.json(deletedUser);
   } else {
     res.status(405).json({ message: "Method not allowed" });

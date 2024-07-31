@@ -27,9 +27,9 @@ async function adminUserRoute(req, res) {
     try {
       const getUser = await db.collection("users").findOne(query);
       if (getUser) {
-        const countTasks = await db.collection("tasks").countDocuments({ owner: new ObjectId(getUser._id) });
-        const countCollections = await db.collection("collections").countDocuments({ owner: new ObjectId(getUser._id) });
-        const countShared = await db.collection("collections").countDocuments({ owner: new ObjectId(getUser._id), 'sharing.shared': true });
+        const countTasks = await db.collection("tasks").countDocuments({ owner: getUser._id });
+        const countCollections = await db.collection("collections").countDocuments({ owner: getUser._id });
+        const countShared = await db.collection("collections").countDocuments({ owner: getUser._id, 'sharing.shared': true });
         res.json({
           ...getUser,
           stats: {
@@ -46,7 +46,7 @@ async function adminUserRoute(req, res) {
     }
   } else if (req.method === 'POST') {
     const body = await req.body;
-    if (process.env.SUPERADMIN === uid && user._id !== uid) {
+    if (process.env.SUPERADMIN === uid && user._id.toString() !== uid) {
       res.status(403).json({ message: "You do not have permission to modify this user." });
       return;
     }
@@ -91,11 +91,11 @@ async function adminUserRoute(req, res) {
       if (body.verify) {
         // If anyone else has the same email as a newly verified user, we need to get rid of it
         const verifiedUser = await db.collection("users").findOne(query, { projection: { email: 1 } });
-        await db.collection("users").updateMany({ _id: { $ne: new ObjectId(verifiedUser._id) }, $and: [ {email: verifiedUser.email}, {email: {$ne: ""}} ]}, { $set: { email: "", verificationKey: "", otp: "", 'permissions.verified': false } });
+        await db.collection("users").updateMany({ _id: { $ne: verifiedUser._id }, $and: [ {email: verifiedUser.email}, {email: {$ne: ""}} ]}, { $set: { email: "", verificationKey: "", otp: "", 'permissions.verified': false } });
       }
     }
     if (body.admin !== undefined) { // true or false
-      if (process.env.SUPERADMIN !== user._id.toString() || user._id === uid) {
+      if (process.env.SUPERADMIN !== user._id.toString() || user._id.toString() === uid) {
         res.status(403).json({ message: "You do not have permission to edit this user\'s admin status." });
         return;
       }
@@ -108,7 +108,7 @@ async function adminUserRoute(req, res) {
       const warningDoc = {
         reason: body.warning,
         timestamp: Math.floor(Date.now()/1000),
-        by: new ObjectId(user._id),
+        by: user._id,
       };
       const warnUpdateDoc = {
         $set: {'permissions.warned': true},
@@ -135,7 +135,7 @@ async function adminUserRoute(req, res) {
     }
     if (body.ban !== undefined && body.ban) { // true or false
       const banUpdateDoc = {
-        $set: {'permissions.banned': body.ban, 'history.ban.reason': body.banReason, 'history.ban.timestamp': Math.floor(Date.now()/1000), 'history.ban.by': new ObjectId(user._id)},
+        $set: {'permissions.banned': body.ban, 'history.ban.reason': body.banReason, 'history.ban.timestamp': Math.floor(Date.now()/1000), 'history.ban.by': user._id},
       };
       await db.collection("users").updateOne(query, banUpdateDoc); // See above
     } else if (body.ban !== undefined && !body.ban) {
@@ -145,20 +145,20 @@ async function adminUserRoute(req, res) {
       await db.collection("users").updateOne(query, banUpdateDoc); // See above
     } else if (body.ban === undefined && body.banReason) {
       const banReasonUpdateDoc = {
-        $set: {'history.ban.reason': body.banReason, 'history.ban.timestamp': Math.floor(Date.now()/1000), 'history.ban.by': new ObjectId(user._id)},
+        $set: {'history.ban.reason': body.banReason, 'history.ban.timestamp': Math.floor(Date.now()/1000), 'history.ban.by': user._id},
       };
       await db.collection("users").updateOne(query, banReasonUpdateDoc); // See above
     }
     const lastEditDoc = {
       $set: {
         'history.lastEdit.timestamp': Math.floor(Date.now()/1000),
-        'history.lastEdit.by': new ObjectId(user._id),
+        'history.lastEdit.by': user._id,
       },
     };
     await db.collection("users").updateOne(query, lastEditDoc); // See above
     res.json(updated);
   } else if (req.method === 'DELETE') {
-    if (user._id === uid) {
+    if (user._id.toString() === uid) {
       res.status(401).json({ message: "You can\'t delete your own account from the admin panel." });
       return;
     } else if (process.env.SUPERADMIN !== user._id.toString()) {

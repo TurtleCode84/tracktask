@@ -33,7 +33,7 @@ async function reportsRoute(req, res) {
     }
     try {
       const newReport = {
-        reporter: new ObjectId(user._id),
+        reporter: user._id,
         type: type,
         reason: reason.trim(),
         reported: reported,
@@ -45,12 +45,12 @@ async function reportsRoute(req, res) {
         const query = {
           _id: new ObjectId(reported._id),
           hidden: false,
-          'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user._id)}},
+          'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: user._id}},
         };
         const updateDoc = {
           $pull: {
             'sharing.sharedWith': {
-              id: new ObjectId(user._id),
+              id: user._id,
             },
           }
         };

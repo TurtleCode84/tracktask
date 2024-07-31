@@ -180,12 +180,12 @@ async function adminDataRoute(req, res) {
       const taskInCollabCollectionQuery = {
         hidden: false,
         $or: [
-          { owner: new ObjectId(user._id) },
+          { owner: user._id },
           {
             'sharing.shared': true,
             'sharing.sharedWith': {
               $elemMatch: {
-                id: new ObjectId(user._id),
+                id: user._id,
                 $and: [
                   {role: {$not: /pending/i}},
                   {$or: [
@@ -202,7 +202,7 @@ async function adminDataRoute(req, res) {
       const ownTaskQuery = {
         _id: new ObjectId(dataPath[1]),
         hidden: false,
-        owner: new ObjectId(user._id),
+        owner: user._id,
       };
       const taskQuery = { // Dangerous!
         _id: new ObjectId(dataPath[1]),
@@ -389,7 +389,7 @@ async function adminDataRoute(req, res) {
         const query = {
           _id: new ObjectId(dataPath[1]),
           hidden: false,
-          owner: new ObjectId(user._id),
+          owner: user._id,
         };
         if (body.name) {updateDoc.name = body.name.trim().slice(0, 55);} // Enforce length limit
         if (body.description) {updateDoc.description = body.description.trim().slice(0, 500);}
@@ -414,7 +414,7 @@ async function adminDataRoute(req, res) {
         }
       } else { // Adding a task to collections
         // The following query will return null if the user does not own the task
-        const taskInfo = await db.collection("tasks").findOne({_id: new ObjectId(body.taskId), owner: new ObjectId(user._id), hidden: false}, { projection: { owner: 1 } });
+        const taskInfo = await db.collection("tasks").findOne({_id: new ObjectId(body.taskId), owner: user._id, hidden: false}, { projection: { owner: 1 } });
 
         var addCollectionsId = [];
         if (body.addCollections) {
@@ -444,10 +444,10 @@ async function adminDataRoute(req, res) {
               },
               hidden: false,
               $or: [
-                { owner: new ObjectId(user._id) },
+                { owner: user._id },
                 {
                   'sharing.shared': true,
-                  'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user._id), role: "contributor"}}
+                  'sharing.sharedWith': {$elemMatch: {id: user._id, role: "contributor"}}
                 },
               ],
               // Anyone can only add their own tasks
@@ -464,10 +464,10 @@ async function adminDataRoute(req, res) {
               },
               hidden: false,
               $or: [
-                { owner: new ObjectId(user._id) },
+                { owner: user._id },
                 {
                   'sharing.shared': true,
-                  'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user._id), role: "contributor"}},
+                  'sharing.sharedWith': {$elemMatch: {id: user._id, role: "contributor"}},
                   tasks: {$in : [new ObjectId(taskInfo?._id)]}
                 },
               ],
@@ -516,9 +516,9 @@ async function adminDataRoute(req, res) {
         const query = {
           _id: new ObjectId(dataPath[1]),
           hidden: false,
-          owner: new ObjectId(user._id),
+          owner: user._id,
         };
-        const validateCollection = await db.collection("collections").findOne({...query, 'sharing.sharedWith': {$elemMatch: {id: new ObjectId(validateUser._id)}} });
+        const validateCollection = await db.collection("collections").findOne({...query, 'sharing.sharedWith': {$elemMatch: {id: validateUser._id}} });
         if (validateCollection) {
           res.status(403).json({ message: "Collection is already shared with this user!" });
           return;
@@ -526,7 +526,7 @@ async function adminDataRoute(req, res) {
         const pendingRole = "pending-" + body.role;
         const updateDoc = {
           $push: {
-            'sharing.sharedWith': {id: validateUser._id, role: pendingRole },
+            'sharing.sharedWith': { id: validateUser._id, role: pendingRole },
           },
         };
         try {

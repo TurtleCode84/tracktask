@@ -622,7 +622,7 @@ async function dataRoute(req, res) {
         if (!body.username || !body.role || !roles.includes(body.role)) {
           res.status(422).json({ message: "Invalid data" });
           return;
-        } else if (user.username === body.username) {
+        } else if (user.username === body.username.trim().toLowerCase()) {
           res.status(403).json({ message: "Collection is already shared with this user!" });
           return;
         }

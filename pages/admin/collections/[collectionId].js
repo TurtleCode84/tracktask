@@ -52,7 +52,7 @@ export default function Collection() {
         <br/><div className="textarea"><Linkify options={{target:'blank'}}>{collection.description}</Linkify></div>
         <p title={collection.created > 0 ? moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a") : 'Never'}>Created: {collection.created > 0 ? <>{moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a")}{' '}({moment.unix(collection.created).fromNow()})</> : 'never'}</p>
         <p>Owner: <User user={user} id={collection.owner} link={true}/></p>
-        {collection.sharing.shared && <p>Shared with: <ul>{sharedWithList.length > 0 ? sharedWithList : <li>Nobody!</li>}</ul></p>}
+        {collection.sharing.shared && <p>Shared with: <ul>{sharedWithList.length > 0 ? sharedWithList : <li style={{ fontStyle: "italic" }}>Nobody!</li>}</ul></p>}
         <p>Number of tasks: {collection.tasks.length}</p></div>
         <div className="tasks">
         {relTaskList === undefined || comTaskList === undefined || error ?

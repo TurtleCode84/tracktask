@@ -61,7 +61,7 @@ async function notificationsRoute(req, res) {
       res.status(403).json({ message: "You do not have permission to modify your subscription!" });
       return;
     }
-    const query = { _id: new ObjectId(user._id) };
+    const query = { _id: user._id };
     const updateDoc = {
       $set: {
         'notifications.enabled': Math.floor(Date.now()/1000)-60, // 1 minute ago to avoid conflicts with new tasks
@@ -89,7 +89,7 @@ async function notificationsRoute(req, res) {
       res.status(403).json({ message: "You do not have permission to modify your subscription!" });
       return;
     }
-    const query = { _id: new ObjectId(user._id) };
+    const query = { _id: user._id };
     const updateDoc = {
       $set: {
         'notifications.enabled': 0,
