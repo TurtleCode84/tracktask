@@ -48,17 +48,20 @@ async function notificationsRoute(req, res) {
     }
   } else if (req.method === 'POST') {
     const { subscription } = await req.body;
-    const user = req.session.user;
-    if (!user || !user.isLoggedIn || user.permissions.banned ) {
+
+    const client = await clientPromise;
+    const db = client.db("data");
+
+    const sessionUser = req.session.user;
+    const user = await db.collection("users").findOne({ _id: new ObjectId(sessionUser.id) });
+    if (!sessionUser || !sessionUser.isLoggedIn || user.permissions.banned ) {
       res.status(401).json({ message: "Authentication required" });
       return;
     } else if (!user.permissions.verified) {
       res.status(403).json({ message: "You do not have permission to modify your subscription!" });
       return;
     }
-    const client = await clientPromise;
-    const db = client.db("data");
-    const query = { _id: new ObjectId(user.id) };
+    const query = { _id: new ObjectId(user._id) };
     const updateDoc = {
       $set: {
         'notifications.enabled': Math.floor(Date.now()/1000)-60, // 1 minute ago to avoid conflicts with new tasks
@@ -74,17 +77,19 @@ async function notificationsRoute(req, res) {
       return;
     }
   } else if (req.method === 'DELETE') {
-    const user = req.session.user;
-    if (!user || !user.isLoggedIn || user.permissions.banned ) {
+    const client = await clientPromise;
+    const db = client.db("data");
+
+    const sessionUser = req.session.user;
+    const user = await db.collection("users").findOne({ _id: new ObjectId(sessionUser.id) });
+    if (!sessionUser || !sessionUser.isLoggedIn || user.permissions.banned ) {
       res.status(401).json({ message: "Authentication required" });
       return;
     } else if (!user.permissions.verified) {
       res.status(403).json({ message: "You do not have permission to modify your subscription!" });
       return;
     }
-    const client = await clientPromise;
-    const db = client.db("data");
-    const query = { _id: new ObjectId(user.id) };
+    const query = { _id: new ObjectId(user._id) };
     const updateDoc = {
       $set: {
         'notifications.enabled': 0,

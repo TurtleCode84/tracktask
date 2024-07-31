@@ -7,8 +7,12 @@ import { hash } from "bcryptjs";
 export default withIronSessionApiRoute(adminUserRoute, sessionOptions);
 
 async function adminUserRoute(req, res) {
-  const user = req.session.user;
-  if (!user || !user.isLoggedIn || user.permissions.banned || !user.permissions.admin) {
+  const client = await clientPromise;
+  const db = client.db("data");
+
+  const sessionUser = req.session.user;
+  const user = await db.collection("users").findOne({ _id: new ObjectId(sessionUser.id) });
+  if (!sessionUser || !sessionUser.isLoggedIn || user.permissions.banned || !user.permissions.admin) {
     res.status(401).json({ message: "Unauthorized" });
     return;
   }
@@ -18,8 +22,6 @@ async function adminUserRoute(req, res) {
     return;
   }
   if (req.method === 'GET') {
-    const client = await clientPromise;
-    const db = client.db("data");
     const query = { _id: new ObjectId(uid) };
   
     try {
@@ -44,12 +46,10 @@ async function adminUserRoute(req, res) {
     }
   } else if (req.method === 'POST') {
     const body = await req.body;
-    if (process.env.SUPERADMIN === uid && user.id !== uid) {
+    if (process.env.SUPERADMIN === uid && user._id !== uid) {
       res.status(403).json({ message: "You do not have permission to modify this user." });
       return;
     }
-    const client = await clientPromise;
-    const db = client.db("data");
     var updateUser = {};
     if (body.username) {
       const taken = await db.collection("users").countDocuments({ username: body.username.trim().toLowerCase() });
@@ -95,7 +95,7 @@ async function adminUserRoute(req, res) {
       }
     }
     if (body.admin !== undefined) { // true or false
-      if (process.env.SUPERADMIN !== user.id || user.id === uid) {
+      if (process.env.SUPERADMIN !== user._id || user._id === uid) {
         res.status(403).json({ message: "You do not have permission to edit this user\'s admin status." });
         return;
       }
@@ -108,7 +108,7 @@ async function adminUserRoute(req, res) {
       const warningDoc = {
         reason: body.warning,
         timestamp: Math.floor(Date.now()/1000),
-        by: new ObjectId(user.id),
+        by: new ObjectId(user._id),
       };
       const warnUpdateDoc = {
         $set: {'permissions.warned': true},
@@ -121,7 +121,7 @@ async function adminUserRoute(req, res) {
       };
       await db.collection("users").updateOne(query, warnUpdateDoc); // See above
     } else if (body.clearWarnings) {
-      if (process.env.SUPERADMIN !== user.id) {
+      if (process.env.SUPERADMIN !== user._id) {
         res.status(403).json({ message: "You do not have permission to pardon users." });
         return;
       }
@@ -135,7 +135,7 @@ async function adminUserRoute(req, res) {
     }
     if (body.ban !== undefined && body.ban) { // true or false
       const banUpdateDoc = {
-        $set: {'permissions.banned': body.ban, 'history.ban.reason': body.banReason, 'history.ban.timestamp': Math.floor(Date.now()/1000), 'history.ban.by': new ObjectId(user.id)},
+        $set: {'permissions.banned': body.ban, 'history.ban.reason': body.banReason, 'history.ban.timestamp': Math.floor(Date.now()/1000), 'history.ban.by': new ObjectId(user._id)},
       };
       await db.collection("users").updateOne(query, banUpdateDoc); // See above
     } else if (body.ban !== undefined && !body.ban) {
@@ -145,28 +145,26 @@ async function adminUserRoute(req, res) {
       await db.collection("users").updateOne(query, banUpdateDoc); // See above
     } else if (body.ban === undefined && body.banReason) {
       const banReasonUpdateDoc = {
-        $set: {'history.ban.reason': body.banReason, 'history.ban.timestamp': Math.floor(Date.now()/1000), 'history.ban.by': new ObjectId(user.id)},
+        $set: {'history.ban.reason': body.banReason, 'history.ban.timestamp': Math.floor(Date.now()/1000), 'history.ban.by': new ObjectId(user._id)},
       };
       await db.collection("users").updateOne(query, banReasonUpdateDoc); // See above
     }
     const lastEditDoc = {
       $set: {
         'history.lastEdit.timestamp': Math.floor(Date.now()/1000),
-        'history.lastEdit.by': new ObjectId(user.id),
+        'history.lastEdit.by': new ObjectId(user._id),
       },
     };
     await db.collection("users").updateOne(query, lastEditDoc); // See above
     res.json(updated);
   } else if (req.method === 'DELETE') {
-    if (user.id === uid) {
+    if (user._id === uid) {
       res.status(401).json({ message: "You can\'t delete your own account from the admin panel." });
       return;
-    } else if (process.env.SUPERADMIN !== user.id) {
+    } else if (process.env.SUPERADMIN !== user._id) {
       res.status(403).json({ message: "You do not have permission to delete users." });
       return;
     }
-    const client = await clientPromise;
-    const db = client.db("data");
     const deletedUser = await db.collection("users").deleteOne({ _id: new ObjectId(uid) });
     await db.collection("tasks").deleteMany({ owner: new ObjectId(uid) }); // See above
     await db.collection("collections").deleteMany({ owner: new ObjectId(uid) }); // See above

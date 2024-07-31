@@ -7,23 +7,25 @@ import moment from "moment";
 export default withIronSessionApiRoute(adminDataRoute, sessionOptions);
 
 async function adminDataRoute(req, res) {
-  const user = req.session.user;
   const { dataPath, filter } = req.query;
   const allowedPaths = ["tasks", "collections"];
 
   if (!dataPath || dataPath.length > 2 || !allowedPaths.includes(dataPath[0])) {
     res.status(404).json({ message: "Endpoint not found" });
     return;
-  } else if (!user || !user.isLoggedIn || user.permissions.banned || !user.permissions.admin) {
+  }
+
+  const client = await clientPromise;
+  const db = client.db("data");
+
+  const sessionUser = req.session.user;
+  const user = await db.collection("users").findOne({ _id: new ObjectId(sessionUser.id) });
+  if (!sessionUser || !sessionUser.isLoggedIn || user.permissions.banned || !user.permissions.admin) {
     res.status(401).json({ message: "Authentication required" });
     return;
   }
 
   // At this point we know that the first parameter is either tasks or collections, and the user is an authorized admin
-  // So now we might as well initialize the DB connector
-
-  const client = await clientPromise;
-  const db = client.db("data");
 
   if (dataPath[0] === "tasks") {
 
@@ -178,12 +180,12 @@ async function adminDataRoute(req, res) {
       const taskInCollabCollectionQuery = {
         hidden: false,
         $or: [
-          { owner: new ObjectId(user.id) },
+          { owner: new ObjectId(user._id) },
           {
             'sharing.shared': true,
             'sharing.sharedWith': {
               $elemMatch: {
-                id: new ObjectId(user.id),
+                id: new ObjectId(user._id),
                 $and: [
                   {role: {$not: /pending/i}},
                   {$or: [
@@ -200,7 +202,7 @@ async function adminDataRoute(req, res) {
       const ownTaskQuery = {
         _id: new ObjectId(dataPath[1]),
         hidden: false,
-        owner: new ObjectId(user.id),
+        owner: new ObjectId(user._id),
       };
       const taskQuery = { // Dangerous!
         _id: new ObjectId(dataPath[1]),
@@ -387,7 +389,7 @@ async function adminDataRoute(req, res) {
         const query = {
           _id: new ObjectId(dataPath[1]),
           hidden: false,
-          owner: new ObjectId(user.id),
+          owner: new ObjectId(user._id),
         };
         if (body.name) {updateDoc.name = body.name.trim().slice(0, 55);} // Enforce length limit
         if (body.description) {updateDoc.description = body.description.trim().slice(0, 500);}
@@ -412,7 +414,7 @@ async function adminDataRoute(req, res) {
         }
       } else { // Adding a task to collections
         // The following query will return null if the user does not own the task
-        const taskInfo = await db.collection("tasks").findOne({_id: new ObjectId(body.taskId), owner: new ObjectId(user.id), hidden: false}, { projection: { owner: 1 } });
+        const taskInfo = await db.collection("tasks").findOne({_id: new ObjectId(body.taskId), owner: new ObjectId(user._id), hidden: false}, { projection: { owner: 1 } });
 
         var addCollectionsId = [];
         if (body.addCollections) {
@@ -442,10 +444,10 @@ async function adminDataRoute(req, res) {
               },
               hidden: false,
               $or: [
-                { owner: new ObjectId(user.id) },
+                { owner: new ObjectId(user._id) },
                 {
                   'sharing.shared': true,
-                  'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user.id), role: "contributor"}}
+                  'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user._id), role: "contributor"}}
                 },
               ],
               // Anyone can only add their own tasks
@@ -462,10 +464,10 @@ async function adminDataRoute(req, res) {
               },
               hidden: false,
               $or: [
-                { owner: new ObjectId(user.id) },
+                { owner: new ObjectId(user._id) },
                 {
                   'sharing.shared': true,
-                  'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user.id), role: "contributor"}},
+                  'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user._id), role: "contributor"}},
                   tasks: {$in : [new ObjectId(taskInfo?._id)]}
                 },
               ],
@@ -514,7 +516,7 @@ async function adminDataRoute(req, res) {
         const query = {
           _id: new ObjectId(dataPath[1]),
           hidden: false,
-          owner: new ObjectId(user.id),
+          owner: new ObjectId(user._id),
         };
         const validateCollection = await db.collection("collections").findOne({...query, 'sharing.sharedWith': {$elemMatch: {id: new ObjectId(validateUser._id)}} });
         if (validateCollection) {

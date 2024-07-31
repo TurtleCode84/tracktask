@@ -6,13 +6,15 @@ import clientPromise from "lib/mongodb";
 export default withIronSessionApiRoute(toolsRoute, sessionOptions);
 
 async function toolsRoute(req, res) {
-  const user = req.session.user;
-  if (!user || !user.isLoggedIn || user.permissions.banned ) {
+  const client = await clientPromise;
+  const db = client.db("data");
+
+  const sessionUser = req.session.user;
+  const user = await db.collection("users").findOne({ _id: new ObjectId(sessionUser.id) });
+  if (!sessionUser || !sessionUser.isLoggedIn || user.permissions.banned ) {
     res.status(401).json({ message: "Unauthorized" });
     return;
   }
-  const client = await clientPromise;
-  const db = client.db("data");
   const { tool, param } = req.query;
   if (req.method === 'GET') {
     if (tool) {
