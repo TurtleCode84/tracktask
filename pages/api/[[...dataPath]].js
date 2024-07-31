@@ -9,7 +9,7 @@ export default withIronSessionApiRoute(dataRoute, sessionOptions);
 async function dataRoute(req, res) {
   const { dataPath, filter } = req.query;
   const allowedPaths = ["tasks", "collections"];
-  
+
   if (!dataPath) {
     res.status(200).json({ message: "TrackTask API", isOnline: { frontend: true, backend: true, notifications: true }, maintenance: false });
     return;
@@ -129,7 +129,7 @@ async function dataRoute(req, res) {
                 } else {
                   collectionRole = allCollections[j].sharing.sharedWith.find(element => element.id == user._id)?.role;
                   if (!collectionRole) {
-                    res.status(500).json({ debug: allCollections[j], ownerTest: user._id == allCollections[j].owner });
+                    res.status(500).json({ debug: allCollections[j], ownerTest: user._id == allCollections[j].owner, eval: allCollections[j].sharing.sharedWith.find(element => element.id == user._id) });
                     return;
                   }
                 }
