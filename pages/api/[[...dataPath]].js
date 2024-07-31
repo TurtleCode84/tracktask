@@ -170,7 +170,7 @@ async function dataRoute(req, res) {
       if (!name) {
         res.status(422).json({ message: "Invalid data" });
         return;
-      } else if (name.trim().length > 55 || description.trim().length > 500) {
+      } else if (name.trim().length > 55 || description?.trim().length > 500) {
         res.status(422).json({ message: "Length of title and description must not exceed 55 and 500 characters respectively." });
         return;
       } else if (countUserTasks >= 10000) {
@@ -180,7 +180,7 @@ async function dataRoute(req, res) {
       try {
         const newTask = {
           name: name.trim(),
-          description: description.trim(),
+          description: description?.trim(),
           hidden: false,
           owner: user._id,
           created: Math.floor(Date.now()/1000),
@@ -444,7 +444,7 @@ async function dataRoute(req, res) {
       if (!name) {
         res.status(422).json({ message: "Invalid data" });
         return;
-      } else if (name.trim().length > 55 || description.trim().length > 500) {
+      } else if (name.trim().length > 55 || description?.trim().length > 500) {
         res.status(422).json({ message: "Length of title and description must not exceed 55 and 500 characters respectively." });
         return;
       } else if (countUserCollections >= 100) {
@@ -454,7 +454,7 @@ async function dataRoute(req, res) {
       try {
         const newCollection = {
           name: name.trim(),
-          description: description.trim(),
+          description: description?.trim(),
           sharing: {
             shared: false,
             sharedWith: [],

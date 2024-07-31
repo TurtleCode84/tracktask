@@ -236,7 +236,7 @@ async function adminDataRoute(req, res) {
       } else if (perms === "edit") {
 
         if (body.name) {updateDoc.name = body.name.trim().slice(0, 55);} // Enforce length limit
-        if (body.description) {updateDoc.description = body.description.trim().slice(0, 500);}
+        if (body.description !== undefined) {updateDoc.description = body.description.trim().slice(0, 500);}
         if (body.dueDate !== undefined) {
           if (body.dueDate) {
             updateDoc.dueDate = moment(body.dueDate).unix();
@@ -392,7 +392,7 @@ async function adminDataRoute(req, res) {
           owner: user._id,
         };
         if (body.name) {updateDoc.name = body.name.trim().slice(0, 55);} // Enforce length limit
-        if (body.description) {updateDoc.description = body.description.trim().slice(0, 500);}
+        if (body.description !== undefined) {updateDoc.description = body.description.trim().slice(0, 500);}
         if (body.shared !== undefined && user.permissions.verified) {
           updateDoc = {
             $set: {
