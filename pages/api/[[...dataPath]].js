@@ -7,7 +7,7 @@ import moment from "moment";
 export default withIronSessionApiRoute(dataRoute, sessionOptions);
 
 async function dataRoute(req, res) {
-  const user = req.session.user;
+  const user = await req.session.user;
   const { dataPath, filter } = req.query;
   const allowedPaths = ["tasks", "collections"];
 
