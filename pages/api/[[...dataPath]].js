@@ -173,6 +173,9 @@ async function dataRoute(req, res) {
       } else if (user.stats.tasks >= 10000) {
         res.status(403).json({ message: "Woah there, we didn't expect you to create so many tasks! If you have tasks completed over a year ago, we'll remove them within the week to clear space for new tasks, otherwise you should delete a few before creating any more." });
         return;
+      } else if (!user.stats) {
+        res.status(500).json({ message: "A problem occurred, see debug details.", debug: user });
+        return;
       }
       try {
         const newTask = {
