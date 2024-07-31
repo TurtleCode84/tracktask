@@ -164,13 +164,14 @@ async function dataRoute(req, res) {
     } else if (req.method === 'POST') { // Creates a new task
 
       const { name, description, dueDate, addCollections, markPriority } = await req.body;
+      const countUserTasks = await db.collection("tasks").countDocuments({ owner: new ObjectId(user.id) });
       if (!name) {
         res.status(422).json({ message: "Invalid data" });
         return;
       } else if (name.trim().length > 55 || description.trim().length > 500) {
         res.status(422).json({ message: "Length of title and description must not exceed 55 and 500 characters respectively." });
         return;
-      } else if (user.stats.tasks >= 10000) {
+      } else if (countUserTasks >= 10000) {
         res.status(403).json({ message: "Woah there, we didn't expect you to create so many tasks! If you have tasks completed over a year ago, we'll remove them within the week to clear space for new tasks, otherwise you should delete a few before creating any more." });
         return;
       }
@@ -437,13 +438,14 @@ async function dataRoute(req, res) {
     } else if (req.method === 'POST') { // Creates a new collection
 
       const { name, description } = await req.body;
+      const countUserCollections = await db.collection("collections").countDocuments({ owner: new ObjectId(user.id) });
       if (!name) {
         res.status(422).json({ message: "Invalid data" });
         return;
       } else if (name.trim().length > 55 || description.trim().length > 500) {
         res.status(422).json({ message: "Length of title and description must not exceed 55 and 500 characters respectively." });
         return;
-      } else if (user.stats.collections >= 100) {
+      } else if (countUserCollections >= 100) {
         res.status(403).json({ message: "Woah there, we didn't expect you to create so many collections! Try deleting a few before making a new one." });
         return;
       }
