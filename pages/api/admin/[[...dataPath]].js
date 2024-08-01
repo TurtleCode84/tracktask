@@ -100,7 +100,7 @@ async function adminDataRoute(req, res) {
             }
           
           }
-          // data should now contain a task from a reported collection, if it exists
+          // data should now contain a task from a reported or hidden collection, if it exists
           
           // At this point we can tell if the task exists
           if (dataPath[1] && data.length < 1) {
@@ -198,7 +198,7 @@ async function adminDataRoute(req, res) {
         }
       });
       
-      // Get and append tasks from reported collections as well
+      // Get and append tasks from reported and hidden collections as well
       const reportedCollections = await db.collection("reports").find({ $or: [ { type: "collection" }, { type: "share" } ] }, { projection: { reported: 1 } }).toArray();
 
       for (var i=0; i<reportedCollections.length; i++) {
@@ -211,8 +211,16 @@ async function adminDataRoute(req, res) {
           }
         }
       }
+      const hiddenCollections = await db.collection("collections").find({ hidden: true }).toArray();
+      hiddenCollections.forEach(collection => {
+        for (var i=0; i<collection.tasks.length; i++) {
+          if (!reportedTaskIds.includes(collection.tasks[i])) {
+            reportedTaskIds.push(collection.tasks[i]);
+          }
+        }
+      });
     
-      // reportedTaskIds should now contain all directly and indirectly reported tasks
+      // reportedTaskIds should now contain all directly and indirectly reported tasks, plus those from hidden collections
 
       const reportedTaskQuery = {
         $and: [
@@ -448,7 +456,7 @@ async function adminDataRoute(req, res) {
           }
         });
 
-        // Get and append tasks from reported collections as well
+        // Get and append tasks from reported and hidden collections as well
 
         for (var i=0; i<reportedCollectionIds.length; i++) {
           const collectionTasks = await db.collection("collections").findOne({ _id: reportedCollectionIds[i] });
@@ -460,8 +468,16 @@ async function adminDataRoute(req, res) {
             }
           }
         }
+        const hiddenCollections = await db.collection("collections").find({ hidden: true }).toArray();
+        hiddenCollections.forEach(collection => {
+          for (var i=0; i<collection.tasks.length; i++) {
+            if (!reportedTaskIds.includes(collection.tasks[i])) {
+              reportedTaskIds.push(collection.tasks[i]);
+            }
+          }
+        });
 
-        // reportedTaskIds should now contain all directly and indirectly reported tasks
+        // reportedTaskIds should now contain all directly and indirectly reported tasks, plus those from hidden collections
 
         // CONTINUE RENOVATING HERE
 
