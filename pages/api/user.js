@@ -12,7 +12,7 @@ async function userRoute(req, res) {
     if (req.session.user) {
       const client = await clientPromise;
       const db = client.db("data");
-      const query = { _id: new ObjectId(req.session.user.id), 'permissions.banned': false };
+      const query = { _id: new ObjectId(req.session.user.id) };
       const userInfo = await db.collection("users").findOne(query);
       if (!userInfo) {
         await req.session.destroy();
