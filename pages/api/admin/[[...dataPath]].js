@@ -169,98 +169,47 @@ async function adminDataRoute(req, res) {
         return;
       }
 
-      res.status(503).json({ message: "Under construction" });
-      return;
+      //res.status(503).json({ message: "Under construction" });
+      //return;
+
+      const body = await req.body;
 
       const reportedTasks = await db.collection("reports").find({ type: "task" }, { projection: { reported: 1 } }).toArray();
       var reportedTaskIds = [];
-      reportedTasks.forEach(task => reportedTaskIds.push(task.reported));
+      reportedTasks.forEach(task => reportedTaskIds.push(new ObjectId(task.reported._id)));
 
-      const body = await req.body;
-      const taskInCollabCollectionQuery = {
-        hidden: false,
-        $or: [
-          { owner: user._id },
-          {
-            'sharing.shared': true,
-            'sharing.sharedWith': {
-              $elemMatch: {
-                id: user._id,
-                $and: [
-                  {role: {$not: /pending/i}},
-                  {$or: [
-                    {role: "collaborator"},
-                    {role: "contributor"},
-                  ]},
-                ],
-              }
-            }
-        }
-      ],
-        tasks: new ObjectId(dataPath[1]),
-      };
-      const ownTaskQuery = {
-        _id: new ObjectId(dataPath[1]),
-        hidden: false,
-        owner: user._id,
-      };
-      const taskQuery = { // Dangerous!
-        _id: new ObjectId(dataPath[1]),
-        hidden: false,
-      };
+      const reportedTaskQuery = {
+        $and: [
+          { _id: { $in: reportedTaskIds } },
+          { _id: new ObjectId(dataPath[1]) },
+        ],
+      }
+
       var updateDoc = {};
 
-      // Check if proper perms are present
-      var perms;
-      const isOwnTask = await db.collection("tasks").countDocuments(ownTaskQuery);
-      if (isOwnTask >= 1) {
-        perms = "edit";
-      } else {
-        const isCollabTask = await db.collection("collections").countDocuments(taskInCollabCollectionQuery);
-        if (isCollabTask >= 1) {
-          perms = "complete";
+      if (body.name) {updateDoc.name = body.name.trim();} // Allow admins to bypass length limits
+      if (body.description !== undefined) {updateDoc.description = body.description.trim();}
+      if (body.dueDate !== undefined) {
+        if (body.dueDate) {
+          updateDoc.dueDate = moment(body.dueDate).unix();
         } else {
-          res.status(403).json({ message: "You do not have permission to edit this task!" });
-          return;
+          updateDoc.dueDate = 0;
         }
+        updateDoc.notified = false;
+      }
+      if (body.priority !== undefined) {updateDoc.priority = body.priority;}
+      if (body.hidden !== undefined) {updateDoc.hidden = body.hidden;}
+      if (body.completion) {
+        updateDoc.completion = {};
+        updateDoc.completion.completed = body.completion.completed;
+        updateDoc.completion.completedBy = body.completion.completedBy;
       }
 
-      if (perms === "complete") {
-
-        if (body.completion) {
-          updateDoc.completion = {};
-          updateDoc.completion.completed = body.completion.completed;
-          updateDoc.completion.completedBy = body.completion.completedBy;
-        }
-
-      } else if (perms === "edit") {
-
-        if (body.name) {updateDoc.name = body.name.trim().slice(0, 55);} // Enforce length limit
-        if (body.description !== undefined) {updateDoc.description = body.description.trim().slice(0, 500);}
-        if (body.dueDate !== undefined) {
-          if (body.dueDate) {
-            updateDoc.dueDate = moment(body.dueDate).unix();
-          } else {
-            updateDoc.dueDate = 0;
-          }
-          updateDoc.notified = false;
-        }
-        if (body.priority !== undefined) {updateDoc.priority = body.priority;}
-        if (body.completion) {
-          updateDoc.completion = {};
-          updateDoc.completion.completed = body.completion.completed;
-          updateDoc.completion.completedBy = body.completion.completedBy;
-        }
-
-      } else {
-        res.status(403).json({ message: "Permissions error" }); // This should not happen
-        return;
-      }
       updateDoc = {
         $set: updateDoc,
       };
       try {
-        const updatedTask = await db.collection("tasks").updateOne(taskQuery, updateDoc); // Dangerous!
+        const updatedTask = await db.collection("tasks").updateOne(reportedTaskQuery, updateDoc);
         res.json(updatedTask);
       } catch (error) {
         res.status(500).json({ message: error.message });

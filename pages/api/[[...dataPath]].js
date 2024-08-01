@@ -166,7 +166,7 @@ async function dataRoute(req, res) {
     } else if (req.method === 'POST') { // Creates a new task
 
       const { name, description, dueDate, addCollections, markPriority } = await req.body;
-      const countUserTasks = await db.collection("tasks").countDocuments({ owner: user._id });
+      const countUserTasks = await db.collection("tasks").countDocuments({ hidden: false, owner: user._id });
       if (!name) {
         res.status(422).json({ message: "Invalid data" });
         return;
@@ -440,7 +440,7 @@ async function dataRoute(req, res) {
     } else if (req.method === 'POST') { // Creates a new collection
 
       const { name, description } = await req.body;
-      const countUserCollections = await db.collection("collections").countDocuments({ owner: user._id });
+      const countUserCollections = await db.collection("collections").countDocuments({ hidden: false, owner: user._id });
       if (!name) {
         res.status(422).json({ message: "Invalid data" });
         return;
@@ -725,8 +725,8 @@ async function dataRoute(req, res) {
           };
           const updatedCollection = await db.collection("collections").updateOne(query, updateDoc);
           
-          const updatedCollectionInfo = await db.collection("collections").findOne({ _id: new ObjectId(dataPath[1]) }, { projection: {tasks: 1} });
-          const updatedCollectionTasks = await db.collection("tasks").find({ _id: {$in: updatedCollectionInfo.tasks} }, { projection: {owner: 1} }).toArray();
+          const updatedCollectionInfo = await db.collection("collections").findOne({ hidden: false, _id: new ObjectId(dataPath[1]) }, { projection: {tasks: 1} });
+          const updatedCollectionTasks = await db.collection("tasks").find({ _id: {$in: updatedCollectionInfo.tasks} }, { projection: {owner: 1} }).toArray(); // deliberately includes hidden tasks
 
           var taskIds = [];
           updatedCollectionTasks.forEach(task => {
@@ -735,7 +735,7 @@ async function dataRoute(req, res) {
             }
           });
 
-          await db.collection("collections").updateOne({ _id: new ObjectId(dataPath[1]) }, { $pull: {tasks: {$in: taskIds}} });
+          await db.collection("collections").updateOne({ hidden: false, _id: new ObjectId(dataPath[1]) }, { $pull: {tasks: {$in: taskIds}} });
           res.json(updatedCollection);
 
         } else { // Removing self from collection
@@ -755,8 +755,8 @@ async function dataRoute(req, res) {
           };
           const updatedCollection = await db.collection("collections").updateOne(query, updateDoc);
                     
-          const updatedCollectionInfo = await db.collection("collections").findOne({ _id: new ObjectId(dataPath[1]) }, { projection: {tasks: 1} });
-          const updatedCollectionTasks = await db.collection("tasks").find({ _id: {$in: updatedCollectionInfo.tasks} }, { projection: {owner: 1} }).toArray();
+          const updatedCollectionInfo = await db.collection("collections").findOne({ hidden: false, _id: new ObjectId(dataPath[1]) }, { projection: {tasks: 1} });
+          const updatedCollectionTasks = await db.collection("tasks").find({ _id: {$in: updatedCollectionInfo.tasks} }, { projection: {owner: 1} }).toArray(); // deliberately includes hidden tasks
 
           var taskIds = [];
           updatedCollectionTasks.forEach(task => {
@@ -765,7 +765,7 @@ async function dataRoute(req, res) {
             }
           });
 
-          await db.collection("collections").updateOne({ _id: new ObjectId(dataPath[1]) }, { $pull: {tasks: {$in: taskIds}} });
+          await db.collection("collections").updateOne({ hidden: false, _id: new ObjectId(dataPath[1]) }, { $pull: {tasks: {$in: taskIds}} });
           res.json(updatedCollection);
           
         }
