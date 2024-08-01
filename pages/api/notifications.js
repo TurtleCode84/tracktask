@@ -36,7 +36,8 @@ async function notificationsRoute(req, res) {
             await db.collection("tasks").updateOne({ hidden: false, _id: new ObjectId(tasks[j]._id)}, { $set: {notified: true} });
           }
         }
-        res.status(200).json({ message: "Success", debug: debug });
+        //console.warn({ debug: debug });
+        res.status(200).json({ message: "Success" });
         return;
       } catch (error) {
         res.status(500).json({ message: error.message });

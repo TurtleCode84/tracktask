@@ -161,16 +161,13 @@ async function adminDataRoute(req, res) {
         return;
       }
 
-    } else if (req.method === 'PATCH') { // Updates a task (WIP)
+    } else if (req.method === 'PATCH') { // Updates a task (WIP, stable)
 
       // Make sure there is a valid task ID to update
       if (!ObjectId.isValid(dataPath[1])) {
         res.status(422).json({ message: "Invalid task ID" });
         return;
       }
-
-      //res.status(503).json({ message: "Under construction" });
-      //return;
 
       const body = await req.body;
 
@@ -227,6 +224,7 @@ async function adminDataRoute(req, res) {
         updateDoc.completion.completed = body.completion.completed;
         updateDoc.completion.completedBy = body.completion.completedBy;
       }
+      // owner
 
       updateDoc = {
         $set: updateDoc,

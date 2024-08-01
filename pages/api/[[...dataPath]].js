@@ -129,7 +129,8 @@ async function dataRoute(req, res) {
                 } else {
                   collectionRole = allCollections[j].sharing.sharedWith.find(element => element.id.equals(user._id))?.role;
                   if (!collectionRole) {
-                    res.status(500).json({ debug: allCollections[j], ownerTest: allCollections[j].owner.equals(user._id) });
+                    console.error({ debug: allCollections[j], ownerTest: allCollections[j].owner.equals(user._id) });
+                    res.status(500).json({ message: "A server error occurred, please contact a site administrator." });
                     return;
                   }
                 }
