@@ -219,6 +219,7 @@ async function adminDataRoute(req, res) {
       }
       if (body.priority !== undefined) {updateDoc.priority = body.priority;}
       if (body.hidden !== undefined) {updateDoc.hidden = body.hidden;}
+      if (body.notified !== undefined) {updateDoc.notified = body.notified;}
       if (body.completion) {
         updateDoc.completion = {};
         updateDoc.completion.completed = body.completion.completed;
@@ -349,21 +350,31 @@ async function adminDataRoute(req, res) {
         return;
       }
 
-      res.status(503).json({ message: "Under construction" });
-      return;
-
       const body = await req.body;
+
+      // Get reported collections
+      const reportedCollections = await db.collection("reports").find({ $or: [ { type: "collection" }, { type: "share" } ] }, { projection: { reported: 1 } }).toArray();
+      var reportedCollectionIds = [];
+      reportedCollections.forEach(collection => {
+        const collectionReportedId = new ObjectId(collection.reported._id);
+        if (!reportedCollectionIds.some((element) => collectionReportedId.equals(element))) {
+          reportedCollectionIds.push(collectionReportedId);
+        }
+      });
+
       var updateDoc = {};
 
       if (dataPath[1]) { // Updating a specific collection
-        const query = {
-          _id: new ObjectId(dataPath[1]),
-          hidden: false,
-          owner: user._id,
+        const reportedCollectionQuery = {
+          $and: [
+            { _id: { $in: reportedCollectionIds } },
+            { _id: new ObjectId(dataPath[1]) },
+          ],
         };
-        if (body.name) {updateDoc.name = body.name.trim().slice(0, 55);} // Enforce length limit
-        if (body.description !== undefined) {updateDoc.description = body.description.trim().slice(0, 500);}
-        if (body.shared !== undefined && user.permissions.verified) {
+        if (body.name) {updateDoc.name = body.name.trim();} // Allow admins to bypass length limits
+        if (body.description !== undefined) {updateDoc.description = body.description.trim();}
+        if (body.hidden !== undefined) {updateDoc.hidden = body.hidden;}
+        if (body.shared !== undefined) {
           updateDoc = {
             $set: {
               ...updateDoc,
@@ -375,14 +386,21 @@ async function adminDataRoute(req, res) {
             $set: updateDoc,
           };
         }
+        // owner
+        // sharing.sharedWith
         try {
-          const updatedCollection = await db.collection("collections").updateOne(query, updateDoc);
+          const updatedCollection = await db.collection("collections").updateOne(reportedCollectionQuery, updateDoc);
           res.json(updatedCollection);
         } catch (error) {
           res.status(500).json({ message: error.message });
           return;
         }
       } else { // Adding a task to collections
+        res.status(503).json({ message: "Under construction" });
+        return;
+
+        // Task must be reported or in a reported collection
+
         // The following query will return null if the user does not own the task
         const taskInfo = await db.collection("tasks").findOne({_id: new ObjectId(body.taskId), owner: user._id, hidden: false}, { projection: { owner: 1 } });
 
