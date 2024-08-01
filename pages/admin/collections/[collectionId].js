@@ -110,7 +110,7 @@ export default function Collection() {
           e.preventDefault();
           document.getElementById("hideCollectionBtn").disabled = true;
           const body = {
-            hidden: true,
+            hidden: !collection?.hidden,
           };
           try {
             await fetchJson(`/api/admin/collections/${collection?._id}`, {
@@ -128,7 +128,7 @@ export default function Collection() {
             document.getElementById("hideCollectionBtn").disabled = false;
           }
         }}
-        ><button id="hideCollectionBtn"><span style={{ color: "darkgray" }} className="material-symbols-outlined icon-list">visibility_off</span> Hide collection</button></a>
+        ><button id="hideCollectionBtn"><span style={{ color: "darkgray" }} className="material-symbols-outlined icon-list">visibility_off</span> {collection?.hidden ? 'Unhide' : 'Hide'} collection</button></a>
         <ReportButton user={user} type="collection" reported={collection} flag={true}/></>
       :
         <p style={{ fontStyle: "italic" }}>{error ? error.data.message : 'Loading collection...'}</p>

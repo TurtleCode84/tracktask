@@ -108,7 +108,7 @@ export default function TaskAdmin() {
           e.preventDefault();
           document.getElementById("hideTaskBtn").disabled = true;
           const body = {
-            hidden: true,
+            hidden: !task?.hidden,
           };
           try {
             await fetchJson(`/api/admin/tasks/${task?._id}`, {
@@ -126,7 +126,7 @@ export default function TaskAdmin() {
             document.getElementById("hideTaskBtn").disabled = false;
           }
         }}
-        ><button id="hideTaskBtn"><span style={{ color: "darkgray" }} className="material-symbols-outlined icon-list">visibility_off</span> Hide task</button></a>
+        ><button id="hideTaskBtn"><span style={{ color: "darkgray" }} className="material-symbols-outlined icon-list">visibility_off</span> {collection?.hidden ? 'Unhide' : 'Hide'} task</button></a>
         <ReportButton user={user} type="task" reported={task} flag={true}/></>
       :
         <p style={{ fontStyle: "italic" }}>{taskError ? taskError.data.message : 'Loading task...'}</p>
