@@ -192,12 +192,12 @@ async function adminDataRoute(req, res) {
       console.error(JSON.stringify({one: reportedCollections}));
 
       for (var i=0; i<reportedCollections.length; i++) {
-        const collectionTasks = await db.collection("collections").findOne({ _id: new ObjectId(reportedCollections[i].reported._id) }).tasks;
-        console.error(JSON.stringify({fori: collectionTasks}));
+        const collectionTasks = await db.collection("collections").findOne({ _id: new ObjectId(reportedCollections[i].reported._id) });
+        console.error(collectionTasks);
         if (collectionTasks) { // Reported collection may not exist anymore
           for (var j=0; j<collectionTasks.length; j++) {
-            if (!reportedTaskIds.some((element) => collectionTasks[j].equals(element))) {
-              reportedTaskIds.push(collectionTasks[j]);
+            if (!reportedTaskIds.some((element) => collectionTasks.tasks[j].equals(element))) {
+              reportedTaskIds.push(collectionTasks.tasks[j]);
             }
           }
         }
