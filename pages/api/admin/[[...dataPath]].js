@@ -194,15 +194,15 @@ async function adminDataRoute(req, res) {
           reportedCollectionIds.push(collectionReportedId);
         }
       });
-      reportedCollectionIds.forEach(id => {
-        const collectionTasks = await db.collection("collections").findOne({ _id: id }).tasks;
-        collectionTasks.forEach(task => {
-          const taskReportedId = new ObjectId(collection.reported._id);
+      for (var i=0; i<reportedCollectionIds.length; i++) {
+        const collectionTasks = await db.collection("collections").findOne({ _id: reportedCollectionIds[i] }).tasks;
+        for (var j=0; j<collectionTasks.length; j++) {
+          const taskReportedId = new ObjectId(collectionTasks[j]);
           if (!reportedTaskIds.includes(taskReportedId)) {
             reportedTaskIds.push(taskReportedId);
           }
-        });
-      });
+        }
+      }
     
       // reportedTaskIds should now contain all directly and indirectly reported tasks
 
