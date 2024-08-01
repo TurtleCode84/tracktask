@@ -89,9 +89,8 @@ async function adminDataRoute(req, res) {
             });
             const hiddenCollections = await db.collection("collections").find({ hidden: true }).toArray();
             hiddenCollections.forEach(collection => {
-              const collectionReportedId = new ObjectId(collection.reported._id);
-              if (!reportedCollectionIds.includes(collectionReportedId)) {
-                reportedCollectionIds.push(collectionReportedId);
+              if (!reportedCollectionIds.includes(collection._id)) {
+                reportedCollectionIds.push(collection._id);
               }
             });
             const inReportedCollections = await db.collection("collections").countDocuments({ _id: { $in: reportedCollectionIds }, tasks: new ObjectId(dataPath[1]) });
