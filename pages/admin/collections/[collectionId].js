@@ -44,7 +44,7 @@ export default function Collection() {
   
   return (
     <Layout>
-      <h2>{collection ? <>{collection.hidden && <span title="Hidden" style={{ color: "red" }} className="material-symbols-outlined">disabled_visible</span>}{collection.sharing.shared ? <span title="Shared" style={{ color: "lightslategray" }} className="material-symbols-outlined">group</span> : <span title="Private" style={{ color: "lightslategray" }} className="material-symbols-outlined">lock</span>}<span style={{ color: stringToColor(collection._id), filter: "grayscale(0.4) brightness(1.5)" }} className="material-symbols-outlined">fiber_manual_record</span>{' '}{collection.name}:</> : 'Loading...'}</h2>
+      <h2>{collection ? <>{collection.hidden && <><span title="Hidden" style={{ color: "red" }} className="material-symbols-outlined">disabled_visible</span>{' '}</>}{collection.sharing.shared ? <span title="Shared" style={{ color: "lightslategray" }} className="material-symbols-outlined">group</span> : <span title="Private" style={{ color: "lightslategray" }} className="material-symbols-outlined">lock</span>}<span style={{ color: stringToColor(collection._id), filter: "grayscale(0.4) brightness(1.5)" }} className="material-symbols-outlined">fiber_manual_record</span>{' '}{collection.name}:</> : 'Loading...'}</h2>
       <Link href="/admin/collections">Back to collections</Link><br/>
       <Link href="/admin">Back to admin dashboard</Link><br/>
       {collection ?
