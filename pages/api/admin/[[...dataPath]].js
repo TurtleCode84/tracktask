@@ -29,7 +29,7 @@ async function adminDataRoute(req, res) {
 
   if (dataPath[0] === "tasks") {
 
-    if (req.method === 'GET') { // Returns a task or array of tasks, but only if reported
+    if (req.method === 'GET') { // Returns a task or array of tasks, but only if reported or hidden
       
       const reportedTasksQuery = {};
       const tasksOptions = {
@@ -51,11 +51,16 @@ async function adminDataRoute(req, res) {
 
         if (dataPath[1]) {
           reportedTasksQuery.$and = [
-            { _id: { $in: reportedTaskIds } },
+            { 
+              $or: [
+                { hidden: true },
+                { _id: { $in: reportedTaskIds } },
+              ],
+            },
             { _id: new ObjectId(dataPath[1]) },
           ];
         } else {
-          reportedTasksQuery._id = { $in: reportedTaskIds };
+          reportedTasksQuery.$or = [ { hidden: true }, { _id: { $in: reportedTaskIds } } ];
           if (filter === "recent") {
             reportedTasksQuery.created = {$gte: (Math.floor(Date.now()/1000) - 172800)}; // 2 days ago
           } else if (filter === "upcoming") {
@@ -147,7 +152,12 @@ async function adminDataRoute(req, res) {
       
       const query = {
         $and: [
-          { _id: { $in: reportedTaskIds } }, // Is a reported task
+          { 
+            $or: [
+              { hidden: true },
+              { _id: { $in: reportedTaskIds } },
+            ],
+          }, // Is a reported or hidden task
           { _id: new ObjectId(dataPath[1]) }, // Matches the specified task ID
         ],
       };
@@ -200,7 +210,12 @@ async function adminDataRoute(req, res) {
 
       const reportedTaskQuery = {
         $and: [
-          { _id: { $in: reportedTaskIds } },
+          { 
+            $or: [
+              { hidden: true },
+              { _id: { $in: reportedTaskIds } },
+            ],
+          },
           { _id: new ObjectId(dataPath[1]) },
         ],
       };
@@ -250,7 +265,7 @@ async function adminDataRoute(req, res) {
     
   } else if (dataPath[0] === "collections") {
 
-    if (req.method === 'GET') { // Returns a collection or array of collections, but only if reported
+    if (req.method === 'GET') { // Returns a collection or array of collections, but only if reported or hidden
 
       const reportedCollectionsQuery = {};
       const collectionsOptions = {
@@ -277,11 +292,16 @@ async function adminDataRoute(req, res) {
 
         if (dataPath[1]) {
           reportedCollectionsQuery.$and = [
-            { _id: { $in: reportedCollectionIds } },
+            { 
+              $or: [
+                { hidden: true },
+                { _id: { $in: reportedCollectionIds } },
+              ],
+            },
             { _id: new ObjectId(dataPath[1]) },
           ];
         } else {
-          reportedCollectionsQuery._id = { $in: reportedCollectionIds };
+          reportedCollectionsQuery.$or = [ { hidden: true }, { _id: { $in: reportedCollectionIds } } ];
         }
 
         try {
@@ -327,7 +347,12 @@ async function adminDataRoute(req, res) {
 
       const query = {
         $and: [
-          { _id: { $in: reportedCollectionIds } }, // Is a reported collection
+          { 
+            $or: [
+              { hidden: true },
+              { _id: { $in: reportedCollectionIds } },
+            ],
+          }, // Is a reported or hidden collection
           { _id: new ObjectId(dataPath[1]) }, // Matches the specified collection ID
         ],
       };
@@ -342,7 +367,7 @@ async function adminDataRoute(req, res) {
         return;
       }
 
-    } else if (req.method === 'PATCH') { // Updates or adds/removes tasks from a collection (WIP)
+    } else if (req.method === 'PATCH') { // Updates or adds/removes tasks from a collection (WIP, semi-stable)
 
       // Make sure there is a valid collection ID to update
       if (dataPath[1] && !ObjectId.isValid(dataPath[1])) {
@@ -367,7 +392,12 @@ async function adminDataRoute(req, res) {
       if (dataPath[1]) { // Updating a specific collection
         const reportedCollectionQuery = {
           $and: [
-            { _id: { $in: reportedCollectionIds } },
+            { 
+              $or: [
+                { hidden: true },
+                { _id: { $in: reportedCollectionIds } },
+              ],
+            },
             { _id: new ObjectId(dataPath[1]) },
           ],
         };
@@ -395,11 +425,39 @@ async function adminDataRoute(req, res) {
           res.status(500).json({ message: error.message });
           return;
         }
-      } else { // Adding a task to collections
+      } else { // Adding a task to collections (WIP)
         res.status(503).json({ message: "Under construction" });
         return;
 
         // Task must be reported or in a reported collection
+
+        // Get reported tasks
+        var reportedTasks = await db.collection("reports").find({ type: "task" }, { projection: { reported: 1 } }).toArray();
+
+        var reportedTaskIds = [];
+        reportedTasks.forEach(task => {
+          const taskReportedId = new ObjectId(task.reported._id);
+          if (!reportedTaskIds.some((element) => taskReportedId.equals(element))) {
+            reportedTaskIds.push(taskReportedId);
+          }
+        });
+
+        // Get and append tasks from reported collections as well
+
+        for (var i=0; i<reportedCollectionIds.length; i++) {
+          const collectionTasks = await db.collection("collections").findOne({ _id: reportedCollectionIds[i] });
+          if (collectionTasks) { // Reported collection may not exist anymore
+            for (var j=0; j<collectionTasks.tasks.length; j++) {
+              if (!reportedTaskIds.some((element) => collectionTasks.tasks[j].equals(element))) {
+                reportedTaskIds.push(collectionTasks.tasks[j]);
+              }
+            }
+          }
+        }
+
+        // reportedTaskIds should now contain all directly and indirectly reported tasks
+
+        // CONTINUE RENOVATING HERE
 
         // The following query will return null if the user does not own the task
         const taskInfo = await db.collection("tasks").findOne({_id: new ObjectId(body.taskId), owner: user._id, hidden: false}, { projection: { owner: 1 } });
