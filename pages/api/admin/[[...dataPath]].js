@@ -174,16 +174,44 @@ async function adminDataRoute(req, res) {
 
       const body = await req.body;
 
-      const reportedTasks = await db.collection("reports").find({ type: "task" }, { projection: { reported: 1 } }).toArray();
+      // Get reported tasks
+      var reportedTasks = await db.collection("reports").find({ type: "task" }, { projection: { reported: 1 } }).toArray();
+
       var reportedTaskIds = [];
-      reportedTasks.forEach(task => reportedTaskIds.push(new ObjectId(task.reported._id)));
+      reportedTasks.forEach(task => {
+        const taskReportedId = new ObjectId(task.reported._id);
+        if (!reportedTaskIds.includes(taskReportedId)) {
+          reportedTaskIds.push(taskReportedId);
+        }
+      });
+      
+      // Get and append tasks from reported collections as well
+      const reportedCollections = await db.collection("reports").find({ $or: [ { type: "collection" }, { type: "share" } ] }, { projection: { reported: 1 } }).toArray();
+      var reportedCollectionIds = [];
+      reportedCollections.forEach(collection => {
+        const collectionReportedId = new ObjectId(collection.reported._id);
+        if (!reportedCollectionIds.includes(collectionReportedId)) {
+          reportedCollectionIds.push(collectionReportedId);
+        }
+      });
+      reportedCollectionIds.forEach(id => {
+        const collectionTasks = await db.collection("collections").findOne({ _id: id }).tasks;
+        collectionTasks.forEach(task => {
+          const taskReportedId = new ObjectId(collection.reported._id);
+          if (!reportedTaskIds.includes(taskReportedId)) {
+            reportedTaskIds.push(taskReportedId);
+          }
+        });
+      });
+    
+      // reportedTaskIds should now contain all directly and indirectly reported tasks
 
       const reportedTaskQuery = {
         $and: [
           { _id: { $in: reportedTaskIds } },
           { _id: new ObjectId(dataPath[1]) },
         ],
-      }
+      };
 
       var updateDoc = {};
 
