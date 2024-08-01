@@ -176,7 +176,6 @@ async function adminDataRoute(req, res) {
 
       // Get reported tasks
       var reportedTasks = await db.collection("reports").find({ type: "task" }, { projection: { reported: 1 } }).toArray();
-      console.error(JSON.stringify({one: reportedTasks}));
 
       var reportedTaskIds = [];
       reportedTasks.forEach(task => {
@@ -185,15 +184,12 @@ async function adminDataRoute(req, res) {
           reportedTaskIds.push(taskReportedId);
         }
       });
-      console.error(JSON.stringify({one: reportedTaskIds}));
       
       // Get and append tasks from reported collections as well
       const reportedCollections = await db.collection("reports").find({ $or: [ { type: "collection" }, { type: "share" } ] }, { projection: { reported: 1 } }).toArray();
-      console.error(JSON.stringify({one: reportedCollections}));
 
       for (var i=0; i<reportedCollections.length; i++) {
         const collectionTasks = await db.collection("collections").findOne({ _id: new ObjectId(reportedCollections[i].reported._id) });
-        console.error(collectionTasks);
         if (collectionTasks) { // Reported collection may not exist anymore
           for (var j=0; j<collectionTasks.tasks.length; j++) {
             if (!reportedTaskIds.some((element) => collectionTasks.tasks[j].equals(element))) {
@@ -202,7 +198,6 @@ async function adminDataRoute(req, res) {
           }
         }
       }
-      console.error(JSON.stringify({two: reportedTaskIds}));
     
       // reportedTaskIds should now contain all directly and indirectly reported tasks
 
