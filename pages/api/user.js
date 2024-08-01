@@ -12,10 +12,8 @@ async function userRoute(req, res) {
     if (req.session.user) {
       const client = await clientPromise;
       const db = client.db("data");
-      const query = { _id: new ObjectId(req.session.user.id) };
+      const query = { _id: new ObjectId(req.session.user.id), 'permissions.banned': false };
       const userInfo = await db.collection("users").findOne(query);
-      const taskCount = await db.collection("tasks").countDocuments({ hidden: false, owner: new ObjectId(req.session.user.id) });
-      const collectionCount = await db.collection("collections").countDocuments({ hidden: false, owner: new ObjectId(req.session.user.id) });
       if (!userInfo) {
         await req.session.destroy();
         res.json({
@@ -32,6 +30,8 @@ async function userRoute(req, res) {
       if (userInfo.history.lastEdit.by != req.session.user.id) {
         delete userInfo.history.lastEdit.by;
       }
+      const taskCount = await db.collection("tasks").countDocuments({ hidden: false, owner: new ObjectId(req.session.user.id) });
+      const collectionCount = await db.collection("collections").countDocuments({ hidden: false, owner: new ObjectId(req.session.user.id) });
       const user = {
         ...req.session.user,
         isLoggedIn: true,
