@@ -78,10 +78,17 @@ async function adminDataRoute(req, res) {
 
           if (data.length === 0 && dataPath[1]) {
 
-            // Get and append tasks from reported collections as well
+            // Get and append tasks from reported and hidden collections as well
             const reportedCollections = await db.collection("reports").find({ $or: [ { type: "collection" }, { type: "share" } ] }, { projection: { reported: 1 } }).toArray();
             var reportedCollectionIds = [];
             reportedCollections.forEach(collection => {
+              const collectionReportedId = new ObjectId(collection.reported._id);
+              if (!reportedCollectionIds.includes(collectionReportedId)) {
+                reportedCollectionIds.push(collectionReportedId);
+              }
+            });
+            const hiddenCollections = await db.collection("collections").find({ hidden: true }).toArray();
+            hiddenCollections.forEach(collection => {
               const collectionReportedId = new ObjectId(collection.reported._id);
               if (!reportedCollectionIds.includes(collectionReportedId)) {
                 reportedCollectionIds.push(collectionReportedId);
