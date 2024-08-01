@@ -195,7 +195,7 @@ async function adminDataRoute(req, res) {
         const collectionTasks = await db.collection("collections").findOne({ _id: new ObjectId(reportedCollections[i].reported._id) });
         console.error(collectionTasks);
         if (collectionTasks) { // Reported collection may not exist anymore
-          for (var j=0; j<collectionTasks.length; j++) {
+          for (var j=0; j<collectionTasks.tasks.length; j++) {
             if (!reportedTaskIds.some((element) => collectionTasks.tasks[j].equals(element))) {
               reportedTaskIds.push(collectionTasks.tasks[j]);
             }
