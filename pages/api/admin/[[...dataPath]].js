@@ -187,16 +187,14 @@ async function adminDataRoute(req, res) {
       
       // Get and append tasks from reported collections as well
       const reportedCollections = await db.collection("reports").find({ $or: [ { type: "collection" }, { type: "share" } ] }, { projection: { reported: 1 } }).toArray();
-      
-      console.log({ one: reportedTaskIds, two: reportedCollections, three: reportedTasks });
-      res.status(500).json({ message: "See debug logs" });
-      return;
 
       for (var i=0; i<reportedCollections.length; i++) {
         const collectionTasks = await db.collection("collections").findOne({ _id: new ObjectId(reportedCollections[i].reported._id) }).tasks;
-        for (var j=0; j<collectionTasks.length; j++) {
-          if (!reportedTaskIds.includes(collectionTasks[j])) {
-            reportedTaskIds.push(collectionTasks[j]);
+        if (collectionTasks) { // Reported collection may not exist anymore
+          for (var j=0; j<collectionTasks.length; j++) {
+            if (!reportedTaskIds.includes(collectionTasks[j])) {
+              reportedTaskIds.push(collectionTasks[j]);
+            }
           }
         }
       }
