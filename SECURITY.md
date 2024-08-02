@@ -11,7 +11,7 @@ The current production deployment, available at https://tracktask.eu.org, is alw
 | preview      | :x:                |
 
 ## Searching for Vulnerabilities
-If you are a security researcher or intend to search for security issues in TrackTasks's codebase, application, or services, you are welcome to do so, provided that you do not cause our website and its services an undue amount of strain or stress. Only test vulnerabilities to the extend necessary to obtain enough information for the issue to be properly investigated and fixed, then report them immediately via the proper channels.
+If you are a security researcher or intend to search for security issues in TrackTasks's codebase, application, or services, you are welcome to do so, provided that you do not cause our website and its services an undue amount of strain or stress. Only test vulnerabilities to the extent necessary to obtain enough information for the issue to be properly investigated and fixed, then report them immediately via the proper channels.
 
 ## Reporting a Vulnerability
 

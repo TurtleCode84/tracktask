@@ -50,18 +50,18 @@ export default function Admin() {
       {dynamicMsg && <p className="success">{dynamicMsg}{' '}<Link href="/admin">Ok</Link></p>}
       <h2><hr/>Recent Reports<hr/></h2>
       <ul style={{ display: "table" }}>
-        {reportList?.length > 0 ? reportList : <li>No reports found!</li>}
+        {reportList?.length > 0 ? reportList : <li style={{ fontStyle: "italic" }}>No reports found!</li>}
       </ul>
       <h2><hr/>User Statistics<hr/></h2>
       <h3>Recently active:</h3>
       <ul>
-        {activeUsersList ? activeUsersList : 'Loading active users...'}
-        {activeUsersList && activeUsersList === null && <>No active users found</>}
+        {activeUsersList ? activeUsersList : <li style={{ fontStyle: "italic" }}>Loading active users...</li>}
+        {activeUsersList && activeUsersList === null && <li style={{ fontStyle: "italic" }}>No active users found</li>}
       </ul>
       <h3>Recently joined:</h3>
       <ul>
-        {newUsersList ? newUsersList : 'Loading new users...'}
-        {newUsersList && newUsersList === null && <>No new users found</>}
+        {newUsersList ? newUsersList : <li style={{ fontStyle: "italic" }}>Loading new users...</li>}
+        {newUsersList && newUsersList === null && <li style={{ fontStyle: "italic" }}>No new users found</li>}
       </ul>
       <Link href="/admin/users">View all users</Link><hr/>
       <p>Useful admin pages:</p>

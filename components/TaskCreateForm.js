@@ -1,3 +1,5 @@
+import dynamicToggle from "lib/dynamicToggle";
+
 export default function TaskCreateForm({ collections, errorMessage, onSubmit }) {
   const listCollections = collections?.filter(collection => collection.sharing?.role === "owner" || collection.sharing?.role === "contributor").map((collection) =>
     <option key={collection._id} value={collection._id}>{collection.name}</option>
@@ -8,9 +10,11 @@ export default function TaskCreateForm({ collections, errorMessage, onSubmit }) 
         <span>Name</span>
         <input type="text" name="name" maxlength="55" autoFocus required />
       </label>
+      <details id="adetails">
+      <summary onClick={(e) => { dynamicToggle(e, "adetails") }}>Additional details</summary><br/>
       <label>
-        <span>Description</span>
-        <textarea name="description" rows="8" cols="30" maxlength="500" required />
+        <span>Description (optional)</span>
+        <textarea name="description" rows="8" cols="30" maxlength="500" />
       </label><br/>
       <label>
         <span>Due Date (optional)</span>
@@ -26,6 +30,7 @@ export default function TaskCreateForm({ collections, errorMessage, onSubmit }) 
         <span>Mark as priority</span>
         <input type="checkbox" name="markPriority" />
       </label>
+      </details><br/>
 
       <button type="submit" id="createTaskBtn">Create task</button>
 

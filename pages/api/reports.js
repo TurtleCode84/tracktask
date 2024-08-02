@@ -6,13 +6,15 @@ import { sessionOptions } from "lib/session";
 export default withIronSessionApiRoute(reportsRoute, sessionOptions);
 
 async function reportsRoute(req, res) {
-  const user = req.session.user;
-  if (!user || !user.isLoggedIn || user.permissions.banned) {
-    res.status(401).json({ message: "Unauthorized" });
-    return;
-  }
   const client = await clientPromise;
   const db = client.db("data");
+
+  const sessionUser = req.session.user;
+  const user = sessionUser ? await db.collection("users").findOne({ _id: new ObjectId(sessionUser.id) }) : undefined;
+  if (!sessionUser || !sessionUser.isLoggedIn || user.permissions.banned) {
+    res.status(401).json({ message: "Authentication required" });
+    return;
+  }
   if (req.method === 'GET' && user.permissions.admin) {
     const { reviewed } = req.query;
     var query;
@@ -31,7 +33,7 @@ async function reportsRoute(req, res) {
     }
     try {
       const newReport = {
-        reporter: new ObjectId(user.id),
+        reporter: user._id,
         type: type,
         reason: reason.trim(),
         reported: reported,
@@ -43,12 +45,12 @@ async function reportsRoute(req, res) {
         const query = {
           _id: new ObjectId(reported._id),
           hidden: false,
-          'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user.id)}},
+          'sharing.shared': true, 'sharing.sharedWith': {$elemMatch: {id: user._id}},
         };
         const updateDoc = {
           $pull: {
             'sharing.sharedWith': {
-              id: new ObjectId(user.id),
+              id: user._id,
             },
           }
         };

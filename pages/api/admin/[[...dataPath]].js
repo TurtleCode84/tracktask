@@ -7,27 +7,29 @@ import moment from "moment";
 export default withIronSessionApiRoute(adminDataRoute, sessionOptions);
 
 async function adminDataRoute(req, res) {
-  const user = req.session.user;
   const { dataPath, filter } = req.query;
   const allowedPaths = ["tasks", "collections"];
 
   if (!dataPath || dataPath.length > 2 || !allowedPaths.includes(dataPath[0])) {
     res.status(404).json({ message: "Endpoint not found" });
     return;
-  } else if (!user || !user.isLoggedIn || user.permissions.banned || !user.permissions.admin) {
+  }
+
+  const client = await clientPromise;
+  const db = client.db("data");
+
+  const sessionUser = req.session.user;
+  const user = sessionUser ? await db.collection("users").findOne({ _id: new ObjectId(sessionUser.id) }) : undefined;
+  if (!sessionUser || !sessionUser.isLoggedIn || user.permissions.banned || !user.permissions.admin) {
     res.status(401).json({ message: "Authentication required" });
     return;
   }
 
   // At this point we know that the first parameter is either tasks or collections, and the user is an authorized admin
-  // So now we might as well initialize the DB connector
-
-  const client = await clientPromise;
-  const db = client.db("data");
 
   if (dataPath[0] === "tasks") {
 
-    if (req.method === 'GET') { // Returns a task or array of tasks, but only if reported
+    if (req.method === 'GET') { // Returns a task or array of tasks, but only if reported or hidden
       
       const reportedTasksQuery = {};
       const tasksOptions = {
@@ -49,11 +51,16 @@ async function adminDataRoute(req, res) {
 
         if (dataPath[1]) {
           reportedTasksQuery.$and = [
-            { _id: { $in: reportedTaskIds } },
+            { 
+              $or: [
+                { hidden: true },
+                { _id: { $in: reportedTaskIds } },
+              ],
+            },
             { _id: new ObjectId(dataPath[1]) },
           ];
         } else {
-          reportedTasksQuery._id = { $in: reportedTaskIds };
+          reportedTasksQuery.$or = [ { hidden: true }, { _id: { $in: reportedTaskIds } } ];
           if (filter === "recent") {
             reportedTasksQuery.created = {$gte: (Math.floor(Date.now()/1000) - 172800)}; // 2 days ago
           } else if (filter === "upcoming") {
@@ -71,13 +78,19 @@ async function adminDataRoute(req, res) {
 
           if (data.length === 0 && dataPath[1]) {
 
-            // Get and append tasks from reported collections as well
+            // Get and append tasks from reported and hidden collections as well
             const reportedCollections = await db.collection("reports").find({ $or: [ { type: "collection" }, { type: "share" } ] }, { projection: { reported: 1 } }).toArray();
             var reportedCollectionIds = [];
             reportedCollections.forEach(collection => {
               const collectionReportedId = new ObjectId(collection.reported._id);
               if (!reportedCollectionIds.includes(collectionReportedId)) {
                 reportedCollectionIds.push(collectionReportedId);
+              }
+            });
+            const hiddenCollections = await db.collection("collections").find({ hidden: true }).toArray();
+            hiddenCollections.forEach(collection => {
+              if (!reportedCollectionIds.includes(collection._id)) {
+                reportedCollectionIds.push(collection._id);
               }
             });
             const inReportedCollections = await db.collection("collections").countDocuments({ _id: { $in: reportedCollectionIds }, tasks: new ObjectId(dataPath[1]) });
@@ -87,7 +100,7 @@ async function adminDataRoute(req, res) {
             }
           
           }
-          // data should now contain a task from a reported collection, if it exists
+          // data should now contain a task from a reported or hidden collection, if it exists
           
           // At this point we can tell if the task exists
           if (dataPath[1] && data.length < 1) {
@@ -142,10 +155,17 @@ async function adminDataRoute(req, res) {
       const reportedTasks = await db.collection("reports").find({ type: "task" }, { projection: { reported: 1 } }).toArray();
       var reportedTaskIds = [];
       reportedTasks.forEach(task => reportedTaskIds.push(task.reported));
+
+      // Current logic does NOT allow deletion for unreported/unhidden tasks
       
       const query = {
         $and: [
-          { _id: { $in: reportedTaskIds } }, // Is a reported task
+          { 
+            $or: [
+              { hidden: true },
+              { _id: { $in: reportedTaskIds } },
+            ],
+          }, // Is a reported or hidden task
           { _id: new ObjectId(dataPath[1]) }, // Matches the specified task ID
         ],
       };
@@ -159,7 +179,7 @@ async function adminDataRoute(req, res) {
         return;
       }
 
-    } else if (req.method === 'PATCH') { // Updates a task (WIP)
+    } else if (req.method === 'PATCH') { // Updates a task (WIP, stable)
 
       // Make sure there is a valid task ID to update
       if (!ObjectId.isValid(dataPath[1])) {
@@ -167,98 +187,82 @@ async function adminDataRoute(req, res) {
         return;
       }
 
-      res.status(503).json({ message: "Under construction" });
-      return;
-
-      const reportedTasks = await db.collection("reports").find({ type: "task" }, { projection: { reported: 1 } }).toArray();
-      var reportedTaskIds = [];
-      reportedTasks.forEach(task => reportedTaskIds.push(task.reported));
-
       const body = await req.body;
-      const taskInCollabCollectionQuery = {
-        hidden: false,
-        $or: [
-          { owner: new ObjectId(user.id) },
-          {
-            'sharing.shared': true,
-            'sharing.sharedWith': {
-              $elemMatch: {
-                id: new ObjectId(user.id),
-                $and: [
-                  {role: {$not: /pending/i}},
-                  {$or: [
-                    {role: "collaborator"},
-                    {role: "contributor"},
-                  ]},
-                ],
-              }
-            }
+
+      // Get reported tasks
+      var reportedTasks = await db.collection("reports").find({ type: "task" }, { projection: { reported: 1 } }).toArray();
+
+      var reportedTaskIds = [];
+      reportedTasks.forEach(task => {
+        const taskReportedId = new ObjectId(task.reported._id);
+        if (!reportedTaskIds.some((element) => taskReportedId.equals(element))) {
+          reportedTaskIds.push(taskReportedId);
         }
-      ],
-        tasks: new ObjectId(dataPath[1]),
+      });
+      
+      // Get and append tasks from reported and hidden collections as well
+      const reportedCollections = await db.collection("reports").find({ $or: [ { type: "collection" }, { type: "share" } ] }, { projection: { reported: 1 } }).toArray();
+
+      for (var i=0; i<reportedCollections.length; i++) {
+        const collectionTasks = await db.collection("collections").findOne({ _id: new ObjectId(reportedCollections[i].reported._id) });
+        if (collectionTasks) { // Reported collection may not exist anymore
+          for (var j=0; j<collectionTasks.tasks.length; j++) {
+            if (!reportedTaskIds.some((element) => collectionTasks.tasks[j].equals(element))) {
+              reportedTaskIds.push(collectionTasks.tasks[j]);
+            }
+          }
+        }
+      }
+      const hiddenCollections = await db.collection("collections").find({ hidden: true }).toArray();
+      hiddenCollections.forEach(collection => {
+        for (var i=0; i<collection.tasks.length; i++) {
+          if (!reportedTaskIds.includes(collection.tasks[i])) {
+            reportedTaskIds.push(collection.tasks[i]);
+          }
+        }
+      });
+    
+      // reportedTaskIds should now contain all directly and indirectly reported tasks, plus those from hidden collections
+
+      const reportedTaskQuery = {
+        $and: [
+          { 
+            $or: [
+              { hidden: true },
+              { _id: { $in: reportedTaskIds } },
+            ],
+          },
+          { _id: new ObjectId(dataPath[1]) },
+        ],
       };
-      const ownTaskQuery = {
-        _id: new ObjectId(dataPath[1]),
-        hidden: false,
-        owner: new ObjectId(user.id),
-      };
-      const taskQuery = { // Dangerous!
-        _id: new ObjectId(dataPath[1]),
-        hidden: false,
-      };
+
       var updateDoc = {};
 
-      // Check if proper perms are present
-      var perms;
-      const isOwnTask = await db.collection("tasks").countDocuments(ownTaskQuery);
-      if (isOwnTask >= 1) {
-        perms = "edit";
-      } else {
-        const isCollabTask = await db.collection("collections").countDocuments(taskInCollabCollectionQuery);
-        if (isCollabTask >= 1) {
-          perms = "complete";
+      if (body.name) {updateDoc.name = body.name.trim();} // Allow admins to bypass length limits
+      if (body.description !== undefined) {updateDoc.description = body.description.trim();}
+      if (body.dueDate !== undefined) {
+        if (body.dueDate) {
+          updateDoc.dueDate = moment(body.dueDate).unix();
         } else {
-          res.status(403).json({ message: "You do not have permission to edit this task!" });
-          return;
+          updateDoc.dueDate = 0;
         }
+        updateDoc.notified = false;
       }
-
-      if (perms === "complete") {
-
-        if (body.completion) {
-          updateDoc.completion = {};
-          updateDoc.completion.completed = body.completion.completed;
-          updateDoc.completion.completedBy = body.completion.completedBy;
-        }
-
-      } else if (perms === "edit") {
-
-        if (body.name) {updateDoc.name = body.name.trim().slice(0, 55);} // Enforce length limit
-        if (body.description) {updateDoc.description = body.description.trim().slice(0, 500);}
-        if (body.dueDate !== undefined) {
-          if (body.dueDate) {
-            updateDoc.dueDate = moment(body.dueDate).unix();
-          } else {
-            updateDoc.dueDate = 0;
-          }
-          updateDoc.notified = false;
-        }
-        if (body.priority !== undefined) {updateDoc.priority = body.priority;}
-        if (body.completion) {
-          updateDoc.completion = {};
-          updateDoc.completion.completed = body.completion.completed;
-          updateDoc.completion.completedBy = body.completion.completedBy;
-        }
-
-      } else {
-        res.status(403).json({ message: "Permissions error" }); // This should not happen
-        return;
+      if (body.priority !== undefined) {updateDoc.priority = body.priority;}
+      if (body.hidden !== undefined) {updateDoc.hidden = body.hidden;}
+      if (body.notified !== undefined) {updateDoc.notified = body.notified;}
+      if (body.completion) {
+        updateDoc.completion = {};
+        updateDoc.completion.completed = body.completion.completed;
+        updateDoc.completion.completedBy = body.completion.completedBy;
       }
+      // owner
+
       updateDoc = {
         $set: updateDoc,
       };
       try {
-        const updatedTask = await db.collection("tasks").updateOne(taskQuery, updateDoc); // Dangerous!
+        const updatedTask = await db.collection("tasks").updateOne(reportedTaskQuery, updateDoc);
         res.json(updatedTask);
       } catch (error) {
         res.status(500).json({ message: error.message });
@@ -277,7 +281,7 @@ async function adminDataRoute(req, res) {
     
   } else if (dataPath[0] === "collections") {
 
-    if (req.method === 'GET') { // Returns a collection or array of collections, but only if reported
+    if (req.method === 'GET') { // Returns a collection or array of collections, but only if reported or hidden
 
       const reportedCollectionsQuery = {};
       const collectionsOptions = {
@@ -304,11 +308,16 @@ async function adminDataRoute(req, res) {
 
         if (dataPath[1]) {
           reportedCollectionsQuery.$and = [
-            { _id: { $in: reportedCollectionIds } },
+            { 
+              $or: [
+                { hidden: true },
+                { _id: { $in: reportedCollectionIds } },
+              ],
+            },
             { _id: new ObjectId(dataPath[1]) },
           ];
         } else {
-          reportedCollectionsQuery._id = { $in: reportedCollectionIds };
+          reportedCollectionsQuery.$or = [ { hidden: true }, { _id: { $in: reportedCollectionIds } } ];
         }
 
         try {
@@ -352,9 +361,16 @@ async function adminDataRoute(req, res) {
       var reportedCollectionIds = [];
       reportedCollections.forEach(collection => reportedCollectionIds.push(collection.reported));
 
+      // Current logic does NOT allow deletion for unreported/unhidden collections
+
       const query = {
         $and: [
-          { _id: { $in: reportedCollectionIds } }, // Is a reported collection
+          { 
+            $or: [
+              { hidden: true },
+              { _id: { $in: reportedCollectionIds } },
+            ],
+          }, // Is a reported or hidden collection
           { _id: new ObjectId(dataPath[1]) }, // Matches the specified collection ID
         ],
       };
@@ -369,7 +385,7 @@ async function adminDataRoute(req, res) {
         return;
       }
 
-    } else if (req.method === 'PATCH') { // Updates or adds/removes tasks from a collection (WIP)
+    } else if (req.method === 'PATCH') { // Updates or adds/removes tasks from a collection (WIP, semi-stable)
 
       // Make sure there is a valid collection ID to update
       if (dataPath[1] && !ObjectId.isValid(dataPath[1])) {
@@ -377,21 +393,36 @@ async function adminDataRoute(req, res) {
         return;
       }
 
-      res.status(503).json({ message: "Under construction" });
-      return;
-
       const body = await req.body;
+
+      // Get reported collections
+      const reportedCollections = await db.collection("reports").find({ $or: [ { type: "collection" }, { type: "share" } ] }, { projection: { reported: 1 } }).toArray();
+      var reportedCollectionIds = [];
+      reportedCollections.forEach(collection => {
+        const collectionReportedId = new ObjectId(collection.reported._id);
+        if (!reportedCollectionIds.some((element) => collectionReportedId.equals(element))) {
+          reportedCollectionIds.push(collectionReportedId);
+        }
+      });
+
       var updateDoc = {};
 
       if (dataPath[1]) { // Updating a specific collection
-        const query = {
-          _id: new ObjectId(dataPath[1]),
-          hidden: false,
-          owner: new ObjectId(user.id),
+        const reportedCollectionQuery = {
+          $and: [
+            { 
+              $or: [
+                { hidden: true },
+                { _id: { $in: reportedCollectionIds } },
+              ],
+            },
+            { _id: new ObjectId(dataPath[1]) },
+          ],
         };
-        if (body.name) {updateDoc.name = body.name.trim().slice(0, 55);} // Enforce length limit
-        if (body.description) {updateDoc.description = body.description.trim().slice(0, 500);}
-        if (body.shared !== undefined && user.permissions.verified) {
+        if (body.name) {updateDoc.name = body.name.trim();} // Allow admins to bypass length limits
+        if (body.description !== undefined) {updateDoc.description = body.description.trim();}
+        if (body.hidden !== undefined) {updateDoc.hidden = body.hidden;}
+        if (body.shared !== undefined) {
           updateDoc = {
             $set: {
               ...updateDoc,
@@ -403,16 +434,61 @@ async function adminDataRoute(req, res) {
             $set: updateDoc,
           };
         }
+        // owner
+        // sharing.sharedWith
         try {
-          const updatedCollection = await db.collection("collections").updateOne(query, updateDoc);
+          const updatedCollection = await db.collection("collections").updateOne(reportedCollectionQuery, updateDoc);
           res.json(updatedCollection);
         } catch (error) {
           res.status(500).json({ message: error.message });
           return;
         }
-      } else { // Adding a task to collections
+      } else { // Adding a task to collections (WIP)
+        res.status(503).json({ message: "Under construction" });
+        return;
+
+        // Task must be reported, hidden, or in a reported or hidden collection
+
+        // Get reported tasks
+        var reportedTasks = await db.collection("reports").find({ type: "task" }, { projection: { reported: 1 } }).toArray();
+
+        var reportedTaskIds = [];
+        reportedTasks.forEach(task => {
+          const taskReportedId = new ObjectId(task.reported._id);
+          if (!reportedTaskIds.some((element) => taskReportedId.equals(element))) {
+            reportedTaskIds.push(taskReportedId);
+          }
+        });
+
+        // Get and append tasks from reported and hidden collections as well
+
+        for (var i=0; i<reportedCollectionIds.length; i++) {
+          const collectionTasks = await db.collection("collections").findOne({ _id: reportedCollectionIds[i] });
+          if (collectionTasks) { // Reported collection may not exist anymore
+            for (var j=0; j<collectionTasks.tasks.length; j++) {
+              if (!reportedTaskIds.some((element) => collectionTasks.tasks[j].equals(element))) {
+                reportedTaskIds.push(collectionTasks.tasks[j]);
+              }
+            }
+          }
+        }
+        const hiddenCollections = await db.collection("collections").find({ hidden: true }).toArray();
+        hiddenCollections.forEach(collection => {
+          for (var i=0; i<collection.tasks.length; i++) {
+            if (!reportedTaskIds.includes(collection.tasks[i])) {
+              reportedTaskIds.push(collection.tasks[i]);
+            }
+          }
+        });
+
+        // reportedTaskIds should now contain all directly and indirectly reported tasks, plus those from hidden collections
+
+        // In the future query for tasks, I also need to include an $or for hidden: true
+
+        // CONTINUE RENOVATING HERE
+
         // The following query will return null if the user does not own the task
-        const taskInfo = await db.collection("tasks").findOne({_id: new ObjectId(body.taskId), owner: new ObjectId(user.id), hidden: false}, { projection: { owner: 1 } });
+        const taskInfo = await db.collection("tasks").findOne({_id: new ObjectId(body.taskId), owner: user._id, hidden: false}, { projection: { owner: 1 } });
 
         var addCollectionsId = [];
         if (body.addCollections) {
@@ -442,10 +518,10 @@ async function adminDataRoute(req, res) {
               },
               hidden: false,
               $or: [
-                { owner: new ObjectId(user.id) },
+                { owner: user._id },
                 {
                   'sharing.shared': true,
-                  'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user.id), role: "contributor"}}
+                  'sharing.sharedWith': {$elemMatch: {id: user._id, role: "contributor"}}
                 },
               ],
               // Anyone can only add their own tasks
@@ -462,10 +538,10 @@ async function adminDataRoute(req, res) {
               },
               hidden: false,
               $or: [
-                { owner: new ObjectId(user.id) },
+                { owner: user._id },
                 {
                   'sharing.shared': true,
-                  'sharing.sharedWith': {$elemMatch: {id: new ObjectId(user.id), role: "contributor"}},
+                  'sharing.sharedWith': {$elemMatch: {id: user._id, role: "contributor"}},
                   tasks: {$in : [new ObjectId(taskInfo?._id)]}
                 },
               ],
@@ -514,9 +590,9 @@ async function adminDataRoute(req, res) {
         const query = {
           _id: new ObjectId(dataPath[1]),
           hidden: false,
-          owner: new ObjectId(user.id),
+          owner: user._id,
         };
-        const validateCollection = await db.collection("collections").findOne({...query, 'sharing.sharedWith': {$elemMatch: {id: new ObjectId(validateUser._id)}} });
+        const validateCollection = await db.collection("collections").findOne({...query, 'sharing.sharedWith': {$elemMatch: {id: validateUser._id}} });
         if (validateCollection) {
           res.status(403).json({ message: "Collection is already shared with this user!" });
           return;
@@ -524,7 +600,7 @@ async function adminDataRoute(req, res) {
         const pendingRole = "pending-" + body.role;
         const updateDoc = {
           $push: {
-            'sharing.sharedWith': {id: validateUser._id, role: pendingRole },
+            'sharing.sharedWith': { id: validateUser._id, role: pendingRole },
           },
         };
         try {

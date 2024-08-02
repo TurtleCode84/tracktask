@@ -12,13 +12,15 @@ import verifyEmail from "templates/verifyEmail";
 export default withIronSessionApiRoute(emailRoute, sessionOptions);
 
 async function emailRoute(req, res) {
-  const user = req.session.user;
-  if ((!user || !user.isLoggedIn || user.permissions.banned) && req.method !== 'PUT') {
-    res.status(401).json({ message: "Unauthorized" });
-    return;
-  }
   const client = await clientPromise;
   const db = client.db("data");
+
+  const sessionUser = req.session.user;
+  const user = sessionUser ? await db.collection("users").findOne({ _id: new ObjectId(sessionUser.id) }) : undefined;
+  if (req.method !== 'PUT' && (!sessionUser || !sessionUser.isLoggedIn || user.permissions.banned)) {
+    res.status(401).json({ message: "Authentication required" });
+    return;
+  }
   if (req.method === 'PUT') { // Sends a password reset email (there may or may not be a logged in user)
     const { email, gReCaptchaToken } = await req.body;
     const captchaResponse = await fetchJson("https://www.google.com/recaptcha/api/siteverify", {
@@ -37,11 +39,11 @@ async function emailRoute(req, res) {
       return;
     }
     // warning: this whole system relies on emails being unique
-    const matchUser = await db.collection("users").findOne({ email: email.trim().toLowerCase(), 'permissions.verified': true }, { projection: { username: 1, email: 1 } });
+    const matchUser = await db.collection("users").findOne({ email: email.trim().toLowerCase(), 'permissions.verified': true, 'permissions.banned': false }, { projection: { username: 1, email: 1 } });
     if (matchUser) {
       const uuid = uuidv1();
       const email = passwordReset(matchUser.username, uuid);
-      await db.collection("users").updateOne({ _id: new ObjectId(matchUser._id) }, { $set: { otp: uuid } });
+      await db.collection("users").updateOne({ _id: matchUser._id }, { $set: { otp: uuid } });
       await sendEmail(matchUser.email, email.subject, email.html);
     }
     res.json({ message: "Password reset request sent!" }); // fail silently if necessary
@@ -67,7 +69,7 @@ async function emailRoute(req, res) {
     }
     const uuid = uuidv1();
     const email = verifyEmail(user.username, uuid);
-    await db.collection("users").updateOne({ _id: new ObjectId(user.id) }, { $set: { verificationKey: uuid } });
+    await db.collection("users").updateOne({ _id: user._id }, { $set: { verificationKey: uuid } });
     const sentMail = await sendEmail(user.email, email.subject, email.html);
     res.json(sentMail);
   } else if (req.method === 'PATCH') { // Attempts to verify the current user
@@ -90,11 +92,11 @@ async function emailRoute(req, res) {
       res.status(422).json({ message: "Your email address is already verified!" });
       return;
     }
-    const userInfo = await db.collection("users").findOne({ _id: new ObjectId(user.id) }, { projection: { verificationKey: 1, email: 1 } });
+    const userInfo = await db.collection("users").findOne({ _id: user._id }, { projection: { verificationKey: 1, email: 1 } });
     if (userInfo.verificationKey && key === userInfo.verificationKey && (Date.now() - parseUuid(userInfo.verificationKey)) < 3600000) {
-      const verifiedUser = await db.collection("users").updateOne({ _id: new ObjectId(user.id) }, { $set: { verificationKey: "", 'permissions.verified': true, 'history.lastEdit.timestamp': Math.floor(Date.now()/1000), 'history.lastEdit.by': new ObjectId(user.id) } });
+      const verifiedUser = await db.collection("users").updateOne({ _id: user._id }, { $set: { verificationKey: "", 'permissions.verified': true, 'history.lastEdit.timestamp': Math.floor(Date.now()/1000), 'history.lastEdit.by': user._id } });
       // If anyone else has the newly verified email, we need to get rid of it
-      await db.collection("users").updateMany({ _id: { $ne: new ObjectId(user.id) }, email: userInfo.email }, { $set: { email: "", verificationKey: "", otp: "", 'permissions.verified': false } });
+      await db.collection("users").updateMany({ _id: { $ne: user._id }, email: userInfo.email }, { $set: { email: "", verificationKey: "", otp: "", 'permissions.verified': false } });
       res.json(verifiedUser);
     } else {
       res.status(403).json({ message: "Invalid verification key, please generate a new one." });

@@ -26,7 +26,7 @@ export default function Layout({ children }) {
         <meta name="twitter:image" content="https://tracktask.eu.org/tracktaskmini.png" />
         <meta name="theme-color" content="#121212" />
         <link rel="manifest" href="/manifest.json" />
-        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
+        {/* eslint-disable-next-line @next/next/no-page-custom-font, @next/next/google-font-display */}
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block" />
       </Head>
       <style jsx global>{`
@@ -83,9 +83,9 @@ export default function Layout({ children }) {
           padding-right: 1rem;
         }
 
-        .dashboard {
+        .dashboard, .collection {
           display: grid;
-          minHeight: 300px;
+          min-height: 330px;
         }
         
         @media only screen and (max-width: 600px) {
@@ -99,7 +99,12 @@ export default function Layout({ children }) {
           .dashboard {
             grid-template-columns: 1fr;
             gap: 30px;
-            width: fit-content;
+            width: 100%;
+          }
+          .collection {
+            grid-template-columns: 1fr;
+            gap: 0px;
+            width: 100%;
           }
           h1 {
             font-size: 28px;
@@ -108,7 +113,10 @@ export default function Layout({ children }) {
             font-size: 20px;
             margin-bottom: 18px;
           }
-          .dashboard .tasks ul {
+          .collection .tasks {
+            margin-top: -20px;
+          }
+          .dashboard .tasks ul, .collection .tasks ul {
             margin-left: -40px;
           }
           .grecaptcha-badge {
@@ -123,6 +131,16 @@ export default function Layout({ children }) {
           .dashboard {
             grid-template-columns: 3fr 2fr;
             gap: 40px;
+          }
+          .collection {
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+          }
+          .collection .tasks {
+            margin-top: -5px;
+          }
+          .collection .tasks ul {
+            margin-left: -40px;
           }
         }
 
@@ -176,7 +194,8 @@ export default function Layout({ children }) {
           border: 1px solid;
           border-color: var(--textarea-border-color);
           border-radius: 4px;
-          width: 611px;
+          width: auto;
+          max-width: 611px;
           height: 150px;
           padding: 2px;
           font-family: inherit;
@@ -184,7 +203,7 @@ export default function Layout({ children }) {
           letter-spacing: 0.1px;
           white-space: pre-line;
           word-wrap: break-word;
-          overflow-y: scroll;
+          overflow-y: auto;
         }
 
         input, select {
@@ -243,7 +262,7 @@ export default function Layout({ children }) {
         }
 
         pre {
-          overflow-x: scroll;
+          overflow-x: auto;
         }
         
         .material-symbols-outlined {

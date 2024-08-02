@@ -8,6 +8,7 @@ import CollectionEditForm from "components/CollectionEditForm";
 import useUser from "lib/useUser";
 import useData from "lib/useData";
 import dynamicToggle from "lib/dynamicToggle";
+import stringToColor from "lib/stringToColor";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
 import moment from "moment";
@@ -60,13 +61,13 @@ export default function Collection() {
   
   return (
     <Layout>
-      <h2>{collection ? <><span title={titleInfo.hover} style={{ color: sharedColor }} className="material-symbols-outlined">{titleInfo.icon}</span>{' '}{collection.pending ? <>Share request for &quot;{collection.name}&quot;</> : collection.name}:</> : 'Loading...'}</h2>
+      <h2>{collection ? <><span title={titleInfo.hover} style={{ color: sharedColor }} className="material-symbols-outlined">{titleInfo.icon}</span><span style={{ color: stringToColor(collection._id), filter: "grayscale(0.4) brightness(1.5)" }} className="material-symbols-outlined">fiber_manual_record</span>{' '}{collection.pending ? <>Share request for &quot;{collection.name}&quot;</> : collection.name}:</> : 'Loading...'}</h2>
       <Link href={`/dashboard${collection ? "#collection-" + collection._id : ""}`}>Back to dashboard</Link><br/>
       {collection ?
         <>{collection.pending ?
         <><h3>Preview information:</h3>
         <p>Shared by: <User user={user} id={collection.owner}/></p>
-        <p>Description:</p>{' '}<div className="textarea" style={{ maxWidth: "90vw" }}><Linkify options={{target:'blank'}}>{collection.description}</Linkify></div>
+        <p>Description:</p>{' '}<div className="textarea"><Linkify options={{target:'blank'}}>{collection.description}</Linkify></div>
         <p title={collection.created > 0 ? moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a") : 'Never'}>Created: {collection.created > 0 ? <>{moment.unix(collection.created).fromNow()}</> : 'never'}</p>
         <a href={`/api/collections/${collection._id}`} style={{ marginRight: "8px" }}
         onClick={async (e) => {
@@ -91,15 +92,15 @@ export default function Collection() {
             document.getElementById("acceptRequestBtn").disabled = false;
           }
         }}
-        ><button id="acceptRequestBtn"><span style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">check_circle</span> Accept request</button></a></>
+        ><button id="acceptRequestBtn" style={{ marginBottom: "8px" }}><span style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">check_circle</span> Accept request</button></a></>
         :
-        <><h3>General information</h3>
-        <p>Description:</p>{' '}<textarea value={collection.description} rows="8" cols="70" style={{ maxWidth: "90vw" }} disabled /><br/>
+        <><div className="collection"><div>
+        <br/><div className="textarea"><Linkify options={{target:'blank'}}>{collection.description}</Linkify></div>
         <p title={collection.created > 0 ? moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a") : 'Never'}>Created: {collection.created > 0 ? <>{moment.unix(collection.created).fromNow()}</> : 'never'}</p>
         {user.id !== collection.owner && <p>Owner: <User user={user} id={collection.owner}/></p>}
-        {collection.sharing.shared && <p>Shared with: <ul>{sharedWithList.length > 0 ? sharedWithList : <li>Nobody!</li>}</ul></p>}
-        <p>Number of tasks: {collection.tasks.length}</p>
-        <p>Tasks in collection:</p>
+        {collection.sharing.shared && <p>Shared with: <ul>{sharedWithList.length > 0 ? sharedWithList : <li style={{ fontStyle: "italic" }}>Nobody!</li>}</ul></p>}
+        <p>Number of tasks: {collection.tasks.length}</p></div>
+        <div className="tasks">
         {relTaskList === undefined || comTaskList === undefined || error ?
         <>
         {error ? <p style={{ fontStyle: "italic" }}>{error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
@@ -107,12 +108,12 @@ export default function Collection() {
         :
         <ul style={{ display: "table" }}>
           {relTaskList.length > 0 || comTaskList.length > 0 ?
-          <>{relTaskList.length > 0 && relTaskList}
-          {comTaskList.length > 0 && <details id="more"><summary style={{ fontSize: "90%", color: "gray" }} onClick={(e) => { dynamicToggle(e, "more") }}>View more</summary>{comTaskList}</details>}</>
+          <>{relTaskList.length > 0 ? relTaskList : <Task text="No incomplete tasks found!" />}
+          {comTaskList.length > 0 && <details id="more"><summary style={{ fontSize: "90%", color: "gray", marginLeft: "15px" }} onClick={(e) => { dynamicToggle(e, "more") }}>View more</summary>{comTaskList}</details>}</>
           :
-          <li style={{ paddingBottom: "2px" }}>No tasks found!</li>}
+          <Task text="No tasks found!" />}
         </ul>
-        }
+        }</div></div>
         {user.id === collection.owner && <><hr/>{user.permissions.verified ? <Link href={`/collections/${collection._id}/share`}>Share this collection</Link> : <span style={{ fontStyle: "italic" }}><Link href="/dashboard/account/verify">Verify your email</Link> to share this collection.</span>}</>}
         <hr/>
         {currentUserRole === "editor" && <><details id="edit">
@@ -173,7 +174,7 @@ export default function Collection() {
             }
           }
         }}
-        ><button id="removeShareBtn"><span style={{ color: "lightslategray" }} className="material-symbols-outlined icon-list">logout</span> Leave collection</button></a>
+        ><button id="removeShareBtn" style={{ marginBottom: "8px" }}><span style={{ color: "lightslategray" }} className="material-symbols-outlined icon-list">logout</span> Leave collection</button></a>
         <ReportButton user={user} type={collection.pending ? "share" : "collection"} reported={collection}/></>}
         {collection.pending && <>{errorMsg && <p className="error">{errorMsg}</p>}</>}</>
       :

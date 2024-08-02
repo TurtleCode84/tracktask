@@ -1,13 +1,18 @@
 import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "lib/session";
+import { ObjectId } from "mongodb";
 import clientPromise from "lib/mongodb";
 
 export default withIronSessionApiRoute(adminUsersRoute, sessionOptions);
 
 async function adminUsersRoute(req, res) {
-  const user = req.session.user;
-  if (!user || !user.isLoggedIn || user.permissions.banned || !user.permissions.admin) {
-    res.status(401).json({ message: "Unauthorized" });
+  const client = await clientPromise;
+  const db = client.db("data");
+
+  const sessionUser = req.session.user;
+  const user = sessionUser ? await db.collection("users").findOne({ _id: new ObjectId(sessionUser.id) }) : undefined;
+  if (!sessionUser || !sessionUser.isLoggedIn || user.permissions.banned || !user.permissions.admin) {
+    res.status(401).json({ message: "Authentication required" });
     return;
   }
   if (req.method === 'GET') {
@@ -16,8 +21,6 @@ async function adminUsersRoute(req, res) {
       res.status(422).json({ message: "You must specify the query parameters \'sort\' and \'count\'" });
       return;
     }
-    const client = await clientPromise;
-    const db = client.db("data");
     if (sort === "joined") {
       try {
         const getUsers = await db.collection("users").find().project({ _id: 1, username: 1, 'history.joined': 1, 'history.lastLogin': 1, permissions: 1 }).limit(parseInt(count)).sort({ 'history.joined': -1 }).toArray();

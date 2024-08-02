@@ -14,8 +14,6 @@ async function userRoute(req, res) {
       const db = client.db("data");
       const query = { _id: new ObjectId(req.session.user.id) };
       const userInfo = await db.collection("users").findOne(query);
-      const taskCount = await db.collection("tasks").countDocuments({ hidden: false, owner: new ObjectId(req.session.user.id) });
-      const collectionCount = await db.collection("collections").countDocuments({ hidden: false, owner: new ObjectId(req.session.user.id) });
       if (!userInfo) {
         await req.session.destroy();
         res.json({
@@ -32,6 +30,8 @@ async function userRoute(req, res) {
       if (userInfo.history.lastEdit.by != req.session.user.id) {
         delete userInfo.history.lastEdit.by;
       }
+      const taskCount = await db.collection("tasks").countDocuments({ hidden: false, owner: new ObjectId(req.session.user.id) });
+      const collectionCount = await db.collection("collections").countDocuments({ hidden: false, owner: new ObjectId(req.session.user.id) });
       const user = {
         ...req.session.user,
         isLoggedIn: true,
@@ -55,14 +55,17 @@ async function userRoute(req, res) {
     }
   } else if (req.method === 'POST') { // Updates the current user
     const body = await req.body;
-    const user = req.session.user;
-    if (!user || !user.isLoggedIn || user.permissions.banned ) {
+
+    const client = await clientPromise;
+    const db = client.db("data");
+
+    const sessionUser = req.session.user;
+    const user = sessionUser ? await db.collection("users").findOne({ _id: new ObjectId(sessionUser.id) }) : undefined;
+    if (!sessionUser || !sessionUser.isLoggedIn || user.permissions.banned ) {
       res.status(401).json({ message: "Authentication required" });
       return;
     }
-    const client = await clientPromise;
-    const db = client.db("data");
-    const query = { _id: new ObjectId(user.id) };
+    const query = { _id: user._id };
     if (body.acknowledgedWarning) {
       try {
         const warnUpdateDoc = {
@@ -72,7 +75,7 @@ async function userRoute(req, res) {
         const lastEditDoc = {
           $set: {
             'history.lastEdit.timestamp': Math.floor(Date.now()/1000),
-            'history.lastEdit.by': new ObjectId(user.id),
+            'history.lastEdit.by': user._id,
           },
         };
         await db.collection("users").updateOne(query, lastEditDoc);
@@ -157,23 +160,25 @@ async function userRoute(req, res) {
       const lastEditDoc = {
         $set: {
           'history.lastEdit.timestamp': Math.floor(Date.now()/1000),
-          'history.lastEdit.by': new ObjectId(user.id),
+          'history.lastEdit.by': user._id,
         },
       };
       await db.collection("users").updateOne(query, lastEditDoc);
       res.json(updated);
     }
   } else if (req.method === 'DELETE') { // Deletes the current user and their data
-    const user = req.session.user;
+    const client = await clientPromise;
+    const db = client.db("data");
+
+    const sessionUser = req.session.user;
+    const user = sessionUser ? await db.collection("users").findOne({ _id: new ObjectId(sessionUser.id) }) : undefined;
     if (user.permissions.admin) {
       res.status(403).json({ message: "For security reasons, admins cannot delete their own accounts. Please contact a developer for data deletion." });
       return;
     }
-    const client = await clientPromise;
-    const db = client.db("data");
-    await db.collection("tasks").deleteMany({ owner: new ObjectId(user.id) });
-    await db.collection("collections").deleteMany({ owner: new ObjectId(user.id) });
-    const deletedUser = await db.collection("users").deleteOne({ _id: new ObjectId(user.id) });
+    await db.collection("tasks").deleteMany({ owner: user._id });
+    await db.collection("collections").deleteMany({ owner: user._id });
+    const deletedUser = await db.collection("users").deleteOne({ _id: user._id });
     res.json(deletedUser);
   } else {
     res.status(405).json({ message: "Method not allowed" });
