@@ -6,18 +6,17 @@ import clientPromise from "lib/mongodb";
 export default withIronSessionApiRoute(adminUserSearchRoute, sessionOptions);
 
 async function adminUserSearchRoute(req, res) {
+  const client = await clientPromise;
+  const db = client.db("data");
+
+  const sessionUser = req.session.user;
+  const user = sessionUser ? await db.collection("users").findOne({ _id: new ObjectId(sessionUser.id) }) : undefined;
+  if (!sessionUser || !sessionUser.isLoggedIn || user.permissions.banned || !user.permissions.admin) {
+    res.status(401).json({ message: "Authentication required" });
+    return;
+  }
   if (req.method === 'POST') {
     const { keyword, query } = await req.body;
-
-    const client = await clientPromise;
-    const db = client.db("data");
-
-    const sessionUser = req.session.user;
-    const user = sessionUser ? await db.collection("users").findOne({ _id: new ObjectId(sessionUser.id) }) : undefined;
-    if (!sessionUser || !sessionUser.isLoggedIn || user.permissions.banned || !user.permissions.admin) {
-      res.status(401).json({ message: "Unauthorized" });
-      return;
-    }
     
     const dbQuery = {};
     if (query === "username" && keyword) {

@@ -18,7 +18,7 @@ async function emailRoute(req, res) {
   const sessionUser = req.session.user;
   const user = sessionUser ? await db.collection("users").findOne({ _id: new ObjectId(sessionUser.id) }) : undefined;
   if (req.method !== 'PUT' && (!sessionUser || !sessionUser.isLoggedIn || user.permissions.banned)) {
-    res.status(401).json({ message: "Unauthorized" });
+    res.status(401).json({ message: "Authentication required" });
     return;
   }
   if (req.method === 'PUT') { // Sends a password reset email (there may or may not be a logged in user)
