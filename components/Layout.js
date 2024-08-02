@@ -26,7 +26,7 @@ export default function Layout({ children }) {
         <meta name="twitter:image" content="https://tracktask.eu.org/tracktaskmini.png" />
         <meta name="theme-color" content="#121212" />
         <link rel="manifest" href="/manifest.json" />
-        {/* eslint-disable-next-line @next/next/no-page-custom-font, @next/next/google-font-displays */}
+        {/* eslint-disable-next-line @next/next/no-page-custom-font, @next/next/google-font-display */}
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block" />
       </Head>
       <style jsx global>{`
