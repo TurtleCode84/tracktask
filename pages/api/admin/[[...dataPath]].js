@@ -155,6 +155,8 @@ async function adminDataRoute(req, res) {
       const reportedTasks = await db.collection("reports").find({ type: "task" }, { projection: { reported: 1 } }).toArray();
       var reportedTaskIds = [];
       reportedTasks.forEach(task => reportedTaskIds.push(task.reported));
+
+      // Current logic does NOT allow deletion for unreported/unhidden tasks
       
       const query = {
         $and: [
@@ -359,6 +361,8 @@ async function adminDataRoute(req, res) {
       var reportedCollectionIds = [];
       reportedCollections.forEach(collection => reportedCollectionIds.push(collection.reported));
 
+      // Current logic does NOT allow deletion for unreported/unhidden collections
+
       const query = {
         $and: [
           { 
@@ -443,7 +447,7 @@ async function adminDataRoute(req, res) {
         res.status(503).json({ message: "Under construction" });
         return;
 
-        // Task must be reported or in a reported collection
+        // Task must be reported, hidden, or in a reported or hidden collection
 
         // Get reported tasks
         var reportedTasks = await db.collection("reports").find({ type: "task" }, { projection: { reported: 1 } }).toArray();
@@ -478,6 +482,8 @@ async function adminDataRoute(req, res) {
         });
 
         // reportedTaskIds should now contain all directly and indirectly reported tasks, plus those from hidden collections
+
+        // In the future query for tasks, I also need to include an $or for hidden: true
 
         // CONTINUE RENOVATING HERE
 
