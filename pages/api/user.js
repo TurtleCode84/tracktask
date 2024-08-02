@@ -60,7 +60,7 @@ async function userRoute(req, res) {
     const db = client.db("data");
 
     const sessionUser = req.session.user;
-    const user = await db.collection("users").findOne({ _id: new ObjectId(sessionUser.id) });
+    const user = sessionUser ? await db.collection("users").findOne({ _id: new ObjectId(sessionUser.id) }) : undefined;
     if (!sessionUser || !sessionUser.isLoggedIn || user.permissions.banned ) {
       res.status(401).json({ message: "Authentication required" });
       return;
@@ -171,7 +171,7 @@ async function userRoute(req, res) {
     const db = client.db("data");
 
     const sessionUser = req.session.user;
-    const user = await db.collection("users").findOne({ _id: new ObjectId(sessionUser.id) });
+    const user = sessionUser ? await db.collection("users").findOne({ _id: new ObjectId(sessionUser.id) }) : undefined;
     if (user.permissions.admin) {
       res.status(403).json({ message: "For security reasons, admins cannot delete their own accounts. Please contact a developer for data deletion." });
       return;

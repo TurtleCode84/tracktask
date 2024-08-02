@@ -10,7 +10,7 @@ async function adminUsersRoute(req, res) {
   const db = client.db("data");
 
   const sessionUser = req.session.user;
-  const user = await db.collection("users").findOne({ _id: new ObjectId(sessionUser.id) });
+  const user = sessionUser ? await db.collection("users").findOne({ _id: new ObjectId(sessionUser.id) }) : undefined;
   if (!sessionUser || !sessionUser.isLoggedIn || user.permissions.banned || !user.permissions.admin) {
     res.status(401).json({ message: "Unauthorized" });
     return;

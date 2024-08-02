@@ -16,8 +16,8 @@ async function emailRoute(req, res) {
   const db = client.db("data");
 
   const sessionUser = req.session.user;
-  const user = await db.collection("users").findOne({ _id: new ObjectId(sessionUser.id) });
-  if ((!sessionUser || !sessionUser.isLoggedIn || user.permissions.banned) && req.method !== 'PUT') {
+  const user = sessionUser ? await db.collection("users").findOne({ _id: new ObjectId(sessionUser.id) }) : undefined;
+  if (req.method !== 'PUT' && (!sessionUser || !sessionUser.isLoggedIn || user.permissions.banned)) {
     res.status(401).json({ message: "Unauthorized" });
     return;
   }
