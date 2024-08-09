@@ -94,7 +94,7 @@ async function authRoute(req, res) {
         },
       };
       await db.collection("users").updateOne(query, ipUpdateDoc);
-      const user = { isLoggedIn: true, id: userInfo._id, username: userInfo.username, profilePicture: userInfo.profilePicture, permissions: userInfo.permissions };
+      const user = { isLoggedIn: true, id: userInfo._id, username: userInfo.username, profilePicture: userInfo.profilePicture, permissions: userInfo.permissions, history: { } };
       req.session.user = user;
       await req.session.save();
       res.json(user);
