@@ -8,11 +8,11 @@ export default function TaskEditForm({ errorMessage, onSubmit, task, isTaskOwner
     <form id="taskEditForm" autocomplete="off" onSubmit={onSubmit}>
       {isTaskOwner && <><label>
         <span>Name</span>
-        <input type="text" name="name" defaultValue={task.name} maxlength="55" />
+        <input type="text" name="name" defaultValue={task.name} maxlength={process.env.NEXT_PUBLIC_MAXLENGTH_TITLE} />
       </label>
       <label>
         <span>Description</span>
-        <textarea name="description" rows="4" cols="30" defaultValue={task.description} maxlength="500" />
+        <textarea name="description" rows="4" cols="30" defaultValue={task.description} maxlength={process.env.NEXT_PUBLIC_MAXLENGTH_DESCRIPTION} />
       </label><hr/>
       <label>
         <span>Due Date (<a style={{fontWeight: "400"}} href={`/task/${task._id}`}
