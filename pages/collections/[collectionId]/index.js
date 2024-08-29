@@ -5,6 +5,7 @@ import Task from "components/Task";
 import User from "components/User";
 import ReportButton from "components/ReportButton";
 import CollectionEditForm from "components/CollectionEditForm";
+import CollectionNewTaskForm from "components/CollectionNewTaskForm";
 import useUser from "lib/useUser";
 import useData from "lib/useData";
 import dynamicToggle from "lib/dynamicToggle";
@@ -24,6 +25,7 @@ export default function Collection() {
   const { data: collection, error } = useData(user, "collections", collectionId, false);
   
   const [errorMsg, setErrorMsg] = useState("");
+  const [newTaskErrorMsg, setNewTaskErrorMsg] = useState("");
   var sharedColor = "lightslategray";
   if (collection?.pending || collection?.owner !== user?.id) {
     sharedColor = "#006dbe";
@@ -99,7 +101,54 @@ export default function Collection() {
         <p title={collection.created > 0 ? moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a") : 'Never'}>Created: {collection.created > 0 ? <>{moment.unix(collection.created).fromNow()}</> : 'never'}</p>
         {user.id !== collection.owner && <p>Owner: <User user={user} id={collection.owner}/></p>}
         {collection.sharing.shared && <p>Shared with: <ul>{sharedWithList.length > 0 ? sharedWithList : <li style={{ fontStyle: "italic" }}>Nobody!</li>}</ul></p>}
-        <p>Number of tasks: {collection.tasks.length}</p></div>
+        <p>Number of tasks: {collection.tasks.length}</p>
+        
+        <h1>Create a new task:</h1>
+        <CollectionNewTaskForm
+          errorMessage={newTaskErrorMsg}
+          onSubmit={async function handleSubmit(event) {
+            event.preventDefault();
+            document.getElementById("createTaskBtn").disabled = true;
+            
+            var utcDueDate;
+            if (event.currentTarget.dueDate.value) {
+              const offset = new Date().getTimezoneOffset();
+              utcDueDate = moment(event.currentTarget.dueDate.value, moment.HTML5_FMT.DATETIME_LOCAL).utcOffset(offset);
+            } else {
+              utcDueDate = "";
+            }
+
+            const addedCollections = event.currentTarget.collections.selectedOptions;
+            const addedCollectionsValues = Array.from(addedCollections)?.map((item) => item.value);
+
+            const body = {
+              name: event.currentTarget.name.value,
+              description: event.currentTarget.description.value,
+              dueDate: utcDueDate,
+              markPriority: event.currentTarget.markPriority.checked,
+              addCollections: [ collection._id ],
+            };
+
+            try {
+              const getUrl = await fetchJson("/api/tasks", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body),
+              });
+              //router.reload();
+              document.getElementById("createTaskBtn").disabled = false; // EXPERIMENTAL
+            } catch (error) {
+              if (error instanceof FetchError) {
+                setNewTaskErrorMsg(error.data.message);
+              } else {
+                console.error("An unexpected error happened:", error);
+              }
+              document.getElementById("createTaskBtn").disabled = false;
+            }
+          }}
+        />
+        
+        </div>
         <div className="tasks">
         {relTaskList === undefined || comTaskList === undefined || error ?
         <>
