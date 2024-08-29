@@ -118,9 +118,6 @@ export default function Collection() {
               utcDueDate = "";
             }
 
-            const addedCollections = event.currentTarget.collections.selectedOptions;
-            const addedCollectionsValues = Array.from(addedCollections)?.map((item) => item.value);
-
             const body = {
               name: event.currentTarget.name.value,
               description: event.currentTarget.description.value,
