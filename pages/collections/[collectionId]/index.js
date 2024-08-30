@@ -104,7 +104,7 @@ export default function Collection() {
         {collection.sharing.shared && <p>Shared with: <ul>{sharedWithList.length > 0 ? sharedWithList : <li style={{ fontStyle: "italic" }}>Nobody!</li>}</ul></p>}
         <p>Number of tasks: {collection.tasks.length}</p>
         
-        <div style={{ border: "1px dashed", borderColor: "var(--textarea-border-color)", borderRadius: "4px", padding: "20px", paddingTop: "0" }}>
+        {["contributor", "editor"].includes(currentUserRole) && <div style={{ border: "1px dashed", borderColor: "var(--textarea-border-color)", borderRadius: "4px", padding: "20px", paddingTop: "0" }}>
         <h3>Create new task in collection:</h3>
         <CollectionNewTaskForm
           errorMessage={newTaskErrorMsg}
@@ -149,7 +149,7 @@ export default function Collection() {
             }
           }}
         />
-        </div>
+        </div>}
         
         </div>
         <div className="tasks">
