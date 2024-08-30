@@ -103,7 +103,8 @@ export default function Collection() {
         {collection.sharing.shared && <p>Shared with: <ul>{sharedWithList.length > 0 ? sharedWithList : <li style={{ fontStyle: "italic" }}>Nobody!</li>}</ul></p>}
         <p>Number of tasks: {collection.tasks.length}</p>
         
-        <h3>Add new task to collection:</h3>
+        <div style={{ border: "1px dashed", borderColor: "var(--textarea-border-color)", borderRadius: "4px", padding: "20px", paddingTop: "0", color: "var(--secondary-text-color)" }}>
+        <h2>Create new task in collection:</h2>
         <CollectionNewTaskForm
           errorMessage={newTaskErrorMsg}
           onSubmit={async function handleSubmit(event) {
@@ -132,9 +133,8 @@ export default function Collection() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body),
               });
-              //router.reload();
-              mutate(); // EXPERIMENTAL
-              document.getElementById("createTaskBtn").disabled = false; // EXPERIMENTAL
+              mutate();
+              document.getElementById("createTaskBtn").disabled = false;
             } catch (error) {
               if (error instanceof FetchError) {
                 setNewTaskErrorMsg(error.data.message);
@@ -145,6 +145,7 @@ export default function Collection() {
             }
           }}
         />
+        </div>
         
         </div>
         <div className="tasks">
@@ -183,7 +184,8 @@ export default function Collection() {
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify(body),
                 });
-                router.reload();
+                mutate();
+                document.getElementById("editCollectionBtn").disabled = false;
               } catch (error) {
                 if (error instanceof FetchError) {
                   setErrorMsg(error.data.message);
