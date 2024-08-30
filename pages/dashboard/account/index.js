@@ -11,7 +11,7 @@ import dynamicToggle from "lib/dynamicToggle";
 import { useRouter } from "next/router";
 
 export default function Account() {
-  const { user } = useUser({
+  const { user, mutateUser } = useUser({
     redirectTo: "/login",
   });
   
@@ -67,7 +67,7 @@ export default function Account() {
                  headers: { "Content-Type": "application/json" },
                  body: JSON.stringify(body),
                });
-               router.reload();
+               await mutateUser();
              } catch (error) {
                if (error instanceof FetchError) {
                  setErrorMsg(error.data.message);

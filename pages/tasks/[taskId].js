@@ -21,7 +21,7 @@ export default function Task() {
   });
   const router = useRouter();
   const { taskId } = router.query;
-  const { data: task, error: taskError } = useData(user, "tasks", taskId, false);
+  const { data: task, error: taskError, mutate: taskMutate } = useData(user, "tasks", taskId, false);
   const { data: collections, error: collectionsError } = useData(user, "collections", false, false);
   
   const [errorMsg, setErrorMsg] = useState("");
@@ -70,7 +70,7 @@ export default function Task() {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(body),
             });
-            router.reload();
+            await taskMutate();
           } catch (error) {
             if (error instanceof FetchError) {
               setErrorMsg(error.data.message);
@@ -120,7 +120,7 @@ export default function Task() {
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify(body),
                 });
-                router.reload();
+                await taskMutate();
               } catch (error) {
                 if (error instanceof FetchError) {
                   setErrorMsg(error.data.message);
@@ -163,7 +163,7 @@ export default function Task() {
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify(body),
                 });
-                router.reload();
+                await taskMutate();
               } catch (error) {
                 if (error instanceof FetchError) {
                   setErrorMsg(error.data.message);

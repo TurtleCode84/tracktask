@@ -17,7 +17,7 @@ export default function CollectionShare() {
   });
   const router = useRouter();
   const { collectionId } = router.query;
-  const { data: collection, error } = useData(user, "collections", collectionId, false);
+  const { data: collection, error, mutate } = useData(user, "collections", collectionId, false);
   
   const [errorMsg, setErrorMsg] = useState("");
   const [userErrorMsg, setUserErrorMsg] = useState("");
@@ -83,7 +83,7 @@ export default function CollectionShare() {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(body),
             });
-            router.reload();
+            await mutate();
           } catch (error) {
             if (error instanceof FetchError) {
               setErrorMsg(error.data.message);
@@ -109,7 +109,7 @@ export default function CollectionShare() {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(body),
             });
-            router.reload();
+            await mutate();
           } catch (error) {
             if (error instanceof FetchError) {
               setErrorMsg(error.data.message);

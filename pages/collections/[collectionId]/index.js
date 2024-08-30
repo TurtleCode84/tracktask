@@ -86,7 +86,7 @@ export default function Collection() {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(body),
             });
-            router.reload();
+            await mutate();
           } catch (error) {
             if (error instanceof FetchError) {
               setErrorMsg(error.data.message);

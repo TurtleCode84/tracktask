@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import fetchJson from "lib/fetchJson";
 import dynamicToggle from "lib/dynamicToggle";
 
-export default function Report({ user, report, key }) {
+export default function Report({ user, report, key, mutate }) {
   const router = useRouter();
   var path = "collections";
   if (report.type === "share") {
@@ -36,7 +36,7 @@ export default function Report({ user, report, key }) {
                     id: report._id,
                 }),
             });
-            router.reload();
+            await mutate();
         } catch (error) {
             document.getElementById(`reportErrorMessage-${report._id}`).innerHTML = error.data.message;
         }
@@ -49,7 +49,7 @@ export default function Report({ user, report, key }) {
         if (confirm("Are you sure? Deleting a report is permanent!")) {
           try {
               await fetchJson(`/api/reports?id=${report._id}`, { method: "DELETE" });
-              router.reload();
+              await mutate();
           } catch (error) {
               document.getElementById(`reportErrorMessage-${report._id}`).innerHTML = error.data.message;
           }

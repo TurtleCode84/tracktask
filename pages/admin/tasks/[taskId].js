@@ -21,7 +21,7 @@ export default function TaskAdmin() {
   });
   const router = useRouter();
   const { taskId } = router.query;
-  const { data: task, error: taskError } = useAdminData(user, "tasks", taskId, false);
+  const { data: task, error: taskError, mutate: taskMutate } = useAdminData(user, "tasks", taskId, false);
   const { data: collections, error: collectionsError } = useAdminData(user, "collections", false, false);
   
   const [errorMsg, setErrorMsg] = useState("");
@@ -87,7 +87,7 @@ export default function TaskAdmin() {
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify(body),
                 });
-                router.reload();
+                await taskMutate();
               } catch (error) {
                 if (error instanceof FetchError) {
                   setErrorMsg(error.data.message);
@@ -116,7 +116,7 @@ export default function TaskAdmin() {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(body),
             });
-            router.reload();
+            await taskMutate();
           } catch (error) {
             if (error instanceof FetchError) {
               setErrorMsg(error.data.message);

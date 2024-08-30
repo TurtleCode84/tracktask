@@ -23,7 +23,7 @@ export default function UserAdmin() {
   const [errorMsg, setErrorMsg] = useState("");
   const router = useRouter();
   const { userId } = router.query;
-  const { lookup, error } = useAdminUser(user, userId);
+  const { lookup, error, mutate } = useAdminUser(user, userId);
   
   if (!user || !user.isLoggedIn || user.permissions.banned || !user.permissions.admin) {
     return (
@@ -122,7 +122,7 @@ export default function UserAdmin() {
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify(body),
                 });
-                router.reload();
+                await mutate();
               } catch (error) {
                 if (error instanceof FetchError) {
                   setErrorMsg(error.data.message);

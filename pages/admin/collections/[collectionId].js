@@ -22,7 +22,7 @@ export default function Collection() {
   });
   const router = useRouter();
   const { collectionId } = router.query;
-  const { data: collection, error } = useAdminData(user, "collections", collectionId, false);
+  const { data: collection, error, mutate } = useAdminData(user, "collections", collectionId, false);
   
   const [errorMsg, setErrorMsg] = useState("");
   const relTaskList = collection?.tasks?.filter(task => task.completion.completed === 0).map((task) =>
@@ -89,7 +89,7 @@ export default function Collection() {
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify(body),
                 });
-                router.reload();
+                await mutate();
               } catch (error) {
                 if (error instanceof FetchError) {
                   setErrorMsg(error.data.message);
@@ -118,7 +118,7 @@ export default function Collection() {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(body),
             });
-            router.reload();
+            await mutate();
           } catch (error) {
             if (error instanceof FetchError) {
               setErrorMsg(error.data.message);
