@@ -26,6 +26,7 @@ export default function Collection() {
   
   const [errorMsg, setErrorMsg] = useState("");
   const [newTaskErrorMsg, setNewTaskErrorMsg] = useState("");
+  const [newTaskSuccessMessage, setNewTaskSuccessMsg] = useState("");
   var sharedColor = "lightslategray";
   if (collection?.pending || collection?.owner !== user?.id) {
     sharedColor = "#006dbe";
@@ -103,10 +104,11 @@ export default function Collection() {
         {collection.sharing.shared && <p>Shared with: <ul>{sharedWithList.length > 0 ? sharedWithList : <li style={{ fontStyle: "italic" }}>Nobody!</li>}</ul></p>}
         <p>Number of tasks: {collection.tasks.length}</p>
         
-        <div style={{ border: "1px dashed", borderColor: "var(--textarea-border-color)", borderRadius: "4px", padding: "20px", paddingTop: "0", color: "var(--secondary-text-color)" }}>
-        <h2>Create new task in collection:</h2>
+        <div style={{ border: "1px dashed", borderColor: "var(--textarea-border-color)", borderRadius: "4px", padding: "20px", paddingTop: "0" }}>
+        <h3>Create new task in collection:</h3>
         <CollectionNewTaskForm
           errorMessage={newTaskErrorMsg}
+          successMessage={newTaskSuccessMessage}
           onSubmit={async function handleSubmit(event) {
             event.preventDefault();
             document.getElementById("createTaskBtn").disabled = true;
@@ -134,6 +136,8 @@ export default function Collection() {
                 body: JSON.stringify(body),
               });
               mutate();
+              setNewTaskSuccessMsg("Task created!");
+              document.getElementById(`task-${getUrl.insertedId}`).scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
               document.getElementById("createTaskBtn").disabled = false;
             } catch (error) {
               if (error instanceof FetchError) {

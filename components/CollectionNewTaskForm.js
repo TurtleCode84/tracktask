@@ -1,6 +1,6 @@
 import dynamicToggle from "lib/dynamicToggle";
 
-export default function CollectionNewTaskForm({ errorMessage, onSubmit }) {
+export default function CollectionNewTaskForm({ errorMessage, successMessage, onSubmit }) {
   return (
     <form id="collectionNewTaskForm" autocomplete="off" onSubmit={onSubmit}>
       <label>
@@ -26,6 +26,7 @@ export default function CollectionNewTaskForm({ errorMessage, onSubmit }) {
       <button type="submit" id="createTaskBtn">Create task</button>
 
       {errorMessage && <p className="error">{errorMessage}</p>}
+      {successMessage && !errorMessage && <p className="success">{successMessage}</p>}
 
       <style jsx>{`
         form,
