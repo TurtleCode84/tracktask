@@ -25,6 +25,7 @@ export default function Collection() {
   const { data: collection, error, mutate } = useData(user, "collections", collectionId, false);
   
   const [errorMsg, setErrorMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
   const [newTaskErrorMsg, setNewTaskErrorMsg] = useState("");
   const [newTaskSuccessMessage, setNewTaskSuccessMsg] = useState("");
   var sharedColor = "lightslategray";
