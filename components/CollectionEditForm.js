@@ -1,7 +1,7 @@
 import fetchJson from "lib/fetchJson";
 import { useRouter } from "next/router";
 
-export default function CollectionEditForm({ verified, errorMessage, onSubmit, collection }) {
+export default function CollectionEditForm({ verified, errorMessage, successMessage, onSubmit, collection }) {
   const router = useRouter();
   return (
     <form id="collectionEditForm" autocomplete="off" onSubmit={onSubmit}>
@@ -16,7 +16,8 @@ export default function CollectionEditForm({ verified, errorMessage, onSubmit, c
 
       <button type="submit" id="editCollectionBtn">Save collection details</button>
 
-      {errorMessage && <p className="error">{errorMessage}</p>}<hr/>
+      {errorMessage && <p className="error">{errorMessage}</p>}
+      {successMessage && !errorMessage && <p className="success">{successMessage}</p>}<hr/>
        
       <a href={`/api/collections/${collection._id}`}
         onClick={async (e) => {

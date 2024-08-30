@@ -137,6 +137,7 @@ export default function Collection() {
               });
               await mutate();
               setNewTaskSuccessMsg("Task created!");
+              document.getElementById("collectionNewTaskForm").reset();
               document.getElementById(`task-${getUrl.insertedId}`).scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
               document.getElementById("createTaskBtn").disabled = false;
             } catch (error) {
@@ -173,6 +174,7 @@ export default function Collection() {
           <CollectionEditForm
             verified={user.permissions.verified}
             errorMessage={errorMsg}
+            successMessage={successMsg}
             collection={collection}
             onSubmit={async function handleSubmit(event) {
               event.preventDefault();
@@ -188,7 +190,8 @@ export default function Collection() {
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify(body),
                 });
-                mutate();
+                await mutate();
+                setSuccessMsg("Collection saved!");
                 document.getElementById("editCollectionBtn").disabled = false;
               } catch (error) {
                 if (error instanceof FetchError) {
