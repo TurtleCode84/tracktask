@@ -135,7 +135,7 @@ export default function Collection() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body),
               });
-              mutate();
+              await mutate();
               setNewTaskSuccessMsg("Task created!");
               document.getElementById(`task-${getUrl.insertedId}`).scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
               document.getElementById("createTaskBtn").disabled = false;
