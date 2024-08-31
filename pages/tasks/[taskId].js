@@ -22,10 +22,12 @@ export default function Task() {
   const router = useRouter();
   const { taskId } = router.query;
   const { data: task, error: taskError, mutate: taskMutate } = useData(user, "tasks", taskId, false);
-  const { data: collections, error: collectionsError } = useData(user, "collections", false, false);
+  const { data: collections, error: collectionsError, mutate: collectionsMutate } = useData(user, "collections", false, false);
   
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
+  const [ARCErrorMsg, setARCErrorMsg] = useState("");
+  const [ARCSuccessMsg, setARCSuccessMsg] = useState("");
   var roles = ["none", "viewer", "collaborator", "contributor", "owner"]
   var perms = 0;
   if (user?.id === task?.owner) {
@@ -140,7 +142,7 @@ export default function Task() {
         {perms >= 4 && <details id="arm">
           <summary onClick={(e) => { dynamicToggle(e, "arm") }}>Add/remove from collection</summary>
           <AddRemoveCollectionForm
-            errorMessage={errorMsg}
+            errorMessage={ARCErrorMsg}
             taskId={task._id}
             collections={collections}
             isTaskOwner={user.id == task.owner}
@@ -169,9 +171,13 @@ export default function Task() {
                   body: JSON.stringify(body),
                 });
                 await taskMutate();
+                await collectionsMutate();
+                setARCSuccessMsg("Collections saved!");
+                //document.getElementById("addRemoveCollectionForm").reset();
+                document.getElementById("addRemoveCollectionBtn").disabled = false;
               } catch (error) {
                 if (error instanceof FetchError) {
-                  setErrorMsg(error.data.message);
+                  setARCErrorMsg(error.data.message);
                 } else {
                   console.error("An unexpected error happened:", error);
                 }
