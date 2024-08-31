@@ -91,6 +91,7 @@ export default function Collection() {
           } catch (error) {
             if (error instanceof FetchError) {
               setErrorMsg(error.data?.message || error.message);
+              setSuccessMsg("");
             } else {
               console.error("An unexpected error happened:", error);
             }
@@ -145,6 +146,7 @@ export default function Collection() {
             } catch (error) {
               if (error instanceof FetchError) {
                 setNewTaskErrorMsg(error.data?.message || error.message);
+                setNewTaskSuccessMsg("");
               } else {
                 console.error("An unexpected error happened:", error);
               }
@@ -198,6 +200,7 @@ export default function Collection() {
               } catch (error) {
                 if (error instanceof FetchError) {
                   setErrorMsg(error.data?.message || error.message);
+                  setSuccessMsg("");
                 } else {
                   console.error("An unexpected error happened:", error);
                 }
@@ -225,6 +228,7 @@ export default function Collection() {
             } catch (error) {
               if (error instanceof FetchError) {
                 setErrorMsg(error.data?.message || error.message);
+                setSuccessMsg("");
               } else {
                 console.error("An unexpected error happened:", error);
               }

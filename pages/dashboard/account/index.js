@@ -48,6 +48,7 @@ export default function Account() {
               document.getElementById("editUserBtn").disabled = true;
               if (event.currentTarget.password.value !== event.currentTarget.cpassword.value) {
                 setErrorMsg("New passwords do not match!");
+                setSuccessMsg("");
                 document.getElementById("editUserBtn").disabled = false;
                 return;
               }
@@ -73,6 +74,7 @@ export default function Account() {
              } catch (error) {
                if (error instanceof FetchError) {
                  setErrorMsg(error.data?.message || error.message);
+                 setSuccessMsg("");
                } else {
                  console.error("An unexpected error happened:", error);
                }

@@ -78,6 +78,7 @@ export default function Task() {
           } catch (error) {
             if (error instanceof FetchError) {
               setErrorMsg(error.data?.message || error.message);
+              setSuccessMsg("");
             } else {
               console.error("An unexpected error happened:", error);
             }
@@ -131,6 +132,7 @@ export default function Task() {
               } catch (error) {
                 if (error instanceof FetchError) {
                   setErrorMsg(error.data?.message || error.message);
+                  setSuccessMsg("");
                 } else {
                   console.error("An unexpected error happened:", error);
                 }
@@ -178,6 +180,7 @@ export default function Task() {
               } catch (error) {
                 if (error instanceof FetchError) {
                   setArcErrorMsg(error.data?.message || error.message);
+                  setArcSuccessMsg("");
                 } else {
                   console.error("An unexpected error happened:", error);
                 }

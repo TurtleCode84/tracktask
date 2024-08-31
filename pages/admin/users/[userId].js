@@ -94,10 +94,12 @@ export default function UserAdmin() {
               document.getElementById("editUserBtn").disabled = true;
               if (event.currentTarget.password.value !== event.currentTarget.cpassword.value) {
                 setErrorMsg("Passwords do not match!");
+                setSuccessMsg("");
                 document.getElementById("editUserBtn").disabled = false;
                 return;
               } else if (event.currentTarget.warn.checked && !event.currentTarget.warning.value) {
                 setErrorMsg("Warnings can\'t be blank!");
+                setSuccessMsg("");
                 document.getElementById("editUserBtn").disabled = false;
                 return;
               }
@@ -130,6 +132,7 @@ export default function UserAdmin() {
               } catch (error) {
                 if (error instanceof FetchError) {
                   setErrorMsg(error.data?.message || error.message);
+                  setSuccessMsg("");
                 } else {
                   console.error("An unexpected error happened:", error);
                 }
