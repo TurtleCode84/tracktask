@@ -26,8 +26,8 @@ export default function Task() {
   
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
-  const [ARCErrorMsg, setARCErrorMsg] = useState("");
-  const [ARCSuccessMsg, setARCSuccessMsg] = useState("");
+  const [arcErrorMsg, setArcErrorMsg] = useState("");
+  const [arcSuccessMsg, setArcSuccessMsg] = useState("");
   var roles = ["none", "viewer", "collaborator", "contributor", "owner"]
   var perms = 0;
   if (user?.id === task?.owner) {
@@ -142,8 +142,8 @@ export default function Task() {
         {perms >= 4 && <details id="arm">
           <summary onClick={(e) => { dynamicToggle(e, "arm") }}>Add/remove from collection</summary>
           <AddRemoveCollectionForm
-            errorMessage={ARCErrorMsg}
-            successMessage={ARCSuccessMsg}
+            errorMessage={arcErrorMsg}
+            successMessage={arcSuccessMsg}
             taskId={task._id}
             collections={collections}
             isTaskOwner={user.id == task.owner}
@@ -173,11 +173,11 @@ export default function Task() {
                 });
                 await taskMutate();
                 await collectionsMutate();
-                setARCSuccessMsg("Collections saved!");
+                setArcSuccessMsg("Collections saved!");
                 document.getElementById("addRemoveCollectionBtn").disabled = false;
               } catch (error) {
                 if (error instanceof FetchError) {
-                  setARCErrorMsg(error.data?.message || error.message);
+                  setArcErrorMsg(error.data?.message || error.message);
                 } else {
                   console.error("An unexpected error happened:", error);
                 }
