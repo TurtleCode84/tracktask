@@ -131,7 +131,7 @@ export default function TaskAdmin() {
         ><button id="hideTaskBtn"><span style={{ color: "darkgray" }} className="material-symbols-outlined icon-list">visibility_off</span> {task?.hidden ? 'Unhide' : 'Hide'} task</button></a>
         <ReportButton user={user} type="task" reported={task} flag={true}/></>
       :
-        <p style={{ fontStyle: "italic" }}>{taskError ? taskError.data?.message || error.message : 'Loading task...'}</p>
+        <p style={{ fontStyle: "italic" }}>{taskError ? taskError.data?.message || taskError.message : 'Loading task...'}</p>
       }
     </Layout>
   );

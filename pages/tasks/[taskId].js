@@ -189,7 +189,7 @@ export default function Task() {
         {perms >= 4 && <br/>}
         {user.id !== task.owner && <ReportButton user={user} type="task" reported={task}/>}</>
       :
-        <>{taskError ? <p>{taskerror.data?.message || error.message}</p> : <p style={{ fontStyle: "italic" }}>Loading task...</p>}</>
+        <>{taskError ? <p>{taskError.data?.message || taskError.message}</p> : <p style={{ fontStyle: "italic" }}>Loading task...</p>}</>
       }
     </Layout>
   );

@@ -32,7 +32,7 @@ export default function TasksAdmin() {
       <Link href="/admin">Back to admin dashboard</Link><br/>
       {relTaskList === undefined || comTaskList === undefined || tasksError ?
       <>
-      {tasksError ? <p style={{ fontStyle: "italic" }}>{tasksError.data?.message || error.message}</p> : <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
+      {tasksError ? <p style={{ fontStyle: "italic" }}>{tasksError.data?.message || tasksError.message}</p> : <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
       </>
       :
       <ul style={{ display: "table" }}>
