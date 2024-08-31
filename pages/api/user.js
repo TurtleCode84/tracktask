@@ -81,7 +81,7 @@ async function userRoute(req, res) {
         await db.collection("users").updateOne(query, lastEditDoc);
         res.json(updatedWarn);
       } catch (error) {
-        res.status(500).json({ message: error.data?.message || error.message });
+        res.status(500).json({ message: error.message });
       }
     } else {
       const blacklist = process.env.BLACKLIST.split(',');
