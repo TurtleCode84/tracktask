@@ -77,7 +77,7 @@ export default function Task() {
             document.getElementById("taskEditForm").reset();
           } catch (error) {
             if (error instanceof FetchError) {
-              setErrorMsg(error.data?.message || "An error occurred.");
+              setErrorMsg(error.data?.message || error.message);
             } else {
               console.error("An unexpected error happened:", error);
             }
@@ -130,7 +130,7 @@ export default function Task() {
                 document.getElementById("editTaskBtn").disabled = false;
               } catch (error) {
                 if (error instanceof FetchError) {
-                  setErrorMsg(error.data?.message || "An error occurred.");
+                  setErrorMsg(error.data?.message || error.message);
                 } else {
                   console.error("An unexpected error happened:", error);
                 }
@@ -177,7 +177,7 @@ export default function Task() {
                 document.getElementById("addRemoveCollectionBtn").disabled = false;
               } catch (error) {
                 if (error instanceof FetchError) {
-                  setARCErrorMsg(error.data?.message || "An error occurred.");
+                  setARCErrorMsg(error.data?.message || error.message);
                 } else {
                   console.error("An unexpected error happened:", error);
                 }
@@ -189,7 +189,7 @@ export default function Task() {
         {perms >= 4 && <br/>}
         {user.id !== task.owner && <ReportButton user={user} type="task" reported={task}/>}</>
       :
-        <>{taskError ? <p>{taskerror.data?.message || "An error occurred."}</p> : <p style={{ fontStyle: "italic" }}>Loading task...</p>}</>
+        <>{taskError ? <p>{taskerror.data?.message || error.message}</p> : <p style={{ fontStyle: "italic" }}>Loading task...</p>}</>
       }
     </Layout>
   );

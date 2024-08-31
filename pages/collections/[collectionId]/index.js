@@ -89,7 +89,7 @@ export default function Collection() {
             await mutate();
           } catch (error) {
             if (error instanceof FetchError) {
-              setErrorMsg(error.data?.message || "An error occurred.");
+              setErrorMsg(error.data?.message || error.message);
             } else {
               console.error("An unexpected error happened:", error);
             }
@@ -143,7 +143,7 @@ export default function Collection() {
               document.getElementById("createTaskBtn").disabled = false;
             } catch (error) {
               if (error instanceof FetchError) {
-                setNewTaskErrorMsg(error.data?.message || "An error occurred.");
+                setNewTaskErrorMsg(error.data?.message || error.message);
               } else {
                 console.error("An unexpected error happened:", error);
               }
@@ -157,7 +157,7 @@ export default function Collection() {
         <div className="tasks">
         {relTaskList === undefined || comTaskList === undefined || error ?
         <>
-        {error ? <p style={{ fontStyle: "italic" }}>{error.data?.message || "An error occurred."}</p> : <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
+        {error ? <p style={{ fontStyle: "italic" }}>{error.data?.message || error.message}</p> : <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
         </>
         :
         <ul style={{ display: "table" }}>
@@ -196,7 +196,7 @@ export default function Collection() {
                 document.getElementById("editCollectionBtn").disabled = false;
               } catch (error) {
                 if (error instanceof FetchError) {
-                  setErrorMsg(error.data?.message || "An error occurred.");
+                  setErrorMsg(error.data?.message || error.message);
                 } else {
                   console.error("An unexpected error happened:", error);
                 }
@@ -223,7 +223,7 @@ export default function Collection() {
               window.location.replace("/");
             } catch (error) {
               if (error instanceof FetchError) {
-                setErrorMsg(error.data?.message || "An error occurred.");
+                setErrorMsg(error.data?.message || error.message);
               } else {
                 console.error("An unexpected error happened:", error);
               }
@@ -235,7 +235,7 @@ export default function Collection() {
         <ReportButton user={user} type={collection.pending ? "share" : "collection"} reported={collection}/></>}
         {collection.pending && <>{errorMsg && <p className="error">{errorMsg}</p>}</>}</>
       :
-        <>{error ? <p>{error.data?.message || "An error occurred."}</p> : <p style={{ fontStyle: "italic" }}>Loading collection...</p>}</>
+        <>{error ? <p>{error.data?.message || error.message}</p> : <p style={{ fontStyle: "italic" }}>Loading collection...</p>}</>
       }
     </Layout>
   );

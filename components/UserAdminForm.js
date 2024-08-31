@@ -83,7 +83,7 @@ export default function UserAdminForm({ errorMessage, successMessage, onSubmit, 
               await fetchJson(`/api/admin/users/${lookup._id}`, { method: "DELETE" });
               router.push("/admin?deleted=true");
             } catch (error) {
-              document.getElementById("deleteUserMessage").innerHTML = error.data?.message || "An error occurred.";
+              document.getElementById("deleteUserMessage").innerHTML = error.data?.message || error.message;
             }
           } else if (confirm) {
             alert("You didn't type \"delete this account\", so we'll assume you didn't want to. Only delete a user if it's completely necessary!");

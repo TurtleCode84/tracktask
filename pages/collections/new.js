@@ -44,7 +44,7 @@ export default function CollectionsCreate() {
             router.push(`/collections/${getUrl.insertedId}`);
           } catch (error) {
             if (error instanceof FetchError) {
-              setErrorMsg(error.data?.message || "An error occurred.");
+              setErrorMsg(error.data?.message || error.message);
             } else {
               console.error("An unexpected error happened:", error);
             }
