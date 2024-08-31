@@ -7,7 +7,7 @@ export default function CollectionEditForm({ verified, errorMessage, successMess
     <form id="collectionEditForm" autocomplete="off" onSubmit={onSubmit}>
       <label>
         <span>Name</span>
-        <input type="text" name="name" defaultValue={collection.name} maxlength={process.env.NEXT_PUBLIC_MAXLENGTH_TITLE} />
+        <input type="text" name="name" defaultValue={collection.name} maxlength={process.env.NEXT_PUBLIC_MAXLENGTH_TITLE} required />
       </label>
       <label>
         <span>Description</span>

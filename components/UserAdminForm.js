@@ -7,7 +7,7 @@ export default function UserAdminForm({ errorMessage, successMessage, onSubmit, 
     <form id="userAdminForm" autocomplete="off" onSubmit={onSubmit}>
       <label>
         <span>Username</span>
-        <input type="text" name="username" defaultValue={lookup.username} />
+        <input type="text" name="username" defaultValue={lookup.username} required />
       </label>
       <label>
         <span>Email</span>

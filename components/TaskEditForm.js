@@ -8,7 +8,7 @@ export default function TaskEditForm({ errorMessage, successMessage, onSubmit, t
     <form id="taskEditForm" autocomplete="off" onSubmit={onSubmit}>
       {isTaskOwner && <><label>
         <span>Name</span>
-        <input type="text" name="name" defaultValue={task.name} maxlength={process.env.NEXT_PUBLIC_MAXLENGTH_TITLE} />
+        <input type="text" name="name" defaultValue={task.name} maxlength={process.env.NEXT_PUBLIC_MAXLENGTH_TITLE} required />
       </label>
       <label>
         <span>Description</span>

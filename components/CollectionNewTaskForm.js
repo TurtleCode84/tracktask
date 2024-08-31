@@ -5,7 +5,7 @@ export default function CollectionNewTaskForm({ errorMessage, successMessage, on
     <form id="collectionNewTaskForm" autocomplete="off" onSubmit={onSubmit}>
       <label>
         <span>Name</span>
-        <input type="text" name="name" maxlength={process.env.NEXT_PUBLIC_MAXLENGTH_TITLE} autoFocus required />
+        <input type="text" name="name" maxlength={process.env.NEXT_PUBLIC_MAXLENGTH_TITLE} required />
       </label>
       <details id="adetails">
       <summary onClick={(e) => { dynamicToggle(e, "adetails") }}>Additional details</summary><br/>
