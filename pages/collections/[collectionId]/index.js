@@ -27,7 +27,7 @@ export default function Collection() {
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   const [newTaskErrorMsg, setNewTaskErrorMsg] = useState("");
-  const [newTaskSuccessMessage, setNewTaskSuccessMsg] = useState("");
+  const [newTaskSuccessMsg, setNewTaskSuccessMsg] = useState("");
   var sharedColor = "lightslategray";
   if (collection?.pending || collection?.owner !== user?.id) {
     sharedColor = "#006dbe";
@@ -109,7 +109,7 @@ export default function Collection() {
         <h3>Create new task in collection:</h3>
         <CollectionNewTaskForm
           errorMessage={newTaskErrorMsg}
-          successMessage={newTaskSuccessMessage}
+          successMessage={newTaskSuccessMsg}
           onSubmit={async function handleSubmit(event) {
             event.preventDefault();
             document.getElementById("createTaskBtn").disabled = true;
