@@ -29,7 +29,7 @@ export default function CollectionsAdmin() {
       {collectionList && collectionList.length === 0 ? <p style={{ fontStyle: "italic" }}>No collections found!</p> : null}
       {collectionList === undefined || collectionsError ?
       <>
-      {collectionsError ? <p style={{ fontStyle: "italic" }}>{collectionserror.data?.message || error.message}</p> : <p style={{ fontStyle: "italic" }}>Loading collections...</p>}
+      {collectionsError ? <p style={{ fontStyle: "italic" }}>{collectionsError.data?.message || collectionsError.message}</p> : <p style={{ fontStyle: "italic" }}>Loading collections...</p>}
       </>
       :
       <><ul style={{ display: "table" }}>
