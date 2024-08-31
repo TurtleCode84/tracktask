@@ -1,12 +1,5 @@
 self.addEventListener("install", (event) => {
   console.log("Installing Service Worker for push notifications...");
-// We need to ask the user for permission
-  Notification.requestPermission().then((permission) => {
-    if (permission !== "granted") {
-      localStorage.setItem("notifications", "disable");
-      alert("You've blocked notifications, so push notifications cannot be enabled.");
-    }
-  });
 });
   
 self.addEventListener("activate", (event) => {

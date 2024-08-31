@@ -28,7 +28,7 @@ function MyApp({ Component, pageProps }) {
     if (pushNotifications === "enable") {
       if("serviceWorker" in navigator && "Notification" in window) {
         
-        if (Notification.permission !== "denied") {
+        //if (Notification.permission !== "denied") {
           // We need to ask the user for permission
           Notification.requestPermission().then((permission) => {
             if (permission !== "granted") {
@@ -36,7 +36,7 @@ function MyApp({ Component, pageProps }) {
               alert("You've blocked notifications, so push notifications cannot be enabled.");
             }
           });
-        }      
+        //}      
 
         navigator.serviceWorker.register("/notifications.js");
 
