@@ -108,7 +108,7 @@ export default function UserEditForm({ errorMessage, successMessage, onSubmit, u
               await fetchJson(`/api/user`, { method: "DELETE" });
               router.push("/");
             } catch (error) {
-              document.getElementById("deleteUserMessage").innerHTML = error.data.message;
+              document.getElementById("deleteUserMessage").innerHTML = error.data?.message || error.message;
             }
           } else if (confirm) {
             alert("You didn't type \"delete my account\", so we'll assume you didn't want to. Great choice!");

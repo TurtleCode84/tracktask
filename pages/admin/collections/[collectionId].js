@@ -57,7 +57,7 @@ export default function Collection() {
         <div className="tasks">
         {relTaskList === undefined || comTaskList === undefined || error ?
         <>
-        {error ? <p style={{ fontStyle: "italic" }}>{error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
+        {error ? <p style={{ fontStyle: "italic" }}>{error.data?.message || error.message}</p> : <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
         </>
         :
         <ul style={{ display: "table" }}>
@@ -93,7 +93,7 @@ export default function Collection() {
                 document.getElementById("adminCollectionBtn").disabled = false;
               } catch (error) {
                 if (error instanceof FetchError) {
-                  setErrorMsg(error.data.message);
+                  setErrorMsg(error.data?.message || error.message);
                 } else {
                   console.error("An unexpected error happened:", error);
                 }
@@ -123,7 +123,7 @@ export default function Collection() {
             document.getElementById("hideCollectionBtn").disabled = false;
           } catch (error) {
             if (error instanceof FetchError) {
-              setErrorMsg(error.data.message);
+              setErrorMsg(error.data?.message || error.message);
             } else {
               console.error("An unexpected error happened:", error);
             }
@@ -133,7 +133,7 @@ export default function Collection() {
         ><button id="hideCollectionBtn"><span style={{ color: "darkgray" }} className="material-symbols-outlined icon-list">visibility_off</span> {collection?.hidden ? 'Unhide' : 'Hide'} collection</button></a>
         <ReportButton user={user} type="collection" reported={collection} flag={true}/></>
       :
-        <p style={{ fontStyle: "italic" }}>{error ? error.data.message : 'Loading collection...'}</p>
+        <p style={{ fontStyle: "italic" }}>{error ? error.data?.message || error.message : 'Loading collection...'}</p>
       }
     </Layout>
   );

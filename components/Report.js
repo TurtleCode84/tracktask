@@ -38,7 +38,7 @@ export default function Report({ user, report, key, mutate }) {
             });
             await mutate();
         } catch (error) {
-            document.getElementById(`reportErrorMessage-${report._id}`).innerHTML = error.data.message;
+            document.getElementById(`reportErrorMessage-${report._id}`).innerHTML = error.data?.message || error.message;
         }
         }}
     ><button><span style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">fact_check</span> Review</button></a>}
@@ -51,7 +51,7 @@ export default function Report({ user, report, key, mutate }) {
               await fetchJson(`/api/reports?id=${report._id}`, { method: "DELETE" });
               await mutate();
           } catch (error) {
-              document.getElementById(`reportErrorMessage-${report._id}`).innerHTML = error.data.message;
+              document.getElementById(`reportErrorMessage-${report._id}`).innerHTML = error.data?.message || error.message;
           }
         }
       }}

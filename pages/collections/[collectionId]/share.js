@@ -46,7 +46,7 @@ export default function CollectionShare() {
           window.location.replace(`/collections/${collection._id}/share?modified=true`);
         } catch (error) {
           if (error instanceof FetchError) {
-            setUserErrorMsg({id: item.id, message: error.data.message});
+            setUserErrorMsg({id: item.id, message: error.data?.message || error.message});
           } else {
             console.error("An unexpected error happened:", error);
           }
@@ -86,7 +86,7 @@ export default function CollectionShare() {
             await mutate();
           } catch (error) {
             if (error instanceof FetchError) {
-              setErrorMsg(error.data.message);
+              setErrorMsg(error.data?.message || error.message);
             } else {
               console.error("An unexpected error happened:", error);
             }
@@ -112,7 +112,7 @@ export default function CollectionShare() {
             await mutate();
           } catch (error) {
             if (error instanceof FetchError) {
-              setErrorMsg(error.data.message);
+              setErrorMsg(error.data?.message || error.message);
             } else {
               console.error("An unexpected error happened:", error);
             }
@@ -143,7 +143,7 @@ export default function CollectionShare() {
             window.location.replace(`/collections/${collection._id}?shared=true`);
           } catch (error) {
             if (error instanceof FetchError) {
-              setErrorMsg(error.data.message);
+              setErrorMsg(error.data?.message || error.message);
             } else {
               console.error("An unexpected error happened:", error);
             }

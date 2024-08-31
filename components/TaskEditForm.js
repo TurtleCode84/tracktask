@@ -47,7 +47,7 @@ export default function TaskEditForm({ errorMessage, successMessage, onSubmit, t
               await fetchJson(`/api/tasks/${task._id}`, { method: "DELETE" });
               router.push("/dashboard?deleted=t");
             } catch (error) {
-              document.getElementById("deleteTaskMessage").innerHTML = error.data.message;
+              document.getElementById("deleteTaskMessage").innerHTML = error.data?.message || error.message;
             }
           }
         }}
