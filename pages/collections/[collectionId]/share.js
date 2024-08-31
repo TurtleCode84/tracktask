@@ -20,13 +20,17 @@ export default function CollectionShare() {
   const { data: collection, error, mutate } = useData(user, "collections", collectionId, false);
   
   const [errorMsg, setErrorMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
   const [userErrorMsg, setUserErrorMsg] = useState("");
+  const [userSuccessMsg, setUserSuccessMsg] = useState("");
   const sharedWithList = collection?.sharing.sharedWith.map((item) =>
     <details key={item.id} id={`share-${item.id}`} style={{ paddingBottom: "10px", marginLeft: "23px" }}><summary onClick={(e) => { dynamicToggle(e, `share-${item.id}`, ["center", "end"]) }}><User user={user} id={item.id}/> <span style={{ fontSize: "80%", fontStyle: "italic", color: "darkgray" }}>({item.role.split('-')[1] ? "pending " + item.role.split('-')[1] : item.role.split('-')[0]})</span></summary>
     <UserShareForm
       collectionId={collectionId}
       errorMessage={userErrorMsg}
+      successMessage={userSuccessMsg}
       share={item}
+      mutate={mutate}
       onSubmit={async function handleSubmit(event) {
         event.preventDefault();
         document.getElementById("modifyUserShareBtn").disabled = true;
@@ -43,7 +47,9 @@ export default function CollectionShare() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(body),
           });
-          window.location.replace(`/collections/${collection._id}/share?modified=true`);
+          await mutate();
+          setUserSuccessMsg({id: item.id, message: "User saved!"});
+          document.getElementById("modifyUserShareBtn").disabled = false;
         } catch (error) {
           if (error instanceof FetchError) {
             setUserErrorMsg({id: item.id, message: error.data?.message || error.message});
@@ -124,6 +130,7 @@ export default function CollectionShare() {
       <details id="new"><summary onClick={(e) => { dynamicToggle(e, "new") }}>Add a new user</summary>
       <CollectionShareForm
         errorMessage={errorMsg}
+        successMessage={successMsg}
         onSubmit={async function handleSubmit(event) {
           event.preventDefault();
           document.getElementById("shareCollectionBtn").disabled = true;
@@ -140,7 +147,9 @@ export default function CollectionShare() {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(body),
             });
-            window.location.replace(`/collections/${collection._id}?shared=true`);
+            await mutate();
+            setSuccessMsg("Share request sent!");
+            document.getElementById("shareCollectionBtn").disabled = false;
           } catch (error) {
             if (error instanceof FetchError) {
               setErrorMsg(error.data?.message || error.message);

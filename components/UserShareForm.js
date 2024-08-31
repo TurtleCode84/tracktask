@@ -1,6 +1,6 @@
 import fetchJson from "lib/fetchJson";
 
-export default function UserShareForm({ errorMessage, onSubmit, share, collectionId }) {
+export default function UserShareForm({ errorMessage, successMessage, onSubmit, share, collectionId, mutate }) {
   const role = share.role.split("-");
   return (
     <form id={share.id + "-userShareForm"} autocomplete="off" onSubmit={onSubmit}><br/>
@@ -15,7 +15,8 @@ export default function UserShareForm({ errorMessage, onSubmit, share, collectio
 
       <button type="submit" id="modifyUserShareBtn" style={{ width: "max-content", padding: "5px" }}><span style={{ color: "darkslategray" }} className="material-symbols-outlined icon-list">save</span> Save role changes</button>
 
-      {errorMessage && errorMessage.id === share.id && <p className="error">{errorMessage.message}</p>}<br/>
+      {errorMessage && errorMessage.id === share.id && <p className="error">{errorMessage.message}</p>}
+      {successMessage && successMessage.id === share.id && !errorMessage && <p className="success">{successMessage.message}</p>}<br/>
       
       <a href={`/api/collections/${collectionId}`}
         onClick={async (e) => {
@@ -31,7 +32,8 @@ export default function UserShareForm({ errorMessage, onSubmit, share, collectio
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body),
               });
-              window.location.replace(`/collections/${collection._id}/share?removed=true`);
+              await mutate();
+              //window.location.replace(`/collections/${collection._id}/share?removed=true`);
             } catch (error) {
               document.getElementById(share.id + "-removeShareMessage").innerHTML = error.data?.message || error.message;
             }

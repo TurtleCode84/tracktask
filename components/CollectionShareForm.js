@@ -1,4 +1,4 @@
-export default function CollectionShareForm({ errorMessage, onSubmit }) {
+export default function CollectionShareForm({ errorMessage, successMessage, onSubmit }) {
   return (
     <form id="collectionShareForm" autocomplete="off" onSubmit={onSubmit}>
       <label>
@@ -16,7 +16,8 @@ export default function CollectionShareForm({ errorMessage, onSubmit }) {
 
       <button type="submit" id="shareCollectionBtn">Send share request</button>
 
-      {errorMessage && <p className="error">{errorMessage}</p>}<hr/>
+      {errorMessage && <p className="error">{errorMessage}</p>}
+      {successMessage && !errorMessage && <p className="success">{successMessage}</p>}<hr/>
        
       <style jsx>{`
         form,
