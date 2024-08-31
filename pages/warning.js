@@ -4,14 +4,12 @@ import Loading from "components/Loading";
 import Link from "next/link";
 import useUser from "lib/useUser";
 import fetchJson from "lib/fetchJson";
-import { useRouter } from "next/router";
 
 export default function Warning() {
   const { user, mutateUser } = useUser({
     redirectTo: "/dashboard",
     warnedOnly: true,
   });
-  const router = useRouter();
   
   if (!user || !user.isLoggedIn || !user.permissions.warned) {
     return (

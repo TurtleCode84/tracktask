@@ -1,12 +1,10 @@
 import moment from "moment";
 import Link from "next/link";
 import User from "components/User";
-import { useRouter } from "next/router";
 import fetchJson from "lib/fetchJson";
 import dynamicToggle from "lib/dynamicToggle";
 
 export default function Report({ user, report, key, mutate }) {
-  const router = useRouter();
   var path = "collections";
   if (report.type === "share") {
     delete report.type;

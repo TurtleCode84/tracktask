@@ -8,7 +8,6 @@ import Link from "next/link";
 import Image from "next/image";
 import useUser from "lib/useUser";
 import dynamicToggle from "lib/dynamicToggle";
-import { useRouter } from "next/router";
 
 export default function Account() {
   const { user, mutateUser } = useUser({
@@ -17,7 +16,6 @@ export default function Account() {
   
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
-  const router = useRouter();
   
   if (!user || !user.isLoggedIn || user.permissions.banned) {
     return (
