@@ -2,7 +2,7 @@ import fetchJson from "lib/fetchJson";
 import { useRouter } from "next/router";
 import moment from "moment";
 
-export default function TaskEditForm({ errorMessage, onSubmit, task, isTaskOwner }) {
+export default function TaskEditForm({ errorMessage, successMessage, onSubmit, task, isTaskOwner }) {
   const router = useRouter();
   return (
     <form id="taskEditForm" autocomplete="off" onSubmit={onSubmit}>
@@ -36,7 +36,8 @@ export default function TaskEditForm({ errorMessage, onSubmit, task, isTaskOwner
 
       <button type="submit" id="editTaskBtn">Save task details</button>
 
-      {errorMessage && <p className="error">{errorMessage}</p>}<hr/>
+      {errorMessage && <p className="error">{errorMessage}</p>}
+      {successMessage && !errorMessage && <p className="success">{successMessage}</p>}<hr/>
        
       {isTaskOwner && <><a href={`/api/tasks/${task._id}`}
         onClick={async (e) => {

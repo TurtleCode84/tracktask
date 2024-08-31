@@ -90,6 +90,7 @@ export default function Collection() {
                   body: JSON.stringify(body),
                 });
                 await mutate();
+                document.getElementById("adminCollectionBtn").disabled = false;
               } catch (error) {
                 if (error instanceof FetchError) {
                   setErrorMsg(error.data.message);
@@ -119,6 +120,7 @@ export default function Collection() {
               body: JSON.stringify(body),
             });
             await mutate();
+            document.getElementById("hideCollectionBtn").disabled = false;
           } catch (error) {
             if (error instanceof FetchError) {
               setErrorMsg(error.data.message);
