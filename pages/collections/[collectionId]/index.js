@@ -103,7 +103,7 @@ export default function Collection() {
         <p title={collection.created > 0 ? moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a") : 'Never'}>Created: {collection.created > 0 ? <>{moment.unix(collection.created).fromNow()}</> : 'never'}</p>
         {user.id !== collection.owner && <p>Owner: <User user={user} id={collection.owner}/></p>}
         {collection.sharing.shared && <p>Shared with: <ul>{sharedWithList.length > 0 ? sharedWithList : <li style={{ fontStyle: "italic" }}>Nobody!</li>}</ul></p>}
-        <p>Number of tasks: {collection.tasks.length}</p>
+        <p>Task count: {relTaskList.length} to do &raquo; {comTaskList.length} complete &raquo; {collection.tasks.length} total</p>
         
         {["contributor", "editor"].includes(currentUserRole) && <div style={{ border: "1px dashed", borderColor: "var(--textarea-border-color)", borderRadius: "4px", padding: "20px", paddingTop: "0" }}>
         <h3>Create new task in collection:</h3>
