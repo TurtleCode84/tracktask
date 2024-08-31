@@ -25,6 +25,7 @@ export default function Task() {
   const { data: collections, error: collectionsError } = useData(user, "collections", false, false);
   
   const [errorMsg, setErrorMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
   var roles = ["none", "viewer", "collaborator", "contributor", "owner"]
   var perms = 0;
   if (user?.id === task?.owner) {
@@ -71,6 +72,7 @@ export default function Task() {
               body: JSON.stringify(body),
             });
             await taskMutate();
+            document.getElementById("taskEditForm").reset();
           } catch (error) {
             if (error instanceof FetchError) {
               setErrorMsg(error.data.message);
@@ -86,6 +88,7 @@ export default function Task() {
           <summary onClick={(e) => { dynamicToggle(e, "edit") }}>Edit task</summary>
           <TaskEditForm
             errorMessage={errorMsg}
+            successMessage={successMsg}
             task={task}
             isTaskOwner={user.id == task.owner}
             onSubmit={async function handleSubmit(event) {
@@ -121,6 +124,8 @@ export default function Task() {
                   body: JSON.stringify(body),
                 });
                 await taskMutate();
+                setSuccessMsg("Task saved!");
+                document.getElementById("editTaskBtn").disabled = false;
               } catch (error) {
                 if (error instanceof FetchError) {
                   setErrorMsg(error.data.message);
