@@ -22,8 +22,8 @@ export default function addRemoveCollectionForm({ errorMessage, successMessage, 
 
       <button type="submit" id="addRemoveCollectionBtn">Save collection data</button>
 
-      {errorMessage && <p className="error">{errorMessage}</p>}
-      {successMessage && !errorMessage && <p className="success">{successMessage}</p>}<hr/>
+      {errorMessage && !successMessage && <p className="error">{errorMessage}</p>}
+      {successMessage && <p className="success">{successMessage}</p>}<hr/>
 
       <style jsx>{`
         form,

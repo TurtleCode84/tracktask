@@ -96,8 +96,8 @@ export default function UserEditForm({ errorMessage, successMessage, onSubmit, u
 
       <button type="submit" id="editUserBtn">Save account details</button>
 
-      {errorMessage && <p className="error">{errorMessage}</p>}
-      {successMessage && !errorMessage && <p className="success">{successMessage}</p>}<hr/>
+      {errorMessage && !successMessage && <p className="error">{errorMessage}</p>}
+      {successMessage && <p className="success">{successMessage}</p>}<hr/>
        
       <a href={`/api/user`}
         onClick={async (e) => {

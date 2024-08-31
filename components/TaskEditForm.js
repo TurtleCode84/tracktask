@@ -36,8 +36,8 @@ export default function TaskEditForm({ errorMessage, successMessage, onSubmit, t
 
       <button type="submit" id="editTaskBtn">Save task details</button>
 
-      {errorMessage && <p className="error">{errorMessage}</p>}
-      {successMessage && !errorMessage && <p className="success">{successMessage}</p>}<hr/>
+      {errorMessage && !successMessage && <p className="error">{errorMessage}</p>}
+      {successMessage && <p className="success">{successMessage}</p>}<hr/>
        
       {isTaskOwner && <><a href={`/api/tasks/${task._id}`}
         onClick={async (e) => {

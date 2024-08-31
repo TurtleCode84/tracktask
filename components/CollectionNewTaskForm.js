@@ -25,8 +25,8 @@ export default function CollectionNewTaskForm({ errorMessage, successMessage, on
 
       <button type="submit" id="createTaskBtn">Create task</button>
 
-      {errorMessage && <p className="error">{errorMessage}</p>}
-      {successMessage && !errorMessage && <p className="success">{successMessage}</p>}
+      {errorMessage && !successMessage && <p className="error">{errorMessage}</p>}
+      {successMessage && <p className="success">{successMessage}</p>}
 
       <style jsx>{`
         form,

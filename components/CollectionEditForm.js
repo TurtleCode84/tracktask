@@ -16,8 +16,8 @@ export default function CollectionEditForm({ verified, errorMessage, successMess
 
       <button type="submit" id="editCollectionBtn">Save collection details</button>
 
-      {errorMessage && <p className="error">{errorMessage}</p>}
-      {successMessage && !errorMessage && <p className="success">{successMessage}</p>}<hr/>
+      {errorMessage && !successMessage && <p className="error">{errorMessage}</p>}
+      {successMessage && <p className="success">{successMessage}</p>}<hr/>
        
       <a href={`/api/collections/${collection._id}`}
         onClick={async (e) => {

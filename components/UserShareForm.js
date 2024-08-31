@@ -15,8 +15,8 @@ export default function UserShareForm({ errorMessage, successMessage, onSubmit, 
 
       <button type="submit" id="modifyUserShareBtn" style={{ width: "max-content", padding: "5px" }}><span style={{ color: "darkslategray" }} className="material-symbols-outlined icon-list">save</span> Save role changes</button>
 
-      {errorMessage && errorMessage.id === share.id && <p className="error">{errorMessage.message}</p>}
-      {successMessage && successMessage.id === share.id && !errorMessage && <p className="success">{successMessage.message}</p>}<br/>
+      {errorMessage && errorMessage.id === share.id && !successMessage && <p className="error">{errorMessage.message}</p>}
+      {successMessage && successMessage.id === share.id && <p className="success">{successMessage.message}</p>}<br/>
       
       <a href={`/api/collections/${collectionId}`}
         onClick={async (e) => {
@@ -33,7 +33,6 @@ export default function UserShareForm({ errorMessage, successMessage, onSubmit, 
                 body: JSON.stringify(body),
               });
               await mutate();
-              //window.location.replace(`/collections/${collection._id}/share?removed=true`);
             } catch (error) {
               document.getElementById(share.id + "-removeShareMessage").innerHTML = error.data?.message || error.message;
             }

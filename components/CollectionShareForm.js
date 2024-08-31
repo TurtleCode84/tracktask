@@ -16,8 +16,8 @@ export default function CollectionShareForm({ errorMessage, successMessage, onSu
 
       <button type="submit" id="shareCollectionBtn">Send share request</button>
 
-      {errorMessage && <p className="error">{errorMessage}</p>}
-      {successMessage && !errorMessage && <p className="success">{successMessage}</p>}<hr/>
+      {errorMessage && !successMessage && <p className="error">{errorMessage}</p>}
+      {successMessage && <p className="success">{successMessage}</p>}<hr/>
        
       <style jsx>{`
         form,

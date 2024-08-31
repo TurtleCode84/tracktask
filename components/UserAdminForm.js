@@ -71,8 +71,8 @@ export default function UserAdminForm({ errorMessage, successMessage, onSubmit, 
 
       <button type="submit" id="editUserBtn">Save account data</button>
 
-      {errorMessage && <p className="error">{errorMessage}</p>}
-      {successMessage && !errorMessage && <p className="success">{successMessage}</p>}<hr/>
+      {errorMessage && !successMessage && <p className="error">{errorMessage}</p>}
+      {successMessage && <p className="success">{successMessage}</p>}<hr/>
        
       <a href={`/api/admin/users/${lookup._id}`}
         onClick={async (e) => {
