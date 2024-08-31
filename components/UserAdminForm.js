@@ -1,7 +1,7 @@
 import fetchJson from "lib/fetchJson";
 import { useRouter } from "next/router";
 
-export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
+export default function UserAdminForm({ errorMessage, successMessage, onSubmit, lookup }) {
   const router = useRouter();
   return (
     <form id="userAdminForm" autocomplete="off" onSubmit={onSubmit}>
@@ -71,7 +71,8 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
 
       <button type="submit" id="editUserBtn">Save account data</button>
 
-      {errorMessage && <p className="error">{errorMessage}</p>}<hr/>
+      {errorMessage && <p className="error">{errorMessage}</p>}
+      {successMessage && !errorMessage && <p className="success">{successMessage}</p>}<hr/>
        
       <a href={`/api/admin/users/${lookup._id}`}
         onClick={async (e) => {

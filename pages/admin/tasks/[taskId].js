@@ -88,6 +88,7 @@ export default function TaskAdmin() {
                   body: JSON.stringify(body),
                 });
                 await taskMutate();
+                document.getElementById("editTaskBtn").disabled = false;
               } catch (error) {
                 if (error instanceof FetchError) {
                   setErrorMsg(error.data.message);
@@ -117,6 +118,7 @@ export default function TaskAdmin() {
               body: JSON.stringify(body),
             });
             await taskMutate();
+            document.getElementById("hideTaskBtn").disabled = false;
           } catch (error) {
             if (error instanceof FetchError) {
               setErrorMsg(error.data.message);

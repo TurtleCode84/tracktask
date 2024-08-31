@@ -16,6 +16,7 @@ export default function Account() {
   });
   
   const [errorMsg, setErrorMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
   const router = useRouter();
   
   if (!user || !user.isLoggedIn || user.permissions.banned) {
@@ -42,6 +43,7 @@ export default function Account() {
         <summary onClick={(e) => { dynamicToggle(e, "edit") }}>Edit account details</summary>
         <UserEditForm
             errorMessage={errorMsg}
+            successMessage={successMsg}
             user={user}
             onSubmit={async function handleSubmit(event) {
               event.preventDefault();
@@ -68,6 +70,8 @@ export default function Account() {
                  body: JSON.stringify(body),
                });
                await mutateUser();
+               setSuccessMsg("Account saved!");
+               document.getElementById("editUserBtn").disabled = false;
              } catch (error) {
                if (error instanceof FetchError) {
                  setErrorMsg(error.data.message);

@@ -143,6 +143,7 @@ export default function Task() {
           <summary onClick={(e) => { dynamicToggle(e, "arm") }}>Add/remove from collection</summary>
           <AddRemoveCollectionForm
             errorMessage={ARCErrorMsg}
+            successMessage={ARCSuccessMsg}
             taskId={task._id}
             collections={collections}
             isTaskOwner={user.id == task.owner}
@@ -173,7 +174,6 @@ export default function Task() {
                 await taskMutate();
                 await collectionsMutate();
                 setARCSuccessMsg("Collections saved!");
-                //document.getElementById("addRemoveCollectionForm").reset();
                 document.getElementById("addRemoveCollectionBtn").disabled = false;
               } catch (error) {
                 if (error instanceof FetchError) {

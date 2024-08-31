@@ -21,6 +21,7 @@ export default function UserAdmin() {
   });
   
   const [errorMsg, setErrorMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
   const router = useRouter();
   const { userId } = router.query;
   const { lookup, error, mutate } = useAdminUser(user, userId);
@@ -86,6 +87,7 @@ export default function UserAdmin() {
         <summary onClick={(e) => { dynamicToggle(e, "edit") }}>Edit user info</summary>
         <UserAdminForm
             errorMessage={errorMsg}
+            successMessage={successMsg}
             lookup={lookup}
             onSubmit={async function handleSubmit(event) {
               event.preventDefault();
@@ -123,6 +125,8 @@ export default function UserAdmin() {
                   body: JSON.stringify(body),
                 });
                 await mutate();
+                setSuccessMsg("User saved!");
+                document.getElementById("editUserBtn").disabled = false;
               } catch (error) {
                 if (error instanceof FetchError) {
                   setErrorMsg(error.data.message);
