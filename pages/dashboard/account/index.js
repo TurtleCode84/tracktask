@@ -74,7 +74,7 @@ export default function Account() {
                document.getElementById("editUserBtn").disabled = false;
              } catch (error) {
                if (error instanceof FetchError) {
-                 setErrorMsg(error.data.message);
+                 setErrorMsg(error.data?.message || "An error occurred.");
                } else {
                  console.error("An unexpected error happened:", error);
                }

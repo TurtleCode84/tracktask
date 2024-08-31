@@ -33,7 +33,7 @@ export default function UserShareForm({ errorMessage, onSubmit, share, collectio
               });
               window.location.replace(`/collections/${collection._id}/share?removed=true`);
             } catch (error) {
-              document.getElementById(share.id + "-removeShareMessage").innerHTML = error.data.message;
+              document.getElementById(share.id + "-removeShareMessage").innerHTML = error.data?.message || "An error occurred.";
             }
           }
         }}

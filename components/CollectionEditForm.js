@@ -27,7 +27,7 @@ export default function CollectionEditForm({ verified, errorMessage, successMess
               await fetchJson(`/api/collections/${collection._id}`, { method: "DELETE" });
               router.push("/dashboard?deleted=c");
             } catch (error) {
-              document.getElementById("deleteCollectionMessage").innerHTML = error.data.message;
+              document.getElementById("deleteCollectionMessage").innerHTML = error.data?.message || "An error occurred.";
             }
           }
         }}

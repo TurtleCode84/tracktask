@@ -31,7 +31,7 @@ export default function Tasks() {
       <Link href="/dashboard">Back to dashboard</Link><br/>
       {relTaskList === undefined || comTaskList === undefined || allTasksError ?
       <>
-      {allTasksError ? <p style={{ fontStyle: "italic" }}>{allTasksError.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
+      {allTasksError ? <p style={{ fontStyle: "italic" }}>{allTasksError.data?.message || "An error occurred."}</p> : <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
       </>
       :
       <ul style={{ display: "table" }}>

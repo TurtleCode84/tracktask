@@ -129,7 +129,7 @@ export default function UserAdmin() {
                 document.getElementById("editUserBtn").disabled = false;
               } catch (error) {
                 if (error instanceof FetchError) {
-                  setErrorMsg(error.data.message);
+                  setErrorMsg(error.data?.message || "An error occurred.");
                 } else {
                   console.error("An unexpected error happened:", error);
                 }
@@ -139,7 +139,7 @@ export default function UserAdmin() {
         />
       </details></>
       :
-      <>{error ? <p>{error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading user info...</p>}</>
+      <>{error ? <p>{error.data?.message || "An error occurred."}</p> : <p style={{ fontStyle: "italic" }}>Loading user info...</p>}</>
       }
       <details id="raw">
         <summary onClick={(e) => { dynamicToggle(e, "raw") }}>View raw JSON</summary>
