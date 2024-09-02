@@ -71,7 +71,7 @@ export default function Collection() {
         <>{collection.pending ?
         <><h3>Preview information:</h3>
         <p>Shared by: <User user={user} id={collection.owner}/></p>
-        <p>Your role: <code>{collection.role}</code></p>
+        <p>Your role: {collection.role}</p>
         <div className="textarea"><Linkify options={{target:'blank'}}>{collection.description}</Linkify></div>
         <p title={collection.created > 0 ? moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a") : 'Never'}>Created: {collection.created > 0 ? <>{moment.unix(collection.created).fromNow()}</> : 'never'}</p>
         <a href={`/api/collections/${collection._id}`} style={{ marginRight: "8px" }}
