@@ -419,7 +419,8 @@ async function dataRoute(req, res) {
             delete data[i].tasks;
             delete data[i].sharing;
             data[i].pending = true;
-            data[i].role = data[i].sharing.sharedWith.find((element) => element.id.equals(user._id) && element.role.split('-')[0] === "pending").role.split('-')[1];
+            data[i].role = data[i].sharing;
+            //data[i].role = data[i].sharing.sharedWith.find((element) => element.id.equals(user._id) && element.role.split('-')[0] === "pending").role.split('-')[1];
           } else {
             if (data[i].owner.equals(user._id)) {
               data[i].sharing.role = "owner";
