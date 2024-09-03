@@ -14,9 +14,9 @@ export default function ReportsAdmin() {
   });
   const router = useRouter();
   const { reviewed } = router.query;
-  const { reports, error: reportsError } = useAdminReports(user, reviewed);
+  const { reports, error: reportsError, mutate: reportsMutate } = useAdminReports(user, reviewed);
   const reportList = reports?.map((report) =>
-    <Report user={user} report={report} key={report._id}/>
+    <Report user={user} report={report} key={report._id} mutate={reportsMutate}/>
   );
   
   if (!user || !user.isLoggedIn || user.permissions.banned || !user.permissions.admin) {

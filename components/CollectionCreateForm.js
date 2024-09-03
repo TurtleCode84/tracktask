@@ -6,13 +6,13 @@ export default function CollectionCreateForm({ verified, errorMessage, onSubmit 
     <form id="collectionCreateForm" autocomplete="off" onSubmit={onSubmit}>
       <label>
         <span>Name</span>
-        <input type="text" name="name" maxlength="55" autoFocus required />
+        <input type="text" name="name" maxlength={process.env.NEXT_PUBLIC_MAXLENGTH_TITLE} autoFocus required />
       </label>
       <details id="adetails">
       <summary onClick={(e) => { dynamicToggle(e, "adetails") }}>Additional details</summary><br/>
       <label>
         <span>Description (optional)</span>
-        <textarea name="description" rows="8" cols="30" maxlength="500" />
+        <textarea name="description" rows="8" cols="30" maxlength={process.env.NEXT_PUBLIC_MAXLENGTH_DESCRIPTION} />
       </label>
       </details>
       <p style={{ fontStyle: "italic" }}>{verified ? 'You will be able to share this collection after you create it.' : <>If you would like to share this collection, please <Link href="/dashboard/account/verify">verify your email</Link>.</>}</p>

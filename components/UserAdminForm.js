@@ -1,13 +1,13 @@
 import fetchJson from "lib/fetchJson";
 import { useRouter } from "next/router";
 
-export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
+export default function UserAdminForm({ errorMessage, successMessage, onSubmit, lookup }) {
   const router = useRouter();
   return (
     <form id="userAdminForm" autocomplete="off" onSubmit={onSubmit}>
       <label>
         <span>Username</span>
-        <input type="text" name="username" defaultValue={lookup.username} />
+        <input type="text" name="username" defaultValue={lookup.username} required />
       </label>
       <label>
         <span>Email</span>
@@ -71,7 +71,8 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
 
       <button type="submit" id="editUserBtn">Save account data</button>
 
-      {errorMessage && <p className="error">{errorMessage}</p>}<hr/>
+      {errorMessage && !successMessage && <p className="error">{errorMessage}</p>}
+      {successMessage && <p className="success">{successMessage}</p>}<hr/>
        
       <a href={`/api/admin/users/${lookup._id}`}
         onClick={async (e) => {
@@ -82,7 +83,7 @@ export default function UserAdminForm({ errorMessage, onSubmit, lookup }) {
               await fetchJson(`/api/admin/users/${lookup._id}`, { method: "DELETE" });
               router.push("/admin?deleted=true");
             } catch (error) {
-              document.getElementById("deleteUserMessage").innerHTML = error.data.message;
+              document.getElementById("deleteUserMessage").innerHTML = error.data?.message || error.message;
             }
           } else if (confirm) {
             alert("You didn't type \"delete this account\", so we'll assume you didn't want to. Only delete a user if it's completely necessary!");

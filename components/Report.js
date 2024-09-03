@@ -1,12 +1,10 @@
 import moment from "moment";
 import Link from "next/link";
 import User from "components/User";
-import { useRouter } from "next/router";
 import fetchJson from "lib/fetchJson";
 import dynamicToggle from "lib/dynamicToggle";
 
-export default function Report({ user, report, key }) {
-  const router = useRouter();
+export default function Report({ user, report, key, mutate }) {
   var path = "collections";
   if (report.type === "share") {
     delete report.type;
@@ -36,9 +34,9 @@ export default function Report({ user, report, key }) {
                     id: report._id,
                 }),
             });
-            router.reload();
+            await mutate();
         } catch (error) {
-            document.getElementById(`reportErrorMessage-${report._id}`).innerHTML = error.data.message;
+            document.getElementById(`reportErrorMessage-${report._id}`).innerHTML = error.data?.message || error.message;
         }
         }}
     ><button><span style={{ color: "darkgreen" }} className="material-symbols-outlined icon-list">fact_check</span> Review</button></a>}
@@ -49,9 +47,9 @@ export default function Report({ user, report, key }) {
         if (confirm("Are you sure? Deleting a report is permanent!")) {
           try {
               await fetchJson(`/api/reports?id=${report._id}`, { method: "DELETE" });
-              router.reload();
+              await mutate();
           } catch (error) {
-              document.getElementById(`reportErrorMessage-${report._id}`).innerHTML = error.data.message;
+              document.getElementById(`reportErrorMessage-${report._id}`).innerHTML = error.data?.message || error.message;
           }
         }
       }}

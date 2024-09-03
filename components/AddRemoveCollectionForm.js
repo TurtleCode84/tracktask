@@ -1,4 +1,4 @@
-export default function addRemoveCollectionForm({ errorMessage, onSubmit, collections, taskId, isTaskOwner }) {
+export default function addRemoveCollectionForm({ errorMessage, successMessage, onSubmit, collections, taskId, isTaskOwner }) {
   const addCollections = collections?.filter(collection => !collection.tasks?.some((element) => element._id === taskId) && (collection.sharing?.role === "owner" || collection.sharing?.role === "contributor")).map((collection) =>
     <option key={collection._id} value={collection._id}>{collection.name}</option>
   );
@@ -22,7 +22,8 @@ export default function addRemoveCollectionForm({ errorMessage, onSubmit, collec
 
       <button type="submit" id="addRemoveCollectionBtn">Save collection data</button>
 
-      {errorMessage && <p className="error">{errorMessage}</p>}<hr/>
+      {errorMessage && !successMessage && <p className="error">{errorMessage}</p>}
+      {successMessage && <p className="success">{successMessage}</p>}<hr/>
 
       <style jsx>{`
         form,

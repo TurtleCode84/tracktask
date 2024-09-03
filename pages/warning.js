@@ -4,14 +4,12 @@ import Loading from "components/Loading";
 import Link from "next/link";
 import useUser from "lib/useUser";
 import fetchJson from "lib/fetchJson";
-import { useRouter } from "next/router";
 
 export default function Warning() {
-  const { user } = useUser({
+  const { user, mutateUser } = useUser({
     redirectTo: "/dashboard",
     warnedOnly: true,
   });
-  const router = useRouter();
   
   if (!user || !user.isLoggedIn || !user.permissions.warned) {
     return (
@@ -37,7 +35,7 @@ export default function Warning() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ acknowledgedWarning: true }),
           })
-          router.reload();
+          await mutateUser();
         }}
       ><button>Continue to TrackTask &raquo;</button></a>
         

@@ -22,9 +22,9 @@ export default function Admin() {
   if (deleted === "true") {
     dynamicMsg = "User successfully deleted!";
   }
-  const { reports, error: reportsError } = useAdminReports(user, false);
+  const { reports, error: reportsError, mutate: reportsMutate } = useAdminReports(user, false);
   const reportList = reports?.slice(0,4).map((report) =>
-    <span key={report._id} style={{ float: "left", paddingRight: "12px" }}><Report user={user} report={report}/></span>
+    <span key={report._id} style={{ float: "left", paddingRight: "12px" }}><Report user={user} report={report} mutate={reportsMutate}/></span>
   );
   const { users: recentlyActive } = useAdminUsers(user, "login", 5);
   const activeUsersList = recentlyActive?.map((activeUser) =>

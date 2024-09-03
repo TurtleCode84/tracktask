@@ -2,17 +2,17 @@ import fetchJson from "lib/fetchJson";
 import { useRouter } from "next/router";
 import moment from "moment";
 
-export default function TaskEditForm({ errorMessage, onSubmit, task, isTaskOwner }) {
+export default function TaskEditForm({ errorMessage, successMessage, onSubmit, task, isTaskOwner }) {
   const router = useRouter();
   return (
     <form id="taskEditForm" autocomplete="off" onSubmit={onSubmit}>
       {isTaskOwner && <><label>
         <span>Name</span>
-        <input type="text" name="name" defaultValue={task.name} maxlength="55" />
+        <input type="text" name="name" defaultValue={task.name} maxlength={process.env.NEXT_PUBLIC_MAXLENGTH_TITLE} required />
       </label>
       <label>
         <span>Description</span>
-        <textarea name="description" rows="4" cols="30" defaultValue={task.description} maxlength="500" />
+        <textarea name="description" rows="4" cols="30" defaultValue={task.description} maxlength={process.env.NEXT_PUBLIC_MAXLENGTH_DESCRIPTION} />
       </label><hr/>
       <label>
         <span>Due Date (<a style={{fontWeight: "400"}} href={`/task/${task._id}`}
@@ -36,7 +36,8 @@ export default function TaskEditForm({ errorMessage, onSubmit, task, isTaskOwner
 
       <button type="submit" id="editTaskBtn">Save task details</button>
 
-      {errorMessage && <p className="error">{errorMessage}</p>}<hr/>
+      {errorMessage && !successMessage && <p className="error">{errorMessage}</p>}
+      {successMessage && <p className="success">{successMessage}</p>}<hr/>
        
       {isTaskOwner && <><a href={`/api/tasks/${task._id}`}
         onClick={async (e) => {
@@ -46,7 +47,7 @@ export default function TaskEditForm({ errorMessage, onSubmit, task, isTaskOwner
               await fetchJson(`/api/tasks/${task._id}`, { method: "DELETE" });
               router.push("/dashboard?deleted=t");
             } catch (error) {
-              document.getElementById("deleteTaskMessage").innerHTML = error.data.message;
+              document.getElementById("deleteTaskMessage").innerHTML = error.data?.message || error.message;
             }
           }
         }}

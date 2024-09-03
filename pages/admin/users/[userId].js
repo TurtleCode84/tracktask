@@ -21,9 +21,10 @@ export default function UserAdmin() {
   });
   
   const [errorMsg, setErrorMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
   const router = useRouter();
   const { userId } = router.query;
-  const { lookup, error } = useAdminUser(user, userId);
+  const { lookup, error, mutate } = useAdminUser(user, userId);
   
   if (!user || !user.isLoggedIn || user.permissions.banned || !user.permissions.admin) {
     return (
@@ -86,16 +87,19 @@ export default function UserAdmin() {
         <summary onClick={(e) => { dynamicToggle(e, "edit") }}>Edit user info</summary>
         <UserAdminForm
             errorMessage={errorMsg}
+            successMessage={successMsg}
             lookup={lookup}
             onSubmit={async function handleSubmit(event) {
               event.preventDefault();
               document.getElementById("editUserBtn").disabled = true;
               if (event.currentTarget.password.value !== event.currentTarget.cpassword.value) {
                 setErrorMsg("Passwords do not match!");
+                setSuccessMsg("");
                 document.getElementById("editUserBtn").disabled = false;
                 return;
               } else if (event.currentTarget.warn.checked && !event.currentTarget.warning.value) {
                 setErrorMsg("Warnings can\'t be blank!");
+                setSuccessMsg("");
                 document.getElementById("editUserBtn").disabled = false;
                 return;
               }
@@ -122,10 +126,13 @@ export default function UserAdmin() {
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify(body),
                 });
-                router.reload();
+                await mutate();
+                setSuccessMsg("User saved!");
+                document.getElementById("editUserBtn").disabled = false;
               } catch (error) {
                 if (error instanceof FetchError) {
-                  setErrorMsg(error.data.message);
+                  setErrorMsg(error.data?.message || error.message);
+                  setSuccessMsg("");
                 } else {
                   console.error("An unexpected error happened:", error);
                 }
@@ -135,7 +142,7 @@ export default function UserAdmin() {
         />
       </details></>
       :
-      <>{error ? <p>{error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading user info...</p>}</>
+      <>{error ? <p>{error.data?.message || error.message}</p> : <p style={{ fontStyle: "italic" }}>Loading user info...</p>}</>
       }
       <details id="raw">
         <summary onClick={(e) => { dynamicToggle(e, "raw") }}>View raw JSON</summary>

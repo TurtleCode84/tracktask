@@ -1,22 +1,23 @@
 import fetchJson from "lib/fetchJson";
 import { useRouter } from "next/router";
 
-export default function CollectionEditForm({ verified, errorMessage, onSubmit, collection }) {
+export default function CollectionEditForm({ verified, errorMessage, successMessage, onSubmit, collection }) {
   const router = useRouter();
   return (
     <form id="collectionEditForm" autocomplete="off" onSubmit={onSubmit}>
       <label>
         <span>Name</span>
-        <input type="text" name="name" defaultValue={collection.name} maxlength="55" />
+        <input type="text" name="name" defaultValue={collection.name} maxlength={process.env.NEXT_PUBLIC_MAXLENGTH_TITLE} required />
       </label>
       <label>
         <span>Description</span>
-        <textarea name="description" rows="4" cols="30" defaultValue={collection.description} maxlength="500" />
+        <textarea name="description" rows="4" cols="30" defaultValue={collection.description} maxlength={process.env.NEXT_PUBLIC_MAXLENGTH_DESCRIPTION} />
       </label><hr/>
 
       <button type="submit" id="editCollectionBtn">Save collection details</button>
 
-      {errorMessage && <p className="error">{errorMessage}</p>}<hr/>
+      {errorMessage && !successMessage && <p className="error">{errorMessage}</p>}
+      {successMessage && <p className="success">{successMessage}</p>}<hr/>
        
       <a href={`/api/collections/${collection._id}`}
         onClick={async (e) => {
@@ -26,7 +27,7 @@ export default function CollectionEditForm({ verified, errorMessage, onSubmit, c
               await fetchJson(`/api/collections/${collection._id}`, { method: "DELETE" });
               router.push("/dashboard?deleted=c");
             } catch (error) {
-              document.getElementById("deleteCollectionMessage").innerHTML = error.data.message;
+              document.getElementById("deleteCollectionMessage").innerHTML = error.data?.message || error.message;
             }
           }
         }}

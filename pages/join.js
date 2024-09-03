@@ -53,7 +53,7 @@ export default function Join() {
               router.push(`/login?joined=true&username=${res.username}`);
             } catch (error) {
               if (error instanceof FetchError) {
-                setErrorMsg(error.data.message);
+                setErrorMsg(error.data?.message || error.message);
               } else {
                 console.error("An unexpected error happened:", error);
               }

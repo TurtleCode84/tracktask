@@ -21,7 +21,7 @@ export default function TaskAdmin() {
   });
   const router = useRouter();
   const { taskId } = router.query;
-  const { data: task, error: taskError } = useAdminData(user, "tasks", taskId, false);
+  const { data: task, error: taskError, mutate: taskMutate } = useAdminData(user, "tasks", taskId, false);
   const { data: collections, error: collectionsError } = useAdminData(user, "collections", false, false);
   
   const [errorMsg, setErrorMsg] = useState("");
@@ -38,7 +38,7 @@ export default function TaskAdmin() {
   
   return (
     <Layout>
-      <h2>{task ? <>{task.hidden && <><span title="Hidden" style={{ color: "red" }} className="material-symbols-outlined">disabled_visible</span>{' '}</>}{task.completion.completed > 0 ? <span title="Completed" style={{ color: "darkgreen", marginRight: "8px" }} className="material-symbols-outlined">task_alt</span> : null}{task.priority ? <span title="Priority" style={{ color: "red", marginRight: "8px" }} className="material-symbols-outlined">label_important</span> : null}{collectionTags?.length > 0 && collectionTags}{task.name}:</> : 'Loading...'}</h2>
+      <h2><span title="Admin View" style={{ color: "lightslategray" }} className="material-symbols-outlined">verified_user</span>{task ? <>{task.hidden && <><span title="Hidden" style={{ color: "red" }} className="material-symbols-outlined">disabled_visible</span>{' '}</>}{task.completion.completed > 0 ? <span title="Completed" style={{ color: "darkgreen", marginRight: "8px" }} className="material-symbols-outlined">task_alt</span> : null}{task.priority ? <span title="Priority" style={{ color: "red", marginRight: "8px" }} className="material-symbols-outlined">label_important</span> : null}{collectionTags?.length > 0 && collectionTags}{task.name}:</> : 'Loading...'}</h2>
       <Link href="/admin/tasks">Back to tasks</Link><br/>
       <Link href="/admin">Back to admin dashboard</Link><br/>
       {task ?
@@ -87,10 +87,11 @@ export default function TaskAdmin() {
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify(body),
                 });
-                router.reload();
+                await taskMutate();
+                document.getElementById("editTaskBtn").disabled = false;
               } catch (error) {
                 if (error instanceof FetchError) {
-                  setErrorMsg(error.data.message);
+                  setErrorMsg(error.data?.message || error.message);
                 } else {
                   console.error("An unexpected error happened:", error);
                 }
@@ -116,10 +117,11 @@ export default function TaskAdmin() {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(body),
             });
-            router.reload();
+            await taskMutate();
+            document.getElementById("hideTaskBtn").disabled = false;
           } catch (error) {
             if (error instanceof FetchError) {
-              setErrorMsg(error.data.message);
+              setErrorMsg(error.data?.message || error.message);
             } else {
               console.error("An unexpected error happened:", error);
             }
@@ -129,7 +131,7 @@ export default function TaskAdmin() {
         ><button id="hideTaskBtn"><span style={{ color: "darkgray" }} className="material-symbols-outlined icon-list">visibility_off</span> {task?.hidden ? 'Unhide' : 'Hide'} task</button></a>
         <ReportButton user={user} type="task" reported={task} flag={true}/></>
       :
-        <p style={{ fontStyle: "italic" }}>{taskError ? taskError.data.message : 'Loading task...'}</p>
+        <p style={{ fontStyle: "italic" }}>{taskError ? taskError.data?.message || taskError.message : 'Loading task...'}</p>
       }
     </Layout>
   );

@@ -3,7 +3,7 @@ import dynamicToggle from "lib/dynamicToggle";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
-export default function UserEditForm({ errorMessage, onSubmit, user }) {
+export default function UserEditForm({ errorMessage, successMessage, onSubmit, user }) {
   const router = useRouter();
   useEffect(() => {
     const themeDropdown = document.getElementById("theme-dropdown");
@@ -96,7 +96,8 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
 
       <button type="submit" id="editUserBtn">Save account details</button>
 
-      {errorMessage && <p className="error">{errorMessage}</p>}<hr/>
+      {errorMessage && !successMessage && <p className="error">{errorMessage}</p>}
+      {successMessage && <p className="success">{successMessage}</p>}<hr/>
        
       <a href={`/api/user`}
         onClick={async (e) => {
@@ -107,7 +108,7 @@ export default function UserEditForm({ errorMessage, onSubmit, user }) {
               await fetchJson(`/api/user`, { method: "DELETE" });
               router.push("/");
             } catch (error) {
-              document.getElementById("deleteUserMessage").innerHTML = error.data.message;
+              document.getElementById("deleteUserMessage").innerHTML = error.data?.message || error.message;
             }
           } else if (confirm) {
             alert("You didn't type \"delete my account\", so we'll assume you didn't want to. Great choice!");
