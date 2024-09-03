@@ -26,7 +26,8 @@ function MyApp({ Component, pageProps }) {
     const vapidKey = urlBase64ToUint8Array(process.env.NEXT_PUBLIC_NOTIFICATIONS_PUBLIC_KEY);
     const pushNotifications = localStorage.getItem("notifications");
     if (pushNotifications === "enable") {
-      if("serviceWorker" in navigator && "Notification" in window) {
+      //if("serviceWorker" in navigator && "Notification" in window) {
+      if (true) {
         
         //if (Notification.permission !== "denied") {
           // We need to ask the user for permission
