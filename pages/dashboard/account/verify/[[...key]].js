@@ -52,7 +52,7 @@ export default function Verify() {
                         router.push(`/dashboard?verify=${key?.length > 0 ? "done" : "pending"}`);
                     } catch (error) {
                         if (error instanceof FetchError) {
-                            setErrorMsg(error.data.message);
+                            setErrorMsg(error.data?.message || error.message);
                         } else {
                             console.error("An unexpected error happened:", error);
                         }

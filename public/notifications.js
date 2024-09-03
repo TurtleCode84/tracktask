@@ -20,6 +20,7 @@ self.addEventListener("push", (event) => {
       icon: "/tracktaskmini.png",
     })
   );
+  console.log(`Received push notification: ${JSON.stringify(payload)}`);
 });
 
 self.addEventListener("notificationclick", (event) => {

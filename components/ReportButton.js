@@ -30,7 +30,7 @@ export default function ReportButton({ type, reported, flag }) {
                 router.push("/dashboard?reported=true");
             }
         } catch (error) {
-            document.getElementById("reportMessage").innerHTML = error.data.message;
+            document.getElementById("reportMessage").innerHTML = error.data?.message || error.message;
         }
         }
         }}

@@ -21,10 +21,13 @@ export default function Task() {
   });
   const router = useRouter();
   const { taskId } = router.query;
-  const { data: task, error: taskError } = useData(user, "tasks", taskId, false);
-  const { data: collections, error: collectionsError } = useData(user, "collections", false, false);
+  const { data: task, error: taskError, mutate: taskMutate } = useData(user, "tasks", taskId, false);
+  const { data: collections, error: collectionsError, mutate: collectionsMutate } = useData(user, "collections", false, false);
   
   const [errorMsg, setErrorMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
+  const [arcErrorMsg, setArcErrorMsg] = useState("");
+  const [arcSuccessMsg, setArcSuccessMsg] = useState("");
   var roles = ["none", "viewer", "collaborator", "contributor", "owner"]
   var perms = 0;
   if (user?.id === task?.owner) {
@@ -70,10 +73,12 @@ export default function Task() {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(body),
             });
-            router.reload();
+            await taskMutate();
+            document.getElementById("taskEditForm").reset();
           } catch (error) {
             if (error instanceof FetchError) {
-              setErrorMsg(error.data.message);
+              setErrorMsg(error.data?.message || error.message);
+              setSuccessMsg("");
             } else {
               console.error("An unexpected error happened:", error);
             }
@@ -86,6 +91,7 @@ export default function Task() {
           <summary onClick={(e) => { dynamicToggle(e, "edit") }}>Edit task</summary>
           <TaskEditForm
             errorMessage={errorMsg}
+            successMessage={successMsg}
             task={task}
             isTaskOwner={user.id == task.owner}
             onSubmit={async function handleSubmit(event) {
@@ -120,10 +126,13 @@ export default function Task() {
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify(body),
                 });
-                router.reload();
+                await taskMutate();
+                setSuccessMsg("Task saved!");
+                document.getElementById("editTaskBtn").disabled = false;
               } catch (error) {
                 if (error instanceof FetchError) {
-                  setErrorMsg(error.data.message);
+                  setErrorMsg(error.data?.message || error.message);
+                  setSuccessMsg("");
                 } else {
                   console.error("An unexpected error happened:", error);
                 }
@@ -135,7 +144,8 @@ export default function Task() {
         {perms >= 4 && <details id="arm">
           <summary onClick={(e) => { dynamicToggle(e, "arm") }}>Add/remove from collection</summary>
           <AddRemoveCollectionForm
-            errorMessage={errorMsg}
+            errorMessage={arcErrorMsg}
+            successMessage={arcSuccessMsg}
             taskId={task._id}
             collections={collections}
             isTaskOwner={user.id == task.owner}
@@ -163,10 +173,14 @@ export default function Task() {
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify(body),
                 });
-                router.reload();
+                await taskMutate();
+                await collectionsMutate();
+                setArcSuccessMsg("Collections saved!");
+                document.getElementById("addRemoveCollectionBtn").disabled = false;
               } catch (error) {
                 if (error instanceof FetchError) {
-                  setErrorMsg(error.data.message);
+                  setArcErrorMsg(error.data?.message || error.message);
+                  setArcSuccessMsg("");
                 } else {
                   console.error("An unexpected error happened:", error);
                 }
@@ -178,7 +192,7 @@ export default function Task() {
         {perms >= 4 && <br/>}
         {user.id !== task.owner && <ReportButton user={user} type="task" reported={task}/>}</>
       :
-        <>{taskError ? <p>{taskError.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading task...</p>}</>
+        <>{taskError ? <p>{taskError.data?.message || taskError.message}</p> : <p style={{ fontStyle: "italic" }}>Loading task...</p>}</>
       }
     </Layout>
   );
