@@ -43,10 +43,10 @@ export default function Collection() {
     titleInfo.hover = "Shared";
     titleInfo.icon = "group";
   }
-  const relTaskList = collection?.tasks?.filter(task => task.completion.completed === 0).sort((a, b) => a.dueDate < b.dueDate && a.dueDate > 0 ? 1 : -1).map((task) =>
+  const relTaskList = collection?.tasks?.filter(task => task.completion.completed === 0).sort((a, b) => a.dueDate < b.dueDate && a.dueDate > 0 ? 1 : 0).map((task) =>
     <Task task={task} key={task._id}/>
   );
-  const comTaskList = collection?.tasks?.filter(task => task.completion.completed > 0).sort((a, b) => a.dueDate < b.dueDate && a.dueDate > 0 ? 1 : -1).map((task) =>
+  const comTaskList = collection?.tasks?.filter(task => task.completion.completed > 0).sort((a, b) => a.dueDate < b.dueDate && a.dueDate > 0 ? 1 : 0).map((task) =>
     <Task task={task} key={task._id}/>
   );
   const sharedWithList = collection?.sharing?.sharedWith?.map((item) =>
