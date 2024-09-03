@@ -26,10 +26,9 @@ function MyApp({ Component, pageProps }) {
     const vapidKey = urlBase64ToUint8Array(process.env.NEXT_PUBLIC_NOTIFICATIONS_PUBLIC_KEY);
     const pushNotifications = localStorage.getItem("notifications");
     if (pushNotifications === "enable") {
-      //if("serviceWorker" in navigator && "Notification" in window) {
-      if (true) {
+      if ("serviceWorker" in navigator && "Notification" in window) {
         
-        //if (Notification.permission !== "denied") {
+        if (Notification.permission !== "denied") {
           // We need to ask the user for permission
           Notification.requestPermission().then((permission) => {
             if (permission === "granted") {
@@ -53,19 +52,22 @@ function MyApp({ Component, pageProps }) {
                   registration.showNotification('TrackTask', {
                     body: "You have enabled push notifications!",
                     icon: "/tracktaskmini.png",
-                  })
+                  });
+                  localStorage.setItem("notifications", "enabled");
                 });
               });
-              localStorage.setItem("notifications", "enabled");
             } else {
               localStorage.setItem("notifications", "disabled");
               alert("Please allow notifications from this site to enable push notifcations.");
             }
           });
-        //}
+        } else {
+          localStorage.setItem("notifications", "disabled");
+          alert("Please allow notifications from this site to enable push notifcations.");
+        }
       } else {
         localStorage.setItem("notifications", "disabled");
-        alert("Unfortunately, push notifications are not supported by your browser, so they could not be enabled.");
+        alert("Push notifications are not supported by your browser, so they could not be enabled.");
       }
     } else if (pushNotifications === "disable") {
       fetch("/api/notifications", {
