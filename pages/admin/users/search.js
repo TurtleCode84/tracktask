@@ -60,7 +60,7 @@ export default function UserSearch() {
               }
             } catch (error) {
               if (error instanceof FetchError) {
-                setErrorMsg(error.data.message);
+                setErrorMsg(error.data?.message || error.message);
               } else {
                 console.error("An unexpected error happened:", error);
               }

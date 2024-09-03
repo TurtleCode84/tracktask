@@ -22,13 +22,13 @@ export default function Collection() {
   });
   const router = useRouter();
   const { collectionId } = router.query;
-  const { data: collection, error } = useAdminData(user, "collections", collectionId, false);
+  const { data: collection, error, mutate } = useAdminData(user, "collections", collectionId, false);
   
   const [errorMsg, setErrorMsg] = useState("");
-  const relTaskList = collection?.tasks?.filter(task => task.completion.completed === 0).map((task) =>
+  const relTaskList = collection?.tasks?.filter(task => task.completion.completed === 0).sort((a, b) => a.dueDate < b.dueDate || b.dueDate === 0 ? -1 : 1).map((task) =>
     <Task task={task} key={task._id} admin={true}/>
   );
-  const comTaskList = collection?.tasks?.filter(task => task.completion.completed > 0).map((task) =>
+  const comTaskList = collection?.tasks?.filter(task => task.completion.completed > 0).sort((a, b) => a.dueDate < b.dueDate || b.dueDate === 0 ? -1 : 1).map((task) =>
     <Task task={task} key={task._id} admin={true}/>
   );
 
@@ -44,7 +44,7 @@ export default function Collection() {
   
   return (
     <Layout>
-      <h2>{collection ? <>{collection.hidden && <><span title="Hidden" style={{ color: "red" }} className="material-symbols-outlined">disabled_visible</span>{' '}</>}{collection.sharing.shared ? <span title="Shared" style={{ color: "lightslategray" }} className="material-symbols-outlined">group</span> : <span title="Private" style={{ color: "lightslategray" }} className="material-symbols-outlined">lock</span>}<span style={{ color: stringToColor(collection._id), filter: "grayscale(0.4) brightness(1.5)" }} className="material-symbols-outlined">fiber_manual_record</span>{' '}{collection.name}:</> : 'Loading...'}</h2>
+      <h2><span title="Admin View" style={{ color: "lightslategray" }} className="material-symbols-outlined">verified_user</span>{collection ? <>{collection.hidden && <><span title="Hidden" style={{ color: "red" }} className="material-symbols-outlined">disabled_visible</span>{' '}</>}{collection.sharing.shared ? <span title="Shared" style={{ color: "lightslategray" }} className="material-symbols-outlined">group</span> : <span title="Private" style={{ color: "lightslategray" }} className="material-symbols-outlined">lock</span>}<span style={{ color: stringToColor(collection._id), filter: "grayscale(0.4) brightness(1.5)" }} className="material-symbols-outlined">fiber_manual_record</span>{' '}{collection.name}:</> : 'Loading...'}</h2>
       <Link href="/admin/collections">Back to collections</Link><br/>
       <Link href="/admin">Back to admin dashboard</Link><br/>
       {collection ?
@@ -53,11 +53,11 @@ export default function Collection() {
         <p title={collection.created > 0 ? moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a") : 'Never'}>Created: {collection.created > 0 ? <>{moment.unix(collection.created).format("dddd, MMMM Do YYYY, h:mm:ss a")}{' '}({moment.unix(collection.created).fromNow()})</> : 'never'}</p>
         <p>Owner: <User user={user} id={collection.owner} link={true}/></p>
         {collection.sharing.shared && <p>Shared with: <ul>{sharedWithList.length > 0 ? sharedWithList : <li style={{ fontStyle: "italic" }}>Nobody!</li>}</ul></p>}
-        <p>Number of tasks: {collection.tasks.length}</p></div>
+        <p>Task count: {relTaskList.length} to do &raquo; {comTaskList.length} complete &raquo; {collection.tasks.length} total</p></div>
         <div className="tasks">
         {relTaskList === undefined || comTaskList === undefined || error ?
         <>
-        {error ? <p style={{ fontStyle: "italic" }}>{error.data.message}</p> : <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
+        {error ? <p style={{ fontStyle: "italic" }}>{error.data?.message || error.message}</p> : <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}
         </>
         :
         <ul style={{ display: "table" }}>
@@ -89,10 +89,11 @@ export default function Collection() {
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify(body),
                 });
-                router.reload();
+                await mutate();
+                document.getElementById("adminCollectionBtn").disabled = false;
               } catch (error) {
                 if (error instanceof FetchError) {
-                  setErrorMsg(error.data.message);
+                  setErrorMsg(error.data?.message || error.message);
                 } else {
                   console.error("An unexpected error happened:", error);
                 }
@@ -118,10 +119,11 @@ export default function Collection() {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(body),
             });
-            router.reload();
+            await mutate();
+            document.getElementById("hideCollectionBtn").disabled = false;
           } catch (error) {
             if (error instanceof FetchError) {
-              setErrorMsg(error.data.message);
+              setErrorMsg(error.data?.message || error.message);
             } else {
               console.error("An unexpected error happened:", error);
             }
@@ -131,7 +133,7 @@ export default function Collection() {
         ><button id="hideCollectionBtn"><span style={{ color: "darkgray" }} className="material-symbols-outlined icon-list">visibility_off</span> {collection?.hidden ? 'Unhide' : 'Hide'} collection</button></a>
         <ReportButton user={user} type="collection" reported={collection} flag={true}/></>
       :
-        <p style={{ fontStyle: "italic" }}>{error ? error.data.message : 'Loading collection...'}</p>
+        <p style={{ fontStyle: "italic" }}>{error ? error.data?.message || error.message : 'Loading collection...'}</p>
       }
     </Layout>
   );

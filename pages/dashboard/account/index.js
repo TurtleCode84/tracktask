@@ -8,15 +8,14 @@ import Link from "next/link";
 import Image from "next/image";
 import useUser from "lib/useUser";
 import dynamicToggle from "lib/dynamicToggle";
-import { useRouter } from "next/router";
 
 export default function Account() {
-  const { user } = useUser({
+  const { user, mutateUser } = useUser({
     redirectTo: "/login",
   });
   
   const [errorMsg, setErrorMsg] = useState("");
-  const router = useRouter();
+  const [successMsg, setSuccessMsg] = useState("");
   
   if (!user || !user.isLoggedIn || user.permissions.banned) {
     return (
@@ -42,12 +41,14 @@ export default function Account() {
         <summary onClick={(e) => { dynamicToggle(e, "edit") }}>Edit account details</summary>
         <UserEditForm
             errorMessage={errorMsg}
+            successMessage={successMsg}
             user={user}
             onSubmit={async function handleSubmit(event) {
               event.preventDefault();
               document.getElementById("editUserBtn").disabled = true;
               if (event.currentTarget.password.value !== event.currentTarget.cpassword.value) {
                 setErrorMsg("New passwords do not match!");
+                setSuccessMsg("");
                 document.getElementById("editUserBtn").disabled = false;
                 return;
               }
@@ -67,10 +68,13 @@ export default function Account() {
                  headers: { "Content-Type": "application/json" },
                  body: JSON.stringify(body),
                });
-               router.reload();
+               await mutateUser();
+               setSuccessMsg("Account saved!");
+               document.getElementById("editUserBtn").disabled = false;
              } catch (error) {
                if (error instanceof FetchError) {
-                 setErrorMsg(error.data.message);
+                 setErrorMsg(error.data?.message || error.message);
+                 setSuccessMsg("");
                } else {
                  console.error("An unexpected error happened:", error);
                }

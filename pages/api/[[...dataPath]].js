@@ -171,8 +171,8 @@ async function dataRoute(req, res) {
       if (!name) {
         res.status(422).json({ message: "Invalid data" });
         return;
-      } else if (name.trim().length > 55 || description?.trim().length > 500) {
-        res.status(422).json({ message: "Length of title and description must not exceed 55 and 500 characters respectively." });
+      } else if (name.trim().length > parseInt(process.env.NEXT_PUBLIC_MAXLENGTH_TITLE) || description?.trim().length > parseInt(process.env.NEXT_PUBLIC_MAXLENGTH_DESCRIPTION)) {
+        res.status(422).json({ message: `Length of title and description must not exceed ${process.env.NEXT_PUBLIC_MAXLENGTH_TITLE} and ${process.env.NEXT_PUBLIC_MAXLENGTH_DESCRIPTION} characters respectively.` });
         return;
       } else if (countUserTasks >= 10000) {
         res.status(403).json({ message: "Woah there, we didn't expect you to create so many tasks! If you have tasks completed over a year ago, we'll remove them within the week to clear space for new tasks, otherwise you should delete a few before creating any more." });
@@ -322,8 +322,8 @@ async function dataRoute(req, res) {
 
       } else if (perms === "edit") {
 
-        if (body.name) {updateDoc.name = body.name.trim().slice(0, 55);} // Enforce length limit
-        if (body.description !== undefined) {updateDoc.description = body.description.trim().slice(0, 500);}
+        if (body.name) {updateDoc.name = body.name.trim().slice(0, parseInt(process.env.NEXT_PUBLIC_MAXLENGTH_TITLE));} // Enforce length limit
+        if (body.description !== undefined) {updateDoc.description = body.description.trim().slice(0, parseInt(process.env.NEXT_PUBLIC_MAXLENGTH_DESCRIPTION));}
         if (body.dueDate !== undefined && (moment(body.dueDate, moment.ISO_8601, true).isValid() || body.dueDate.length === 0)) {
           if (body.dueDate) {
             updateDoc.dueDate = moment(body.dueDate).unix();
@@ -416,9 +416,10 @@ async function dataRoute(req, res) {
         
         for (var i=0; i<data.length; i++) {
           if (data[i].sharing.sharedWith.some((element) => element.id.equals(user._id) && element.role.split('-')[0] === "pending")) {
+            data[i].pending = true;
+            data[i].role = data[i].sharing.sharedWith.find((element) => element.id.equals(user._id) && element.role.split('-')[0] === "pending").role.split('-')[1];
             delete data[i].tasks;
             delete data[i].sharing;
-            data[i].pending = true;
           } else {
             if (data[i].owner.equals(user._id)) {
               data[i].sharing.role = "owner";
@@ -445,8 +446,8 @@ async function dataRoute(req, res) {
       if (!name) {
         res.status(422).json({ message: "Invalid data" });
         return;
-      } else if (name.trim().length > 55 || description?.trim().length > 500) {
-        res.status(422).json({ message: "Length of title and description must not exceed 55 and 500 characters respectively." });
+      } else if (name.trim().length > parseInt(process.env.NEXT_PUBLIC_MAXLENGTH_TITLE) || description?.trim().length > parseInt(process.env.NEXT_PUBLIC_MAXLENGTH_DESCRIPTION)) {
+        res.status(422).json({ message: `Length of title and description must not exceed ${process.env.NEXT_PUBLIC_MAXLENGTH_TITLE} and ${process.env.NEXT_PUBLIC_MAXLENGTH_DESCRIPTION} characters respectively.` });
         return;
       } else if (countUserCollections >= 100) {
         res.status(403).json({ message: "Woah there, we didn't expect you to create so many collections! Try deleting a few before making a new one." });
@@ -513,8 +514,8 @@ async function dataRoute(req, res) {
           hidden: false,
           owner: user._id,
         };
-        if (body.name) {updateDoc.name = body.name.trim().slice(0, 55);} // Enforce length limit
-        if (body.description !== undefined) {updateDoc.description = body.description.trim().slice(0, 500);}
+        if (body.name) {updateDoc.name = body.name.trim().slice(0, parseInt(process.env.NEXT_PUBLIC_MAXLENGTH_TITLE));} // Enforce length limit
+        if (body.description !== undefined) {updateDoc.description = body.description.trim().slice(0, parseInt(process.env.NEXT_PUBLIC_MAXLENGTH_DESCRIPTION));}
         if (body.shared !== undefined && user.permissions.verified) {
           updateDoc = {
             $set: {
