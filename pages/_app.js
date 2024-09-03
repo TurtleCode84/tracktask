@@ -32,36 +32,37 @@ function MyApp({ Component, pageProps }) {
         //if (Notification.permission !== "denied") {
           // We need to ask the user for permission
           Notification.requestPermission().then((permission) => {
-            if (permission !== "granted") {
-              localStorage.setItem("notifications", "disable");
-              alert("You've blocked notifications, so push notifications cannot be enabled.");
+            if (permission === "granted") {
+              navigator.serviceWorker.register("/notifications.js");
+
+              navigator.serviceWorker.ready.then(
+                (registration) => {
+                registration.pushManager.subscribe({
+                  userVisibleOnly: true,
+                  applicationServerKey: vapidKey,
+                }).then((pushSubscription) => {
+                  //console.log("Received PushSubscription: ", JSON.stringify(pushSubscription));
+                  fetch("/api/notifications", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                      subscription: pushSubscription,
+                    }),
+                  });
+                }).then((res) => {
+                  registration.showNotification('TrackTask', {
+                    body: "You have enabled push notifications!",
+                    icon: "/tracktaskmini.png",
+                  })
+                });
+              });
+              localStorage.setItem("notifications", "enabled");
+            } else {
+              localStorage.setItem("notifications", "disabled");
+              alert("Please allow notifications from this site to enable push notifcations.");
             }
           });
-        //}      
-
-        navigator.serviceWorker.register("/notifications.js");
-
-        navigator.serviceWorker.ready.then(
-          (registration) => {
-          registration.pushManager.subscribe({
-            userVisibleOnly: true,
-            applicationServerKey: vapidKey,
-          }).then((pushSubscription) => {
-            //console.log("Received PushSubscription: ", JSON.stringify(pushSubscription));
-            fetch("/api/notifications", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                subscription: pushSubscription,
-              }),
-            });
-          });
-          registration.showNotification('TrackTask', {
-            body: "You have enabled push notifications!",
-            icon: "/tracktaskmini.png",
-          })
-        });
-        localStorage.setItem("notifications", "enabled");
+        //}
       } else {
         localStorage.setItem("notifications", "disabled");
         alert("Unfortunately, push notifications are not supported by your browser, so they could not be enabled.");
