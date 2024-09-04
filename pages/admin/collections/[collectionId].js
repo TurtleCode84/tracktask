@@ -25,10 +25,10 @@ export default function Collection() {
   const { data: collection, error, mutate } = useAdminData(user, "collections", collectionId, false);
   
   const [errorMsg, setErrorMsg] = useState("");
-  const relTaskList = collection?.tasks?.filter(task => task.completion.completed === 0).sort((a, b) => a.dueDate < b.dueDate || b.dueDate === 0 ? 0 : 1).sort((a, b) => a.priority ? 0 : 1).map((task) =>
+  const relTaskList = collection?.tasks?.filter(task => task.completion.completed === 0).sort((a, b) => a.dueDate < b.dueDate || b.dueDate === 0 ? 0 : 1).reverse().sort((a, b) => a.priority ? 0 : 1).map((task) =>
     <Task task={task} key={task._id} admin={true}/>
   );
-  const comTaskList = collection?.tasks?.filter(task => task.completion.completed > 0).sort((a, b) => a.dueDate < b.dueDate || b.dueDate === 0 ? 0 : 1).sort((a, b) => a.priority ? 0 : 1).map((task) =>
+  const comTaskList = collection?.tasks?.filter(task => task.completion.completed > 0).sort((a, b) => a.dueDate < b.dueDate || b.dueDate === 0 ? 0 : 1).reverse().sort((a, b) => a.priority ? 0 : 1).map((task) =>
     <Task task={task} key={task._id} admin={true}/>
   );
 
