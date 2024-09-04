@@ -107,7 +107,7 @@ export default function Collection() {
         {collection.sharing.shared && <p>Shared with: <ul>{sharedWithList.length > 0 ? sharedWithList : <li style={{ fontStyle: "italic" }}>Nobody!</li>}</ul></p>}
         <p>Task count: {relTaskList.length} to do &raquo; {comTaskList.length} complete &raquo; {collection.tasks.length} total</p>
         
-        {["contributor", "editor"].includes(currentUserRole) && <div style={{ border: "1px dashed", borderColor: "var(--textarea-border-color)", borderRadius: "4px", padding: "20px", paddingTop: "0" }}>
+        {["contributor", "editor"].includes(currentUserRole) && <div style={{ border: "1px dashed", borderColor: "var(--textarea-border-color)", borderRadius: "4px", padding: "20px", paddingTop: "0", marginBottom: "14px" }}>
         <h3>Create new task in collection:</h3>
         <CollectionNewTaskForm
           errorMessage={newTaskErrorMsg}
