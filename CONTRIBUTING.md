@@ -36,7 +36,7 @@ Thank you for your interest in making TrackTask a better platform! Please review
 | `NOTIFICATIONS_PRIVATE_KEY` | A valid [VAPID](https://web.dev/articles/push-notifications-web-push-protocol) private key, matched to the public key set in `NEXT_PUBLIC_NOTIFICATIONS_PUBLIC_KEY`. Can be blank, but only if you do not plan on using push notifications. | Push notifications |
 | `RECAPTCHA_SECRET`       | The secret key for a v3 [Google reCAPTCHA](https://www.google.com/recaptcha/about/) instance                                                       | Abuse prevention     |
 | `SECRET_COOKIE_PASSWORD` | A complex, random-generated string, must be at least 32 characters long                                      | User authentication  |
-| `SMTP_AUTH`            | Authentication details for sending account-related emails through SMTP. Syntax: `username:password`.      | Account-related emails |
+| `SMTP_AUTH`            | Authentication details for sending account-related emails through SMTP. Syntax: `host:username:password`.      | Account-related emails |
 | `SUPERADMIN`             | The ID of the main admin user, grants this user additional privileges and immunity. Can be blank.       | Administration       |
 
 4. Click "Deploy" and verify that everything builds correctly. You should now be able to visit your deployed frontend.
