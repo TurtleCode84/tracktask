@@ -32,7 +32,7 @@ export default function passwordReset(username, key) {
 
                                 <p>Please note that the password reset link is valid for 1 hour from the time of this email. If you don&apos;t complete the reset within this time frame, you may need to request another one.</p>
 
-                                <p>If you encounter any issues or have questions, please don&apos;t hesitate to contact our support team at <a href="mailto:tracktask@tracktask.eu.org">tracktask@tracktask.eu.org</a>.</p>
+                                <p>If you encounter any issues or have questions, please don&apos;t hesitate to contact our support team at <a href="mailto:hello@tracktask.eu.org">hello@tracktask.eu.org</a>.</p>
 
                                 <p>Best,</p>
                                 <p>The TrackTask Team<br>

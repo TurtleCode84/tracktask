@@ -13,7 +13,7 @@ async function notificationsRoute(req, res) {
       const client = await clientPromise;
       const db = client.db("data");
       webpush.setVapidDetails(
-        'mailto:tracktask@tracktask.eu.org',
+        'mailto:hello@tracktask.eu.org',
         process.env.NEXT_PUBLIC_NOTIFICATIONS_PUBLIC_KEY,
         process.env.NOTIFICATIONS_PRIVATE_KEY
       );      

@@ -56,7 +56,7 @@ Please see our [CONTRIBUTING.md](/CONTRIBUTING.md) for contributing guidelines a
 <hr>
 
 ### Contact Us
->Email &bull; `tracktask@tracktask.eu.org`
+>Email &bull; `hello@tracktask.eu.org`
 <br>Github &bull; [Discussions](https://github.com/TurtleCode84/tracktask/discussions)
 <br>Security &bull; [SECURITY.md](/SECURITY.md)
 
