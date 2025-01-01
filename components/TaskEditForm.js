@@ -22,7 +22,7 @@ export default function TaskEditForm({ errorMessage, successMessage, onSubmit, t
           document.getElementById("dueDate").value = "";
           document.getElementById("editTaskBtn").disabled = false;
         }}
-        >remove</a>)</span>
+        >reset</a>)</span>
         <input type="datetime-local" id="dueDate" name="dueDate" defaultValue={task.dueDate !== 0 && moment.unix(task.dueDate).format(moment.HTML5_FMT.DATETIME_LOCAL)} min="1970-01-01T00:00" />
       </label>
       <label>
