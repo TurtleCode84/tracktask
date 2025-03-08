@@ -47,7 +47,7 @@ Currently, as the project's main development cycle has concluded, only one offic
 ## Things to consider:
 > This project, while feature-complete, is **still in development**, some things may not work as expected. We're working on adding new features and improving existing infrastructure, but most of our development team has other commitments and a life outside of TrackTask, so we can't always devote our attention to issues/improvements.
 
-> If you find something that you dislike and/or think could be better, **please don't just complain** about it. Sometimes we miss things, but most times we'd like to know _how_ we can improve things, so complaining about them won't always get you (or us) anywhere.
+> If you find something that you dislike and/or think could be better, **please don't just complain** about it. Sometimes we miss things, but most times we'd like to know _how_ we can improve things, so complaining about them won't get you (or us) anywhere.
 
 > The code you see here is the product of **hundreds of hours of work and improvement**. We are very proud of how far we've come since development on TrackTask first started nearly a year ago. The truth is, this project was created to satisfy a single person's need to keep track of school assignments, but it's grown to be much more; a worthwhile learning experience, a result that hopefully a few others will continue to find useful for many years to come.
 
