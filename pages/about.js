@@ -8,8 +8,8 @@ export default function About() {
     <Layout>
       <h1>About TrackTask:</h1>
       <p>
-      TrackTask was created out of necessity by a single student in need of an academic planner. Rather than purchase one from a store, however, this developer was inspired to build their own website on which they could track and manage their tasks. The web app you see here is the culmination of more than a year&apos;s work towards the ultimate task management platform.<br/>
-      <br/>Users? They can create tasks with relevant information, and keep track of their completion & priority.
+      TrackTask was created out of necessity by a single student in need of an academic planner. Rather than purchase one from a store, however, this developer was inspired to build their own website on which they could track and manage their tasks. The web app you see here is the culmination of more than two years&apos; work towards the ultimate task management platform.<br/>
+      <br/>Users? You can create tasks with relevant information, and keep track of their completion & priority.
       <br/>Tasks? They can be grouped in collections, which can be shared with and collaborated on by other users.
       <br/>The website? In its final form, it allows individuals and teams to get work done in an organized way.<br/>
       <br/><b>This, is TrackTask.</b><br/>
@@ -36,6 +36,8 @@ export default function About() {
         <li><a href="https://github.com/TurtleCode84" target="_blank" rel="noreferrer">@TurtleCode84</a>, lead developer</li>
         <li>Anyone else who gave suggestions or feedback!</li>
       </ul>
+      <h2>Data Privacy</h2>
+      <p>We recognize that user privacy is important, especially when it comes to your to-do lists. That&apos;s why TrackTask is designed with intentional limits and features that ensure only you and those you allow can access your tasks or collections. All user-related information is securely stored in our cloud database according to current best practices, and is transmitted to your device via an end-to-end encrypted connection. Site administrators cannot view your tasks or collections, except for limited reports only available to them if you or another user with access submits one by clicking &quot;Report abuse&quot; on a task or collection. For any questions or concerns regarding your information privacy on TrackTask, please contact us at <a href="mailto:privacy@tracktask.eu.org">privacy@tracktask.eu.org</a>.</p>
       <h2>Found a bug or have feedback?</h2>
       <p>Head over to our <a href="https://github.com/TurtleCode84/tracktask" target="_blank" rel="noreferrer">GitHub repository</a>, we&apos;d love to hear how we can make TrackTask better!</p>
 

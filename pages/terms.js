@@ -16,7 +16,7 @@ export default function Terms() {
           <li>Spamming or attempting to spam on any part of the site.</li>
           <li>&quot;Hacking&quot;, attempting to gain unauthorized access, or performing unauthorized actions on any part of the site. This includes unauthorized use of another user&apos;s account.</li>
           <li>Bypassing any security measure or account protection put in place by the site&apos;s developers to provide a secure user experience.</li>
-          <li>Exploiting security vulnerabilities. Please report these immediately to <a href="mailto:security@tracktask.eu.org">security@tracktask.eu.org</a></li>
+          <li>Exploiting security vulnerabilities. Please report these immediately in accordance with our <a href="https://github.com/TurtleCode84/tracktask/security/policy#reporting-a-vulnerability" target="_blank" rel="noreferrer">security policy</a>.</li>
           <li>Shared accounts (single accounts used by multiple individuals). <i>Note: The use of multiple or &quot;alt&quot; accounts by one person, while not specifically prohibited, is discouraged and such accounts may be banned without warning.</i></li>
           <li>Causing undue strain or stress on the site or its counterparts. IP addresses of suspected spammers will be blocked without warning.</li>
           <li>Using the site to upload, transmit, or otherwise distribute illegal, pornographic, hateful, or questionable content. This is determined at the discretion of the site administrators.</li>
@@ -26,7 +26,7 @@ export default function Terms() {
         <li>Failure to follow the above terms will lead to administrative action, including but not limited to an account warning, ban, or IP block, in no particular order.</li>
       </ul>
       <p>If you have any questions about the terms listed above, please contact us at <a href="mailto:hello@tracktask.eu.org">hello@tracktask.eu.org</a>.</p>
-      <p style={{ fontStyle: "italic" }}>This page was last updated 08-01-2024.</p>
+      <p style={{ fontStyle: "italic" }}>This page was last updated 03-08-2025.</p>
 
       <style jsx>{`
         li {
