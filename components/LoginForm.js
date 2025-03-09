@@ -10,6 +10,7 @@ export default function LoginForm({ errorMessage, onSubmit, joinMessage, joinUse
         <input type="password" name="password" required />
       </label>
 
+      {/*<div class="cf-turnstile" data-sitekey={process.env.NEXT_PUBLIC_CF_TURNSTILE_SITE_KEY}></div>*/}
       <button type="submit" id="loginBtn">Login</button>
 
       {errorMessage && <p className="error">{errorMessage}</p>}

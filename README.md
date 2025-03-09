@@ -24,7 +24,7 @@ Glad you asked! Here's a running features list:
 - [x] Tasks (with name, description, due date, priority, and completion)
 - [x] Shareable collections (with name and description)
 - [x] Reporting for admin attention (tasks, users, collections)
-- [x] Anti-spam measures like reCAPTCHA and rate-limiting
+- [x] Anti-spam measures like Cloudflare Turnstile and rate-limiting
 - [x] User-friendly task, collection, and account UIs
 - [x] Informational pages (about, privacy policy, terms of use)
 - [x] Optional push notifications

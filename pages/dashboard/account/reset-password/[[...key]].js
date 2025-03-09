@@ -1,6 +1,5 @@
 import { useState } from "react";
 import fetchJson, { FetchError } from "lib/fetchJson";
-import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import Layout from "components/Layout";
 import PasswordResetForm from "components/PasswordResetForm";
 import useUser from "lib/useUser";
@@ -15,7 +14,6 @@ export default function ResetPassword() {
 
     const [errorMsg, setErrorMsg] = useState("");
     const router = useRouter();
-    const { executeRecaptcha } = useGoogleReCaptcha();
     const { key } = router.query;
     const confirmed = key?.length > 0;
 
@@ -30,11 +28,7 @@ export default function ResetPassword() {
                 onSubmit={async function handleSubmit(event) {
                     event.preventDefault();
                     document.getElementById("resetPasswordBtn").disabled = true;
-                    if (!executeRecaptcha) {
-                      setErrorMsg("reCAPTCHA not available, please try again.");
-                      document.getElementById("resetPasswordBtn").disabled = false;
-                      return;
-                    } else if (confirmed && event.currentTarget.password.value !== event.currentTarget.cpassword.value) {
+                    if (confirmed && event.currentTarget.password.value !== event.currentTarget.cpassword.value) {
                       setErrorMsg("Passwords do not match!");
                       document.getElementById("resetPasswordBtn").disabled = false;
                       return;
@@ -44,7 +38,7 @@ export default function ResetPassword() {
                       email: confirmed ? undefined : event.currentTarget.email.value,
                       password: confirmed ? event.currentTarget.password.value : undefined,
                       key: confirmed ? key[0] : undefined,
-                      gReCaptchaToken: await executeRecaptcha("passwordResetFormSubmit"),
+                      cf_turnstile: event.currentTarget.cf-turnstile-response.value,
                     };
 
                     try {

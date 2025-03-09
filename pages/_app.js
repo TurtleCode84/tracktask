@@ -1,7 +1,6 @@
 import { SWRConfig } from "swr";
 import fetchJson from "lib/fetchJson";
 import urlBase64ToUint8Array from "lib/urlBase64ToUint8Array";
-import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import { useEffect } from "react";
 import ErrorBoundary from "components/ErrorBoundary";
 import { Roboto_Flex } from "next/font/google"; // Exo_2
@@ -86,15 +85,6 @@ function MyApp({ Component, pageProps }) {
   }, []);
 
   return (
-    <GoogleReCaptchaProvider
-      reCaptchaKey="6LdRJ_ApAAAAAP1MTmPLpc7gOo7LTm-rawp1I_Zx"
-      scriptProps={{
-        async: false,
-        defer: true,
-        appendTo: "head",
-        nonce: undefined,
-      }}
-    >
     <SWRConfig
       value={{
         fetcher: fetchJson,
@@ -112,7 +102,6 @@ function MyApp({ Component, pageProps }) {
       <Component {...pageProps} />
       </ErrorBoundary>
     </SWRConfig>
-    </GoogleReCaptchaProvider>
   );
 }
 

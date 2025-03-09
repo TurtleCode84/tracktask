@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import useUser from "lib/useUser";
-//import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import Layout from "components/Layout";
 import LoginForm from "components/LoginForm";
 import Link from "next/link";
@@ -15,7 +14,6 @@ export default function Login() {
   });
   
   const [errorMsg, setErrorMsg] = useState("");
-  //const { executeRecaptcha } = useGoogleReCaptcha();
   const router = useRouter();
   const { joined, reset, username } = router.query;
   var joinMsg;
@@ -39,16 +37,11 @@ export default function Login() {
           onSubmit={async function handleSubmit(event) {
             event.preventDefault();
             document.getElementById("loginBtn").disabled = true;
-            /*if (!executeRecaptcha) {
-              setErrorMsg("reCAPTCHA not available, please try again.");
-              document.getElementById("loginBtn").disabled = false;
-              return;
-            }*/
 
             const body = {
               username: event.currentTarget.username.value,
               password: event.currentTarget.password.value,
-              //gReCaptchaToken: await executeRecaptcha("loginFormSubmit"),
+              //cf_turnstile: event.currentTarget.cf-turnstile-response.value,
             };
 
             try {

@@ -17,7 +17,6 @@
     "bcryptjs": "^3.0.2",
     "moment": "^2.29.4",
     "iron-session": "^6.2.0",
-    "react-google-recaptcha-v3": "^1.10.0",
     "web-push": "^3.6.4",
     "linkify-react": "^4.1.1",
     "linkifyjs": "^4.1.1",

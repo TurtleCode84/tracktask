@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import useUser from "lib/useUser";
-import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import Layout from "components/Layout";
 import SignupForm from "components/SignupForm";
 import Link from "next/link";
@@ -16,7 +15,6 @@ export default function Join() {
 
   const [errorMsg, setErrorMsg] = useState("");
   const router = useRouter();
-  const { executeRecaptcha } = useGoogleReCaptcha();
 
   return (
     <Layout>
@@ -28,11 +26,7 @@ export default function Join() {
           onSubmit={async function handleSubmit(event) {
             event.preventDefault();
             document.getElementById("signupBtn").disabled = true;
-            if (!executeRecaptcha) {
-              setErrorMsg("reCAPTCHA not available, please try again.");
-              document.getElementById("signupBtn").disabled = false;
-              return;
-            } else if (event.currentTarget.password.value !== event.currentTarget.cpassword.value) {
+            if (event.currentTarget.password.value !== event.currentTarget.cpassword.value) {
               setErrorMsg("Passwords do not match!");
               document.getElementById("signupBtn").disabled = false;
               return;
@@ -41,7 +35,7 @@ export default function Join() {
               username: event.currentTarget.username.value,
               password: event.currentTarget.password.value,
               email: event.currentTarget.email.value,
-              gReCaptchaToken: await executeRecaptcha("joinFormSubmit"),
+              cf_turnstile: event.currentTarget.cf-turnstile-response.value,
             };
 
             try {
