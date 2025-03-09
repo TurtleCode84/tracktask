@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Turnstile from "@marsidev/react-turnstile";
+import { Turnstile } from "@marsidev/react-turnstile";
 import { useState } from "react";
 
 export default function SignupForm({ errorMessage, onSubmit }) {
