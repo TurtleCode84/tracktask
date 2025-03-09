@@ -35,7 +35,7 @@ export default function Verify() {
                     onSubmit={async function handleSubmit(event) {
                         event.preventDefault();
                         document.getElementById("verifyEmailBtn").disabled = true;
-                        const body = { cf_turnstile: event.currentTarget.cf-turnstile-response.value };
+                        const body = { cf_turnstile: event.currentTarget["cf-turnstile-response"].value };
                         if (key?.length > 0) {
                             body.key = key[0];
                         }

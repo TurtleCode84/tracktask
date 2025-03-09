@@ -35,7 +35,7 @@ export default function Join() {
               username: event.currentTarget.username.value,
               password: event.currentTarget.password.value,
               email: event.currentTarget.email.value,
-              cf_turnstile: event.currentTarget.cf-turnstile-response.value,
+              cf_turnstile: event.currentTarget["cf-turnstile-response"].value,
             };
 
             try {

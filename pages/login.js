@@ -41,7 +41,7 @@ export default function Login() {
             const body = {
               username: event.currentTarget.username.value,
               password: event.currentTarget.password.value,
-              //cf_turnstile: event.currentTarget.cf-turnstile-response.value,
+              //cf_turnstile: event.currentTarget["cf-turnstile-response"].value,
             };
 
             try {

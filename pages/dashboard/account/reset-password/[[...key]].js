@@ -38,7 +38,7 @@ export default function ResetPassword() {
                       email: confirmed ? undefined : event.currentTarget.email.value,
                       password: confirmed ? event.currentTarget.password.value : undefined,
                       key: confirmed ? key[0] : undefined,
-                      cf_turnstile: event.currentTarget.cf-turnstile-response.value,
+                      cf_turnstile: event.currentTarget["cf-turnstile-response"].value,
                     };
 
                     try {
