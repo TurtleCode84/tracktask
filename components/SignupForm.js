@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Turnstile from "react-turnstile";
+import Turnstile from "@marsidev/react-turnstile";
 import { useState } from "react";
 
 export default function SignupForm({ errorMessage, onSubmit }) {
@@ -28,9 +28,11 @@ export default function SignupForm({ errorMessage, onSubmit }) {
       <p style={{ marginTop: "0" }}>By creating an account, you agree to our <Link href="/privacy">Privacy Policy</Link> and <Link href="/terms">Terms of Use</Link>.</p>
       
       <Turnstile
-        sitekey={process.env.NEXT_PUBLIC_CF_TURNSTILE_SITE_KEY}
-        action="joinFormSubmit"
-        onVerify={(token) => {
+        siteKey={process.env.NEXT_PUBLIC_CF_TURNSTILE_SITE_KEY}
+        options={{
+          action="joinFormSubmit",
+        }}
+        onSuccess={(token) => {
           setToken(token);
         }}
       />
