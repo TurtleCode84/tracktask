@@ -10,29 +10,28 @@ export default withIronSessionApiRoute(authRoute, sessionOptions);
 
 async function authRoute(req, res) {
   if (req.method === 'POST') { // login
-    //const { username, password, gReCaptchaToken } = await req.body;
+    //const { username, password, cf_turnstile } = await req.body;
     const { username, password } = await req.body;
     
     //Check if robot
-    /*const captchaResponse = await fetchJson("https://www.google.com/recaptcha/api/siteverify", {
+    const ip = req.headers["cf-connecting-ip"] || req.headers["x-forwarded-for"].split(',')[0];
+    /*const turnstileResponse = await fetchJson("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
       method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded", },
-      body: `secret=${process.env.RECAPTCHA_SECRET}&response=${gReCaptchaToken}`,
-    })
+      headers: { "Content-Type": "application/json", },
+      body: {
+        secret: process.env.CF_TURNSTILE_SECRET_KEY,
+        reponse: cf_turnstile,
+        remoteip: ip,
+      }
+    });
     if (process.env.VERCEL_ENV !== "preview") {
-      if (!captchaResponse || !captchaResponse.success || captchaResponse.action !== "loginFormSubmit" || captchaResponse.score <= 0.5) {
-        res.status(403).json({ message: "reCAPTCHA verification failed, please try again." });
+      if (!turnstileResponse || !turnstileResponse.success || turnstileResponse.action !== "loginFormSubmit") {
+        res.status(403).json({ message: "Turnstile verification failed, please try again." });
         return;
       }
     }*/
     
     //Check if IP banned
-    var ip;
-    if (req.headers["cf-connecting-ip"]) {
-      ip = req.headers["cf-connecting-ip"];
-    } else {
-      ip = req.headers["x-forwarded-for"].split(',')[0];
-    }
     const bannedIps = process.env.IPBAN.split(',');
     if (bannedIps.includes(ip)) {
       res.status(403).json({ message: 'Your IP address has been banned from logging in due to repeated abuse of the platform. If you believe this may have been a mistake or would like to appeal, please contact us at appeals@tracktask.eu.org.' });
@@ -102,28 +101,27 @@ async function authRoute(req, res) {
       res.status(500).json({ message: error.message });
     }
   } else if (req.method === 'PUT') { // signup
-    const { username, password, email, gReCaptchaToken } = await req.body;
+    const { username, password, email, cf_turnstile } = await req.body;
     
     //Check if robot
-    const captchaResponse = await fetchJson("https://www.google.com/recaptcha/api/siteverify", {
+    const ip = req.headers["cf-connecting-ip"] || req.headers["x-forwarded-for"].split(',')[0];
+    const turnstileResponse = await fetchJson("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
       method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded", },
-      body: `secret=${process.env.RECAPTCHA_SECRET}&response=${gReCaptchaToken}`,
+      headers: { "Content-Type": "application/json", },
+      body: {
+        secret: process.env.CF_TURNSTILE_SECRET_KEY,
+        reponse: cf_turnstile,
+        remoteip: ip,
+      }
     });
     if (process.env.VERCEL_ENV !== "preview") {
-      if (!captchaResponse || !captchaResponse.success || captchaResponse.action !== "joinFormSubmit" || captchaResponse.score <= 0.5) {
-        res.status(403).json({ message: "reCAPTCHA verification failed, please try again." });
+      if (!turnstileResponse || !turnstileResponse.success || turnstileResponse.action !== "joinFormSubmit") {
+        res.status(403).json({ message: "Turnstile verification failed, please try again." });
         return;
       }
     }
     
     //Check if IP banned
-    var ip;
-    if (req.headers["cf-connecting-ip"]) {
-      ip = req.headers["cf-connecting-ip"];
-    } else {
-      ip = req.headers["x-forwarded-for"].split(',')[0];
-    }
     const bannedIps = process.env.IPBAN.split(',');
     if (bannedIps.includes(ip)) {
       res.status(403).json({ message: "Your IP address has been banned from creating accounts due to repeated abuse of the platform. If you believe this may have been a mistake or would like to appeal, please contact us at appeals@tracktask.eu.org." });
@@ -224,15 +222,20 @@ async function authRoute(req, res) {
       res.status(500).json({ message: error.message });
     }
   } else if (req.method === 'PATCH') { // password reset
-    const { key, password, gReCaptchaToken } = await req.body;
-    const captchaResponse = await fetchJson("https://www.google.com/recaptcha/api/siteverify", {
+    const { key, password, cf_turnstile } = await req.body;
+    const ip = req.headers["cf-connecting-ip"] || req.headers["x-forwarded-for"].split(',')[0];
+    const turnstileResponse = await fetchJson("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
       method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded", },
-      body: `secret=${process.env.RECAPTCHA_SECRET}&response=${gReCaptchaToken}`,
+      headers: { "Content-Type": "application/json", },
+      body: {
+        secret: process.env.CF_TURNSTILE_SECRET_KEY,
+        reponse: cf_turnstile,
+        remoteip: ip,
+      }
     });
     if (process.env.VERCEL_ENV !== "preview") {
-      if (!captchaResponse || !captchaResponse.success || captchaResponse.action !== "passwordResetFormSubmit" || captchaResponse.score <= 0.5) {
-        res.status(403).json({ message: "reCAPTCHA verification failed, please try again." });
+      if (!turnstileResponse || !turnstileResponse.success || turnstileResponse.action !== "passwordResetFormSubmit") {
+        res.status(403).json({ message: "Turnstile verification failed, please try again." });
         return;
       }
     }

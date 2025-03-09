@@ -22,15 +22,20 @@ async function emailRoute(req, res) {
     return;
   }
   if (req.method === 'PUT') { // Sends a password reset email (there may or may not be a logged in user)
-    const { email, gReCaptchaToken } = await req.body;
-    const captchaResponse = await fetchJson("https://www.google.com/recaptcha/api/siteverify", {
+    const { email, cf_turnstile } = await req.body;
+    const ip = req.headers["cf-connecting-ip"] || req.headers["x-forwarded-for"].split(',')[0];
+    const turnstileResponse = await fetchJson("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
       method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded", },
-      body: `secret=${process.env.RECAPTCHA_SECRET}&response=${gReCaptchaToken}`,
+      headers: { "Content-Type": "application/json", },
+      body: {
+        secret: process.env.CF_TURNSTILE_SECRET_KEY,
+        reponse: cf_turnstile,
+        remoteip: ip,
+      }
     });
     if (process.env.VERCEL_ENV !== "preview") {
-      if (!captchaResponse || !captchaResponse.success || captchaResponse.action !== "passwordResetFormSubmit" || captchaResponse.score <= 0.5) {
-        res.status(403).json({ message: "reCAPTCHA verification failed, please try again." });
+      if (!turnstileResponse || !turnstileResponse.success || turnstileResponse.action !== "passwordResetFormSubmit") {
+        res.status(403).json({ message: "Turnstile verification failed, please try again." });
         return;
       }
     }
@@ -48,15 +53,20 @@ async function emailRoute(req, res) {
     }
     res.json({ message: "Password reset request sent!" }); // fail silently if necessary
   } else if (req.method === 'POST') { // Sends a verification email
-    const { gReCaptchaToken } = await req.body;
-    const captchaResponse = await fetchJson("https://www.google.com/recaptcha/api/siteverify", {
+    const { cf_turnstile } = await req.body;
+    const ip = req.headers["cf-connecting-ip"] || req.headers["x-forwarded-for"].split(',')[0];
+    const turnstileResponse = await fetchJson("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
       method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded", },
-      body: `secret=${process.env.RECAPTCHA_SECRET}&response=${gReCaptchaToken}`,
+      headers: { "Content-Type": "application/json", },
+      body: {
+        secret: process.env.CF_TURNSTILE_SECRET_KEY,
+        reponse: cf_turnstile,
+        remoteip: ip,
+      }
     });
     if (process.env.VERCEL_ENV !== "preview") {
-      if (!captchaResponse || !captchaResponse.success || captchaResponse.action !== "verifyEmailFormSubmit" || captchaResponse.score <= 0.5) {
-        res.status(403).json({ message: "reCAPTCHA verification failed, please try again." });
+      if (!turnstileResponse || !turnstileResponse.success || turnstileResponse.action !== "verifyEmailFormSubmit") {
+        res.status(403).json({ message: "Turnstile verification failed, please try again." });
         return;
       }
     }
@@ -73,15 +83,20 @@ async function emailRoute(req, res) {
     const sentMail = await sendEmail(user.email, email.subject, email.html);
     res.json(sentMail);
   } else if (req.method === 'PATCH') { // Attempts to verify the current user
-    const { key, gReCaptchaToken } = await req.body;
-    const captchaResponse = await fetchJson("https://www.google.com/recaptcha/api/siteverify", {
+    const { key, cf_turnstile } = await req.body;
+    const ip = req.headers["cf-connecting-ip"] || req.headers["x-forwarded-for"].split(',')[0];
+    const turnstileResponse = await fetchJson("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
       method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded", },
-      body: `secret=${process.env.RECAPTCHA_SECRET}&response=${gReCaptchaToken}`,
+      headers: { "Content-Type": "application/json", },
+      body: {
+        secret: process.env.CF_TURNSTILE_SECRET_KEY,
+        reponse: cf_turnstile,
+        remoteip: ip,
+      }
     });
     if (process.env.VERCEL_ENV !== "preview") {
-      if (!captchaResponse || !captchaResponse.success || captchaResponse.action !== "verifyEmailFormSubmit" || captchaResponse.score <= 0.5) {
-        res.status(403).json({ message: "reCAPTCHA verification failed, please try again." });
+      if (!turnstileResponse || !turnstileResponse.success || turnstileResponse.action !== "verifyEmailFormSubmit") {
+        res.status(403).json({ message: "Turnstile verification failed, please try again." });
         return;
       }
     }

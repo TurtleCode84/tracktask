@@ -19,7 +19,7 @@ export default function PasswordResetForm({ errorMessage, onSubmit, confirmed })
       </label>
       </>}
 
-      <div class="cf-turnstile" data-sitekey={process.env.NEXT_PUBLIC_CF_TURNSTILE_SITE_KEY}></div>
+      <div class="cf-turnstile" data-sitekey={process.env.NEXT_PUBLIC_CF_TURNSTILE_SITE_KEY} data-action="passwordResetFormSubmit"></div>
       <button type="submit" id="resetPasswordBtn">Reset password</button>
 
       {errorMessage && <p className="error">{errorMessage}</p>}<hr/>
