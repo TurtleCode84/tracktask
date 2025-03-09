@@ -25,9 +25,8 @@ export default function Join() {
           errorMessage={errorMsg}
           onSubmit={async function handleSubmit(event) {
             event.preventDefault();
-            console.log(event);
             document.getElementById("signupBtn").disabled = true;
-            if (!event.currentTarget["cf-turnstile-response"]) {
+            if (!event.currentTarget["cf-turnstile-response"]?.value) {
               setErrorMsg("Please complete the Turnstile verification.");
               document.getElementById("signupBtn").disabled = false;
               return;
@@ -40,8 +39,7 @@ export default function Join() {
               username: event.currentTarget.username.value,
               password: event.currentTarget.password.value,
               email: event.currentTarget.email.value,
-              cf_turnstile: event.currentTarget["cf-turnstile-response"],
-              //cf_turnstile: event.currentTarget.cf_turnstile.value,
+              cf_turnstile: event.currentTarget["cf-turnstile-response"]?.value,
             };
 
             try {
