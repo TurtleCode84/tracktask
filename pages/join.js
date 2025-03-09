@@ -35,7 +35,7 @@ export default function Join() {
             const body = {
               username: event.currentTarget.username.value,
               password: event.currentTarget.password.value,
-              email: event.currentTarget.email.value,
+              email: event.currentTarget.email.value
               //cf_turnstile: event.currentTarget["cf-turnstile-response"],
             };
             console.log(body);

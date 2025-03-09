@@ -102,6 +102,9 @@ async function authRoute(req, res) {
     }
   } else if (req.method === 'PUT') { // signup
     const { username, password, email, cf_turnstile } = await req.body;
+
+    res.status(403).json({ message: "Signup currently disabled, please try again later.", debug: cf_turnstile });
+    return;
     
     //Check if robot
     var ip = req.headers["cf-connecting-ip"] || req.headers["x-forwarded-for"].split(',')[0];
