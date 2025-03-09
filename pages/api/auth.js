@@ -103,14 +103,14 @@ async function authRoute(req, res) {
   } else if (req.method === 'PUT') { // signup
     const { username, password, email, cf_turnstile } = await req.body;
 
-    res.status(403).json({ message: "Signup currently disabled, please try again later." + username || ".." });
+    res.status(403).json({ message: "Signup currently disabled, please try again later." });
     return;
     
     //Check if robot
     var ip = req.headers["cf-connecting-ip"] || req.headers["x-forwarded-for"].split(',')[0];
     const turnstileResponse = await fetchJson("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
       method: "POST",
-      headers: { "Content-Type": "application/json", },
+      headers: { "Content-Type": "application/json" },
       body: {
         secret: process.env.CF_TURNSTILE_SECRET_KEY,
         reponse: cf_turnstile,

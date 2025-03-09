@@ -26,19 +26,21 @@ export default function Join() {
           onSubmit={async function handleSubmit(event) {
             event.preventDefault();
             document.getElementById("signupBtn").disabled = true;
-            if (event.currentTarget.password.value !== event.currentTarget.cpassword.value) {
+            if (!event.currentTarget.cf_turnstile.value) {
+              setErrorMsg("Turnstile verification failed, please try again.");
+              document.getElementById("signupBtn").disabled = false;
+              return;
+            } else if (event.currentTarget.password.value !== event.currentTarget.cpassword.value) {
               setErrorMsg("Passwords do not match!");
               document.getElementById("signupBtn").disabled = false;
               return;
             }
-            console.log(event);
             const body = {
               username: event.currentTarget.username.value,
               password: event.currentTarget.password.value,
-              email: event.currentTarget.email.value
-              //cf_turnstile: event.currentTarget["cf-turnstile-response"],
+              email: event.currentTarget.email.value,
+              cf_turnstile: event.currentTarget.cf_turnstile.value,
             };
-            console.log(body);
 
             try {
               const res = await fetchJson("/api/auth", {
