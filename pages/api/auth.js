@@ -18,11 +18,11 @@ async function authRoute(req, res) {
     /*const turnstileResponse = await fetchJson("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
       method: "POST",
       headers: { "Content-Type": "application/json", },
-      body: {
+      body: JSON.stringify({
         secret: process.env.CF_TURNSTILE_SECRET_KEY,
         reponse: cf_turnstile,
         remoteip: ip,
-      }
+      })
     });
     if (process.env.VERCEL_ENV !== "preview") {
       if (!turnstileResponse || !turnstileResponse.success || turnstileResponse.action !== "loginFormSubmit") {
@@ -103,19 +103,16 @@ async function authRoute(req, res) {
   } else if (req.method === 'PUT') { // signup
     const { username, password, email, cf_turnstile } = await req.body;
 
-    res.status(403).json({ message: "Signup is currently disabled, please try again later. Error code: " + cf_turnstile });
-    return;
-
     //Check if robot
     var ip = req.headers["cf-connecting-ip"] || req.headers["x-forwarded-for"].split(',')[0];
     const turnstileResponse = await fetchJson("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: {
+      body: JSON.stringify({
         secret: process.env.CF_TURNSTILE_SECRET_KEY,
         reponse: cf_turnstile,
         remoteip: ip,
-      }
+      })
     });
     if (process.env.VERCEL_ENV !== "preview") {
       if (!turnstileResponse || !turnstileResponse.success || turnstileResponse.action !== "joinFormSubmit") {
@@ -230,11 +227,11 @@ async function authRoute(req, res) {
     const turnstileResponse = await fetchJson("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
       method: "POST",
       headers: { "Content-Type": "application/json", },
-      body: {
+      body: JSON.stringify({
         secret: process.env.CF_TURNSTILE_SECRET_KEY,
         reponse: cf_turnstile,
         remoteip: ip,
-      }
+      })
     });
     if (process.env.VERCEL_ENV !== "preview") {
       if (!turnstileResponse || !turnstileResponse.success || turnstileResponse.action !== "passwordResetFormSubmit") {

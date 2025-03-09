@@ -27,11 +27,11 @@ async function emailRoute(req, res) {
     const turnstileResponse = await fetchJson("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
       method: "POST",
       headers: { "Content-Type": "application/json", },
-      body: {
+      body: JSON.stringify({
         secret: process.env.CF_TURNSTILE_SECRET_KEY,
         reponse: cf_turnstile,
         remoteip: ip,
-      }
+      })
     });
     if (process.env.VERCEL_ENV !== "preview") {
       if (!turnstileResponse || !turnstileResponse.success || turnstileResponse.action !== "passwordResetFormSubmit") {
@@ -58,11 +58,11 @@ async function emailRoute(req, res) {
     const turnstileResponse = await fetchJson("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
       method: "POST",
       headers: { "Content-Type": "application/json", },
-      body: {
+      body: JSON.stringify({
         secret: process.env.CF_TURNSTILE_SECRET_KEY,
         reponse: cf_turnstile,
         remoteip: ip,
-      }
+      })
     });
     if (process.env.VERCEL_ENV !== "preview") {
       if (!turnstileResponse || !turnstileResponse.success || turnstileResponse.action !== "verifyEmailFormSubmit") {
@@ -88,11 +88,11 @@ async function emailRoute(req, res) {
     const turnstileResponse = await fetchJson("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
       method: "POST",
       headers: { "Content-Type": "application/json", },
-      body: {
+      body: JSON.stringify({
         secret: process.env.CF_TURNSTILE_SECRET_KEY,
         reponse: cf_turnstile,
         remoteip: ip,
-      }
+      })
     });
     if (process.env.VERCEL_ENV !== "preview") {
       if (!turnstileResponse || !turnstileResponse.success || turnstileResponse.action !== "verifyEmailFormSubmit") {
