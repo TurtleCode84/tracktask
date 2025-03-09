@@ -12,7 +12,7 @@ export default function LoginForm({ errorMessage, onSubmit, joinMessage, joinUse
         <input type="password" name="password" required />
       </label>
 
-      {/*<Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></Script>*/}
+      {/*<Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" defer></Script>*/}
 
       {/*<div class="cf-turnstile" data-sitekey={process.env.NEXT_PUBLIC_CF_TURNSTILE_SITE_KEY} data-action="loginFormSubmit"></div>*/}
       <button type="submit" id="loginBtn">Login</button>

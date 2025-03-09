@@ -30,12 +30,13 @@ export default function Join() {
               setErrorMsg("Passwords do not match!");
               document.getElementById("signupBtn").disabled = false;
               return;
-            }         
+            }
+            console.log(event);
             const body = {
               username: event.currentTarget.username.value,
               password: event.currentTarget.password.value,
               email: event.currentTarget.email.value,
-              cf_turnstile: event.currentTarget["cf-turnstile-response"].value,
+              cf_turnstile: event.currentTarget["cf-turnstile-response"]?.value,
             };
 
             try {
