@@ -1,3 +1,5 @@
+//import Script from "next/script";
+
 export default function LoginForm({ errorMessage, onSubmit, joinMessage, joinUsername }) {
   return (
     <form onSubmit={onSubmit}>
@@ -9,6 +11,8 @@ export default function LoginForm({ errorMessage, onSubmit, joinMessage, joinUse
         <span>Password</span>
         <input type="password" name="password" required />
       </label>
+
+      {/*<Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></Script>*/}
 
       {/*<div class="cf-turnstile" data-sitekey={process.env.NEXT_PUBLIC_CF_TURNSTILE_SITE_KEY} data-action="loginFormSubmit"></div>*/}
       <button type="submit" id="loginBtn">Login</button>

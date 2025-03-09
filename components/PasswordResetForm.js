@@ -1,3 +1,5 @@
+import Script from "next/script";
+
 export default function PasswordResetForm({ errorMessage, onSubmit, confirmed }) {
   return (
     <form id="passwordResetForm" autocomplete="off" onSubmit={onSubmit}>
@@ -18,6 +20,8 @@ export default function PasswordResetForm({ errorMessage, onSubmit, confirmed })
         <input type="email" name="email" autoFocus required />
       </label>
       </>}
+
+      <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></Script>
 
       <div class="cf-turnstile" data-sitekey={process.env.NEXT_PUBLIC_CF_TURNSTILE_SITE_KEY} data-action="passwordResetFormSubmit"></div>
       <button type="submit" id="resetPasswordBtn">Reset password</button>

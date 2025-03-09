@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Script from "next/script";
 
 export default function SignupForm({ errorMessage, onSubmit }) {
   return (
@@ -22,6 +23,8 @@ export default function SignupForm({ errorMessage, onSubmit }) {
 
       <p style={{ marginTop: "0" }}>By creating an account, you agree to our <Link href="/privacy">Privacy Policy</Link> and <Link href="/terms">Terms of Use</Link>.</p>
 
+      <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></Script>
+      
       <div class="cf-turnstile" data-sitekey={process.env.NEXT_PUBLIC_CF_TURNSTILE_SITE_KEY} data-action="joinFormSubmit"></div>
       <button type="submit" id="signupBtn">Sign up</button>
 
