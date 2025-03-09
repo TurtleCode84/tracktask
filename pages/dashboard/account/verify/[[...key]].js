@@ -35,7 +35,12 @@ export default function Verify() {
                     onSubmit={async function handleSubmit(event) {
                         event.preventDefault();
                         document.getElementById("verifyEmailBtn").disabled = true;
-                        const body = { cf_turnstile: event.currentTarget["cf-turnstile-response"].value };
+                        if (!event.currentTarget["cf-turnstile-response"]?.value) {
+                            setErrorMsg("Please complete the Turnstile verification.");
+                            document.getElementById("verifyEmailBtn").disabled = false;
+                            return;
+                        }
+                        const body = { cf_turnstile: event.currentTarget["cf-turnstile-response"]?.value };
                         if (key?.length > 0) {
                             body.key = key[0];
                         }
