@@ -26,7 +26,9 @@ export default function SignupForm({ errorMessage, onSubmit }) {
       <input type="hidden" name="cf_turnstile" value={token} />
 
       <p style={{ marginTop: "0" }}>By creating an account, you agree to our <Link href="/privacy">Privacy Policy</Link> and <Link href="/terms">Terms of Use</Link>.</p>
-      
+
+      <button type="submit" id="signupBtn">Sign up</button>
+
       <Turnstile
         siteKey={process.env.NEXT_PUBLIC_CF_TURNSTILE_SITE_KEY}
         options={{
@@ -36,8 +38,6 @@ export default function SignupForm({ errorMessage, onSubmit }) {
           setToken(token);
         }}
       />
-
-      <button type="submit" id="signupBtn">Sign up</button>
 
       {errorMessage && <p className="error">{errorMessage}</p>}
 
