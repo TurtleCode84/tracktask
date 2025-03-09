@@ -3,7 +3,7 @@ import { Turnstile } from "@marsidev/react-turnstile";
 import { useState } from "react";
 
 export default function SignupForm({ errorMessage, onSubmit }) {
-  [token, setToken] = useState("");
+  const [token, setToken] = useState("");
 
   return (
     <form onSubmit={onSubmit}>
