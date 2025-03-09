@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Turnstile from "@marsidev/react-turnstile";
+import { Turnstile } from "@marsidev/react-turnstile";
 import { useState } from "react";
 
 export default function SignupForm({ errorMessage, onSubmit }) {
@@ -32,7 +32,7 @@ export default function SignupForm({ errorMessage, onSubmit }) {
       <Turnstile
         siteKey={process.env.NEXT_PUBLIC_CF_TURNSTILE_SITE_KEY}
         options={{
-          action="joinFormSubmit",
+          action: "joinFormSubmit",
         }}
         onSuccess={(token) => {
           setToken(token);
