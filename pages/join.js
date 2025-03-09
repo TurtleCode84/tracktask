@@ -38,6 +38,7 @@ export default function Join() {
               email: event.currentTarget.email.value,
               //cf_turnstile: event.currentTarget["cf-turnstile-response"],
             };
+            console.log(body);
 
             try {
               const res = await fetchJson("/api/auth", {
