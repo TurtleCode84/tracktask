@@ -14,7 +14,7 @@ async function authRoute(req, res) {
     const { username, password } = await req.body;
     
     //Check if robot
-    const ip = req.headers["cf-connecting-ip"] || req.headers["x-forwarded-for"].split(',')[0];
+    var ip = req.headers["cf-connecting-ip"] || req.headers["x-forwarded-for"].split(',')[0];
     /*const turnstileResponse = await fetchJson("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
       method: "POST",
       headers: { "Content-Type": "application/json", },
@@ -104,7 +104,7 @@ async function authRoute(req, res) {
     const { username, password, email, cf_turnstile } = await req.body;
     
     //Check if robot
-    const ip = req.headers["cf-connecting-ip"] || req.headers["x-forwarded-for"].split(',')[0];
+    var ip = req.headers["cf-connecting-ip"] || req.headers["x-forwarded-for"].split(',')[0];
     const turnstileResponse = await fetchJson("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
       method: "POST",
       headers: { "Content-Type": "application/json", },
@@ -223,7 +223,7 @@ async function authRoute(req, res) {
     }
   } else if (req.method === 'PATCH') { // password reset
     const { key, password, cf_turnstile } = await req.body;
-    const ip = req.headers["cf-connecting-ip"] || req.headers["x-forwarded-for"].split(',')[0];
+    var ip = req.headers["cf-connecting-ip"] || req.headers["x-forwarded-for"].split(',')[0];
     const turnstileResponse = await fetchJson("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
       method: "POST",
       headers: { "Content-Type": "application/json", },
