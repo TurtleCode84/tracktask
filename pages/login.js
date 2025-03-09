@@ -37,11 +37,16 @@ export default function Login() {
           onSubmit={async function handleSubmit(event) {
             event.preventDefault();
             document.getElementById("loginBtn").disabled = true;
+            /*if (!event.currentTarget["cf-turnstile-response"]?.value) {
+              setErrorMsg("Please complete the Turnstile verification.");
+              document.getElementById("loginBtn").disabled = false;
+              return;
+            }*/
 
             const body = {
               username: event.currentTarget.username.value,
               password: event.currentTarget.password.value,
-              //cf_turnstile: event.currentTarget["cf-turnstile-response"].value,
+              //cf_turnstile: event.currentTarget["cf-turnstile-response"]?.value,
             };
 
             try {
