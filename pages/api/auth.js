@@ -103,7 +103,7 @@ async function authRoute(req, res) {
   } else if (req.method === 'PUT') { // signup
     const { username, password, email, cf_turnstile } = await req.body;
 
-    res.status(403).json({ message: "Signup currently disabled, please try again later.", debug: cf_turnstile });
+    res.status(403).json({ message: "Signup currently disabled, please try again later." + username || ".." });
     return;
     
     //Check if robot
