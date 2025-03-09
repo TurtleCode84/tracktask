@@ -32,7 +32,7 @@ export default function SignupForm({ errorMessage, onSubmit }) {
       <Turnstile
         siteKey={process.env.NEXT_PUBLIC_CF_TURNSTILE_SITE_KEY}
         options={{
-          action="joinFormSubmit",
+          action: "joinFormSubmit",
         }}
         onSuccess={(token) => {
           setToken(token);
