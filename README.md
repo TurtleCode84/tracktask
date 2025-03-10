@@ -49,7 +49,7 @@ Currently, as the project's main development cycle has concluded, only one offic
 
 > If you find something that you dislike and/or think could be better, **please don't just complain** about it. Sometimes we miss things, but most times we'd like to know _how_ we can improve things, so complaining about them won't get you (or us) anywhere.
 
-> The code you see here is the product of **hundreds of hours of work and improvement**. We are very proud of how far we've come since development on TrackTask first started nearly a year ago. The truth is, this project was created to satisfy a single person's need to keep track of school assignments, but it's grown to be much more; a worthwhile learning experience, a result that hopefully a few others will continue to find useful for many years to come.
+> The code you see here is the product of **hundreds of hours of work and improvement**. We are very proud of how far we've come since development on TrackTask first started more than two years ago. The truth is, this project was created to satisfy a single person's need to keep track of school assignments, but it's grown to be much more; a worthwhile learning experience, a result that hopefully a few others will continue to find useful for many years to come.
 
 ## Contributing
 Please see our [CONTRIBUTING.md](/CONTRIBUTING.md) for contributing guidelines and instructions. Thanks for your input!
