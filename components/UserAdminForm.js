@@ -1,8 +1,10 @@
 import fetchJson from "lib/fetchJson";
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 export default function UserAdminForm({ errorMessage, successMessage, onSubmit, lookup }) {
   const router = useRouter();
+  const [canEditBanReason, setCanEditBanReason] = useState(false);
   return (
     <form id="userAdminForm" autocomplete="off" onSubmit={onSubmit}>
       <label>
@@ -57,15 +59,15 @@ export default function UserAdminForm({ errorMessage, successMessage, onSubmit, 
       </label>
       <label>
         <span>Banned <span style={{ color: "red" }} className="material-symbols-outlined icon-list">block</span></span>
-        <input type="checkbox" name="ban" defaultChecked={lookup.permissions.banned} />
+        <input type="checkbox" name="ban" defaultChecked={lookup.permissions.banned} onChange={(e) => {setCanEditBanReason(e.target.checked)}} />
       </label>
       <label>
         {lookup.permissions.banned ?
         <><span>Edit ban reason</span>
-        <input type="text" defaultValue={lookup.history.ban.reason} name="banReason" /></>
+        <input type="text" defaultValue={lookup.history.ban.reason} name="banReason" disabled={!canEditBanReason} /></>
         :
-        <><span>Ban reason</span>
-        <input type="text" name="banReason" /></>
+        <>{canEditBanReason && <><span>Ban reason</span>
+        <input type="text" name="banReason" /></>}</>
         }
       </label><hr/>
 

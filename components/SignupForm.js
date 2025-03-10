@@ -1,10 +1,7 @@
 import Link from "next/link";
 import { Turnstile } from "@marsidev/react-turnstile";
-import { useState } from "react";
 
 export default function SignupForm({ errorMessage, onSubmit }) {
-  [token, setToken] = useState("");
-
   return (
     <form onSubmit={onSubmit}>
       <label>
@@ -23,19 +20,15 @@ export default function SignupForm({ errorMessage, onSubmit }) {
         <span>Confirm password</span>
         <input type="password" name="cpassword" required />
       </label>
-      <input type="hidden" name="cf_turnstile" value={token} />
 
       <p style={{ marginTop: "0" }}>By creating an account, you agree to our <Link href="/privacy">Privacy Policy</Link> and <Link href="/terms">Terms of Use</Link>.</p>
 
       <button type="submit" id="signupBtn">Sign up</button>
 
-      <Turnstile
+      <hr/><Turnstile
         siteKey={process.env.NEXT_PUBLIC_CF_TURNSTILE_SITE_KEY}
         options={{
           action: "joinFormSubmit",
-        }}
-        onSuccess={(token) => {
-          setToken(token);
         }}
       />
 

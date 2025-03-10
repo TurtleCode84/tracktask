@@ -28,7 +28,11 @@ export default function ResetPassword() {
                 onSubmit={async function handleSubmit(event) {
                     event.preventDefault();
                     document.getElementById("resetPasswordBtn").disabled = true;
-                    if (confirmed && event.currentTarget.password.value !== event.currentTarget.cpassword.value) {
+                    if (!event.currentTarget["cf-turnstile-response"]?.value) {
+                      setErrorMsg("Please complete the Turnstile verification.");
+                      document.getElementById("resetPasswordBtn").disabled = false;
+                      return;
+                    } else if (confirmed && event.currentTarget.password.value !== event.currentTarget.cpassword.value) {
                       setErrorMsg("Passwords do not match!");
                       document.getElementById("resetPasswordBtn").disabled = false;
                       return;
@@ -38,7 +42,7 @@ export default function ResetPassword() {
                       email: confirmed ? undefined : event.currentTarget.email.value,
                       password: confirmed ? event.currentTarget.password.value : undefined,
                       key: confirmed ? key[0] : undefined,
-                      cf_turnstile: event.currentTarget["cf-turnstile-response"].value,
+                      cf_turnstile: event.currentTarget["cf-turnstile-response"]?.value,
                     };
 
                     try {

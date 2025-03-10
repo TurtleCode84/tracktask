@@ -31,11 +31,16 @@ export default function Verify() {
                 <VerificationForm
                     errorMessage={errorMsg}
                     buttonDisabled={user.email ? false : true}
-                    key={key}
+                    keyProvided={key?.length > 0}
                     onSubmit={async function handleSubmit(event) {
                         event.preventDefault();
                         document.getElementById("verifyEmailBtn").disabled = true;
-                        const body = { cf_turnstile: event.currentTarget["cf-turnstile-response"].value };
+                        if (!event.currentTarget["cf-turnstile-response"]?.value) {
+                            setErrorMsg("Please complete the Turnstile verification.");
+                            document.getElementById("verifyEmailBtn").disabled = false;
+                            return;
+                        }
+                        const body = { cf_turnstile: event.currentTarget["cf-turnstile-response"]?.value };
                         if (key?.length > 0) {
                             body.key = key[0];
                         }

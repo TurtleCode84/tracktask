@@ -1,4 +1,4 @@
-//import Script from "next/script";
+//import { Turnstile } from "@marsidev/react-turnstile";
 
 export default function LoginForm({ errorMessage, onSubmit, joinMessage, joinUsername }) {
   return (
@@ -12,10 +12,14 @@ export default function LoginForm({ errorMessage, onSubmit, joinMessage, joinUse
         <input type="password" name="password" required />
       </label>
 
-      {/*<Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></Script>*/}
-
-      {/*<div class="cf-turnstile" data-sitekey={process.env.NEXT_PUBLIC_CF_TURNSTILE_SITE_KEY} data-action="loginFormSubmit"></div>*/}
       <button type="submit" id="loginBtn">Login</button>
+
+      {/*<hr/><Turnstile
+        siteKey={process.env.NEXT_PUBLIC_CF_TURNSTILE_SITE_KEY}
+        options={{
+          action: "loginFormSubmit",
+        }}
+      />*/}
 
       {errorMessage && <p className="error">{errorMessage}</p>}
       {joinMessage && !errorMessage && <p className="success">{joinMessage}</p>}

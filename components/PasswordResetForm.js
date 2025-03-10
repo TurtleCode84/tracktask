@@ -1,4 +1,4 @@
-import Script from "next/script";
+import { Turnstile } from "@marsidev/react-turnstile";
 
 export default function PasswordResetForm({ errorMessage, onSubmit, confirmed }) {
   return (
@@ -21,10 +21,14 @@ export default function PasswordResetForm({ errorMessage, onSubmit, confirmed })
       </label>
       </>}
 
-      <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></Script>
-
-      <div class="cf-turnstile" data-sitekey={process.env.NEXT_PUBLIC_CF_TURNSTILE_SITE_KEY} data-action="passwordResetFormSubmit"></div>
       <button type="submit" id="resetPasswordBtn">Reset password</button>
+
+      <hr/><Turnstile
+        siteKey={process.env.NEXT_PUBLIC_CF_TURNSTILE_SITE_KEY}
+        options={{
+          action: "passwordResetFormSubmit",
+        }}
+      />
 
       {errorMessage && <p className="error">{errorMessage}</p>}<hr/>
 
