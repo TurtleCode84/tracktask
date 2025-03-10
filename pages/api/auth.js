@@ -20,7 +20,7 @@ async function authRoute(req, res) {
       headers: { "Content-Type": "application/json", },
       body: JSON.stringify({
         secret: process.env.CF_TURNSTILE_SECRET_KEY,
-        reponse: cf_turnstile,
+        response: cf_turnstile,
         remoteip: ip,
       })
     });
@@ -110,7 +110,7 @@ async function authRoute(req, res) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         secret: process.env.CF_TURNSTILE_SECRET_KEY,
-        reponse: cf_turnstile,
+        response: cf_turnstile,
         remoteip: ip,
       })
     });
@@ -230,7 +230,7 @@ async function authRoute(req, res) {
       headers: { "Content-Type": "application/json", },
       body: JSON.stringify({
         secret: process.env.CF_TURNSTILE_SECRET_KEY,
-        reponse: cf_turnstile,
+        response: cf_turnstile,
         remoteip: ip,
       })
     });
