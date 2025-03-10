@@ -31,7 +31,7 @@ export default function Verify() {
                 <VerificationForm
                     errorMessage={errorMsg}
                     buttonDisabled={user.email ? false : true}
-                    key={key}
+                    keyProvided={key?.length > 0}
                     onSubmit={async function handleSubmit(event) {
                         event.preventDefault();
                         document.getElementById("verifyEmailBtn").disabled = true;
