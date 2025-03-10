@@ -41,7 +41,6 @@ export default function TaskAdmin() {
       <h2><span title="Admin View" style={{ color: "lightslategray" }} className="material-symbols-outlined">verified_user</span>{task ? <>{task.hidden && <><span title="Hidden" style={{ color: "red" }} className="material-symbols-outlined">disabled_visible</span>{' '}</>}{task.completion.completed > 0 ? <span title="Completed" style={{ color: "darkgreen", marginRight: "8px" }} className="material-symbols-outlined">task_alt</span> : null}{task.priority ? <span title="Priority" style={{ color: "red", marginRight: "8px" }} className="material-symbols-outlined">label_important</span> : null}{collectionTags?.length > 0 && collectionTags}{task.name}:</> : 'Loading...'}</h2>
       <Link href="/admin/tasks">Back to tasks</Link><br/>
       <Link href="/admin">Back to admin dashboard</Link><br/>
-      <Link href={`/admin/reports#report-${task?._id}`}>Locate report (experimental)</Link><br/>
       {task ?
         <><p>Owner: <User user={user} id={task.owner} link={true}/></p>
         <div className="textarea"><Linkify options={{target:'blank'}}>{task.description}</Linkify></div>
