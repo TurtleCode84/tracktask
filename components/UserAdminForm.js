@@ -62,6 +62,7 @@ export default function UserAdminForm({ errorMessage, successMessage, onSubmit, 
         <input type="checkbox" name="ban" defaultChecked={lookup.permissions.banned} onChange={(e) => {setCanEditBanReason(e.target.checked)}} />
       </label>
       <label>
+        {canEditBanReason && "true"}
         {lookup.permissions.banned ?
         <><span>Edit ban reason</span>
         <input type="text" defaultValue={lookup.history.ban.reason} name="banReason" disabled={!canEditBanReason} /></>
