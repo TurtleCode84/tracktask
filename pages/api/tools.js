@@ -17,31 +17,23 @@ async function toolsRoute(req, res) {
   }
   const { tool, param } = req.query;
   if (req.method === 'GET') {
-    if (tool) {
-      if (tool === "userInfo") {
-        if (!ObjectId.isValid(param)) {
-          res.status(422).json({ message: "Invalid user ID" });
-          return;
-        }
-        const query = { _id: new ObjectId(param) };
-        const getUser = await db.collection("users").findOne(query, { projection: { username: 1, profilePicture: 1, 'permissions.verified': 1 } });
-        if (getUser) {
-          res.json(getUser);
-        } else {
-          res.status(404).json({ message: "User does not exist" });
-          return;
-        }
+    if (tool === "userInfo") {
+      if (!ObjectId.isValid(param)) {
+        res.status(422).json({ message: "Invalid user ID" });
+        return;
+      }
+      const query = { _id: new ObjectId(param) };
+      const getUser = await db.collection("users").findOne(query, { projection: { username: 1, profilePicture: 1, 'permissions.verified': 1 } });
+      if (getUser) {
+        res.json(getUser);
       } else {
-        res.status(418).json({ message: "Under construction" });
+        res.status(404).json({ message: "User does not exist" });
         return;
       }
     } else {
-      res.status(422).json({ message: "You must specify a tool to use!" });
+      res.status(422).json({ message: "You must specify a valid tool!" });
       return;
     }
-  } else if (req.method === 'POST') {
-    res.status(418).json({ message: "Under construction" });
-    return;
   } else {
     res.status(405).json({ message: "Method not allowed" });
     return;

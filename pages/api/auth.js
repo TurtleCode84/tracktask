@@ -66,10 +66,10 @@ async function authRoute(req, res) {
     //Check if banned
     if (userInfo.permissions.banned) {
       if (userInfo.history.ban.reason) {
-        res.status(401).json({ message: 'Your account has been banned for the following reason: ' + userInfo.history.ban.reason + '. Please contact us at appeals@tracktask.eu.org if you would like to appeal or request more information.' });
+        res.status(401).json({ message: 'Your account has been banned for the following reason: ' + userInfo.history.ban.reason + '. Please contact appeals@tracktask.eu.org if you would like to appeal or request more information.' });
         return;
       } else {
-        res.status(401).json({ message: 'Your account has been banned, please contact us at appeals@tracktask.eu.org if you would like to appeal or request more information.' });
+        res.status(401).json({ message: 'Your account has been banned, please contact appeals@tracktask.eu.org if you would like to appeal or request more information.' });
         return;
       }
     }
