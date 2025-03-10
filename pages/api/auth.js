@@ -114,6 +114,7 @@ async function authRoute(req, res) {
         remoteip: ip,
       })
     });
+    console.warn(turnstileResponse);
     if (process.env.VERCEL_ENV !== "preview") {
       if (!turnstileResponse || !turnstileResponse.success || turnstileResponse.action !== "joinFormSubmit") {
         res.status(403).json({ message: "Turnstile verification failed, please try again." });
