@@ -187,6 +187,7 @@ export default function Collection() {
               const body = {};
               if (event.currentTarget.name.value !== event.currentTarget.name.defaultValue) {body.name = event.currentTarget.name.value};
               if (event.currentTarget.description.value !== event.currentTarget.description.defaultValue) {body.description = event.currentTarget.description.value};
+              if (event.currentTarget.archived.checked !== event.currentTarget.archived.defaultChecked) {body.archived = event.currentTarget.archived.checked};
 
               try {
                 await fetchJson(`/api/collections/${collection._id}`, {

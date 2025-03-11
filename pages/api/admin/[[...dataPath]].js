@@ -422,6 +422,7 @@ async function adminDataRoute(req, res) {
         if (body.name) {updateDoc.name = body.name.trim();} // Allow admins to bypass length limits
         if (body.description !== undefined) {updateDoc.description = body.description.trim();}
         if (body.hidden !== undefined) {updateDoc.hidden = body.hidden;}
+        if (body.archived !== undefined) {updateDoc.archived = body.archived;}
         if (body.shared !== undefined) {
           updateDoc = {
             $set: {

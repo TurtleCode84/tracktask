@@ -462,6 +462,7 @@ async function dataRoute(req, res) {
             sharedWith: [],
           },
           hidden: false,
+          archived: false,
           owner: user._id,
           created: Math.floor(Date.now()/1000),
           tasks: [],
@@ -516,6 +517,7 @@ async function dataRoute(req, res) {
         };
         if (body.name) {updateDoc.name = body.name.trim().slice(0, parseInt(process.env.NEXT_PUBLIC_MAXLENGTH_TITLE));} // Enforce length limit
         if (body.description !== undefined) {updateDoc.description = body.description.trim().slice(0, parseInt(process.env.NEXT_PUBLIC_MAXLENGTH_DESCRIPTION));}
+        if (body.archived !== undefined) {updateDoc.archived = body.archived;}
         if (body.shared !== undefined && user.permissions.verified) {
           updateDoc = {
             $set: {
