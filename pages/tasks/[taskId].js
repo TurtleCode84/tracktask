@@ -40,7 +40,7 @@ export default function Task() {
     }
   }
   const collectionTags = task?.collections.map((item, index) =>
-    <Link key={index} href={`/collections/${item._id}`}><span style={{fontSize: "18px", verticalAlign: "2px", backgroundColor: stringToColor(item._id), padding: "0.5px 4px", borderStyle: "solid", borderWidth: "2px", borderColor: "var(--inset-border-color)", borderRadius: "7px", color: "#111", marginRight: "6px", display: "inline-block", filter: "grayscale(0.4) brightness(1.5)" }}>{item.name}</span></Link>
+    <Link key={index} href={`/collections/${item._id}`}><span style={{fontSize: "18px", verticalAlign: "2px", backgroundColor: stringToColor(item._id), padding: "0.5px 4px", borderStyle: "solid", borderWidth: "2px", borderColor: "var(--inset-border-color)", borderRadius: "7px", color: "#111", marginRight: "6px", display: "inline-block", filter: "grayscale(0.4) brightness(1.5)", userSelect: "none" }}>{item.name}</span></Link>
   );
     
   if (!user || !user.isLoggedIn || user.permissions.banned) {
@@ -52,7 +52,8 @@ export default function Task() {
   return (
     <Layout>
       <h2>{task ? <>{task.completion.completed > 0 ? <span title="Completed" style={{ color: "darkgreen", marginRight: "8px" }} className="material-symbols-outlined">task_alt</span> : null}{task.priority ? <span title="Priority" style={{ color: "red", marginRight: "8px" }} className="material-symbols-outlined">label_important</span> : null}{collectionTags.length > 0 && collectionTags}{task.name}:</> : 'Loading...'}</h2>
-      <Link href={`/dashboard${task ? "#task-" + task._id : ""}`}>Back to dashboard</Link><br/>
+      <Link href={`/dashboard${task ? "#task-" + task._id : ""}`}>Back to dashboard</Link>
+      <a href="#" onClick={(e) => {e.preventDefault();router.back();}}>Back to previous (experimental)</a><br/>
       {task ?
         <>{user.id !== task.owner ? <p>Owner: <User user={user} id={task.owner}/></p> : <br/>}
         <div className="textarea"><Linkify options={{target:'blank'}}>{task.description}</Linkify></div>
