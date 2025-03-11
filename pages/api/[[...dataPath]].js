@@ -138,6 +138,7 @@ async function dataRoute(req, res) {
                   _id: allCollections[j]._id,
                   name: allCollections[j].name,
                   role: collectionRole,
+                  archived: allCollections[j].archived,
                 };
                 
                 taskInCollection.push(collectionInfo); // Returns defined if in collection
@@ -382,7 +383,7 @@ async function dataRoute(req, res) {
       };
       const collectionsOptions = {
         sort: { created: -1 },
-        projection: { name: 1, description: 1, created: 1, owner: 1, sharing: 1, tasks: 1 },
+        projection: { name: 1, description: 1, created: 1, owner: 1, sharing: 1, tasks: 1, archived: 1 },
       };
       const sortedTasksOptions = {
         sort: { 'completion.completed': 1, priority: -1, dueDate: 1 },
@@ -462,6 +463,7 @@ async function dataRoute(req, res) {
             sharedWith: [],
           },
           hidden: false,
+          archived: false,
           owner: user._id,
           created: Math.floor(Date.now()/1000),
           tasks: [],
@@ -516,6 +518,7 @@ async function dataRoute(req, res) {
         };
         if (body.name) {updateDoc.name = body.name.trim().slice(0, parseInt(process.env.NEXT_PUBLIC_MAXLENGTH_TITLE));} // Enforce length limit
         if (body.description !== undefined) {updateDoc.description = body.description.trim().slice(0, parseInt(process.env.NEXT_PUBLIC_MAXLENGTH_DESCRIPTION));}
+        if (body.archived !== undefined) {updateDoc.archived = body.archived;}
         if (body.shared !== undefined && user.permissions.verified) {
           updateDoc = {
             $set: {

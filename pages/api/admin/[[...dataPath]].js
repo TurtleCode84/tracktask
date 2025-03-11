@@ -286,7 +286,7 @@ async function adminDataRoute(req, res) {
       const reportedCollectionsQuery = {};
       const collectionsOptions = {
         sort: { created: -1 },
-        projection: { name: 1, description: 1, created: 1, owner: 1, sharing: 1, tasks: 1, hidden: 1 },
+        projection: { name: 1, description: 1, created: 1, owner: 1, sharing: 1, tasks: 1, hidden: 1, archived: 1 },
       };
       const sortedTasksOptions = {
         sort: { 'completion.completed': 1, priority: -1, dueDate: 1 },
@@ -422,6 +422,7 @@ async function adminDataRoute(req, res) {
         if (body.name) {updateDoc.name = body.name.trim();} // Allow admins to bypass length limits
         if (body.description !== undefined) {updateDoc.description = body.description.trim();}
         if (body.hidden !== undefined) {updateDoc.hidden = body.hidden;}
+        if (body.archived !== undefined) {updateDoc.archived = body.archived;}
         if (body.shared !== undefined) {
           updateDoc = {
             $set: {
