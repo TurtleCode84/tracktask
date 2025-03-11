@@ -138,6 +138,7 @@ async function dataRoute(req, res) {
                   _id: allCollections[j]._id,
                   name: allCollections[j].name,
                   role: collectionRole,
+                  archived: allCollections[j].archived,
                 };
                 
                 taskInCollection.push(collectionInfo); // Returns defined if in collection
