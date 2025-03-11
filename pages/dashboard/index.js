@@ -28,15 +28,15 @@ export default function Dashboard() {
   } else if (verify === "done") {
     dynamicMsg = "Email address successfully verified!";
   }
-  const upcomingTaskList = upcomingTasks?.filter(task => task.collections.some((element) => !element.archived)).map((task) =>
+  const upcomingTaskList = upcomingTasks?.filter(task => task.collections.length < 1 || task.collections.some((element) => !element.archived)).map((task) =>
     <Task task={task} key={task._id}/>
   );
   const { data: overdueTasks, error: overdueTasksError } = useData(user, "tasks", false, "overdue");
-  const overdueTaskList = overdueTasks?.filter(task => task.collections.some((element) => !element.archived)).map((task) =>
+  const overdueTaskList = overdueTasks?.filter(task => task.collections.length < 1 || task.collections.some((element) => !element.archived)).map((task) =>
     <Task task={task} key={task._id}/>
   );
   const { data: notdueTasks, error: notdueTasksError } = useData(user, "tasks", false, "notdue");
-  const notdueTaskList = notdueTasks?.filter(task => task.collections.some((element) => !element.archived)).map((task) =>
+  const notdueTaskList = notdueTasks?.filter(task => task.collections.length < 1 || task.collections.some((element) => !element.archived)).map((task) =>
     <Task task={task} key={task._id}/>
   );
   const { data: collections, error: collectionsError } = useData(user, "collections", false, false);
