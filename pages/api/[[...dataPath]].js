@@ -382,7 +382,7 @@ async function dataRoute(req, res) {
       };
       const collectionsOptions = {
         sort: { created: -1 },
-        projection: { name: 1, description: 1, created: 1, owner: 1, sharing: 1, tasks: 1 },
+        projection: { name: 1, description: 1, created: 1, owner: 1, sharing: 1, tasks: 1, archived: 1 },
       };
       const sortedTasksOptions = {
         sort: { 'completion.completed': 1, priority: -1, dueDate: 1 },

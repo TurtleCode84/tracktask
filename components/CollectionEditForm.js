@@ -13,7 +13,7 @@ export default function CollectionEditForm({ verified, errorMessage, successMess
         <span>Description</span>
         <textarea name="description" rows="4" cols="30" defaultValue={collection.description} maxlength={process.env.NEXT_PUBLIC_MAXLENGTH_DESCRIPTION} />
       </label>
-      <label>
+      <label><hr/>
         <span>Archived <span style={{ color: "lightslategray" }} className="material-symbols-outlined icon-list">archive</span></span>
         <input type="checkbox" name="archived" defaultChecked={collection.archived} />
       </label><hr/>
