@@ -256,6 +256,7 @@ export default function Layout({ children }) {
 
         nav {
           color: var(--nav-text-color);
+          user-select: none;
         }
 
         pre {

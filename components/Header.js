@@ -122,7 +122,6 @@ export default function Header() {
           list-style: none;
           margin-left: 0;
           padding-left: 0;
-          overflow: auto;
           white-space: nowrap;
         }
 
@@ -142,6 +141,7 @@ export default function Header() {
           color: #fff;
           font-weight: 500;
           background-color: var(--header-color);
+          overflow: auto;
         }
 
         @media only screen and (max-width: 600px) {
