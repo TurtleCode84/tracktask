@@ -1,9 +1,9 @@
 export default function addRemoveCollectionForm({ errorMessage, successMessage, onSubmit, collections, taskId, isTaskOwner }) {
-  const addCollections = collections?.filter(collection => !collection.tasks?.some((element) => element._id === taskId) && (collection.sharing?.role === "owner" || collection.sharing?.role === "contributor")).map((collection) =>
-    <option key={collection._id} value={collection._id}>{collection.name}</option>
+  const addCollections = collections?.filter(collection => !collection.tasks?.some((element) => element._id === taskId) && (collection.sharing?.role === "owner" || collection.sharing?.role === "contributor")).sort((a, b) => a.archived ? 1 : -1).map((collection) =>
+    <option key={collection._id} value={collection._id}>{collection.name}{collection.archived && " (archived)"}</option>
   );
-  const removeCollections = collections?.filter(collection => collection.tasks?.some((element) => element._id === taskId) && (collection.sharing?.role === "owner" || collection.sharing?.role === "contributor")).map((collection) =>
-    <option key={collection._id} value={collection._id}>{collection.name}</option>
+  const removeCollections = collections?.filter(collection => collection.tasks?.some((element) => element._id === taskId) && (collection.sharing?.role === "owner" || collection.sharing?.role === "contributor")).sort((a, b) => a.archived ? 1 : -1).map((collection) =>
+    <option key={collection._id} value={collection._id}>{collection.name}{collection.archived && " (archived)"}</option>
   );
   return (
     <form id="addRemoveCollectionForm" autocomplete="off" onSubmit={onSubmit}>
