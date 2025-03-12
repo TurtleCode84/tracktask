@@ -37,7 +37,7 @@ export default function UsersAdmin() {
   return (
     <Layout>
       <h1>All users:</h1>
-      <Link href="/admin">Back to admin dashboard</Link><br/>
+      <a href="#" onClick={(e) => {e.preventDefault();router.back();}}>Back to previous</a><br/>
       {allUsersList === undefined || allUsersError ?
       <>
       {allUsersError ? <p style={{ fontStyle: "italic" }}>{allUsersError.data ? allUsersError.data.message : allUsersError.message}</p> : <p style={{ fontStyle: "italic" }}>Loading users...</p>}

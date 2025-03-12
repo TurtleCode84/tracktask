@@ -1,8 +1,8 @@
 import dynamicToggle from "lib/dynamicToggle";
 
 export default function TaskCreateForm({ collections, errorMessage, onSubmit }) {
-  const listCollections = collections?.filter(collection => collection.sharing?.role === "owner" || collection.sharing?.role === "contributor").map((collection) =>
-    <option key={collection._id} value={collection._id}>{collection.name}</option>
+  const listCollections = collections?.filter(collection => collection.sharing?.role === "owner" || collection.sharing?.role === "contributor").sort((a, b) => a.archived ? 1 : -1).map((collection) =>
+    <option key={collection._id} value={collection._id}>{collection.name}{collection.archived && " (archived)"}</option>
   );
   return (
     <form id="taskCreateForm" autocomplete="off" onSubmit={onSubmit}>

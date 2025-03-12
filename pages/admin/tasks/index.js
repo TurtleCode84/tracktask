@@ -2,7 +2,7 @@ import React from "react";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
 import Task from "components/Task";
-import Link from "next/link";
+import { useRouter } from "next/router";
 import useUser from "lib/useUser";
 import useAdminData from "lib/useAdminData";
 import dynamicToggle from "lib/dynamicToggle";
@@ -12,6 +12,7 @@ export default function TasksAdmin() {
     redirectTo: "/login",
     adminOnly: true,
   });
+  const router = useRouter();
   
   const { data: tasks, error: tasksError } = useAdminData(user, "tasks", false, "all");
   const relTaskList = tasks?.filter(task => task.completion.completed === 0).map((task) =>
@@ -29,7 +30,7 @@ export default function TasksAdmin() {
   return (
     <Layout>
       <h1>All reported tasks:</h1>
-      <Link href="/admin">Back to admin dashboard</Link><br/>
+      <a href="#" onClick={(e) => {e.preventDefault();router.back();}}>Back to previous</a><br/>
       {relTaskList === undefined || comTaskList === undefined || tasksError ?
       <>
       {tasksError ? <p style={{ fontStyle: "italic" }}>{tasksError.data?.message || tasksError.message}</p> : <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}

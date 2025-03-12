@@ -2,15 +2,16 @@ import React from "react";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
 import Collection from "components/Collection";
-import Link from "next/link";
 import useUser from "lib/useUser";
 import useAdminData from "lib/useAdminData";
+import { useRouter } from "next/router";
 
 export default function CollectionsAdmin() {
   const { user } = useUser({
     redirectTo: "/login",
     adminOnly: true,
   });
+  const router = useRouter();
   
   const { data: collections, error: collectionsError } = useAdminData(user, "collections", false, false);
   const collectionList = collections?.map((collection) =>
@@ -25,7 +26,7 @@ export default function CollectionsAdmin() {
   return (
     <Layout>
       <h1>All reported collections:</h1>
-      <Link href="/admin">Back to admin dashboard</Link><br/>
+      <a href="#" onClick={(e) => {e.preventDefault();router.back();}}>Back to previous</a><br/>
       {collectionList && collectionList.length === 0 ? <p style={{ fontStyle: "italic" }}>No collections found!</p> : null}
       {collectionList === undefined || collectionsError ?
       <>

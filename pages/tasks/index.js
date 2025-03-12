@@ -2,15 +2,16 @@ import React from "react";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
 import Task from "components/Task";
-import Link from "next/link";
 import useUser from "lib/useUser";
 import useData from "lib/useData";
+import { useRouter } from "next/router";
 import dynamicToggle from "lib/dynamicToggle";
 
 export default function Tasks() {
   const { user } = useUser({
     redirectTo: "/login",
   });
+  const router = useRouter();
   
   const { data: allTasks, error: allTasksError } = useData(user, "tasks", false, "all");
   const relTaskList = allTasks?.filter(task => task.completion.completed === 0).map((task) =>
@@ -28,7 +29,7 @@ export default function Tasks() {
   return (
     <Layout>
       <h1>All tasks:</h1>
-      <Link href="/dashboard">Back to dashboard</Link><br/>
+      <a href="#" onClick={(e) => {e.preventDefault();router.back();}}>Back to previous</a><br/>
       {relTaskList === undefined || comTaskList === undefined || allTasksError ?
       <>
       {allTasksError ? <p style={{ fontStyle: "italic" }}>{allTasksError.data?.message || allTasksError.message}</p> : <p style={{ fontStyle: "italic" }}>Loading tasks...</p>}

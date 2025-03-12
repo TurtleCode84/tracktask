@@ -5,7 +5,6 @@ import Loading from "components/Loading";
 import VerificationForm from "components/VerificationForm";
 import useUser from "lib/useUser";
 import { useRouter } from "next/router";
-import Link from "next/link";
 
 export default function Verify() {
     const { user } = useUser({
@@ -24,7 +23,7 @@ export default function Verify() {
     return (
         <Layout>
             <h1>Verify your email <span style={{ color: "#006dbe" }} className="material-symbols-outlined">verified</span></h1>
-            <p>Back to <Link href="/dashboard/account">account</Link> or <Link href="/dashboard">dashboard</Link></p>
+            <a href="#" onClick={(e) => {e.preventDefault();router.back();}}>Back to previous</a><br/>
             {!user.permissions.verified ? <>
                 <h3>{key?.length > 0 ? "Almost there! Click the button below to verify your email address." : "To keep your account secure, we need to confirm that you have access to your linked email address. Click the button below to send a verification request to your email."}</h3>
                 <p>{user.email ? `You have linked the email address "${user.email}" to your account.` : "You have not linked an email address to your account, please add one before requesting verification."}</p>

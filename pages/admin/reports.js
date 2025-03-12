@@ -27,7 +27,7 @@ export default function ReportsAdmin() {
   return (
     <Layout>
       <h1>Reports:</h1>
-      <Link href="/admin">Back to admin dashboard</Link><br/>
+      <a href="#" onClick={(e) => {e.preventDefault();router.back();}}>Back to previous</a><br/>
       <br/><Link href={`/admin/reports${!reviewed ? "?reviewed=true" : ""}`}><button>{reviewed ? 'Hide' : 'Show'} reviewed reports</button></Link><br/>
       {reportList === undefined || reportsError ?
       <>

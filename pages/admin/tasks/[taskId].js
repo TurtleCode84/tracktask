@@ -27,7 +27,7 @@ export default function TaskAdmin() {
   const [errorMsg, setErrorMsg] = useState("");
 
   const collectionTags = collections?.filter((collection) => collection.tasks.some((e) => e._id === task?._id)).map((item, index) =>
-    <Link key={index} href={`/admin/collections/${item._id}`}><span style={{fontSize: "18px", verticalAlign: "2px", backgroundColor: stringToColor(item._id), padding: "0.5px 4px", borderStyle: "solid", borderWidth: "2px", borderColor: "var(--inset-border-color)", borderRadius: "7px", color: "#111", marginRight: "6px", display: "inline-block", filter: "grayscale(0.4) brightness(1.5)" }}>{item.name}</span></Link>
+    <Link key={index} href={`/admin/collections/${item._id}`}><span style={{fontSize: "18px", verticalAlign: "2px", backgroundColor: stringToColor(item._id), padding: "0.5px 4px", borderStyle: "solid", borderWidth: "2px", borderColor: "var(--inset-border-color)", borderRadius: "7px", color: "#111", marginRight: "6px", display: "inline-block", filter: "grayscale(0.4) brightness(1.5)", userSelect: "none" }}>{item.name}</span></Link>
   );
     
   if (!user || !user.isLoggedIn || user.permissions.banned || !user.permissions.admin) {
@@ -39,8 +39,7 @@ export default function TaskAdmin() {
   return (
     <Layout>
       <h2><span title="Admin View" style={{ color: "lightslategray" }} className="material-symbols-outlined">verified_user</span>{task ? <>{task.hidden && <><span title="Hidden" style={{ color: "red" }} className="material-symbols-outlined">disabled_visible</span>{' '}</>}{task.completion.completed > 0 ? <span title="Completed" style={{ color: "darkgreen", marginRight: "8px" }} className="material-symbols-outlined">task_alt</span> : null}{task.priority ? <span title="Priority" style={{ color: "red", marginRight: "8px" }} className="material-symbols-outlined">label_important</span> : null}{collectionTags?.length > 0 && collectionTags}{task.name}:</> : 'Loading...'}</h2>
-      <Link href="/admin/tasks">Back to tasks</Link><br/>
-      <Link href="/admin">Back to admin dashboard</Link><br/>
+      <a href="#" onClick={(e) => {e.preventDefault();router.back();}}>Back to previous</a><br/>
       {task ?
         <><p>Owner: <User user={user} id={task.owner} link={true}/></p>
         <div className="textarea"><Linkify options={{target:'blank'}}>{task.description}</Linkify></div>
