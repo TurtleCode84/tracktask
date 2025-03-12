@@ -270,6 +270,7 @@ export default function Layout({ children }) {
           font-size: inherit;
           max-width: 32px;
           overflow: hidden;
+          user-select: none;
           font-variation-settings:
             'FILL' 1,
             'wght' 550,
