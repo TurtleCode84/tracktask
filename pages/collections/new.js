@@ -5,7 +5,6 @@ import CollectionCreateForm from "components/CollectionCreateForm";
 import useUser from "lib/useUser";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
-import Link from "next/link";
 
 export default function CollectionsCreate() {
   const { user } = useUser({
@@ -52,7 +51,7 @@ export default function CollectionsCreate() {
           }
         }}
       />
-      <br/><Link href="/dashboard">Back to dashboard</Link>
+      <br/><a href="#" onClick={(e) => {e.preventDefault();router.back();}}>Back to previous</a>
     </Layout>
   );
 }

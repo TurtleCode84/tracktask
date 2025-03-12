@@ -52,8 +52,7 @@ export default function Task() {
   return (
     <Layout>
       <h2>{task ? <>{task.completion.completed > 0 ? <span title="Completed" style={{ color: "darkgreen", marginRight: "8px" }} className="material-symbols-outlined">task_alt</span> : null}{task.priority ? <span title="Priority" style={{ color: "red", marginRight: "8px" }} className="material-symbols-outlined">label_important</span> : null}{collectionTags.length > 0 && collectionTags}{task.name}:</> : 'Loading...'}</h2>
-      <Link href={`/dashboard${task ? "#task-" + task._id : ""}`}>Back to dashboard</Link>
-      <a href="#" onClick={(e) => {e.preventDefault();router.back();}}>Back to previous (experimental)</a><br/>
+      <a href="#" onClick={(e) => {e.preventDefault();router.back();}}>Back to previous</a><br/>
       {task ?
         <>{user.id !== task.owner ? <p>Owner: <User user={user} id={task.owner}/></p> : <br/>}
         <div className="textarea"><Linkify options={{target:'blank'}}>{task.description}</Linkify></div>

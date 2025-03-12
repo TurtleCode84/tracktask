@@ -7,7 +7,6 @@ import useUser from "lib/useUser";
 import useData from "lib/useData";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
-import Link from "next/link";
 
 export default function TasksCreate() {
   const { user } = useUser({
@@ -70,7 +69,7 @@ export default function TasksCreate() {
           }
         }}
       />
-      <br/><Link href="/dashboard">Back to dashboard</Link>
+      <br/><a href="#" onClick={(e) => {e.preventDefault();router.back();}}>Back to previous</a>
     </Layout>
   );
 }

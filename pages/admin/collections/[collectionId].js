@@ -12,7 +12,6 @@ import stringToColor from "lib/stringToColor";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
 import moment from "moment";
-import Link from "next/link";
 import Linkify from "linkify-react";
 
 export default function Collection() {
@@ -45,8 +44,7 @@ export default function Collection() {
   return (
     <Layout>
       <h2><span title="Admin View" style={{ color: "lightslategray" }} className="material-symbols-outlined">verified_user</span>{collection ? <>{collection.hidden && <><span title="Hidden" style={{ color: "red" }} className="material-symbols-outlined">disabled_visible</span>{' '}</>}{collection.sharing.shared ? <span title="Shared" style={{ color: "lightslategray" }} className="material-symbols-outlined">group</span> : <span title="Private" style={{ color: "lightslategray" }} className="material-symbols-outlined">lock</span>}<span style={{ color: stringToColor(collection._id), filter: "grayscale(0.4) brightness(1.5)" }} className="material-symbols-outlined">fiber_manual_record</span>{collection.archived && <span title="Archived" style={{ color: "lightslategray" }} className="material-symbols-outlined">archive</span>}{' '}{collection.name}:</> : 'Loading...'}</h2>
-      <Link href="/admin/collections">Back to collections</Link><br/>
-      <Link href="/admin">Back to admin dashboard</Link><br/>
+      <a href="#" onClick={(e) => {e.preventDefault();router.back();}}>Back to previous</a><br/>
       {collection ?
         <><div className="collection"><div>
         <br/><div className="textarea"><Linkify options={{target:'blank'}}>{collection.description}</Linkify></div>

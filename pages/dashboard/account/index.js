@@ -7,12 +7,14 @@ import UserEditForm from "components/UserEditForm";
 import Link from "next/link";
 import Image from "next/image";
 import useUser from "lib/useUser";
+import { useRouter } from "next/router";
 import dynamicToggle from "lib/dynamicToggle";
 
 export default function Account() {
   const { user, mutateUser } = useUser({
     redirectTo: "/login",
   });
+  const router = useRouter();
   
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
@@ -25,7 +27,7 @@ export default function Account() {
   return (
     <Layout>
       <h1>Your account <span style={{ color: "dimgray" }} className="material-symbols-outlined">manage_accounts</span></h1>
-      <Link href="/dashboard">Back to dashboard</Link><br/>
+      <a href="#" onClick={(e) => {e.preventDefault();router.back();}}>Back to previous</a><br/>
       <h3><hr/>General information<hr/></h3>
       <p>Username: {user.username}{' '}{user.permissions.verified ? <span title="Verified" style={{ color: "#006dbe" }} className="material-symbols-outlined icon-list">verified</span> : null}{user.permissions.admin ? <span title="Admin" style={{ color: "slategray" }} className="material-symbols-outlined icon-list">verified_user</span> : null}</p>
       <p>User ID: <code>{user.id}</code></p>

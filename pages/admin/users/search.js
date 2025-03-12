@@ -3,7 +3,6 @@ import Layout from "components/Layout";
 import Loading from "components/Loading";
 import UserSearchForm from "components/UserSearchForm";
 import useUser from "lib/useUser";
-import Link from "next/link";
 import fetchJson, { FetchError } from "lib/fetchJson";
 import { useRouter } from "next/router";
 
@@ -68,7 +67,7 @@ export default function UserSearch() {
             }
           }}
       />
-      <br/><Link href="/admin">Back to admin dashboard</Link>
+      <br/><a href="#" onClick={(e) => {e.preventDefault();router.back();}}>Back to previous</a>
     </Layout>
   );
 }
