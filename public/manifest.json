@@ -13,5 +13,31 @@
       "sizes": "any",
       "type": "image/png"
     }
+  ],
+  "shortcuts": [
+    {
+      "name": "New Task",
+      "description": "Create a new task",
+      "url": "../tasks/new",
+      "icons": [
+        {
+          "src": "../tracktaskmini.png",
+          "sizes": "any",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "New Collection",
+      "description": "Create a new collection",
+      "url": "../collections/new",
+      "icons": [
+        {
+          "src": "../tracktaskmini.png",
+          "sizes": "any",
+          "type": "image/png"
+        }
+      ]
+    }
   ]
 }
