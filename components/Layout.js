@@ -301,7 +301,7 @@ export default function Layout({ children }) {
         <div className="container">{children}</div>
       </main>
 
-      <span style={{ fontSize: "90%", textAlign: "center", color: "gray", display: "table", margin: "4rem" + " auto", padding: "0 0.5rem 20px 0.5rem" }}>Copyright &#169; 2022-2024 TrackTask STM, All Rights Reserved &bull; <Link href="/about"><a className="footer">About</a></Link> &bull; <Link href="/privacy"><a className="footer">Privacy</a></Link> &bull; <Link href="/terms"><a className="footer">Terms of Use</a></Link></span>
+      <span style={{ fontSize: "90%", textAlign: "center", color: "gray", display: "table", margin: "4rem" + " auto", padding: "0 0.5rem 20px 0.5rem" }}>Copyright &#169; 2022-2025 TrackTask, All Rights Reserved &bull; <Link href="/about"><a className="footer">About</a></Link> &bull; <Link href="/privacy"><a className="footer">Privacy</a></Link> &bull; <Link href="/terms"><a className="footer">Terms of Use</a></Link></span>
     </>
   );
 }
