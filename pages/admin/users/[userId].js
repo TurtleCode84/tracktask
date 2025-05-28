@@ -110,7 +110,7 @@ export default function UserAdmin() {
               if (event.currentTarget.profilePicture.value !== event.currentTarget.profilePicture.defaultValue) {body.profilePicture = event.currentTarget.profilePicture.value}
               if (event.currentTarget.notes.value !== event.currentTarget.notes.defaultValue) {body.notes = event.currentTarget.notes.value}
               if (event.currentTarget.clearWarnings.checked) {body.clearWarnings = event.currentTarget.clearWarnings.checked}
-              if (event.currentTarget.banReason.value !== event.currentTarget.banReason.defaultValue) {body.banReason = event.currentTarget.banReason.value}
+              if (event.currentTarget.banReason && event.currentTarget.banReason.value !== event.currentTarget.banReason.defaultValue) {body.banReason = event.currentTarget.banReason.value}
               if (event.currentTarget.warn.checked) {
                 body.warn = event.currentTarget.warn.checked;
                 body.warning = event.currentTarget.warning.value;
