@@ -22,7 +22,7 @@
     "web-push": "^3.6.4",
     "linkify-react": "^4.1.1",
     "linkifyjs": "^4.1.1",
-    "nodemailer": "^6.9.7",
+    "nodemailer": "^7.0.3",
     "uuid": "^11.0.3"
   },
   "devDependencies": {
