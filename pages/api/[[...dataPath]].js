@@ -23,7 +23,7 @@ async function dataRoute(req, res) {
 
   const sessionUser = req.session.user;
   const user = sessionUser ? await db.collection("users").findOne({ _id: new ObjectId(sessionUser.id) }) : undefined;
-  if (!sessionUser || !sessionUser.isLoggedIn || user.permissions.banned) {
+  if (!sessionUser || !sessionUser.isLoggedIn || !user || user.permissions.banned) {
     res.status(401).json({ message: "Authentication required" });
     return;
   }

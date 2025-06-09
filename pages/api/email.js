@@ -17,7 +17,7 @@ async function emailRoute(req, res) {
 
   const sessionUser = req.session.user;
   const user = sessionUser ? await db.collection("users").findOne({ _id: new ObjectId(sessionUser.id) }) : undefined;
-  if (req.method !== 'PUT' && (!sessionUser || !sessionUser.isLoggedIn || user.permissions.banned)) {
+  if (req.method !== 'PUT' && (!sessionUser || !sessionUser.isLoggedIn || !user || user.permissions.banned)) {
     res.status(401).json({ message: "Authentication required" });
     return;
   }

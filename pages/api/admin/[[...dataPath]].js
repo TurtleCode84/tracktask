@@ -20,7 +20,7 @@ async function adminDataRoute(req, res) {
 
   const sessionUser = req.session.user;
   const user = sessionUser ? await db.collection("users").findOne({ _id: new ObjectId(sessionUser.id) }) : undefined;
-  if (!sessionUser || !sessionUser.isLoggedIn || user.permissions.banned || !user.permissions.admin) {
+  if (!sessionUser || !sessionUser.isLoggedIn || !user || user.permissions.banned || !user.permissions.admin) {
     res.status(401).json({ message: "Authentication required" });
     return;
   }
